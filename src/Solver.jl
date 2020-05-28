@@ -16,25 +16,26 @@ function assemble_residual(state::OWState)::Vector{Float64}
 end
 
 function assemble_jacobian(state::OWState)::SparseMatrixCSC{Float64,Int}
-    numvar = state.numvar
     I, J, V = Int[], Int[], Float64[]
-    for (i, r) in enumerate(state.rw)
-        (ind, g) = grad(r)
-        for (k, j) in enumerate(ind)
-            for iv = 1:numvar
-                additem(I,J,V,2*i-1, numvar*(j-1)+iv, g[iv, k])
-            end
+    rw = state.rw
+    ro = state.ro
+    numvar = state.numvar
+    for i =1:state.numcell
+        (ind, g) = grad(rw[i])
+        append!(I, (2*i-1) * ones(Int, length(ind) * 2))
+        for i = 1:numvar
+            append!(J, numvar*ind .+ (i-numvar))
         end
-    end
-    for (i, r) in enumerate(state.ro)
-        (ind, g) = grad(r)
-        for (k, j) in enumerate(ind)
-            for iv = 1:numvar
-                additem(I,J,V,2*i, numvar*(j-1)+iv, g[iv, k])
-            end
+        append!(V, [x for x in transpose(g).data])
+
+        (ind, g) = grad(ro[i])
+        append!(I, (2*i) * ones(Int, length(ind) * 2))
+        for i = 1:numvar
+            append!(J, numvar*ind .+ (i-numvar))
         end
+        append!(V, [x for x in transpose(g).data])
     end
-    return sparse(I, J, V)
+    return sparse(I,J,V)
 end
 
 function update_solution(state::OWState, δx::Vector{Float64})::Nothing

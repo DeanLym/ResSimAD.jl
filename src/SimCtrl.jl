@@ -67,7 +67,7 @@ function runsim(sim::Sim, numtime::Int)::Tuple{Matrix{Float64}, Matrix{Float64}}
         err = min_err + 1
         newton_iter = 0
         while err > min_err
-            print("Netwon Iteration $newton_iter: ")
+            #print("Netwon Iteration $newton_iter: ")
             # newton_iter += 1
             # Calculate residual and jacobian
             t0 = time()
@@ -75,7 +75,7 @@ function runsim(sim::Sim, numtime::Int)::Tuple{Matrix{Float64}, Matrix{Float64}}
             compute_rw(sim.state, sim.grid, sim.prod_bhp, sim.inj_bhp, dt)
             residual = assemble_residual(sim.state)
             tt = time() - t0
-            print(" t_res: ", tt)
+            #print(" t_res: ", tt)
             t_res += tt
 
             err = norm(residual)
@@ -88,14 +88,14 @@ function runsim(sim::Sim, numtime::Int)::Tuple{Matrix{Float64}, Matrix{Float64}}
             t0 = time()
             jac = assemble_jacobian(sim.state)
             tt = time() - t0
-            print(" t_jac: ", tt)
+            #print(" t_jac: ", tt)
             t_jac += tt
 
             # Solve equation
             t0 = time()
             δx = jac \ residual
             tt = time() - t0
-            print(" t_sol: $tt \n")
+            #print(" t_sol: $tt \n")
             t_sol += tt
             newton_iter += 1
             # Update variables

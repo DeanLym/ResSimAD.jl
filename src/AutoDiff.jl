@@ -69,7 +69,7 @@ end
 
 function grad(x::Variable{MGrad{Nv, Nc, L}}) where {Nv, Nc, L}
     g = x.grad
-    return vcat([g.ic], g.icn), hcat(g.∇, g.∇n)
+    return vcat(SA[g.ic], g.icn), hcat(g.∇, g.∇n)
 end
 
 function grad(x::Variable{DGrad{Nv, L}}) where {Nv, L}
