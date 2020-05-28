@@ -3,6 +3,7 @@ module ResSimAD
 include("AutoDiff.jl")
 include("Grid.jl")
 include("State.jl")
+include("Schedule.jl")
 include("Solver.jl")
 include("SimCtrl.jl")
 

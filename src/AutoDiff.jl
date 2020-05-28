@@ -80,6 +80,10 @@ function grad(x::Variable{SGrad{Nv}}) where {Nv}
     return SA[x.grad.ic], SMat{Nv, 1, Nv}(x.grad.∇)
 end
 
+function data(t::Tensor)::Vector{Float64}
+    return [x.val for x in t]
+end
+
 ## Operator overload
 # SGrad and Real
 function Base.:-(z::SGrad{Nv})::SGrad{Nv} where {Nv}

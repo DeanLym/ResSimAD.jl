@@ -1,7 +1,7 @@
 module State
 
 using ..Grid: AbstractGrid
-using ..AutoDiff: Tensor, param, zeros_tensor
+using ..AutoDiff: Tensor, param, zeros_tensor, data
 
 export OWState, AbstractState, set_init_state
 
@@ -14,7 +14,8 @@ struct OWState <: AbstractState
     numcell::Int
     numvar::Int
     p::Tensor # Pressure
-    sw::Tensor  # Wate saturation
+    sw::Tensor  # Wate phase saturation
+    so::Tensor # Oil phase saturation
     bo::Tensor # Oil phase formation volume factor
     bw::Tensor # Water phase formation volume factor
     μo::Tensor # Oil phase viscosity
@@ -32,10 +33,11 @@ struct OWState <: AbstractState
     ro::Tensor # Oil component residual
     rw::Tensor # Water component residual
 
-    pₙ::Vector{Float64}   # Pressure at previous time step
-    swₙ::Vector{Float64} # Water saturation at last time step
-    boₙ::Vector{Float64} # bo at last time step
-    bwₙ::Vector{Float64} # bw at last time step
+    pn::Vector{Float64}   # Pressure at previous time step
+    swn::Vector{Float64} # Water saturation at last time step
+    son::Vector{Float64} # Oil saturation at last time step
+    bon::Vector{Float64} # bo at last time step
+    bwn::Vector{Float64} # bw at last time step
 end
 
 function OWState(nc::Int, nconn::Int)::OWState
@@ -43,6 +45,7 @@ function OWState(nc::Int, nconn::Int)::OWState
     p = param(zeros(nc), 1, nv)
     sw = param(zeros(nc), 2, nv)
 
+    so= zeros_tensor(nc, nv) # Oil phase saturation
     bo= zeros_tensor(nc, nv) # Oil phase formation volume factor
     bw= zeros_tensor(nc, nv) # Water phase formation volume factor
     μo= zeros_tensor(nc, nv) # Oil phase viscosity
@@ -63,14 +66,15 @@ function OWState(nc::Int, nconn::Int)::OWState
     ro= zeros_tensor(nc, nv) # Oil component residual
     rw= zeros_tensor(nc, nv) # Water component residual
 
-    pₙ = zeros(Float64, nc)
-    swₙ = zeros(Float64, nc)
-    boₙ = zeros(Float64, nc)
-    bwₙ = zeros(Float64, nc)
+    pn = zeros(Float64, nc)
+    swn = zeros(Float64, nc)
+    son = zeros(Float64, nc)
+    bon = zeros(Float64, nc)
+    bwn = zeros(Float64, nc)
 
     #! format: off
-    return OWState(nc, nv, p, sw, bo, bw, μo, μw, kro, krw, λo, λw,
-                fo, fw, qo, qw, ao, aw, ro, rw, pₙ, swₙ, boₙ, bwₙ)
+    return OWState(nc, nv, p, sw, so, bo, bw, μo, μw, kro, krw, λo, λw,
+                fo, fw, qo, qw, ao, aw, ro, rw, pn, swn, son, bon, bwn)
     #! format: on
 end
 #
@@ -80,14 +84,21 @@ function get_var_order(state::OWState)::Dict{String, Int}
 end
 #
 function update_old_state(state::OWState)::Nothing
-    for i = 1:state.numcell
-        state.pₙ[i] = state.p[i].val
-        state.swₙ[i] = state.sw[i].val
-        state.boₙ[i] = state.bo[i].val
-        state.bwₙ[i] = state.bw[i].val
-    end
+    state.pn .= data(state.p)
+    state.swn .= data(state.sw)
+    state.son .= data(state.so)
+    state.bon .= data(state.bo)
+    state.bwn .= data(state.bw)
     return nothing
 end
+
+function change_back_state(state::OWState)::Nothing
+    for i = 1:state.numcell
+        state.p[i].val = state.pn[i]
+        state.sw[i].val = state.swn[i]
+    end
+end
+
 #
 function set_init_state(state::OWState, p0::Float64, sw0::Float64)::Nothing
     return set_init_state(state, p0*ones(state.numcell), sw0*ones(state.numcell))
@@ -102,6 +113,10 @@ function set_init_state(state::OWState, p0::Vector{Float64}, sw0::Vector{Float64
     return nothing
 end
 
+function compute_so(so::Tensor, sw::Tensor)::Nothing
+    so .= 1 .- sw
+    return nothing
+end
 
 # # Define relative permeability curve
 function compute_kro(kro::Tensor, so::Tensor)::Nothing
@@ -156,7 +171,7 @@ end
 #! format: off
 function compute_ao(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
     state.ao .= 1.0 / M .* grid.v .* grid.ϕ .*
-        ((1 .- state.sw) ./ state.bo - (1 .- state.swₙ) ./ state.boₙ) / dt
+        (state.so ./ state.bo - state.son ./ state.bon) / dt
     return nothing
 end
 #! format: on
@@ -164,7 +179,7 @@ end
 #! format: off
 function compute_aw(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
     state.aw .= 1.0 / M .* grid.v .* grid.ϕ .*
-        (state.sw ./ state.bw - state.swₙ ./ state.bwₙ) / dt
+        (state.sw ./ state.bw - state.swn ./ state.bwn) / dt
     return nothing
 end
 #! format: on
@@ -219,7 +234,8 @@ function compute_qw(state::OWState, prod_bhp::Vector{Float64}, inj_bhp::Vector{F
 end
 
 function compute_params(state::OWState)::Nothing
-    compute_kro(state.kro, 1 .- state.sw)
+    compute_so(state.so, state.sw)
+    compute_kro(state.kro, state.so)
     compute_krw(state.krw, state.sw)
     compute_bo(state.bo, state.p)
     compute_bw(state.bw, state.p)

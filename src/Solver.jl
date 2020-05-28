@@ -2,8 +2,27 @@ module Solver
 
 using SparseArrays:sparse, SparseMatrixCSC
 
-using ..AutoDiff: param, grad
-using ..State: OWState, get_var_order
+using ..AutoDiff: param, grad, data
+using ..Grid: AbstractGrid
+using ..State: OWState, get_var_order, M
+
+
+abstract type NonlinearSolver end
+
+# Newton Raphson Solver
+mutable struct NRSolver <: NonlinearSolver
+    max_iter::Int
+    min_err::Float64
+    NRSolver() = new(10, 1.0e-3)
+end
+
+function compute_residual_error(state::OWState, grid::AbstractGrid, dt::Float64)
+    a = dt * M / (grid.v .* grid.ϕ)
+    rw_err = a .* data(state.bw) .* data(state.rw)
+    ro_err = a .* data(state.bo) .* data(state.ro)
+    return max(maximum(abs.(rw_err)), maximum((abs.(ro_err))))
+end
+
 
 function assemble_residual(state::OWState)::Vector{Float64}
     numcell = state.numcell
@@ -47,21 +66,5 @@ function update_solution(state::OWState, δx::Vector{Float64})::Nothing
         state.sw[i].val -= δx[nv*(i-1) + ivsw]
     end
 end
-
-function additem(
-    I::Vector{Int},
-    J::Vector{Int},
-    V::Vector{Float64},
-    i::Int,
-    j::Int,
-    v::Float64,
-)::Nothing
-    push!(I, i)
-    push!(J, j)
-    push!(V, v)
-    return nothing
-end
-
-
 
 end
