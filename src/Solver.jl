@@ -13,11 +13,11 @@ abstract type NonlinearSolver end
 mutable struct NRSolver <: NonlinearSolver
     max_iter::Int
     min_err::Float64
-    NRSolver() = new(10, 1.0e-3)
+    NRSolver() = new(10, 1.0e-6)
 end
 
 function compute_residual_error(state::OWState, grid::AbstractGrid, dt::Float64)
-    a = dt * M / (grid.v .* grid.ϕ)
+    a = dt .* M ./ (grid.v .* grid.ϕ)
     rw_err = a .* data(state.bw) .* data(state.rw)
     ro_err = a .* data(state.bo) .* data(state.ro)
     return max(maximum(abs.(rw_err)), maximum((abs.(ro_err))))

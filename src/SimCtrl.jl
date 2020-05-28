@@ -7,7 +7,7 @@ using ..AutoDiff: param, data
 using ..Grid: CartGrid, AbstractGrid,
         get_grid_index, set_cell_size, set_perm, set_poro, construct_conn
 
-using ..State: OWState, AbstractState, set_init_state,
+using ..State: OWState, AbstractState, set_init_state, change_back_state,
         compute_ro, compute_rw, compute_params, update_old_state
 
 using ..Schedule: Scheduler, update_dt
@@ -54,6 +54,12 @@ function setup(sim::Sim, input::Dict{Any, Any})::Nothing
         ind = get_grid_index(sim.grid, x, y, z)
         sim.inj_bhp[ind] = bhp
     end
+
+    # Set up options
+    sim.scheduler.t_current = 0.0
+    sim.scheduler.t0 = 0.0
+    sim.scheduler.dt_max = input["dt_max"]
+    sim.scheduler.t_end = input["t_end"]
 
     return nothing
 end

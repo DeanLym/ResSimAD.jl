@@ -40,8 +40,8 @@ function update_dt(sch::Scheduler, state::OWState, converge::Bool)
     else
         ω, ηp, ηs = sch.ω, sch.ηp, sch.ηs
         sch.dt_old = sch.dt
-        rp = (1+ω)*ηp / (abs.(data(state.p) .- state.pn) .+ ω*ηp)
-        rs = (1+ω)*ηs / (abs.(data(state.so) .- state.son) .+ ω*ηs)
+        rp = (1+ω)*ηp ./ (abs.(data(state.p) .- state.pn) .+ ω*ηp)
+        rs = (1+ω)*ηs ./ (abs.(data(state.so) .- state.son) .+ ω*ηs)
     end
     dt = min(sch.dt_old * min(minimum(rp), minimum(rs)), sch.dt_max)
     t_next = sch.t_next
