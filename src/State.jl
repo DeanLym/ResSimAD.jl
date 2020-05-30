@@ -1,5 +1,6 @@
 module State
 
+using ..Global: M
 using ..Grid: AbstractGrid
 using ..AutoDiff: Tensor, param, zeros_tensor, data
 
@@ -7,7 +8,6 @@ export OWState, AbstractState, set_init_state
 
 abstract type AbstractState end
 
-const M = 5.615
 
 # Define struct State
 struct OWState <: AbstractState
@@ -15,6 +15,7 @@ struct OWState <: AbstractState
     numvar::Int
     p::Tensor # Pressure
     sw::Tensor  # Wate phase saturation
+
     so::Tensor # Oil phase saturation
     bo::Tensor # Oil phase formation volume factor
     bw::Tensor # Water phase formation volume factor
@@ -24,8 +25,6 @@ struct OWState <: AbstractState
     krw::Tensor # Water phase rel-perm
     λo::Tensor # Oil phase mobility
     λw::Tensor # Water phase mobility
-    fo::Tensor # Oil component flux
-    fw::Tensor # Water component flux
     qo::Tensor # Oil component well rate
     qw::Tensor # Water component well rate
     ao::Tensor # Oil component accumulation
@@ -33,50 +32,39 @@ struct OWState <: AbstractState
     ro::Tensor # Oil component residual
     rw::Tensor # Water component residual
 
+    fo::Tensor # Oil component flux
+    fw::Tensor # Water component flux
+
     pn::Vector{Float64}   # Pressure at previous time step
     swn::Vector{Float64} # Water saturation at last time step
     son::Vector{Float64} # Oil saturation at last time step
     bon::Vector{Float64} # bo at last time step
     bwn::Vector{Float64} # bw at last time step
+
+    function OWState(nc::Int, nconn::Int)::OWState
+        nv = 2
+        p = param(zeros(nc), 1, nv)
+        sw = param(zeros(nc), 2, nv)
+
+        #! format: off
+        vecs = [:so, :bo, :bw, :μo, :μw, :kro, :krw,
+                    :λo, :λw, :qo, :qw, :ao, :aw, :ro, :rw]
+        #! format: on
+        tensors = [zeros_tensor(nc, nv) for v in vecs]
+
+        fo = zeros_tensor(nconn, nv) # Oil component flux
+        fw = zeros_tensor(nconn, nv) # Water component flux
+
+        vecs = [:pn, :swn, :son, :bon, :bwn]
+        params = [zeros(Float64, nc) for v in vecs]
+
+        #! format: off
+        return new(nc, nv, p, sw, tensors..., fo, fw, params...)
+        #! format: on
+    end
 end
 
-function OWState(nc::Int, nconn::Int)::OWState
-    nv = 2
-    p = param(zeros(nc), 1, nv)
-    sw = param(zeros(nc), 2, nv)
 
-    so= zeros_tensor(nc, nv) # Oil phase saturation
-    bo= zeros_tensor(nc, nv) # Oil phase formation volume factor
-    bw= zeros_tensor(nc, nv) # Water phase formation volume factor
-    μo= zeros_tensor(nc, nv) # Oil phase viscosity
-    μw= zeros_tensor(nc, nv) # Water phase viscosity
-    kro= zeros_tensor(nc, nv) # Oil phase rel-perm
-    krw= zeros_tensor(nc, nv) # Water phase rel-perm
-    λo= zeros_tensor(nc, nv) # Oil phase mobility
-    λw= zeros_tensor(nc, nv) # Water phase mobility
-
-    fo = zeros_tensor(nconn, nv) # Oil component flux
-    fw = zeros_tensor(nconn, nv) # Water component flux
-
-    qo= zeros_tensor(nc, nv) # Oil component well rate
-    qw= zeros_tensor(nc, nv) # Water component well rate
-    ao= zeros_tensor(nc, nv) # Oil component accumulation
-    aw= zeros_tensor(nc, nv) # Water component accumulation
-
-    ro= zeros_tensor(nc, nv) # Oil component residual
-    rw= zeros_tensor(nc, nv) # Water component residual
-
-    pn = zeros(Float64, nc)
-    swn = zeros(Float64, nc)
-    son = zeros(Float64, nc)
-    bon = zeros(Float64, nc)
-    bwn = zeros(Float64, nc)
-
-    #! format: off
-    return OWState(nc, nv, p, sw, so, bo, bw, μo, μw, kro, krw, λo, λw,
-                fo, fw, qo, qw, ao, aw, ro, rw, pn, swn, son, bon, bwn)
-    #! format: on
-end
 #
 
 function get_var_order(state::OWState)::Dict{String, Int}

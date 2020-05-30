@@ -63,7 +63,7 @@ end
 
 function zeros_tensor(nc::Int, nv::Int)
     grad = zeros(SVector{nv, Float64})
-    vec = Vector{Variable}([Variable(0.0, i, grad) for i=1:nc])
+    vec = Vector{Variable}([Variable(0.0, 0, grad) for i=1:nc])
     return vec
 end
 

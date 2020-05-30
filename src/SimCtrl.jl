@@ -10,6 +10,9 @@ using ..Grid: CartGrid, AbstractGrid,
 using ..State: OWState, AbstractState, set_init_state, change_back_state,
         compute_ro, compute_rw, compute_params, update_old_state
 
+using ..Well: StandardWell, WellType, Limit, PRODUCER, INJECTOR,
+        get_ctrl_mode, compute_wi
+
 using ..Schedule: Scheduler, update_dt
 
 using ..Solver: NonlinearSolver, NRSolver, compute_residual_error,
@@ -21,45 +24,70 @@ struct Sim
     state::OWState
     scheduler::Scheduler
     nsolver::NonlinearSolver
-    inj_bhp::Vector{Float64}
-    prod_bhp::Vector{Float64}
+    injectors::Vector{StandardWell{INJECTOR}}
+    producers::Vector{StandardWell{PRODUCER}}
     function Sim(nx::Int, ny::Int, nz::Int)::Sim
         grid = CartGrid(nx, ny, nz)
         state = OWState(grid.numcell, grid.connlist.numconn)
         scheduler = Scheduler()
         nsolver = NRSolver()
-        inj_bhp = Inf * ones(grid.numcell)
-        prod_bhp = Inf * ones(grid.numcell)
-        return new(grid, state, scheduler, nsolver, inj_bhp, prod_bhp)
+        injectors = Vector{StandardWell{INJECTOR}}()
+        producers = Vector{StandardWell{PRODUCER}}()
+        return new(grid, state, scheduler, nsolver, injectors, producers)
     end
 end
 
-function setup(sim::Sim, input::Dict{Any, Any})::Nothing
+function init_well(T::WellType, well_option::Dict, numvar::Int, grid::CartGrid)
+    name = well_option["name"]
+    perf = Vector{Int}()
+    for indices in well_option["perforation"]
+        push!(perf, get_grid_index(grid, indices...))
+    end
+    radius = get(well_option, "radius", 0.5)
+    #
+    well = StandardWell{T}(name, perf, radius, numvar)
+    # Set control mode and target
+    well.mode = get_ctrl_mode[well_option["mode"]]
+    well.target = well_option["target"]
+    # Set limits
+    limits = get(well_option, "limits", Dict{Limit, Float64}())
+    for (k,v) in limits
+        well.limits[k] = v
+    end
+    # Comput well index
+    compute_wi(well, grid)
+    return well
+end
+
+
+function setup(sim::Sim, input::Dict)::Nothing
+    grid, state, scheduler = sim.grid, sim.state, sim.scheduler
+    producers, injectors = sim.producers, sim.injectors
     # Set up grid
     dx, dy, dz = input["dx"], input["dy"], input["dz"]
-    set_cell_size(sim.grid, dx, dy, dz)
-    set_perm(sim.grid, input["k"])
-    set_poro(sim.grid, input["ϕ"])
-    construct_conn(sim.grid)
+    set_cell_size(grid, dx, dy, dz)
+    set_perm(grid, input["k"])
+    set_poro(grid, input["ϕ"])
+    construct_conn(grid)
 
     # Set up initial state
-    set_init_state(sim.state, input["p0"], input["sw0"])
+    set_init_state(state, input["p0"], input["sw0"])
 
     # Set up wells
-    for (x, y, z, bhp) in input["producer"]
-        ind = get_grid_index(sim.grid, x, y, z)
-        sim.prod_bhp[ind] = bhp
+    numvar = state.numvar
+    for p in input["producers"]
+        push!(producers, init_well(PRODUCER, p, numvar, grid))
     end
-    for (x, y, z, bhp) in input["injector"]
-        ind = get_grid_index(sim.grid, x, y, z)
-        sim.inj_bhp[ind] = bhp
+
+    for p in input["injectors"]
+        push!(injectors, init_well(INJECTOR, p, numvar, grid))
     end
 
     # Set up options
-    sim.scheduler.t_current = 0.0
-    sim.scheduler.t0 = 0.0
-    sim.scheduler.dt_max = input["dt_max"]
-    sim.scheduler.t_end = input["t_end"]
+    scheduler.t_current = 0.0
+    scheduler.t0 = 0.0
+    scheduler.dt_max = get(input, "dt_max", 100.)
+    scheduler.t_end = get(input, "t_end", 100.)
 
     return nothing
 end

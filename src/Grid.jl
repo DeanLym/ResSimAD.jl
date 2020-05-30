@@ -1,5 +1,7 @@
 module Grid
 
+using ..Global: α
+
 export AbstractGrid,
     CartGrid, get_grid_index, set_cell_size, set_perm, set_poro, construct_conn
 
@@ -14,7 +16,7 @@ abstract type AbstractStructGrid <: AbstractGrid end
 # 2. Common behaviors
 #       -- input_{k}
 #       -- getgridindex(i,j,k -> ind)
-const α = 0.001127
+
 const Neighbor = Vector{Tuple{Vector{Int},Vector{Float64}}}
 
 # Define struct for Conn List
@@ -37,13 +39,13 @@ function insert_conn(conn::ConnList, ind::Int, l::Int, r::Int, trans::Float64)
     conn.trans[ind] = trans
 end
 
-
 # Define struct for Cartesian Grid
 struct CartGrid <: AbstractStructGrid
     numcell::Int
     nx::Int
     ny::Int
     nz::Int
+    connlist::ConnList
 
     dx::Vector{Float64}
     dy::Vector{Float64}
@@ -51,48 +53,23 @@ struct CartGrid <: AbstractStructGrid
 
     v::Vector{Float64} # Volume
     ϕ::Vector{Float64} # Porosity
-    k::Vector{Float64} # Permeability
+    kx::Vector{Float64} # Permeability x
+    ky::Vector{Float64} # Permeability y
+    kz::Vector{Float64} # Permeability z
     d::Vector{Float64} # Depth
 
-    connlist::ConnList
-    neighbors::Neighbor # Neighbors for each cell
-    # inconn::Array{Array{Tuple{Int, Float64}, 1}, 1}  # Inbound connection for each cell
-    # outconn::Array{Array{Tuple{Int, Float64}, 1}, 1} # Outbound connection for each cell
-
-    function CartGrid(nx::Int, ny::Int, nz::Int)::CartGrid
-        numcell = nx * ny * nz
-
-        dx = Vector{Float64}(undef, numcell)
-        dy = Vector{Float64}(undef, numcell)
-        dz = Vector{Float64}(undef, numcell)
-
-        v = Vector{Float64}(undef, numcell)
-        ϕ = Vector{Float64}(undef, numcell)
-        k = Vector{Float64}(undef, numcell)
-        d = Vector{Float64}(undef, numcell)
-
-        numconn = (nx - 1) * ny * nz + nx * (ny - 1) * nz + nx * ny * (nz - 1)
-        connlist = ConnList(numconn)
-
-        neighbors = Neighbor(undef, numcell)
-
-        return new(
-            numcell,
-            nx,
-            ny,
-            nz,
-            dx,
-            dy,
-            dz,
-            v,
-            ϕ,
-            k,
-            d,
-            connlist,
-            neighbors,
-        )
-    end
 end
+
+function CartGrid(nx::Int, ny::Int, nz::Int)::CartGrid
+    numcell = nx*ny*nz
+    numconn = (nx - 1) * ny * nz + nx * (ny - 1) * nz + nx * ny * (nz - 1)
+    vecs = (:dx, :dy, :dz, :v, :ϕ, :kx, :ky, :kz, :d)
+    params = [Vector{Float64}(undef, numcell) for v in vecs]
+    # !format: off
+    return CartGrid(numcell, nx, ny, nz, ConnList(numconn), params...)
+    # !format: on
+end
+
 
 function get_grid_index(grid::AbstractStructGrid, i::Int, j::Int, k::Int)::Int
     @assert 0 < i <= grid.nx && 0 < j <= grid.ny && 0 < k <= grid.nz
@@ -106,11 +83,8 @@ function set_cell_size(
     dz::Float64,
 )::Nothing
     @assert dx > 0 && dy > 0 && dz > 0
-    grid.dx .= dx
-    grid.dy .= dy
-    grid.dz .= dz
-    # Compute volume
-    grid.v .= grid.dx .* grid.dy .* grid.dz
+    I = ones(Int, grid.numcell)
+    set_cell_size(grid, dx * I, dy * I, dz * I)
     return nothing
 end
 
@@ -131,13 +105,15 @@ end
 
 function set_perm(grid::AbstractGrid, k::Vector{Float64})::Nothing
     @assert all(k .> 0)
-    grid.k .= k
+    grid.kx .= k
+    grid.ky .= k
+    grid.kz .= k
     return nothing
 end
 
 function set_perm(grid::AbstractGrid, k::Float64)::Nothing
     @assert k > 0
-    grid.k .= k
+    set_perm(grid, k*ones(grid.numcell))
     return nothing
 end
 
@@ -149,14 +125,14 @@ end
 
 function set_poro(grid::AbstractGrid, ϕ::Float64)::Nothing
     @assert ϕ > 0
-    grid.ϕ .= ϕ
+    set_poro(grid, ϕ * ones(grid.numcell))
     return nothing
 end
 
 function construct_conn(grid::CartGrid)::Nothing
     count = 1
     dx, dy, dz = grid.dx, grid.dy, grid.dz
-    k = grid.k #
+    kx, ky, kz = grid.kx, grid.ky, grid.kz #
     # X Direction
     for kk = 1:grid.nz
         for jj = 1:grid.ny
@@ -164,7 +140,7 @@ function construct_conn(grid::CartGrid)::Nothing
                 l = get_grid_index(grid, ii, jj, kk)
                 r = get_grid_index(grid, ii + 1, jj, kk)
                 trans =
-                    2 * α * dy[l] * dz[l] / ((dx[l] / k[l]) + (dx[r] / k[r]))
+                    2 * α * dy[l] * dz[l] / ((dx[l] / kx[l]) + (dx[r] / kx[r]))
                 insert_conn(grid.connlist, count, l, r, trans)
                 count += 1
             end
@@ -177,7 +153,7 @@ function construct_conn(grid::CartGrid)::Nothing
                 l = get_grid_index(grid, ii, jj, kk)
                 r = get_grid_index(grid, ii, jj + 1, kk)
                 trans =
-                    2 * α * dx[l] * dz[l] / ((dy[l] / k[l]) + (dy[r] / k[r]))
+                    2 * α * dx[l] * dz[l] / ((dy[l] / ky[l]) + (dy[r] / ky[r]))
                 insert_conn(grid.connlist, count, l, r, trans)
                 count += 1
             end
@@ -190,22 +166,11 @@ function construct_conn(grid::CartGrid)::Nothing
                 l = get_grid_index(grid, ii, jj, kk)
                 r = get_grid_index(grid, ii, jj, kk + 1)
                 trans =
-                    2 * α * dx[l] * dy[l] / ((dz[l] / k[l]) + (dz[r] / k[r]))
+                    2 * α * dx[l] * dy[l] / ((dz[l] / kz[l]) + (dz[r] / kz[r]))
                 insert_conn(grid.connlist, count, l, r, trans)
                 count += 1
             end
         end
-    end
-    # Initialize neighbors
-    for ind = 1:grid.numcell
-        grid.neighbors[ind] = (Int[], Float64[])
-    end
-    # Find neighbors for each cell
-    for ind = 1:grid.connlist.numconn
-        push!(grid.neighbors[grid.connlist.l[ind]][1], grid.connlist.r[ind])
-        push!(grid.neighbors[grid.connlist.l[ind]][2], grid.connlist.trans[ind])
-        push!(grid.neighbors[grid.connlist.r[ind]][1], grid.connlist.l[ind])
-        push!(grid.neighbors[grid.connlist.r[ind]][2], grid.connlist.trans[ind])
     end
     return nothing
 end

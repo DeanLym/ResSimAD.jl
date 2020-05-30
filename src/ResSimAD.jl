@@ -1,8 +1,10 @@
 module ResSimAD
 
+include("Global.jl")
 include("AutoDiff.jl")
 include("Grid.jl")
 include("State.jl")
+include("Well.jl")
 include("Schedule.jl")
 include("Solver.jl")
 include("SimCtrl.jl")
@@ -11,9 +13,11 @@ include("SimCtrl.jl")
 using .AutoDiff:param, zeros_tensor, Tensor
 using .State:OWState
 using .SimCtrl:Sim, setup, runsim
+using .Well:StandardWell
 
 export param, zeros_tensor, Tensor
 export Sim, setup, runsim
+export StandardWell
 
 # function setnv(nv::Int)
 #     global Nv = nv
