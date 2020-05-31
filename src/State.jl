@@ -1,9 +1,7 @@
 module State
 
 using ..Global: M
-using ..Grid: AbstractGrid
 using ..AutoDiff: Tensor, param, zeros_tensor, data
-
 export OWState, AbstractState, set_init_state
 
 abstract type AbstractState end
@@ -156,70 +154,6 @@ function compute_λw(λw::Tensor, krw::Tensor, μw::Tensor, bw::Tensor)::Nothing
     return nothing
 end
 #
-#! format: off
-function compute_ao(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
-    state.ao .= 1.0 / M .* grid.v .* grid.ϕ .*
-        (state.so ./ state.bo - state.son ./ state.bon) / dt
-    return nothing
-end
-#! format: on
-
-#! format: off
-function compute_aw(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
-    state.aw .= 1.0 / M .* grid.v .* grid.ϕ .*
-        (state.sw ./ state.bw - state.swn ./ state.bwn) / dt
-    return nothing
-end
-#! format: on
-
-function compute_fo(state::OWState, grid::AbstractGrid)::Nothing
-    trans = grid.connlist.trans
-    for i = 1:grid.connlist.numconn
-        l, r = grid.connlist.l[i], grid.connlist.r[i]
-        if state.p[l] > state.p[r]
-            state.fo[i] = state.λo[l] * trans[i] * (state.p[l] - state.p[r])
-        else
-            state.fo[i] = state.λo[r] * trans[i] * (state.p[l] - state.p[r])
-        end
-    end
-    return nothing
-end
-
-function compute_fw(state::OWState, grid::AbstractGrid)::Nothing
-    trans = grid.connlist.trans
-    for i = 1:grid.connlist.numconn
-        l, r = grid.connlist.l[i], grid.connlist.r[i]
-        if state.p[l] > state.p[r]
-            state.fw[i] = state.λw[l] * trans[i] * (state.p[l] - state.p[r])
-        else
-            state.fw[i] = state.λw[r] * trans[i] * (state.p[l] - state.p[r])
-        end
-    end
-    return nothing
-end
-
-function compute_qo(state::OWState, prod_bhp::Vector{Float64})::Nothing
-    wi = 0.5 # well index
-    for i = 1:state.numcell
-        if prod_bhp[i] != Inf
-            state.qo[i] = wi * state.λo[i] * (state.p[i] - prod_bhp[i])
-        end
-    end
-    return nothing
-end
-
-function compute_qw(state::OWState, prod_bhp::Vector{Float64}, inj_bhp::Vector{Float64})::Nothing
-    wi = 0.5 # well index
-    for i = 1:state.numcell
-        if prod_bhp[i] != Inf
-            state.qw[i] = wi * state.λw[i] * (state.p[i] - prod_bhp[i])
-        end
-        if inj_bhp[i] != Inf
-            state.qw[i] = wi * state.λw[i] * (state.p[i] - inj_bhp[i])
-        end
-    end
-    return nothing
-end
 
 function compute_params(state::OWState)::Nothing
     compute_so(state.so, state.sw)
@@ -235,42 +169,5 @@ function compute_params(state::OWState)::Nothing
     return nothing
 end
 
-
-function compute_ro(
-    state::OWState,
-    grid::AbstractGrid,
-    prod_bhp::Vector{Float64},
-    dt::Float64,
-)::Nothing
-    compute_ao(state, grid, dt)
-    compute_fo(state, grid)
-    compute_qo(state, prod_bhp)
-    state.ro .= - state.ao .- state.qo
-    l, r = grid.connlist.l, grid.connlist.r
-    for i = 1:grid.connlist.numconn
-        state.ro[l[i]] -= state.fo[i]
-        state.ro[r[i]] += state.fo[i]
-    end
-    return nothing
-end
-
-function compute_rw(
-    state::OWState,
-    grid::AbstractGrid,
-    prod_bhp::Vector{Float64},
-    inj_bhp::Vector{Float64},
-    dt::Float64,
-)::Nothing
-    compute_aw(state, grid, dt)
-    compute_fw(state, grid)
-    compute_qw(state, prod_bhp, inj_bhp)
-    state.rw .= - state.aw .- state.qw
-    l, r = grid.connlist.l, grid.connlist.r
-    for i = 1:grid.connlist.numconn
-        state.rw[l[i]] -= state.fw[i]
-        state.rw[r[i]] += state.fw[i]
-    end
-    return nothing
-end
 
 end

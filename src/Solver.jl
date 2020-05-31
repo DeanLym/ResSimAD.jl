@@ -6,7 +6,6 @@ using ..AutoDiff: param, grad, data
 using ..Grid: AbstractGrid
 using ..State: OWState, get_var_order, M
 
-
 abstract type NonlinearSolver end
 
 # Newton Raphson Solver

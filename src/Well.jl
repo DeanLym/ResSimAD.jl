@@ -3,7 +3,7 @@ module Well
 using DataFrames: DataFrame
 
 using ..Global: α
-using ..AutoDiff:Tensor, zeros_tensor
+using ..AutoDiff:Tensor, zeros_tensor, ones_tensor
 using ..Grid:AbstractStructGrid, get_grid_index
 using ..State:AbstractState
 
@@ -65,9 +65,9 @@ function StandardWell{T}(
     nperf = length(p.ind) # Number of perforations
     p.wi = Vector{Float64}(undef, nperf)
 
-    p.qo = zeros_tensor(nperf, numvar)
-    p.qw = zeros_tensor(nperf, numvar)
-    p.pw = zeros_tensor(nperf, numvar)
+    p.qo = zeros_tensor(perforation, numvar)
+    p.qw = zeros_tensor(perforation, numvar)
+    p.pw = zeros_tensor(perforation, numvar)
 
     return p
 end
@@ -89,7 +89,44 @@ function compute_wi(well::AbstractWell, grid::AbstractStructGrid)::Nothing
 end
 
 
+function compute_qo(well::StandardWell{PRODUCER}, state::AbstractState)
+    mode, target = well.mode, well.target
+    ind = well.ind
+    if mode == CBHP
+        well.qo .= well.wi .* state.λo[ind] .* (state.p[ind] .- target)
+    elseif mode == CORAT
+        well.qo .= target * ones_tensor(ind, state.numvar)
+    elseif mode == CLRAT
+        λo, λw = state.λo, state.λw
+        well.qo .= λo[ind] ./ (λo[ind] .+ λw[ind]) * target
+    end
+    return nothing
+end
 
+function compute_qw(well::StandardWell{PRODUCER}, state::AbstractState)
+    mode, target = well.mode, well.target
+    ind = well.ind
+    if mode == CBHP
+        well.qw .= well.wi .* state.λw[ind] .* (state.p[ind] .- target)
+    elseif mode == CORAT
+        λo, λw = state.λo, state.λw
+        well.qw .= (λw[ind] ./ λo[ind]) * target
+    elseif mode == CLRAT
+        λo, λw = state.λo, state.λw
+        well.qw .= λw[ind] ./ (λo[ind] .+ λw[ind]) * target
+    end
+end
+
+function compute_qw(well::StandardWell{INJECTOR}, state::AbstractState)
+    mode, target = well.mode, well.target
+    ind = well.ind
+    if mode == CBHP
+        λo, λw = state.λo, state.λw
+        well.qw .= well.wi .* (λo[ind] .+ λw[ind]) .* (state.p[ind] .- target)
+    elseif mode == CWRAT
+        well.qw .= target * ones_tensor(ind, state.numvar)
+    end
+end
 
 
 end

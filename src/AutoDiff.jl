@@ -63,7 +63,25 @@ end
 
 function zeros_tensor(nc::Int, nv::Int)
     grad = zeros(SVector{nv, Float64})
-    vec = Vector{Variable}([Variable(0.0, 0, grad) for i=1:nc])
+    vec = Vector{Variable}([Variable(0.0, i, grad) for i=1:nc])
+    return vec
+end
+
+function zeros_tensor(ind::Vector{Int}, nv::Int)
+    grad = zeros(SVector{nv, Float64})
+    vec = Vector{Variable}([Variable(0.0, i, grad) for i in ind])
+    return vec
+end
+
+function ones_tensor(nc::Int, nv::Int)
+    grad = zeros(SVector{nv, Float64})
+    vec = Vector{Variable}([Variable(1.0, i, grad) for i=1:nc])
+    return vec
+end
+
+function ones_tensor(ind::Vector{Int}, nv::Int)
+    grad = zeros(SVector{nv, Float64})
+    vec = Vector{Variable}([Variable(1.0, i, grad) for i in ind])
     return vec
 end
 

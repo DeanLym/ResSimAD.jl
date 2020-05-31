@@ -3,15 +3,16 @@ module SimCtrl
 using LinearAlgebra:norm
 
 #! format: off
-using ..AutoDiff: param, data
+using ..Global: M, α
+using ..AutoDiff: param, data, ones_tensor
 using ..Grid: CartGrid, AbstractGrid,
         get_grid_index, set_cell_size, set_perm, set_poro, construct_conn
 
 using ..State: OWState, AbstractState, set_init_state, change_back_state,
-        compute_ro, compute_rw, compute_params, update_old_state
+        compute_params, update_old_state
 
 using ..Well: StandardWell, WellType, Limit, PRODUCER, INJECTOR,
-        get_ctrl_mode, compute_wi
+        get_ctrl_mode, compute_wi, compute_qo, compute_qw
 
 using ..Schedule: Scheduler, update_dt
 
@@ -59,7 +60,6 @@ function init_well(T::WellType, well_option::Dict, numvar::Int, grid::CartGrid)
     return well
 end
 
-
 function setup(sim::Sim, input::Dict)::Nothing
     grid, state, scheduler = sim.grid, sim.state, sim.scheduler
     producers, injectors = sim.producers, sim.injectors
@@ -93,9 +93,22 @@ function setup(sim::Sim, input::Dict)::Nothing
 end
 
 
+function compute_well_rate(sim::Sim)
+    producers, injectors = sim.producers, sim.injectors
+    state = sim.state
+    for prod in producers
+        compute_qo(prod, state)
+        compute_qw(prod, state)
+    end
+    for inj in injectors
+        compute_qw(inj, state)
+    end
+end
+
+
 function runsim(sim::Sim)
     grid, state, sch, nsolver = sim.grid, sim.state, sim.scheduler, sim.nsolver
-    prod_bhp, inj_bhp = sim.prod_bhp, sim.inj_bhp
+    producers, injectors = sim.producers, sim.injectors
     p_all = Vector{Vector{Float64}}()
     sw_all = Vector{Vector{Float64}}()
 
@@ -113,8 +126,9 @@ function runsim(sim::Sim)
             # newton_iter += 1
             # Calculate residual and jacobian
             t0 = time()
-            compute_ro(state, grid, prod_bhp, dt)
-            compute_rw(state, grid, prod_bhp, inj_bhp, dt)
+            compute_well_rate(sim)
+            compute_ro(state, grid, producers, dt)
+            compute_rw(state, grid, producers, injectors, dt)
             err = compute_residual_error(state, grid, dt)
             if err < nsolver.min_err
                 num_newton += newton_iter
@@ -164,6 +178,97 @@ function runsim(sim::Sim)
     return p_all, sw_all
 end
 
+#! format: off
+function compute_ao(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
+    state.ao .= 1.0 / M .* grid.v .* grid.ϕ .*
+        (state.so ./ state.bo - state.son ./ state.bon) / dt
+    return nothing
+end
+#! format: on
+
+#! format: off
+function compute_aw(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
+    state.aw .= 1.0 / M .* grid.v .* grid.ϕ .*
+        (state.sw ./ state.bw - state.swn ./ state.bwn) / dt
+    return nothing
+end
+#! format: on
+
+function compute_fo(state::OWState, grid::AbstractGrid)::Nothing
+    trans = grid.connlist.trans
+    for i = 1:grid.connlist.numconn
+        l, r = grid.connlist.l[i], grid.connlist.r[i]
+        if state.p[l] > state.p[r]
+            state.fo[i] = state.λo[l] * trans[i] * (state.p[l] - state.p[r])
+        else
+            state.fo[i] = state.λo[r] * trans[i] * (state.p[l] - state.p[r])
+        end
+    end
+    return nothing
+end
+
+function compute_fw(state::OWState, grid::AbstractGrid)::Nothing
+    trans = grid.connlist.trans
+    for i = 1:grid.connlist.numconn
+        l, r = grid.connlist.l[i], grid.connlist.r[i]
+        if state.p[l] > state.p[r]
+            state.fw[i] = state.λw[l] * trans[i] * (state.p[l] - state.p[r])
+        else
+            state.fw[i] = state.λw[r] * trans[i] * (state.p[l] - state.p[r])
+        end
+    end
+    return nothing
+end
+
+function compute_ro(
+    state::OWState,
+    grid::AbstractGrid,
+    producers::Vector{StandardWell{PRODUCER}},
+    dt::Float64,
+)::Nothing
+    compute_ao(state, grid, dt)
+    compute_fo(state, grid)
+    # Accumulation term
+    state.ro .= - state.ao
+    # Sink / source term
+    for w in producers
+        state.ro[w.ind] -= w.qo
+    end
+    # Flux term
+    l, r = grid.connlist.l, grid.connlist.r
+    for i = 1:grid.connlist.numconn
+        state.ro[l[i]] -= state.fo[i]
+        state.ro[r[i]] += state.fo[i]
+    end
+    return nothing
+end
+
+function compute_rw(
+    state::OWState,
+    grid::AbstractGrid,
+    producers::Vector{StandardWell{PRODUCER}},
+    injectors::Vector{StandardWell{INJECTOR}},
+    dt::Float64,
+)::Nothing
+    compute_aw(state, grid, dt)
+    compute_fw(state, grid)
+    # Accumulation term
+    state.rw .= - state.aw
+    # Sink / source term
+    for w in producers
+        state.rw[w.ind] -= w.qw
+    end
+    for w in injectors
+        state.rw[w.ind] -= w.qw
+    end
+    # Flux term
+    l, r = grid.connlist.l, grid.connlist.r
+    for i = 1:grid.connlist.numconn
+        state.rw[l[i]] -= state.fw[i]
+        state.rw[r[i]] += state.fw[i]
+    end
+    return nothing
+end
 
 
 end
