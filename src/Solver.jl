@@ -12,7 +12,8 @@ abstract type NonlinearSolver end
 mutable struct NRSolver <: NonlinearSolver
     max_iter::Int
     min_err::Float64
-    NRSolver() = new(10, 1.0e-6)
+    num_iter::Vector{Int}
+    NRSolver() = new(10, 1.0e-6, Vector{Int}())
 end
 
 function compute_residual_error(state::OWState, grid::AbstractGrid, dt::Float64)

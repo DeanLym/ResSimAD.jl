@@ -11,7 +11,7 @@ using ..Grid: CartGrid, AbstractGrid,
 using ..Fluid: AbstractPVTO, AbstractPVTW, AbstractSWOF, SWOFTable, PVDO, PVTW
 
 using ..State: OWState, AbstractState, set_init_state, change_back_state,
-        compute_params, update_old_state
+        compute_params, update_old_state, save_state_result
 
 using ..Well: StandardWell, WellType, Limit, PRODUCER, INJECTOR,
         get_ctrl_mode, compute_wi, compute_qo, compute_qw, save_result
@@ -72,6 +72,7 @@ function Sim(input::Dict)::Sim
     scheduler.t0 = 0.0
     scheduler.dt_max = get(input, "dt_max", 100.)
     scheduler.t_end = get(input, "t_end", 100.)
+    scheduler.report_time = get(input, "report_time", [scheduler.t_end])
 
     # Construct Nonlinear Solver
     nsolver = NRSolver()
@@ -121,78 +122,76 @@ function save_well_results(sim::Sim, t::Float64)
     end
 end
 
-
-function runsim(sim::Sim)
+function step(sim::Sim)::Nothing
     grid, state, sch, nsolver = sim.grid, sim.state, sim.scheduler, sim.nsolver
     producers, injectors = sim.producers, sim.injectors
-    p_all = Vector{Vector{Float64}}()
-    sw_all = Vector{Vector{Float64}}()
-
+    println(sch.t_next)
     t_res, t_jac, t_sol = 0.0, 0.0, 0.0
-    tmp = nothing
     num_newton = 0
-    while sch.t_current < sch.t_end
-        println(sch.t_current)
-        # println("!=================== Timestep $it ====================!")
-        # Newton Iteration
-        dt = sch.dt
-        converge, err, newton_iter = true, Inf, 0
-        while err > nsolver.min_err
-            #print("Netwon Iteration $newton_iter: ")
-            # newton_iter += 1
-            # Calculate residual and jacobian
-            t0 = time()
-            compute_well_rate(sim)
-            compute_ro(state, grid, producers, dt)
-            compute_rw(state, grid, producers, injectors, dt)
-            err = compute_residual_error(state, grid, dt)
-            if err < nsolver.min_err
-                num_newton += newton_iter
-                break
-            end
-            residual = assemble_residual(state)
-            tt = time() - t0
-            #print(" t_res: ", tt)
-            t_res += tt
-
-            # Compute jacobian
-            t0 = time()
-            jac = assemble_jacobian(state)
-            tt = time() - t0
-            #print(" t_jac: ", tt)
-            t_jac += tt
-
-            # Solve equation
-            t0 = time()
-            δx = jac \ residual
-            tt = time() - t0
-            #print(" t_sol: $tt \n")
-            t_sol += tt
-            newton_iter += 1
-            # Update variables
-            if newton_iter > nsolver.max_iter
-                converge = false
-                break
-            else
-                update_solution(state, δx)
-                compute_params(state)
-            end
+    dt = sch.dt
+    converge, err, newton_iter = true, Inf, 0
+    while err > nsolver.min_err
+        #print("Netwon Iteration $newton_iter: ")
+        # newton_iter += 1
+        # Calculate residual and jacobian
+        t0 = time()
+        compute_well_rate(sim)
+        compute_ro(state, grid, producers, dt)
+        compute_rw(state, grid, producers, injectors, dt)
+        err = compute_residual_error(state, grid, dt)
+        if err < nsolver.min_err
+            num_newton += newton_iter
+            break
         end
-        update_dt(sch, state, converge)
-        if converge
-            update_old_state(state)
-            save_well_results(sim, sch.t_current)
+        residual = assemble_residual(state)
+        tt = time() - t0
+        #print(" t_res: ", tt)
+        t_res += tt
+
+        # Compute jacobian
+        t0 = time()
+        jac = assemble_jacobian(state)
+        tt = time() - t0
+        #print(" t_jac: ", tt)
+        t_jac += tt
+
+        # Solve equation
+        t0 = time()
+        δx = jac \ residual
+        tt = time() - t0
+        #print(" t_sol: $tt \n")
+        t_sol += tt
+        newton_iter += 1
+        # Update variables
+        if newton_iter > nsolver.max_iter
+            converge = false
+            break
         else
-            change_back_state(state)
+            update_solution(state, δx)
             compute_params(state)
         end
-        # Save solution
-        push!(p_all, data(state.p))
-        push!(sw_all, data(state.sw))
     end
-    println("\nt_res： $t_res, t_jac: $t_jac, t_sol: $t_sol")
+    update_dt(sch, state, converge)
+    push!(nsolver.num_iter, num_newton)
+    if converge
+        save_state_result(state, sch.t_next)
+        update_old_state(state)
+        save_well_results(sim, sch.t_next)
+    else
+        change_back_state(state)
+        compute_params(state)
+    end
+    println("t_res： $t_res, t_jac: $t_jac, t_sol: $t_sol")
     println("NumNewton: $num_newton\n")
-    return p_all, sw_all
+    return nothing
+end
+
+function runsim(sim::Sim)::Nothing
+    sch = sim.scheduler
+    while sch.t_current < sch.t_end
+        step(sim)
+    end
+    return nothing
 end
 
 #! format: off

@@ -12,7 +12,7 @@ include("SimCtrl.jl")
 
 using .AutoDiff:param, zeros_tensor, Tensor
 using .State:OWState
-using .SimCtrl:Sim, runsim
+using .SimCtrl:Sim, runsim, step
 using .Well:StandardWell
 
 export param, zeros_tensor, Tensor

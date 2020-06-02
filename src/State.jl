@@ -44,6 +44,10 @@ struct OWState <: AbstractState
     pvtw::AbstractPVTW
     swof::AbstractSWOF
 
+    t::Vector{Float64}  # Save results
+    p_rec::Vector{Vector{Float64}}
+    sw_rec::Vector{Vector{Float64}}
+
     function OWState(
         nc::Int,
         nconn::Int,
@@ -67,8 +71,13 @@ struct OWState <: AbstractState
         vecs = [:pn, :swn, :son, :bon, :bwn]
         params = [zeros(Float64, nc) for v in vecs]
 
+        t = Vector{Float64}()
+        p_rec = Vector{Vector{Float64}}()
+        sw_rec = Vector{Vector{Float64}}()
+
         #! format: off
-        return new(nc, nv, p, sw, tensors..., fo, fw, params..., pvto, pvtw, swof)
+        return new(nc, nv, p, sw, tensors..., fo, fw, params...,
+                   pvto, pvtw, swof, t, p_rec, sw_rec)
         #! format: on
     end
 end
@@ -78,34 +87,41 @@ function get_var_order(state::OWState)::Dict{String, Int}
     return Dict{String, Int}("p" => 1, "sw" => 2)
 end
 #
-function update_old_state(state::OWState)::Nothing
+function update_old_state(state::OWState)::OWState
     state.pn .= data(state.p)
     state.swn .= data(state.sw)
     state.son .= data(state.so)
     state.bon .= data(state.bo)
     state.bwn .= data(state.bw)
-    return nothing
+    return state
 end
-
-function change_back_state(state::OWState)::Nothing
+#
+function save_state_result(state::OWState, t::Float64)::OWState
+    push!(state.t, t)
+    push!(state.p_rec, data(state.p))
+    push!(state.sw_rec, data(state.sw))
+    return state
+end
+#
+function change_back_state(state::OWState)::OWState
     for i = 1:state.numcell
         state.p[i].val = state.pn[i]
         state.sw[i].val = state.swn[i]
     end
+    return state
 end
 
 #
-function set_init_state(state::OWState, p0::Float64, sw0::Float64)::Nothing
+function set_init_state(state::OWState, p0::Float64, sw0::Float64)::OWState
     return set_init_state(state, p0*ones(state.numcell), sw0*ones(state.numcell))
 end
 
-function set_init_state(state::OWState, p0::Vector{Float64}, sw0::Vector{Float64})::Nothing
+function set_init_state(state::OWState, p0::Vector{Float64}, sw0::Vector{Float64})::OWState
     @assert all(p0 .> 0.0) && all(0.0 .<= sw0 .<= 1.0)
     state.p .= param(p0, 1, 2)
     state.sw .= param(sw0, 2, 2)
     compute_params(state)
     update_old_state(state)
-    return nothing
 end
 
 function compute_so(so::Tensor, sw::Tensor)::Tensor
