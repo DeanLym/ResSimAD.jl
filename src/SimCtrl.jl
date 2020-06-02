@@ -6,13 +6,15 @@ using LinearAlgebra:norm
 using ..Global: M, α
 using ..AutoDiff: param, data, ones_tensor
 using ..Grid: CartGrid, AbstractGrid,
-        get_grid_index, set_cell_size, set_perm, set_poro, construct_conn
+        get_grid_index, set_cell_size, set_perm, set_poro, construct_connlist
+
+using ..Fluid: AbstractPVTO, AbstractPVTW, AbstractSWOF, SWOFTable, PVDO, PVTW
 
 using ..State: OWState, AbstractState, set_init_state, change_back_state,
         compute_params, update_old_state
 
 using ..Well: StandardWell, WellType, Limit, PRODUCER, INJECTOR,
-        get_ctrl_mode, compute_wi, compute_qo, compute_qw
+        get_ctrl_mode, compute_wi, compute_qo, compute_qw, save_result
 
 using ..Schedule: Scheduler, update_dt
 
@@ -27,15 +29,54 @@ struct Sim
     nsolver::NonlinearSolver
     injectors::Vector{StandardWell{INJECTOR}}
     producers::Vector{StandardWell{PRODUCER}}
-    function Sim(nx::Int, ny::Int, nz::Int)::Sim
-        grid = CartGrid(nx, ny, nz)
-        state = OWState(grid.numcell, grid.connlist.numconn)
-        scheduler = Scheduler()
-        nsolver = NRSolver()
-        injectors = Vector{StandardWell{INJECTOR}}()
-        producers = Vector{StandardWell{PRODUCER}}()
-        return new(grid, state, scheduler, nsolver, injectors, producers)
+end
+
+function Sim(input::Dict)::Sim
+    # Construct Grid
+    nx, ny, nz = input["nx"], input["ny"], input["nz"]
+    grid = CartGrid(nx, ny, nz)
+    dx, dy, dz = input["dx"], input["dy"], input["dz"]
+    set_cell_size(grid, dx, dy, dz)
+    set_perm(grid, input["k"])
+    set_poro(grid, input["ϕ"])
+    construct_connlist(grid)
+
+    # Construct Fluid
+    if "SWOF" in keys(input)
+        swof = SWOFTable(input["SWOF"])
+    elseif "SWOFCorey" in keys(input)
+        swof = SWOFCorey(input["SWOFCorey"])
     end
+    pvdo = PVDO(input["PVDO"])
+    pvtw = PVTW(input["PVTW"])
+
+    # Construct State
+    state = OWState(grid.numcell, grid.connlist.numconn, pvdo, pvtw, swof)
+    set_init_state(state, input["p0"], input["sw0"])
+
+    # Construct Wells
+    injectors = Vector{StandardWell{INJECTOR}}()
+    producers = Vector{StandardWell{PRODUCER}}()
+    numvar = state.numvar
+    for p in input["producers"]
+        push!(producers, init_well(PRODUCER, p, numvar, grid))
+    end
+
+    for p in input["injectors"]
+        push!(injectors, init_well(INJECTOR, p, numvar, grid))
+    end
+
+    # Construct Scheduler
+    scheduler = Scheduler()
+    scheduler.t_current = 0.0
+    scheduler.t0 = 0.0
+    scheduler.dt_max = get(input, "dt_max", 100.)
+    scheduler.t_end = get(input, "t_end", 100.)
+
+    # Construct Nonlinear Solver
+    nsolver = NRSolver()
+
+    return Sim(grid, state, scheduler, nsolver, injectors, producers)
 end
 
 function init_well(T::WellType, well_option::Dict, numvar::Int, grid::CartGrid)
@@ -60,48 +101,23 @@ function init_well(T::WellType, well_option::Dict, numvar::Int, grid::CartGrid)
     return well
 end
 
-function setup(sim::Sim, input::Dict)::Nothing
-    grid, state, scheduler = sim.grid, sim.state, sim.scheduler
-    producers, injectors = sim.producers, sim.injectors
-    # Set up grid
-    dx, dy, dz = input["dx"], input["dy"], input["dz"]
-    set_cell_size(grid, dx, dy, dz)
-    set_perm(grid, input["k"])
-    set_poro(grid, input["ϕ"])
-    construct_conn(grid)
-
-    # Set up initial state
-    set_init_state(state, input["p0"], input["sw0"])
-
-    # Set up wells
-    numvar = state.numvar
-    for p in input["producers"]
-        push!(producers, init_well(PRODUCER, p, numvar, grid))
-    end
-
-    for p in input["injectors"]
-        push!(injectors, init_well(INJECTOR, p, numvar, grid))
-    end
-
-    # Set up options
-    scheduler.t_current = 0.0
-    scheduler.t0 = 0.0
-    scheduler.dt_max = get(input, "dt_max", 100.)
-    scheduler.t_end = get(input, "t_end", 100.)
-
-    return nothing
-end
-
-
 function compute_well_rate(sim::Sim)
-    producers, injectors = sim.producers, sim.injectors
     state = sim.state
-    for prod in producers
+    for prod in sim.producers
         compute_qo(prod, state)
         compute_qw(prod, state)
     end
-    for inj in injectors
+    for inj in sim.injectors
         compute_qw(inj, state)
+    end
+end
+
+function save_well_results(sim::Sim, t::Float64)
+    for prod in sim.producers
+        save_result(prod, t)
+    end
+    for inj in sim.injectors
+        save_result(inj, t)
     end
 end
 
@@ -165,6 +181,7 @@ function runsim(sim::Sim)
         update_dt(sch, state, converge)
         if converge
             update_old_state(state)
+            save_well_results(sim, sch.t_current)
         else
             change_back_state(state)
             compute_params(state)

@@ -81,11 +81,10 @@ function set_cell_size(
     dx::Float64,
     dy::Float64,
     dz::Float64,
-)::Nothing
+)::CartGrid
     @assert dx > 0 && dy > 0 && dz > 0
     I = ones(Int, grid.numcell)
     set_cell_size(grid, dx * I, dy * I, dz * I)
-    return nothing
 end
 
 function set_cell_size(
@@ -93,43 +92,41 @@ function set_cell_size(
     dx::Vector{Float64},
     dy::Vector{Float64},
     dz::Vector{Float64},
-)::Nothing
+)::CartGrid
     @assert all(dx .> 0) && all(dy .> 0) && all(dz .> 0)
     grid.dx .= dx
     grid.dy .= dy
     grid.dz .= dz
     # Compute volume
     grid.v .= grid.dx .* grid.dy .* grid.dz
-    return nothing
+    return grid
 end
 
-function set_perm(grid::AbstractGrid, k::Vector{Float64})::Nothing
+function set_perm(grid::AbstractGrid, k::Vector{Float64})::CartGrid
     @assert all(k .> 0)
     grid.kx .= k
     grid.ky .= k
     grid.kz .= k
-    return nothing
+    return grid
 end
 
-function set_perm(grid::AbstractGrid, k::Float64)::Nothing
+function set_perm(grid::AbstractGrid, k::Float64)::CartGrid
     @assert k > 0
     set_perm(grid, k*ones(grid.numcell))
-    return nothing
 end
 
-function set_poro(grid::AbstractGrid, ϕ::Vector{Float64})::Nothing
+function set_poro(grid::AbstractGrid, ϕ::Vector{Float64})::CartGrid
     @assert all(ϕ .> 0)
     grid.ϕ .= ϕ
-    return nothing
+    return grid
 end
 
-function set_poro(grid::AbstractGrid, ϕ::Float64)::Nothing
+function set_poro(grid::AbstractGrid, ϕ::Float64)::CartGrid
     @assert ϕ > 0
     set_poro(grid, ϕ * ones(grid.numcell))
-    return nothing
 end
 
-function construct_conn(grid::CartGrid)::Nothing
+function construct_connlist(grid::CartGrid)::CartGrid
     count = 1
     dx, dy, dz = grid.dx, grid.dy, grid.dz
     kx, ky, kz = grid.kx, grid.ky, grid.kz #
@@ -172,7 +169,7 @@ function construct_conn(grid::CartGrid)::Nothing
             end
         end
     end
-    return nothing
+    return grid
 end
 
 end

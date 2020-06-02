@@ -1,9 +1,10 @@
 module Well
 
 using DataFrames: DataFrame
+using Statistics: mean
 
 using ..Global: α
-using ..AutoDiff:Tensor, zeros_tensor, ones_tensor
+using ..AutoDiff:Tensor, zeros_tensor, ones_tensor, data
 using ..Grid:AbstractStructGrid, get_grid_index
 using ..State:AbstractState
 
@@ -75,6 +76,12 @@ end
 function init_results_df()
     Vec = Vector{Float64}
     DataFrame(Time=Vec(), ORAT=Vec(), WRAT=Vec(), GRAT=Vec(), WBHP=Vec())
+end
+
+function save_result(well::StandardWell, t::Float64)
+    qo, qw, qg = sum(data(well.qo)), sum(data(well.qw)), 0.0
+    pw = mean(data(well.pw))
+    push!(well.results, [t, qo, qw, qg, pw])
 end
 
 function compute_wi(well::AbstractWell, grid::AbstractStructGrid)::Nothing

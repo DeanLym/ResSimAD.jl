@@ -33,7 +33,7 @@ MGrad(ic::Int, nv::Int) =
 
 const Grad{Nv, Nc, L} = Union{SGrad{Nv}, DGrad{Nv, L}, MGrad{Nv, Nc}} where {Nv, Nc, L}
 
-mutable struct Variable{T<:Grad}
+mutable struct Variable{T<:Grad} <: Number
     val::Float64
     grad::T
     Variable{T}(val::Float64, grad::T) where {T <: Grad} = new(val, grad)
