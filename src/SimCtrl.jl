@@ -165,6 +165,15 @@ function change_well_target(sim::Sim, name::String, target::Float64; reset_dt=fa
     return nothing
 end
 
+function get_well_rates(sim::Sim, name::String, data::String)
+    @assert name in keys(sim.producers) || name in keys(sim.injectors)
+    if name in keys(sim.producers)
+        return sim.producers[name].results[!, data]
+    else
+        return sim.injectors[name].results[!, data]
+    end
+end
+
 function shut_well(sim::Sim, name::String)::Nothing
     @assert name in keys(sim.producers) || name in keys(sim.injectors)
     if name in keys(sim.producers)

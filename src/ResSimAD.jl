@@ -15,7 +15,7 @@ using .State:OWState
 using .Well:StandardWell
 
 using .SimCtrl:Sim, runsim, step, newton_step, add_well, change_well_mode,
-            change_well_target, shut_well
+            change_well_target, shut_well, get_well_rates
 
 export param, zeros_tensor, Tensor
 export Sim, runsim
