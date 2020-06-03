@@ -17,7 +17,7 @@ using ..State: OWState, AbstractState, set_init_state, change_back_state,
 using ..Well: StandardWell, WellType, Limit, PRODUCER, INJECTOR,
         get_ctrl_mode, compute_wi, compute_qo, compute_qw, save_result
 
-using ..Schedule: Scheduler, update_dt
+using ..Schedule: Scheduler, update_dt, reset_time_step
 
 using ..Solver: NonlinearSolver, NRSolver, compute_residual_error,
         assemble_residual, assemble_jacobian, update_solution
@@ -28,9 +28,12 @@ struct Sim
     state::OWState
     scheduler::Scheduler
     nsolver::NonlinearSolver
-    injectors::Vector{StandardWell{INJECTOR}}
-    producers::Vector{StandardWell{PRODUCER}}
+    injectors::Dict{String, StandardWell{INJECTOR}}
+    producers::Dict{String, StandardWell{PRODUCER}}
 end
+
+get_well_type =
+    Dict{String,WellType}("producer" => PRODUCER, "injector" => INJECTOR)
 
 function Sim(input::Dict)::Sim
     # Construct Grid
@@ -62,15 +65,22 @@ function Sim(input::Dict)::Sim
     set_init_state(state, input["p0"], input["sw0"])
 
     # Construct Wells
-    injectors = Vector{StandardWell{INJECTOR}}()
-    producers = Vector{StandardWell{PRODUCER}}()
+    producers = Dict{String, StandardWell{PRODUCER}}()
+    injectors = Dict{String, StandardWell{INJECTOR}}()
+    well_names = Set{String}()
     numvar = state.numvar
     for p in input["producers"]
-        push!(producers, init_well(PRODUCER, p, numvar, grid))
+        name = p["name"]
+        @assert !(name in well_names)
+        push!(well_names, name)
+        producers[name] = init_well(PRODUCER, p, numvar, grid)
     end
 
     for p in input["injectors"]
-        push!(injectors, init_well(INJECTOR, p, numvar, grid))
+        name = p["name"]
+        @assert !(name in well_names)
+        push!(well_names, name)
+        injectors[p["name"]] = init_well(INJECTOR, p, numvar, grid)
     end
 
     # Construct Scheduler
@@ -79,7 +89,10 @@ function Sim(input::Dict)::Sim
     scheduler.t0 = 0.0
     scheduler.dt_max = get(input, "dt_max", 100.)
     scheduler.t_end = get(input, "t_end", 100.)
+    scheduler.dt0 = get(input, "dt0", 0.01)
+    reset_time_step(scheduler)
     scheduler.report_time = get(input, "report_time", [scheduler.t_end])
+    scheduler.t_end = max(scheduler.t_end, scheduler.report_time[end])
 
     # Construct Nonlinear Solver
     nsolver = NRSolver()
@@ -88,6 +101,7 @@ function Sim(input::Dict)::Sim
 
     return Sim(grid, state, scheduler, nsolver, injectors, producers)
 end
+
 
 function init_well(T::WellType, well_option::Dict, numvar::Int, grid::CartGrid)
     name = well_option["name"]
@@ -111,22 +125,73 @@ function init_well(T::WellType, well_option::Dict, numvar::Int, grid::CartGrid)
     return well
 end
 
+function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
+    name = well_option["name"]
+    @assert !(name in keys(sim.producers)) && !(name in keys(sim.injectors))
+    T = get_well_type[lowercase(welltype)]
+    nv, grid = sim.state.numvar, sim.grid
+    if T == PRODUCER
+        sim.producers[name] = init_well(T, well_option, nv, grid)
+    elseif T == INJECTOR
+        sim.injectors[name] = init_well(T, well_option, nv, grid)
+    end
+    reset_time_step(sim.scheduler)
+    return nothing
+end
+
+function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)::Nothing
+    @assert name in keys(sim.producers) || name in keys(sim.injectors)
+    if name in keys(sim.producers)
+        sim.producers[name].mode = get_ctrl_mode[mode]
+        sim.producers[name].target = target
+    else
+        sim.injectors[name].mode = get_ctrl_mode[mode]
+        sim.injectors[name].target = target
+    end
+    reset_time_step(sim.scheduler)
+    return nothing
+end
+
+function change_well_target(sim::Sim, name::String, target::Float64; reset_dt=false)::Nothing
+    @assert name in keys(sim.producers) || name in keys(sim.injectors)
+    if name in keys(sim.producers)
+        sim.producers[name].target = target
+    else
+        sim.injectors[name].target = target
+    end
+    if reset_dt
+        reset_time_step(sim.scheduler)
+    end
+    return nothing
+end
+
+function shut_well(sim::Sim, name::String)::Nothing
+    @assert name in keys(sim.producers) || name in keys(sim.injectors)
+    if name in keys(sim.producers)
+        sim.producers[name].mode = get_ctrl_mode["shut"]
+    else
+        sim.injectors[name].mode = get_ctrl_mode["shut"]
+    end
+    return nothing
+end
+
+
 function compute_well_rate(sim::Sim)
     state = sim.state
-    for prod in sim.producers
+    for prod in values(sim.producers)
         compute_qo(prod, state)
         compute_qw(prod, state)
     end
-    for inj in sim.injectors
+    for inj in values(sim.injectors)
         compute_qw(inj, state)
     end
 end
 
 function save_well_results(sim::Sim, t::Float64)
-    for prod in sim.producers
+    for prod in values(sim.producers)
         save_result(prod, t)
     end
-    for inj in sim.injectors
+    for inj in values(sim.injectors)
         save_result(inj, t)
     end
 end
@@ -278,7 +343,7 @@ end
 function compute_ro(
     state::OWState,
     grid::AbstractGrid,
-    producers::Vector{StandardWell{PRODUCER}},
+    producers::Dict{String, StandardWell{PRODUCER}},
     dt::Float64,
 )::Nothing
     connlist = grid.connlist
@@ -289,7 +354,7 @@ function compute_ro(
     # Accumulation term
     state.ro .= - state.ao
     # Sink / source term
-    for w in producers
+    for w in values(producers)
         state.ro[w.ind] -= w.qo
     end
     # Flux term
@@ -304,8 +369,8 @@ end
 function compute_rw(
     state::OWState,
     grid::AbstractGrid,
-    producers::Vector{StandardWell{PRODUCER}},
-    injectors::Vector{StandardWell{INJECTOR}},
+    producers::Dict{String, StandardWell{PRODUCER}},
+    injectors::Dict{String, StandardWell{INJECTOR}},
     dt::Float64,
 )::Nothing
     connlist = grid.connlist
@@ -316,10 +381,10 @@ function compute_rw(
     # Accumulation term
     state.rw .= - state.aw
     # Sink / source term
-    for w in producers
+    for w in values(producers)
         state.rw[w.ind] -= w.qw
     end
-    for w in injectors
+    for w in values(injectors)
         state.rw[w.ind] -= w.qw
     end
     # Flux term

@@ -15,6 +15,7 @@ abstract type AbstractWell end
 @enum WellType PRODUCER INJECTOR
 
 const get_ctrl_mode = Dict{String,CtrlMode}(
+    "shut" => SHUT,
     "bhp" => CBHP,
     "orat" => CORAT,
     "wrat" => CWRAT,
@@ -106,6 +107,8 @@ function compute_qo(well::StandardWell{PRODUCER}, state::AbstractState)
     elseif mode == CLRAT
         λo, λw = state.λo, state.λw
         well.qo .= λo[ind] ./ (λo[ind] .+ λw[ind]) * target
+    elseif mode == SHUT
+        well.qo .= zeros_tensor(ind, state.numvar)
     end
     return nothing
 end
@@ -121,6 +124,8 @@ function compute_qw(well::StandardWell{PRODUCER}, state::AbstractState)
     elseif mode == CLRAT
         λo, λw = state.λo, state.λw
         well.qw .= λw[ind] ./ (λo[ind] .+ λw[ind]) * target
+    elseif mode == SHUT
+        well.qw .= zeros_tensor(ind, state.numvar)
     end
 end
 
@@ -132,6 +137,8 @@ function compute_qw(well::StandardWell{INJECTOR}, state::AbstractState)
         well.qw .= well.wi .* (λo[ind] .+ λw[ind]) .* (state.p[ind] .- target)
     elseif mode == CWRAT
         well.qw .= target * ones_tensor(ind, state.numvar)
+    elseif mode == SHUT
+        well.qw .= zeros_tensor(ind, state.numvar)
     end
 end
 

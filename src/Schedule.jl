@@ -8,6 +8,7 @@ mutable struct Scheduler
     dt_old::Float64
     dt::Float64
     dt_max::Float64
+    dt0::Float64
     ω::Float64
     ηp::Float64
     ηs::Float64
@@ -18,8 +19,9 @@ mutable struct Scheduler
     function Scheduler()
         sch = new()
         sch.t0 = 0.0
-        sch.dt = 0.01
-        sch.dt_old = 0.01
+        sch.dt0 = 0.01
+        sch.dt = sch.dt0
+        sch.dt_old = sch.dt
         sch.dt_max = Inf
         sch.ω = 0.5
         sch.ηp = 1000.
@@ -30,6 +32,11 @@ mutable struct Scheduler
         sch.report_time = Vector{Float64}()
         return sch
     end
+end
+
+function reset_time_step(sch::Scheduler)
+    sch.dt = sch.dt0
+    sch.dt_old = sch.dt
 end
 
 function update_dt(sch::Scheduler, state::OWState, converge::Bool)
@@ -56,7 +63,6 @@ function update_dt(sch::Scheduler, state::OWState, converge::Bool)
     sch.t_next = sch.t_current + dt
     return nothing
 end
-
 
 function set_report_time(scheduler::Scheduler, report_time::Vector{Float64})::Nothing
     scheduler.report_time = report_time

@@ -12,8 +12,10 @@ include("SimCtrl.jl")
 
 using .AutoDiff:param, zeros_tensor, Tensor
 using .State:OWState
-using .SimCtrl:Sim, runsim, step
 using .Well:StandardWell
+
+using .SimCtrl:Sim, runsim, step, newton_step, add_well, change_well_mode,
+            change_well_target, shut_well
 
 export param, zeros_tensor, Tensor
 export Sim, runsim
