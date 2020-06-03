@@ -1,6 +1,7 @@
 module SimCtrl
 
 using LinearAlgebra:norm
+using IterativeSolvers, IncompleteLU
 
 #! format: off
 using ..Global: M, α, β, g_, gc
@@ -146,7 +147,8 @@ function newton_step(sim::Sim)::Nothing
     # Compute jacobian
     nsolver.jac = assemble_jacobian(state)
     # Solve equation
-    nsolver.δx = nsolver.jac \ nsolver.residual
+    # nsolver.δx = nsolver.jac \ nsolver.residual
+    nsolver.δx = gmres(nsolver.jac, nsolver.residual, Pl=ilu(nsolver.jac, τ=0.1))
     update_solution(state, nsolver.δx)
     compute_params(state)
     nsolver.converged = false
@@ -179,71 +181,6 @@ function step(sim::Sim)::Nothing
     println("NumNewton: $newton_iter\n")
     return nothing
 end
-#
-# function step(sim::Sim)::Nothing
-#     grid, state, sch, nsolver = sim.grid, sim.state, sim.scheduler, sim.nsolver
-#     producers, injectors = sim.producers, sim.injectors
-#     println(sch.t_next)
-#     t_res, t_jac, t_sol = 0.0, 0.0, 0.0
-#     num_newton = 0
-#     dt = sch.dt
-#     converge, err, newton_iter = true, Inf, 0
-#     while err > nsolver.min_err
-#         #print("Netwon Iteration $newton_iter: ")
-#         # newton_iter += 1
-#         # Calculate residual and jacobian
-#         t0 = time()
-#         compute_well_rate(sim)
-#         compute_ro(state, grid, producers, dt)
-#         compute_rw(state, grid, producers, injectors, dt)
-#         err = compute_residual_error(state, grid, dt)
-#         # println("Error: $err")
-#         if err < nsolver.min_err
-#             num_newton += newton_iter
-#             break
-#         end
-#         nsolver.residual = assemble_residual(state)
-#         tt = time() - t0
-#         #print(" t_res: ", tt)
-#         t_res += tt
-#
-#         # Compute jacobian
-#         t0 = time()
-#         nsolver.jac = assemble_jacobian(state)
-#         tt = time() - t0
-#         #print(" t_jac: ", tt)
-#         t_jac += tt
-#
-#         # Solve equation
-#         t0 = time()
-#         δx = nsolver.jac \ nsolver.residual
-#         tt = time() - t0
-#         #print(" t_sol: $tt \n")
-#         t_sol += tt
-#         newton_iter += 1
-#         # Update variables
-#         if newton_iter > nsolver.max_newton_iter
-#             converge = false
-#             break
-#         else
-#             update_solution(state, δx)
-#             compute_params(state)
-#         end
-#     end
-#     update_dt(sch, state, converge)
-#     push!(nsolver.num_iter, num_newton)
-#     if converge
-#         save_state_result(state, sch.t_next)
-#         update_old_state(state)
-#         save_well_results(sim, sch.t_next)
-#     else
-#         change_back_state(state)
-#         compute_params(state)
-#     end
-#     println("t_res： $t_res, t_jac: $t_jac, t_sol: $t_sol")
-#     println("NumNewton: $num_newton\n")
-#     return nothing
-# end
 
 function runsim(sim::Sim)::Nothing
     sch = sim.scheduler
