@@ -128,16 +128,20 @@ end
 function Base.:+(z::SGrad{Nv}, w::SGrad{Nv}) where {Nv}
     if z.ic == w.ic
         return SGrad{Nv}(z.ic, z.∇ + w.∇)
-    else
+    elseif z.ic < w.ic
         return DGrad{Nv, 2*Nv}(SA[z.ic, w.ic], hcat(z.∇, w.∇))
+    else
+        return DGrad{Nv, 2*Nv}(SA[w.ic, z.ic], hcat(w.∇, z.∇))
     end
 end
 
 function Base.:-(z::SGrad{Nv}, w::SGrad{Nv}) where {Nv}
     if z.ic == w.ic
         return SGrad{Nv}(z.ic, z.∇ - w.∇)
-    else
+    elseif z.ic < w.ic
         return DGrad{Nv, 2*Nv}(SA[z.ic, w.ic], hcat(z.∇, -w.∇))
+    else
+        return DGrad{Nv, 2*Nv}(SA[w.ic, z.ic], hcat(-w.∇, z.∇))
     end
 end
 
@@ -198,13 +202,15 @@ function Base.:-(w::DGrad{Nv, L}, z::SGrad{Nv})::DGrad{Nv, L} where {Nv, L}
         return DGrad{Nv, L}(w.ic, hcat(g, -z.∇) + w.∇)
     end
 end
+
 ##
 # DGrad and DGrad
-
 function Base.:+(z::DGrad{Nv,L}, w::DGrad{Nv,L}) where {Nv,L}
     zic, wic = z.ic, w.ic
     z∇, w∇ = z.∇, w.∇
-    if zic[2] == wic[1]
+    if zic == wic #zic and wic are sorted
+        return DGrad{Nv, L}(zic, z∇ + w∇)
+    elseif zic[2] == wic[1]
         return MGrad{Nv,2,2 * Nv}(
             zic[2],
             z∇[:, 2] + w∇[:, 1],
@@ -238,7 +244,9 @@ end
 function Base.:-(z::DGrad{Nv,L}, w::DGrad{Nv,L}) where {Nv,L}
     zic, wic = z.ic, w.ic
     z∇, w∇ = z.∇, w.∇
-    if zic[2] == wic[1]
+    if zic == wic #zic and wic are sorted
+        return DGrad{Nv, L}(zic, z∇ - w∇)
+    elseif zic[2] == wic[1]
         return MGrad{Nv,2,2 * Nv}(
             zic[2],
             z∇[:, 2] - w∇[:, 1],
@@ -252,12 +260,19 @@ function Base.:-(z::DGrad{Nv,L}, w::DGrad{Nv,L}) where {Nv,L}
             SA[zic[2], wic[1]],
             hcat(z∇[:, 2], -w∇[:, 1]),
         )
-    else
+    elseif zic[1] == wic[1]
         return MGrad{Nv,2,2 * Nv}(
             zic[1],
             z∇[:, 1] - w∇[:, 1],
             SA[zic[2], wic[2]],
             hcat(z∇[:, 2], -w∇[:, 2]),
+        )
+    else
+        return MGrad{Nv,2,2 * Nv}(
+            zic[2],
+            z∇[:, 2] - w∇[:, 2],
+            SA[zic[1], wic[1]],
+            hcat(z∇[:, 1], -w∇[:, 1]),
         )
     end
 end

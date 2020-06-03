@@ -3,9 +3,9 @@ module SimCtrl
 using LinearAlgebra:norm
 
 #! format: off
-using ..Global: M, α
+using ..Global: M, α, β, g_, gc
 using ..AutoDiff: param, data, ones_tensor
-using ..Grid: CartGrid, AbstractGrid,
+using ..Grid: CartGrid, AbstractGrid, ConnList, set_cell_depth,
         get_grid_index, set_cell_size, set_perm, set_poro, construct_connlist
 
 using ..Fluid: AbstractPVTO, AbstractPVTW, AbstractSWOF, SWOFTable, PVDO, PVTW
@@ -37,6 +37,7 @@ function Sim(input::Dict)::Sim
     grid = CartGrid(nx, ny, nz)
     dx, dy, dz = input["dx"], input["dy"], input["dz"]
     set_cell_size(grid, dx, dy, dz)
+    set_cell_depth(grid, input["d"])
     set_perm(grid, input["k"])
     set_poro(grid, input["ϕ"])
     construct_connlist(grid)
@@ -51,7 +52,12 @@ function Sim(input::Dict)::Sim
     pvtw = PVTW(input["PVTW"])
 
     # Construct State
-    state = OWState(grid.numcell, grid.connlist.numconn, pvdo, pvtw, swof)
+    ρo_std = get(input, "ρo_std", 49.1)
+    ρw_std = get(input, "ρw_std", 64.79)
+    #! format: off
+    state = OWState(grid.numcell, grid.connlist.numconn,
+                      ρo_std, ρw_std, pvdo, pvtw, swof)
+    #! format: on
     set_init_state(state, input["p0"], input["sw0"])
 
     # Construct Wells
@@ -76,6 +82,8 @@ function Sim(input::Dict)::Sim
 
     # Construct Nonlinear Solver
     nsolver = NRSolver()
+    nsolver.max_newton_iter = get(input, "max_newton_iter", 10)
+    nsolver.min_err = get(input, "min_err", 1.0e-6)
 
     return Sim(grid, state, scheduler, nsolver, injectors, producers)
 end
@@ -122,69 +130,120 @@ function save_well_results(sim::Sim, t::Float64)
     end
 end
 
-function step(sim::Sim)::Nothing
+function newton_step(sim::Sim)::Nothing
     grid, state, sch, nsolver = sim.grid, sim.state, sim.scheduler, sim.nsolver
     producers, injectors = sim.producers, sim.injectors
-    println(sch.t_next)
-    t_res, t_jac, t_sol = 0.0, 0.0, 0.0
-    num_newton = 0
     dt = sch.dt
-    converge, err, newton_iter = true, Inf, 0
-    while err > nsolver.min_err
-        #print("Netwon Iteration $newton_iter: ")
-        # newton_iter += 1
-        # Calculate residual and jacobian
-        t0 = time()
-        compute_well_rate(sim)
-        compute_ro(state, grid, producers, dt)
-        compute_rw(state, grid, producers, injectors, dt)
-        err = compute_residual_error(state, grid, dt)
-        if err < nsolver.min_err
-            num_newton += newton_iter
-            break
-        end
-        residual = assemble_residual(state)
-        tt = time() - t0
-        #print(" t_res: ", tt)
-        t_res += tt
-
-        # Compute jacobian
-        t0 = time()
-        jac = assemble_jacobian(state)
-        tt = time() - t0
-        #print(" t_jac: ", tt)
-        t_jac += tt
-
-        # Solve equation
-        t0 = time()
-        δx = jac \ residual
-        tt = time() - t0
-        #print(" t_sol: $tt \n")
-        t_sol += tt
-        newton_iter += 1
-        # Update variables
-        if newton_iter > nsolver.max_iter
-            converge = false
-            break
-        else
-            update_solution(state, δx)
-            compute_params(state)
-        end
+    compute_well_rate(sim)
+    compute_ro(state, grid, producers, dt)
+    compute_rw(state, grid, producers, injectors, dt)
+    err = compute_residual_error(state, grid, dt)
+    if err < nsolver.min_err
+        nsolver.converged = true
+        return nothing
     end
-    update_dt(sch, state, converge)
-    push!(nsolver.num_iter, num_newton)
-    if converge
-        save_state_result(state, sch.t_next)
+    nsolver.residual = assemble_residual(state)
+    # Compute jacobian
+    nsolver.jac = assemble_jacobian(state)
+    # Solve equation
+    nsolver.δx = nsolver.jac \ nsolver.residual
+    update_solution(state, nsolver.δx)
+    compute_params(state)
+    nsolver.converged = false
+    return nothing
+end
+
+
+function step(sim::Sim)::Nothing
+    grid, state, sch, nsolver = sim.grid, sim.state, sim.scheduler, sim.nsolver
+    println(sch.t_next)
+    nsolver.converged, err, newton_iter = false, Inf, 0
+
+    while !nsolver.converged
+        if newton_iter > nsolver.max_newton_iter
+            break
+        end
+        newton_step(sim)
+        newton_iter += 1
+    end
+    update_dt(sch, state, nsolver.converged)
+    push!(nsolver.num_iter, newton_iter)
+    if nsolver.converged
+        save_state_result(state, sch.t_current)
         update_old_state(state)
-        save_well_results(sim, sch.t_next)
+        save_well_results(sim, sch.t_current)
     else
         change_back_state(state)
         compute_params(state)
     end
-    println("t_res： $t_res, t_jac: $t_jac, t_sol: $t_sol")
-    println("NumNewton: $num_newton\n")
+    println("NumNewton: $newton_iter\n")
     return nothing
 end
+#
+# function step(sim::Sim)::Nothing
+#     grid, state, sch, nsolver = sim.grid, sim.state, sim.scheduler, sim.nsolver
+#     producers, injectors = sim.producers, sim.injectors
+#     println(sch.t_next)
+#     t_res, t_jac, t_sol = 0.0, 0.0, 0.0
+#     num_newton = 0
+#     dt = sch.dt
+#     converge, err, newton_iter = true, Inf, 0
+#     while err > nsolver.min_err
+#         #print("Netwon Iteration $newton_iter: ")
+#         # newton_iter += 1
+#         # Calculate residual and jacobian
+#         t0 = time()
+#         compute_well_rate(sim)
+#         compute_ro(state, grid, producers, dt)
+#         compute_rw(state, grid, producers, injectors, dt)
+#         err = compute_residual_error(state, grid, dt)
+#         # println("Error: $err")
+#         if err < nsolver.min_err
+#             num_newton += newton_iter
+#             break
+#         end
+#         nsolver.residual = assemble_residual(state)
+#         tt = time() - t0
+#         #print(" t_res: ", tt)
+#         t_res += tt
+#
+#         # Compute jacobian
+#         t0 = time()
+#         nsolver.jac = assemble_jacobian(state)
+#         tt = time() - t0
+#         #print(" t_jac: ", tt)
+#         t_jac += tt
+#
+#         # Solve equation
+#         t0 = time()
+#         δx = nsolver.jac \ nsolver.residual
+#         tt = time() - t0
+#         #print(" t_sol: $tt \n")
+#         t_sol += tt
+#         newton_iter += 1
+#         # Update variables
+#         if newton_iter > nsolver.max_newton_iter
+#             converge = false
+#             break
+#         else
+#             update_solution(state, δx)
+#             compute_params(state)
+#         end
+#     end
+#     update_dt(sch, state, converge)
+#     push!(nsolver.num_iter, num_newton)
+#     if converge
+#         save_state_result(state, sch.t_next)
+#         update_old_state(state)
+#         save_well_results(sim, sch.t_next)
+#     else
+#         change_back_state(state)
+#         compute_params(state)
+#     end
+#     println("t_res： $t_res, t_jac: $t_jac, t_sol: $t_sol")
+#     println("NumNewton: $num_newton\n")
+#     return nothing
+# end
 
 function runsim(sim::Sim)::Nothing
     sch = sim.scheduler
@@ -210,31 +269,74 @@ function compute_aw(state::OWState, grid::AbstractGrid, dt::Float64)::Nothing
 end
 #! format: on
 
-function compute_fo(state::OWState, grid::AbstractGrid)::Nothing
-    trans = grid.connlist.trans
-    for i = 1:grid.connlist.numconn
-        l, r = grid.connlist.l[i], grid.connlist.r[i]
-        if state.p[l] > state.p[r]
-            state.fo[i] = state.λo[l] * trans[i] * (state.p[l] - state.p[r])
+function compute_γo(state::OWState, connlist::ConnList)::Nothing
+    l_list, r_list = connlist.l, connlist.r
+    ρo, γo = state.ρo, state.γo
+    for i = 1:connlist.numconn
+        l, r = l_list[i], r_list[i]
+        γo[i] = β * g_ / gc * (ρo[l] + ρo[r]) / 2.
+    end
+    return nothing
+end
+
+function compute_γw(state::OWState, connlist::ConnList)::Nothing
+    l_list, r_list = connlist.l, connlist.r
+    ρw, γw = state.ρw, state.γw
+    for i = 1:connlist.numconn
+        l, r = l_list[i], r_list[i]
+        γw[i] = β * g_ / gc * (ρw[l] + ρw[r]) / 2.
+    end
+    return nothing
+end
+
+function compute_ΔΨo(state::OWState, connlist::ConnList)::Nothing
+    l_list, r_list, Δd = connlist.l, connlist.r, connlist.Δd
+    ΔΨo, p, γo = state.ΔΨo, state.p, state.γo
+    for i = 1:connlist.numconn
+        l, r = l_list[i], r_list[i]
+        ΔΨo[i] = p[l] - p[r] - γo[i]*Δd[i]
+    end
+    return nothing
+end
+
+function compute_ΔΨw(state::OWState, connlist::ConnList)::Nothing
+    l_list, r_list, Δd = connlist.l, connlist.r, connlist.Δd
+    ΔΨw, p, γw = state.ΔΨw, state.p, state.γw
+    for i = 1:connlist.numconn
+        l, r = l_list[i], r_list[i]
+        ΔΨw[i] = p[l] - p[r] - γw[i]*Δd[i]
+    end
+    return nothing
+end
+
+function compute_fo(state::OWState, connlist::ConnList)::Nothing
+    l_list, r_list, trans = connlist.l, connlist.r, connlist.trans
+    ΔΨo, λo, fo = state.ΔΨo, state.λo, state.fo
+    for i = 1:connlist.numconn
+        l, r = l_list[i], r_list[i]
+        if ΔΨo[i] > 0.0
+            fo[i] = λo[l] * trans[i] * ΔΨo[i]
         else
-            state.fo[i] = state.λo[r] * trans[i] * (state.p[l] - state.p[r])
+            fo[i] = λo[r] * trans[i] * ΔΨo[i]
         end
     end
     return nothing
 end
 
-function compute_fw(state::OWState, grid::AbstractGrid)::Nothing
-    trans = grid.connlist.trans
-    for i = 1:grid.connlist.numconn
-        l, r = grid.connlist.l[i], grid.connlist.r[i]
-        if state.p[l] > state.p[r]
-            state.fw[i] = state.λw[l] * trans[i] * (state.p[l] - state.p[r])
+function compute_fw(state::OWState, connlist::ConnList)::Nothing
+    l_list, r_list, trans = connlist.l, connlist.r, connlist.trans
+    ΔΨw, λw, fw = state.ΔΨw, state.λw, state.fw
+    for i = 1:connlist.numconn
+        l, r = l_list[i], r_list[i]
+        if ΔΨw[i] > 0.0
+            fw[i] = λw[l] * trans[i] * ΔΨw[i]
         else
-            state.fw[i] = state.λw[r] * trans[i] * (state.p[l] - state.p[r])
+            fw[i] = λw[r] * trans[i] * ΔΨw[i]
         end
     end
     return nothing
 end
+
 
 function compute_ro(
     state::OWState,
@@ -242,8 +344,11 @@ function compute_ro(
     producers::Vector{StandardWell{PRODUCER}},
     dt::Float64,
 )::Nothing
+    connlist = grid.connlist
     compute_ao(state, grid, dt)
-    compute_fo(state, grid)
+    compute_γo(state, connlist)
+    compute_ΔΨo(state, connlist)
+    compute_fo(state, connlist)
     # Accumulation term
     state.ro .= - state.ao
     # Sink / source term
@@ -251,8 +356,8 @@ function compute_ro(
         state.ro[w.ind] -= w.qo
     end
     # Flux term
-    l, r = grid.connlist.l, grid.connlist.r
-    for i = 1:grid.connlist.numconn
+    l, r = connlist.l, connlist.r
+    for i = 1:connlist.numconn
         state.ro[l[i]] -= state.fo[i]
         state.ro[r[i]] += state.fo[i]
     end
@@ -266,8 +371,11 @@ function compute_rw(
     injectors::Vector{StandardWell{INJECTOR}},
     dt::Float64,
 )::Nothing
+    connlist = grid.connlist
     compute_aw(state, grid, dt)
-    compute_fw(state, grid)
+    compute_γw(state, connlist)
+    compute_ΔΨw(state, connlist)
+    compute_fw(state, connlist)
     # Accumulation term
     state.rw .= - state.aw
     # Sink / source term
@@ -278,7 +386,7 @@ function compute_rw(
         state.rw[w.ind] -= w.qw
     end
     # Flux term
-    l, r = grid.connlist.l, grid.connlist.r
+    l, r = connlist.l, connlist.r
     for i = 1:grid.connlist.numconn
         state.rw[l[i]] -= state.fw[i]
         state.rw[r[i]] += state.fw[i]

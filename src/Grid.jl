@@ -25,18 +25,22 @@ struct ConnList
     l::Vector{Int}
     r::Vector{Int}
     trans::Vector{Float64}
+    Δd::Vector{Float64} # Depth Diffrence
     function ConnList(numconn::Int)
         l = Vector{Int}(undef, numconn)
         r = Vector{Int}(undef, numconn)
         trans = Vector{Float64}(undef, numconn)
-        return new(numconn, l, r, trans)
+        Δd = Vector{Float64}(undef, numconn)
+        return new(numconn, l, r, trans, Δd)
     end
 end
 
-function insert_conn(conn::ConnList, ind::Int, l::Int, r::Int, trans::Float64)
-    conn.l[ind] = l
-    conn.r[ind] = r
-    conn.trans[ind] = trans
+function insert_conn(conn::ConnList, i::Int, l::Int, r::Int, trans::Float64, Δd::Float64)::ConnList
+    conn.l[i] = l
+    conn.r[i] = r
+    conn.trans[i] = trans
+    conn.Δd[i] = Δd
+    return conn
 end
 
 # Define struct for Cartesian Grid
@@ -57,7 +61,6 @@ struct CartGrid <: AbstractStructGrid
     ky::Vector{Float64} # Permeability y
     kz::Vector{Float64} # Permeability z
     d::Vector{Float64} # Depth
-
 end
 
 function CartGrid(nx::Int, ny::Int, nz::Int)::CartGrid
@@ -85,6 +88,15 @@ function set_cell_size(
     @assert dx > 0 && dy > 0 && dz > 0
     I = ones(Int, grid.numcell)
     set_cell_size(grid, dx * I, dy * I, dz * I)
+end
+
+function set_cell_depth(grid::AbstractGrid, d::Vector{Float64})::AbstractGrid
+    grid.d .= d
+    return grid
+end
+
+function set_cell_depth(grid::AbstractGrid, d::Float64)::AbstractGrid
+    set_cell_depth(grid, d*ones(grid.numcell))
 end
 
 function set_cell_size(
@@ -138,7 +150,8 @@ function construct_connlist(grid::CartGrid)::CartGrid
                 r = get_grid_index(grid, ii + 1, jj, kk)
                 trans =
                     2 * α * dy[l] * dz[l] / ((dx[l] / kx[l]) + (dx[r] / kx[r]))
-                insert_conn(grid.connlist, count, l, r, trans)
+                Δd = grid.d[l] - grid.d[r]
+                insert_conn(grid.connlist, count, l, r, trans, Δd)
                 count += 1
             end
         end
@@ -151,7 +164,8 @@ function construct_connlist(grid::CartGrid)::CartGrid
                 r = get_grid_index(grid, ii, jj + 1, kk)
                 trans =
                     2 * α * dx[l] * dz[l] / ((dy[l] / ky[l]) + (dy[r] / ky[r]))
-                insert_conn(grid.connlist, count, l, r, trans)
+                Δd = grid.d[l] - grid.d[r]
+                insert_conn(grid.connlist, count, l, r, trans, Δd)
                 count += 1
             end
         end
@@ -164,7 +178,8 @@ function construct_connlist(grid::CartGrid)::CartGrid
                 r = get_grid_index(grid, ii, jj, kk + 1)
                 trans =
                     2 * α * dx[l] * dy[l] / ((dz[l] / kz[l]) + (dz[r] / kz[r]))
-                insert_conn(grid.connlist, count, l, r, trans)
+                Δd = grid.d[l] - grid.d[r]
+                insert_conn(grid.connlist, count, l, r, trans, Δd)
                 count += 1
             end
         end

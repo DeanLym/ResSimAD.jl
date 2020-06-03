@@ -14,6 +14,8 @@ abstract type AbstractState end
 struct OWState <: AbstractState
     numcell::Int
     numvar::Int
+    ρo_std::Float64
+    ρw_std::Float64
     p::Tensor # Pressure
     sw::Tensor  # Wate phase saturation
 
@@ -26,11 +28,17 @@ struct OWState <: AbstractState
     krw::Tensor # Water phase rel-perm
     λo::Tensor # Oil phase mobility
     λw::Tensor # Water phase mobility
+    ρo::Tensor # Oil phase density
+    ρw::Tensor # Water phase density
     ao::Tensor # Oil component accumulation
     aw::Tensor # Water component accumulation
     ro::Tensor # Oil component residual
     rw::Tensor # Water component residual
 
+    γo::Tensor # Oil gravity term for each connection
+    γw::Tensor # Oil gravity term for each connection
+    ΔΨo::Tensor # Oil gravity potential difference for each connection
+    ΔΨw::Tensor # Water gravity potential difference for each connection
     fo::Tensor # Oil component flux
     fw::Tensor # Water component flux
 
@@ -51,6 +59,8 @@ struct OWState <: AbstractState
     function OWState(
         nc::Int,
         nconn::Int,
+        ρo_std::Float64,
+        ρw_std::Float64,
         pvto::AbstractPVTO,
         pvtw::AbstractPVTW,
         swof::AbstractSWOF,
@@ -61,12 +71,12 @@ struct OWState <: AbstractState
 
         #! format: off
         vecs = [:so, :bo, :bw, :μo, :μw, :kro, :krw,
-                    :λo, :λw, :ao, :aw, :ro, :rw]
+                    :λo, :λw, :ρo, :ρw, :ao, :aw, :ro, :rw]
         #! format: on
         tensors = [zeros_tensor(nc, nv) for v in vecs]
 
-        fo = zeros_tensor(nconn, nv) # Oil component flux
-        fw = zeros_tensor(nconn, nv) # Water component flux
+        vecs = [:γo, :γw, :ΔΨo, :ΔΨw, :fo, :fw]
+        conn_tensors = [zeros_tensor(nconn, nv) for v in vecs]
 
         vecs = [:pn, :swn, :son, :bon, :bwn]
         params = [zeros(Float64, nc) for v in vecs]
@@ -76,8 +86,8 @@ struct OWState <: AbstractState
         sw_rec = Vector{Vector{Float64}}()
 
         #! format: off
-        return new(nc, nv, p, sw, tensors..., fo, fw, params...,
-                   pvto, pvtw, swof, t, p_rec, sw_rec)
+        return new(nc, nv, ρo_std, ρw_std, p, sw, tensors..., conn_tensors...,
+                    params..., pvto, pvtw, swof, t, p_rec, sw_rec)
         #! format: on
     end
 end
@@ -127,15 +137,24 @@ end
 function compute_so(so::Tensor, sw::Tensor)::Tensor
     so .= 1 .- sw
 end
-#
+
+function compute_ρo(ρo::Tensor, bo::Tensor, ρo_std::Float64)::Tensor
+    ρo .= ρo_std ./ bo
+end
+
+function compute_ρw(ρw::Tensor, bw::Tensor, ρw_std::Float64)::Tensor
+    ρw .= ρw_std ./ bw
+end
+
 function compute_λo(λo::Tensor, kro::Tensor, μo::Tensor, bo::Tensor)::Tensor
     λo .= kro ./ (μo .* bo)
 end
-#
+
 function compute_λw(λw::Tensor, krw::Tensor, μw::Tensor, bw::Tensor)::Tensor
     λw .= krw ./ (μw .* bw)
 end
-#
+
+
 
 function compute_params(state::OWState)::Nothing
     compute_so(state.so, state.sw)
@@ -145,6 +164,9 @@ function compute_params(state::OWState)::Nothing
     compute_μo(state.pvto, state.μo, state.p)
     compute_bw(state.pvtw, state.bw, state.p)
     compute_μw(state.pvtw, state.μw, state.p)
+
+    compute_ρo(state.ρo, state.bo, state.ρo_std)
+    compute_ρw(state.ρw, state.bw, state.ρw_std)
 
     compute_λo(state.λo, state.kro, state.μo, state.bo)
     compute_λw(state.λw, state.krw, state.μw, state.bw)

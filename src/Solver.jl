@@ -10,10 +10,14 @@ abstract type NonlinearSolver end
 
 # Newton Raphson Solver
 mutable struct NRSolver <: NonlinearSolver
-    max_iter::Int
+    max_newton_iter::Int
     min_err::Float64
     num_iter::Vector{Int}
-    NRSolver() = new(10, 1.0e-6, Vector{Int}())
+    converged::Bool
+    δx::Vector{Float64}
+    residual::Vector{Float64}
+    jac::SparseMatrixCSC{Float64,Int}
+    NRSolver() = new(10, 1.0e-6, Vector{Int}(), false)
 end
 
 function compute_residual_error(state::OWState, grid::AbstractGrid, dt::Float64)
@@ -61,9 +65,17 @@ function update_solution(state::OWState, δx::Vector{Float64})::Nothing
     nc, nv = state.numcell, state.numvar
     var_order = get_var_order(state)
     ivp, ivsw = var_order["p"], var_order["sw"]
-    for i=1:state.numcell
+    for i=1:nc
         state.p[i].val -= δx[nv*(i-1) + ivp]
         state.sw[i].val -= δx[nv*(i-1) + ivsw]
+    end
+    # Bounds check
+    for i =1:nc
+        if state.sw[i].val < 0.0
+            state.sw[i].val = 0.0
+        elseif state.sw[i].val > 1.0
+            state.sw[i].val = 1.0
+        end
     end
 end
 
