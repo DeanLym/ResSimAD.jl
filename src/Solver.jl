@@ -40,25 +40,28 @@ end
 
 function assemble_jacobian(state::OWState)::SparseMatrixCSC{Float64,Int}
     I, J, V = Int[], Int[], Float64[]
-    rw = state.rw
-    ro = state.ro
-    numvar = state.numvar
+    rw, ro, numvar = state.rw, state.ro, state.numvar
     for i =1:state.numcell
         (ind, g) = grad(rw[i])
-        append!(I, (2*i-1) * ones(Int, length(ind) * 2))
+        n = length(ind)
+        v1 = ones(Int, 2*n)
+        v2 = ones(n)
+        v3 = numvar*ind
+        append!(I, (2*i-1)*v1)
         for i = 1:numvar
-            append!(J, numvar*ind .+ (i-numvar))
+            append!(J, v3 + (i-numvar)*v2)
         end
-        append!(V, [x for x in transpose(g).data])
+        append!(V, collect(transpose(g).data))
 
         (ind, g) = grad(ro[i])
-        append!(I, (2*i) * ones(Int, length(ind) * 2))
+        v3 = numvar*ind
+        append!(I, 2*i*v1)
         for i = 1:numvar
-            append!(J, numvar*ind .+ (i-numvar))
+            append!(J,v3 + (i-numvar)*v2)
         end
-        append!(V, [x for x in transpose(g).data])
+        append!(V, collect(transpose(g).data))
     end
-    return sparse(I,J,V)
+    return sparse(I, J, V);
 end
 
 function update_solution(state::OWState, δx::Vector{Float64})::Nothing
