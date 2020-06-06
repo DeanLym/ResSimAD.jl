@@ -14,8 +14,7 @@ mutable struct Scheduler
     ηs::Float64
     t_current::Float64
     t_next::Float64
-    t_end::Float64
-    report_time::Vector{Float64}
+    time_step::Vector{Float64}
     function Scheduler()
         sch = new()
         sch.t0 = 0.0
@@ -28,13 +27,12 @@ mutable struct Scheduler
         sch.ηs = 0.4
         sch.t_current = 0.0
         sch.t_next = sch.t_current + sch.dt
-        sch.t_end = Inf
-        sch.report_time = Vector{Float64}()
+        sch.time_step = [100.]
         return sch
     end
 end
 
-function reset_time_step(sch::Scheduler)
+function reset_dt(sch::Scheduler)
     sch.dt = sch.dt0
     sch.dt_old = sch.dt
 end
@@ -52,7 +50,7 @@ function update_dt(sch::Scheduler, state::OWState, converge::Bool)
     end
     dt = min(sch.dt_old * min(minimum(rp), minimum(rs)), sch.dt_max)
     t_next = sch.t_next
-    for t in sch.report_time
+    for t in sch.time_step
         if (t_next - t)*(t_next + dt - t) < 0
             dt = t - t_next
             break
@@ -64,9 +62,14 @@ function update_dt(sch::Scheduler, state::OWState, converge::Bool)
     return nothing
 end
 
-function set_report_time(scheduler::Scheduler, report_time::Vector{Float64})::Nothing
-    scheduler.report_time = report_time
-    return nothing
+function set_time_step(scheduler::Scheduler, time_step::Vector{Float64})::Vector{Float64}
+    scheduler.time_step = time_step
 end
+
+function insert_time_step(scheduler::Scheduler, t::Float64)::Vector{Float64}
+    push!(scheduler.time_step, t)
+    sort!(scheduler.time_step)
+end
+
 
 end

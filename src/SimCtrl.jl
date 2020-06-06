@@ -17,7 +17,7 @@ using ..State: OWState, AbstractState, set_init_state, change_back_state,
 using ..Well: StandardWell, WellType, Limit, PRODUCER, INJECTOR,
         get_ctrl_mode, compute_wi, compute_qo, compute_qw, save_result
 
-using ..Schedule: Scheduler, update_dt, reset_time_step
+using ..Schedule: Scheduler, update_dt, reset_dt, insert_time_step, set_time_step
 
 using ..Solver: NonlinearSolver, NRSolver, compute_residual_error,
         assemble_residual, assemble_jacobian, update_solution
@@ -84,22 +84,21 @@ function Sim(input::Dict)::Sim
     end
 
     # Construct Scheduler
-    scheduler = Scheduler()
-    scheduler.t_current = 0.0
-    scheduler.t0 = 0.0
-    scheduler.dt_max = get(input, "dt_max", 100.)
-    scheduler.t_end = get(input, "t_end", 100.)
-    scheduler.dt0 = get(input, "dt0", 0.01)
-    reset_time_step(scheduler)
-    scheduler.report_time = get(input, "report_time", [scheduler.t_end])
-    scheduler.t_end = max(scheduler.t_end, scheduler.report_time[end])
+    sch = Scheduler()
+    sch.t_current = 0.0
+    sch.t0 = 0.0
+    sch.dt_max = get(input, "dt_max", 100.)
+    sch.dt0 = get(input, "dt0", 0.01)
+    reset_dt(sch)
+    t_end = get(input, "t_end", 100.)
+    set_time_step(sch, get(input, "time_step", [t_end]))
 
     # Construct Nonlinear Solver
     nsolver = NRSolver()
     nsolver.max_newton_iter = get(input, "max_newton_iter", 10)
     nsolver.min_err = get(input, "min_err", 1.0e-6)
 
-    return Sim(grid, state, scheduler, nsolver, injectors, producers)
+    return Sim(grid, state, sch, nsolver, injectors, producers)
 end
 
 
@@ -152,15 +151,15 @@ function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)
     return nothing
 end
 
-function change_well_target(sim::Sim, name::String, target::Float64; reset_dt=false)::Nothing
+function change_well_target(sim::Sim, name::String, target::Float64; cut_dt=false)::Nothing
     @assert name in keys(sim.producers) || name in keys(sim.injectors)
     if name in keys(sim.producers)
         sim.producers[name].target = target
     else
         sim.injectors[name].target = target
     end
-    if reset_dt
-        reset_time_step(sim.scheduler)
+    if cut_dt
+        reset_dt(sim.scheduler)
     end
     return nothing
 end
@@ -256,9 +255,17 @@ function step(sim::Sim)::Nothing
     return nothing
 end
 
+function step_to(sim::Sim, t::Float64)::Nothing
+    sch = sim.scheduler
+    insert_time_step(sch, t)
+    while sch.t_current < t
+        step(sim)
+    end
+end
+
 function runsim(sim::Sim)::Nothing
     sch = sim.scheduler
-    while sch.t_current < sch.t_end
+    while sch.t_current < sch.time_step[end]
         step(sim)
     end
     return nothing
