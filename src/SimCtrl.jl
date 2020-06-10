@@ -134,7 +134,7 @@ function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     elseif T == INJECTOR
         sim.injectors[name] = init_well(T, well_option, nv, grid)
     end
-    reset_time_step(sim.scheduler)
+    reset_dt(sim.scheduler)
     return nothing
 end
 
@@ -147,7 +147,7 @@ function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)
         sim.injectors[name].mode = get_ctrl_mode[mode]
         sim.injectors[name].target = target
     end
-    reset_time_step(sim.scheduler)
+    reset_dt(sim.scheduler)
     return nothing
 end
 
