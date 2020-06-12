@@ -48,16 +48,16 @@ function assemble_jacobian(state::OWState)::SparseMatrixCSC{Float64,Int}
         v2 = ones(n)
         v3 = numvar*ind
         append!(I, (2*i-1)*v1)
-        for i = 1:numvar
-            append!(J, v3 + (i-numvar)*v2)
+        for j = 1:numvar
+            append!(J, v3 + (j-numvar)*v2)
         end
         append!(V, collect(transpose(g).data))
 
         (ind, g) = grad(ro[i])
         v3 = numvar*ind
         append!(I, 2*i*v1)
-        for i = 1:numvar
-            append!(J,v3 + (i-numvar)*v2)
+        for j = 1:numvar
+            append!(J,v3 + (j-numvar)*v2)
         end
         append!(V, collect(transpose(g).data))
     end
