@@ -15,9 +15,11 @@ end
 
 function save_fluid_results(reservoir::AbstractReservoir, t::Float64)
     for phase in reservoir.fluid.phases
-        push!(phase.p_rec, data(phase.p))
-        push!(phase.s_rec, data(phase.s))
+        phase.p_rec[round(t, digits=6)] = data(phase.p)
+        phase.s_rec[round(t, digits=6)] = data(phase.s)
     end
 end
+
+
 
 end

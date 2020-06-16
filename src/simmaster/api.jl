@@ -127,9 +127,10 @@ end
 
 function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     name = well_option["name"]
-    @assert !(name in keys(sim.wells))
+    @assert !(name in keys(sim.facility))
     T = get_well_type[lowercase(welltype)]
-    nv, grid, rock = sim.fluid.nv, sim.reservoir.grid, sim.reservoir.rock
+    reservoir = sim.reservoir
+    nv, grid, rock = reservoir.fluid.nv, reservoir.grid, reservoir.rock
     sim.facility[name] = init_well(T, well_option, nv, grid, rock)
     reset_dt(sim.scheduler)
     return nothing
@@ -144,7 +145,7 @@ function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)
 end
 
 function change_well_target(sim::Sim, name::String, target::Float64; cut_dt=false)::Nothing
-    @assert name in keys(sim.wells)
+    @assert name in keys(sim.facility)
     sim.facility[name].target = target
     if cut_dt
         reset_dt(sim.scheduler)
@@ -153,12 +154,77 @@ function change_well_target(sim::Sim, name::String, target::Float64; cut_dt=fals
 end
 
 function get_well_rates(sim::Sim, name::String, data::String)
-    @assert name in keys(sim.wells)
+    @assert name in keys(sim.facility)
     return sim.facility[name].results[!, data]
 end
 
 function shut_well(sim::Sim, name::String)::Nothing
-    @assert name in keys(sim.wells)
+    @assert name in keys(sim.facility)
     sim.facility[name].mode = get_ctrl_mode["shut"]
     return nothing
 end
+
+
+## Define some function for convenience
+
+# Define function po(sim), pw(sim), so(sim), sw(sim) ....
+for v in (:p, :s, :b, :μ, :kr, :λ, :ρ, :γ, :ΔΨ, :f, :ρn, :sn, :bn, :ρs, :pvt)
+    for p in ("o", "w", "g")
+        @eval function $(Symbol(v,p))(x::Sim)
+            getfield(x, :reservoir).fluid.phases[Symbol($p)].$v
+        end
+    end
+end
+
+# Define function ao(sim), aw(sim), ro(sim), rw(sim) ....
+for v in (:a, :r)
+    for p in ("o", "w", "g")
+        @eval function $(Symbol(v,p))(x::Sim)
+            getfield(x, :reservoir).fluid.components[Symbol($p)].$v
+        end
+    end
+end
+
+# Define function po_rec(sim), pw_rec(sim) ...
+for v in ("p", "s")
+    for p in ("o", "w", "g")
+        @eval function $(Symbol(v, p, "_rec"))(x::Sim)
+            getfield(getfield(x, :reservoir).fluid.phases[Symbol($p)], Symbol($v, "_rec"))
+        end
+    end
+end
+
+# Define function kx(sim), ϕ(sim) ...
+for v in (:kx, :ky, :kz, :ϕ)
+    @eval function $v(x::Sim)
+        getfield(x, :reservoir).rock.$v
+    end
+end
+
+# Define function nc(sim), nx(sim) ...
+for v in (:nc, :nx, :ny, :nz, :dx, :dy, :dz, :v, :d, :connlist)
+    @eval function $v(x::Sim)
+        getfield(x, :reservoir).grid.$v
+    end
+end
+
+# Define function residual, jacobian
+for v in (:residual, :jac)
+    @eval function $v(x::Sim)
+        getfield(x, :nsolver).$v
+    end
+end
+
+# Define function reservoir(sim), facility(sim) ...
+for v in ("reservoir", "facility", "scheduler", "nsolver", "lsolver")
+    @eval $(Symbol(v))(x::Sim) = getfield(x, Symbol($v))
+end
+# Overwrite getproperty function for sim
+# sim.$symbol = symbol(sim)
+# Now we can use sim.po to get sim.reservoir.fluid.phases.o.p
+# Similarly sim.ro => sim.reservoir.fluid.components.o.r
+# sim.po_rec => sim.reservoir.fluid.phases.o.p_rec
+# At the same time, sim.reservoir sim.facility sim.nsolver ... still works
+
+import Base
+Base.getproperty(x::Sim, s::Symbol) = eval(s)(x)

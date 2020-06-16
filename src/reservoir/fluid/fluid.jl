@@ -36,8 +36,8 @@ struct Phase
     ρs::Float64  # Phase density at standard condition
     pvt::AbstractPVT  # PVT function for formation and viscosity
 
-    p_rec::Vector{Vector{Float64}}
-    s_rec::Vector{Vector{Float64}}
+    p_rec::Dict{Float64, Vector{Float64}}
+    s_rec::Dict{Float64, Vector{Float64}}
 
     function Phase(nc::Int, nconn::Int, nv::Int, ρs::Float64, pvt::AbstractPVT)
         props = (:p, :s, :b, :μ, :kr, :λ, :ρ)
@@ -47,11 +47,10 @@ struct Phase
         props = (:pn, :sn, :bn)
         vec_cell = [zeros(Float64, nc) for _ in props]
         props = (:p_rec, :s_rec)
-        vec_rec = [Vector{Vector{Float64}}() for _ in props]
+        vec_rec = [Dict{Float64, Vector{Float64}}() for _ in props]
         return new(tensor_cell..., tensor_conn..., vec_cell..., ρs, pvt, vec_rec...)
     end
 end
-
 
 struct Component
     a::Tensor   # Cells Component Accumulation

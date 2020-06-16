@@ -42,7 +42,6 @@ function compute_residual(
     return fluid
 end
 
-
 function compute_residual_error(fluid::OWFluid, grid::AbstractGrid, rock::AbstractRock, dt::Float64)
     a = dt .* M ./ (grid.v .* rock.ϕ)
     op, wp = fluid.phases.o, fluid.phases.w
