@@ -1,7 +1,8 @@
 module Schedule
 
-using ..State:OWState
 using ..AutoDiff:data
+using ..Fluid:OWFluid
+
 
 mutable struct Scheduler
     t0::Float64
@@ -37,7 +38,7 @@ function reset_dt(sch::Scheduler)
     sch.dt_old = sch.dt
 end
 
-function update_dt(sch::Scheduler, state::OWState, converge::Bool)
+function update_dt(sch::Scheduler, fluid::OWFluid, converge::Bool)
     if !converge
         sch.dt *= 0.5
         sch.t_next = sch.t_current + sch.dt
@@ -45,8 +46,9 @@ function update_dt(sch::Scheduler, state::OWState, converge::Bool)
     else
         ω, ηp, ηs = sch.ω, sch.ηp, sch.ηs
         sch.dt_old = sch.dt
-        rp = (1+ω)*ηp ./ (abs.(data(state.p) .- state.pn) .+ ω*ηp)
-        rs = (1+ω)*ηs ./ (abs.(data(state.so) .- state.son) .+ ω*ηs)
+        o = fluid.phases.o
+        rp = (1+ω)*ηp ./ (abs.(data(o.p) .- o.pn) .+ ω*ηp)
+        rs = (1+ω)*ηs ./ (abs.(data(o.s) .- o.sn) .+ ω*ηs)
     end
     dt = min(sch.dt_old * min(minimum(rp), minimum(rs)), sch.dt_max)
     t_next = sch.t_next

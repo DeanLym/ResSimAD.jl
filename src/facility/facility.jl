@@ -1,14 +1,15 @@
-module Well
+module Facility
 
 using DataFrames: DataFrame
 using Statistics: mean
 
 using ..Global: α
 using ..AutoDiff:Tensor, zeros_tensor, ones_tensor, data
+using ..Rock:AbstractRock
 using ..Grid:AbstractStructGrid, get_grid_index
-using ..State:AbstractState
+using ..Fluid:AbstractFluid
 
-abstract type AbstractWell end
+abstract type AbstractFacility end
 
 @enum CtrlMode SHUT CBHP CORAT CWRAT CGRAT CLRAT
 @enum Limit MAX_BHP MIN_BHP MAX_ORAT MAX_WRAT MAX_GRAT MAX_LRAT
@@ -23,7 +24,7 @@ const get_ctrl_mode = Dict{String,CtrlMode}(
     "lrat" => CLRAT,
 )
 
-mutable struct StandardWell{T} <: AbstractWell
+mutable struct StandardWell{T} <: AbstractFacility
     name::String
     r::Float64 # Wellbore radius
     ind::Vector{Int} # Perforation gridblock indices
@@ -56,20 +57,18 @@ function StandardWell{T}(
     name::String,
     perforation::Vector{Int},
     radius::Float64,
-    numvar::Int,
+    nv::Int,
 ) where {T}
     p = StandardWell{T}(name)
     p.ind = Vector{Int}()
     append!(p.ind, perforation)
-
     p.r = radius
-
     nperf = length(p.ind) # Number of perforations
     p.wi = Vector{Float64}(undef, nperf)
 
-    p.qo = zeros_tensor(perforation, numvar)
-    p.qw = zeros_tensor(perforation, numvar)
-    p.pw = zeros_tensor(perforation, numvar)
+    p.qo = zeros_tensor(perforation, nv)
+    p.qw = zeros_tensor(perforation, nv)
+    p.pw = zeros_tensor(perforation, nv)
 
     return p
 end
@@ -85,9 +84,9 @@ function save_result(well::StandardWell, t::Float64)
     push!(well.results, [t, qo, qw, qg, pw])
 end
 
-function compute_wi(well::AbstractWell, grid::AbstractStructGrid)::Nothing
+function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::AbstractRock)::Nothing
     ind, r = well.ind, well.r
-    kx, ky, dx, dy, dz = grid.kx, grid.ky, grid.dx, grid.dy, grid.dz
+    kx, ky, dx, dy, dz = rock.kx, rock.ky, grid.dx, grid.dy, grid.dz
     for (i, n) in enumerate(ind)
         kx, ky, dx, dy, dz = kx[n], ky[n], dx[n], dy[n], dz[n]
         r0 = 0.28*√(√(ky/kx)*dx^2 + √(kx/ky)*dy^2) / ((ky/kx)^0.25 + (kx/ky)^0.25)
@@ -96,50 +95,59 @@ function compute_wi(well::AbstractWell, grid::AbstractStructGrid)::Nothing
     return nothing
 end
 
-
-function compute_qo(well::StandardWell{PRODUCER}, state::AbstractState)
-    mode, target = well.mode, well.target
-    ind = well.ind
+function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::Tensor
+    mode, target, ind = well.mode, well.target, well.ind
+    o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
-        well.qo .= well.wi .* state.λo[ind] .* (state.p[ind] .- target)
+        λo, po = o.λ, o.p
+        well.qo .= well.wi .* λo[ind] .* (po[ind] .- target)
     elseif mode == CORAT
-        well.qo .= target * ones_tensor(ind, state.numvar)
+        well.qo .= target * ones_tensor(ind, fluid.nv)
     elseif mode == CLRAT
-        λo, λw = state.λo, state.λw
+        λo, λw = o.λ, w.λ
         well.qo .= λo[ind] ./ (λo[ind] .+ λw[ind]) * target
     elseif mode == SHUT
-        well.qo .= zeros_tensor(ind, state.numvar)
+        well.qo .= zeros_tensor(ind, fluid.nv)
     end
+    return well.qo
+end
+
+
+
+function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::Tensor
+    mode, target, ind = well.mode, well.target, well.ind
+    o, w = fluid.phases.o, fluid.phases.w
+    if mode == CBHP
+        λw, pw = w.λ, w.p
+        well.qw .= well.wi .* λw[ind] .* (pw[ind] .- target)
+    elseif mode == CORAT
+        λo, λw = o.λ, w.λ
+        well.qw .= (λw[ind] ./ λo[ind]) * target
+    elseif mode == CLRAT
+        λo, λw = o.λ, w.λ
+        well.qw .= λw[ind] ./ (λo[ind] .+ λw[ind]) * target
+    elseif mode == SHUT
+        well.qw .= zeros_tensor(ind, fluid.nv)
+    end
+    return well.qw
+end
+
+function compute_qo(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
     return nothing
 end
 
-function compute_qw(well::StandardWell{PRODUCER}, state::AbstractState)
-    mode, target = well.mode, well.target
-    ind = well.ind
+function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::Tensor
+    mode, target, ind = well.mode, well.target, well.ind
+    o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
-        well.qw .= well.wi .* state.λw[ind] .* (state.p[ind] .- target)
-    elseif mode == CORAT
-        λo, λw = state.λo, state.λw
-        well.qw .= (λw[ind] ./ λo[ind]) * target
-    elseif mode == CLRAT
-        λo, λw = state.λo, state.λw
-        well.qw .= λw[ind] ./ (λo[ind] .+ λw[ind]) * target
-    elseif mode == SHUT
-        well.qw .= zeros_tensor(ind, state.numvar)
-    end
-end
-
-function compute_qw(well::StandardWell{INJECTOR}, state::AbstractState)
-    mode, target = well.mode, well.target
-    ind = well.ind
-    if mode == CBHP
-        λo, λw = state.λo, state.λw
-        well.qw .= well.wi .* (λo[ind] .+ λw[ind]) .* (state.p[ind] .- target)
+        λo, λw, pw = o.λ, w.λ, w.p
+        well.qw .= well.wi .* (λo[ind] .+ λw[ind]) .* (pw[ind] .- target)
     elseif mode == CWRAT
-        well.qw .= target * ones_tensor(ind, state.numvar)
+        well.qw .= target * ones_tensor(ind, fluid.nv)
     elseif mode == SHUT
-        well.qw .= zeros_tensor(ind, state.numvar)
+        well.qw .= zeros_tensor(ind, fluid.nv)
     end
+    return well.qw
 end
 
 

@@ -10,7 +10,6 @@ export param, zeros_tensor, Tensor
 const SVec = SVector{Nv, Float64} where {Nv}
 const SMat = SMatrix{Nv, Nc, Float64, L} where {Nv, Nc, L}
 
-
 struct SGrad{Nv}
     ic::Int
     ∇::SVec{Nv}
@@ -39,7 +38,7 @@ mutable struct Variable{T<:Grad} <: Number
     Variable{T}(val::Float64, grad::T) where {T <: Grad} = new(val, grad)
 end
 
-const Tensor = Union{Vector{Variable}, Vector{Variable{T}}}  where{T<:Grad}
+const Tensor = Union{Vector{Float64}, Vector{Variable}, Vector{Variable{T}}}  where{T<:Grad}
 
 Variable(val::Float64, grad::SGrad{Nv}) where {Nv} =
     Variable{SGrad{Nv}}(val, grad)
@@ -277,7 +276,22 @@ function Base.:-(z::DGrad{Nv,L}, w::DGrad{Nv,L}) where {Nv,L}
     end
 end
 
+## MGrad and SGrad
+function Base.:+(z::MGrad{Nv, Nc, Lz}, w::SGrad{Nv}) where {Nv, Nc, Lz}
+    return MGrad{Nv,Nc, Lz}(z.ic,z.∇ + w.∇, z.icn, z.∇n)
+end
 
+function Base.:+(w::SGrad{Nv}, z::MGrad{Nv, Nc, Lz}) where {Nv, Nc, Lz}
+    return MGrad{Nv,Nc, Lz}(z.ic,z.∇ + w.∇, z.icn, z.∇n)
+end
+
+function Base.:-(z::MGrad{Nv, Nc, Lz}, w::SGrad{Nv}) where {Nv, Nc, Lz}
+    return MGrad{Nv,Nc, Lz}(z.ic,z.∇ - w.∇, z.icn, z.∇n)
+end
+
+function Base.:-(w::SGrad{Nv}, z::MGrad{Nv, Nc, Lz}) where {Nv, Nc, Lz}
+    return MGrad{Nv,Nc, Lz}(z.ic,w.∇ - z.∇, z.icn, z.∇n)
+end
 
 ##  MGrad and DGrad
 function Base.:+(z::MGrad{Nv, Nc, Lz}, w::DGrad{Nv,Lw}) where {Nv, Nc, Lz,Lw}

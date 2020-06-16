@@ -1,24 +1,25 @@
 module ResSimAD
 
-include("Global.jl")
-include("AutoDiff.jl")
-include("Grid.jl")
-include("Fluid.jl")
-include("State.jl")
-include("Well.jl")
-include("Schedule.jl")
-include("Solver.jl")
-include("SimCtrl.jl")
+include("utils/global.jl")
+include("utils/inputparse.jl")
+include("autodiff/autodiff.jl")
+include("reservoir/rock/rock.jl")
+include("reservoir/grid/grid.jl")
+include("reservoir/fluid/fluid.jl")
+include("reservoir/reservoir.jl")
+include("facility/facility.jl")
+include("schedule/schedule.jl")
+include("linearsolver/linearsolver.jl")
+include("simmaster/simmaster.jl")
 
 using .AutoDiff:param, zeros_tensor, Tensor
-using .State:OWState
-using .Well:StandardWell
+# using .Facility:StandardWell
 
-using .SimCtrl:Sim, runsim, step, step_to, newton_step, add_well, change_well_mode,
+using .SimMaster:Sim, runsim, step, step_to, newton_step, add_well, change_well_mode,
             change_well_target, shut_well, get_well_rates
 
 export param, zeros_tensor, Tensor
 export Sim, runsim, step, step_to, newton_step
-export StandardWell
+# export StandardWell
 
 end # module
