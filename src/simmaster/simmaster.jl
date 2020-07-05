@@ -21,7 +21,8 @@ using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJ
 
 using ..Schedule: Scheduler, update_dt, reset_dt, insert_time_step, set_time_step
 
-using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver, GMRES_ILU0_Solver, solve
+using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
+        GMRES_ILU0_Solver, GMRES_CPR_Solver, solve
 #! format: on
 
 abstract type NonlinearSolver end
@@ -54,14 +55,20 @@ function newton_step(sim::Sim)::Nothing
     # Assemble residual
     nsolver.residual = assemble_residual(fluid)
     # Assemble jacobian
-    nsolver.jac = assemble_jacobian(fluid)
+    println("Assemble Jacobian")
+    @time nsolver.jac = assemble_jacobian(fluid)
     # Solve equation
-    nsolver.δx = solve(lsolver, nsolver.jac, nsolver.residual)
+    println("Solve Equation")
+    @time nsolver.δx = solve(lsolver, nsolver.jac, nsolver.residual)
+    # println("Solved Equation")
     # Update solution
+    println("Update Solution")
     update_solution(fluid, nsolver.δx)
     # Update dynamic states and then compute new residual
-    update_phases(fluid, grid.connlist)
-    compute_residual(fluid, grid, rock, facility, sch.dt)
+    println("Update Phases")
+    @time update_phases(fluid, grid.connlist)
+    println("Compute Residual")
+    @time compute_residual(fluid, grid, rock, facility, sch.dt)
     nsolver.newton_iter += 1
     return nothing
 end

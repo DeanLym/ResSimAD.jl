@@ -2,462 +2,190 @@ module AutoDiff
 
 using StaticArrays
 import Base
-import Calculus
-using SpecialFunctions
-
-export param, zeros_tensor, Tensor
-
 const SVec = SVector{Nv, Float64} where {Nv}
 const SMat = SMatrix{Nv, Nc, Float64, L} where {Nv, Nc, L}
 
-struct SGrad{Nv}
-    ic::Int
-    ∇::SVec{Nv}
+struct ADScaler{Nv, Nc, L}
+    v::Float64
+    i::SVector{Nc, Int}
+    ∇::SMat{Nv, Nc, L}
 end
 
-struct DGrad{Nv, L}
-    ic::SVector{2, Int}
-    ∇::SMat{Nv, 2, L}
+const ADVector = Vector{T} where T <: ADScaler
+
+## Constructors
+function advector(v::Vector{Float64}, g::SMat{Nv, 1, L}) where{Nv, L}
+    return [ADScaler{Nv, 1, L}(v[i], SA[i], g) for i in eachindex(v)]
 end
 
-struct MGrad{Nv, Nc, L}
-    ic::Int
-    ∇::SVec{Nv}
-    icn::SVector{Nc, Int}
-    ∇n::SMat{Nv, Nc, L}
+function advector(v::Vector{Float64}, iv::Int, nv::Int)
+    g = SMat{nv, 1, nv}([if i==iv 1.0 else 0.0 end for i=1:nv])
+    return new_param(v, g)
 end
 
-MGrad(ic::Int, nv::Int) =
-    MGrad{nv,0,0}(ic, zeros(SVec{nv}), SVector{0,Int}(), SMat{nv,0,0}())
-
-const Grad{Nv, Nc, L} = Union{SGrad{Nv}, DGrad{Nv, L}, MGrad{Nv, Nc}} where {Nv, Nc, L}
-
-mutable struct Variable{T<:Grad} <: Number
-    val::Float64
-    grad::T
-    Variable{T}(val::Float64, grad::T) where {T <: Grad} = new(val, grad)
+## Operator Overload
+function Base.:-(z::Tv) where {Tv <: ADScaler}
+    return Tv(-z.v, z.i, -z.∇)
 end
 
-const Tensor = Union{Vector{Float64}, Vector{Variable}, Vector{Variable{T}}}  where{T<:Grad}
-
-Variable(val::Float64, grad::SGrad{Nv}) where {Nv} =
-    Variable{SGrad{Nv}}(val, grad)
-
-Variable(val::Float64, grad::DGrad{Nv,L}) where {Nv,L} =
-    Variable{DGrad{Nv,L}}(val, grad)
-
-Variable(val::Float64, grad::MGrad{Nv,Nc, L}) where {Nv,Nc,L} =
-    Variable{MGrad{Nv,Nc,L}}(val, grad)
-
-function Variable(val::Float64, ic::Int, grad::SVector{Nv, Float64}) where {Nv}
-    Variable(val, SGrad{Nv}(ic, grad))
+function Base.:+(z::Tv, w::T)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(w+z.v, z.i, z.∇)
 end
 
-
-function param(x::Vector{Float64}, iv::Int, nv::Int)
-    grad = SVector{nv, Float64}([if i==iv 1.0 else 0.0 end for i=1:nv])
-    n = length(x)
-    return [Variable(x[i], i, grad) for i=1:n]
+function Base.:+(w::T, z::Tv)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(w+z.v, z.i, z.∇)
 end
 
-function zeros_tensor(nc::Int, nv::Int)
-    grad = zeros(SVector{nv, Float64})
-    vec = Vector{Variable}([Variable(0.0, i, grad) for i=1:nc])
-    return vec
+function Base.:-(z::Tv, w::T)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(z.v - w, z.i, z.∇)
 end
 
-function zeros_tensor(ind::Vector{Int}, nv::Int)
-    grad = zeros(SVector{nv, Float64})
-    vec = Vector{Variable}([Variable(0.0, i, grad) for i in ind])
-    return vec
+function Base.:-(w::T, z::Tv)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(w - z.v, z.i, -z.∇)
 end
 
-function ones_tensor(nc::Int, nv::Int)
-    grad = zeros(SVector{nv, Float64})
-    vec = Vector{Variable}([Variable(1.0, i, grad) for i=1:nc])
-    return vec
+function Base.:*(z::Tv, w::T)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(w*z.v, z.i, w*z.∇)
 end
 
-function ones_tensor(ind::Vector{Int}, nv::Int)
-    grad = zeros(SVector{nv, Float64})
-    vec = Vector{Variable}([Variable(1.0, i, grad) for i in ind])
-    return vec
+function Base.:*(w::T, z::Tv)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(w*z.v, z.i, w*z.∇)
 end
 
-function grad(x::Variable{MGrad{Nv, Nc, L}}) where {Nv, Nc, L}
-    g = x.grad
-    return vcat(SA[g.ic], g.icn), hcat(g.∇, g.∇n)
+function Base.:/(z::Tv, w::T)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(z.v/w, z.i, z.∇/w)
 end
 
-function grad(x::Variable{DGrad{Nv, L}}) where {Nv, L}
-    return x.grad.ic, x.grad.∇
+function Base.:/(w::T, z::Tv)::Tv where {Tv<:ADScaler, T<:Real}
+    return Tv(w/z.v, z.i, -w*z.∇/z.v^2)
 end
 
-function grad(x::Variable{SGrad{Nv}}) where {Nv}
-    return SA[x.grad.ic], SMat{Nv, 1, Nv}(x.grad.∇)
+function Base.:^(z::Tv, n::T) where {Tv<:ADScaler, T<:Real}
+    return Tv(z.v^n, z.i, z.∇*n*z.v^(n-1))
 end
 
-function data(t::Tensor)::Vector{Float64}
-    return [x.val for x in t]
-end
-
-## Operator overload
-# SGrad and Real
-function Base.:-(z::SGrad{Nv})::SGrad{Nv} where {Nv}
-    return SGrad{Nv}(z.ic, -z.∇)
-end
-
-function Base.:*(z::SGrad{Nv}, w::Real)::SGrad{Nv} where {Nv}
-    return SGrad{Nv}(z.ic, z.∇*w)
-end
-
-function Base.:*(w::Real, z::SGrad{Nv})::SGrad{Nv} where {Nv}
-    return SGrad{Nv}(z.ic, w*z.∇)
-end
-
-function Base.:/(z::SGrad{Nv}, w::Real)::SGrad{Nv} where {Nv}
-    return SGrad{Nv}(z.ic, z.∇/w)
-end
-
-function Base.:/(w::Real, z::SGrad{Nv})::SGrad{Nv} where {Nv}
-    return SGrad{Nv}(z.ic, w/z.∇)
-end
-
-# SGrad and SGrad
-function Base.:+(z::SGrad{Nv}, w::SGrad{Nv}) where {Nv}
-    if z.ic == w.ic
-        return SGrad{Nv}(z.ic, z.∇ + w.∇)
-    elseif z.ic < w.ic
-        return DGrad{Nv, 2*Nv}(SA[z.ic, w.ic], hcat(z.∇, w.∇))
+## SVar and SVar
+function Base.:+(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 1, Nv}) where {Nv}
+    zi, wi = z.i[1], w.i[1]
+    if zi == wi
+        return ADScaler{Nv, 1, Nv}(z.v + w.v, z.i, z.∇ + w.∇)
+    elseif wi < zi
+        return ADScaler{Nv, 2, 2*Nv}(z.v + w.v, hcat(w.i, z.i), hcat(w.∇, z.∇))
     else
-        return DGrad{Nv, 2*Nv}(SA[w.ic, z.ic], hcat(w.∇, z.∇))
+        return ADScaler{Nv, 2, 2*Nv}(z.v + w.v, hcat(z.i, w.i), hcat(z.∇, w.∇))
     end
 end
 
-function Base.:-(z::SGrad{Nv}, w::SGrad{Nv}) where {Nv}
-    if z.ic == w.ic
-        return SGrad{Nv}(z.ic, z.∇ - w.∇)
-    elseif z.ic < w.ic
-        return DGrad{Nv, 2*Nv}(SA[z.ic, w.ic], hcat(z.∇, -w.∇))
+function Base.:-(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 1, Nv}) where {Nv}
+    zi, wi = z.i[1], w.i[1]
+    if zi == wi
+        return ADScaler{Nv, 1, Nv}(z.v - w.v, z.i, z.∇ - w.∇)
+    elseif wi < zi
+        return ADScaler{Nv, 2, 2*Nv}(z.v - w.v, hcat(w.i, z.i), hcat(-w.∇, z.∇))
     else
-        return DGrad{Nv, 2*Nv}(SA[w.ic, z.ic], hcat(-w.∇, z.∇))
+        return ADScaler{Nv, 2, 2*Nv}(z.v - w.v, hcat(z.i, w.i), hcat(z.∇, -w.∇))
     end
 end
 
-# DGrad Real
-function Base.:-(z::DGrad{Nv, L})::DGrad{Nv, L} where {Nv, L}
-    return DGrad{Nv, L}(z.ic, -z.∇)
-end
-
-function Base.:*(z::DGrad{Nv, L}, w::Real)::DGrad{Nv, L} where {Nv, L}
-    return DGrad{Nv, L}(z.ic, z.∇*w)
-end
-
-function Base.:*(w::Real, z::DGrad{Nv, L})::DGrad{Nv, L} where {Nv, L}
-    return DGrad{Nv, L}(z.ic, w*z.∇)
-end
-
-function Base.:/(z::DGrad{Nv, L}, w::Real)::DGrad{Nv, L} where {Nv, L}
-    return DGrad{Nv, L}(z.ic, z.∇/w)
-end
-
-function Base.:/(w::Real, z::DGrad{Nv, L})::DGrad{Nv, L} where {Nv, L}
-    return DGrad{Nv, L}(z.ic, w/z.∇)
-end
-
-# SGrad and DGrad
-function Base.:+(z::SGrad{Nv}, w::DGrad{Nv, L})::DGrad{Nv, L} where {Nv, L}
-    g = zeros(SVector{Nv, Float64})
-    if z.ic == w.ic[1]
-        return DGrad{Nv, L}(w.ic, hcat(z.∇, g) + w.∇)
+function Base.:*(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 1, Nv}) where {Nv}
+    zi, wi = z.i[1], w.i[1]
+    if zi == wi
+        return ADScaler{Nv, 1, Nv}(z.v * w.v, z.i, w.v*z.∇ + z.v*w.∇)
+    elseif wi < zi
+        return ADScaler{Nv, 2, 2*Nv}(z.v * w.v, hcat(w.i, z.i), hcat(z.v*w.∇, w.v*z.∇))
     else
-        return DGrad{Nv, L}(w.ic, hcat(g, z.∇) + w.∇)
+        return ADScaler{Nv, 2, 2*Nv}(z.v * w.v, hcat(z.i, w.i), hcat(w.v*z.∇, z.v*w.∇))
     end
 end
 
-function Base.:+(w::DGrad{Nv, L}, z::SGrad{Nv})::DGrad{Nv, L} where {Nv, L}
-    g = zeros(SVector{Nv, Float64})
-    if z.ic == w.ic[1]
-        return DGrad{Nv, L}(w.ic, hcat(z.∇, g) + w.∇)
+function Base.:/(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 1, Nv}) where {Nv}
+    zv, wv = z.v, w.v
+    zi, wi = z.i[1], w.i[1]
+    if zi == wi
+        return ADScaler{Nv, 1, Nv}(zv / wv, z.i,  (wv*z.∇ - zv*w.∇) / (wv*wv))
+    elseif wi < zi
+        return ADScaler{Nv, 2, 2*Nv}(zv / wv, hcat(w.i, z.i), hcat(-zv/(wv*wv)*w.∇, z.∇/wv))
     else
-        return DGrad{Nv, L}(w.ic, hcat(g, z.∇) + w.∇)
+        return ADScaler{Nv, 2, 2*Nv}(zv / wv, hcat(z.i, w.i), hcat(z.∇/wv, -zv/(wv*wv)*w.∇))
     end
 end
 
-function Base.:-(z::SGrad{Nv}, w::DGrad{Nv, L})::DGrad{Nv, L} where {Nv, L}
-    g = zeros(SVector{Nv, Float64})
-    if z.ic == w.ic[1]
-        return DGrad{Nv, L}(w.ic, hcat(z.∇, g) - w.∇)
+## SVar and DVar
+function Base.:+(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 2, L})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(z.v+w.v, w.i, hcat(z.∇, g) + w.∇)
     else
-        return DGrad{Nv, L}(w.ic, hcat(g, z.∇) - w.∇)
+        return ADScaler{Nv, 2, L}(z.v+w.v, w.i, hcat(g, z.∇) + w.∇)
     end
 end
 
-function Base.:-(w::DGrad{Nv, L}, z::SGrad{Nv})::DGrad{Nv, L} where {Nv, L}
-    g = zeros(SVector{Nv, Float64})
-    if z.ic == w.ic[1]
-        return DGrad{Nv, L}(w.ic, hcat(-z.∇, g) + w.∇)
+function Base.:+(w::ADScaler{Nv, 2, L}, z::ADScaler{Nv, 1, Nv})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(z.v+w.v, w.i, hcat(z.∇, g) + w.∇)
     else
-        return DGrad{Nv, L}(w.ic, hcat(g, -z.∇) + w.∇)
+        return ADScaler{Nv, 2, L}(z.v+w.v, w.i, hcat(g, z.∇) + w.∇)
     end
 end
 
-##
-# DGrad and DGrad
-function Base.:+(z::DGrad{Nv,L}, w::DGrad{Nv,L}) where {Nv,L}
-    zic, wic = z.ic, w.ic
-    z∇, w∇ = z.∇, w.∇
-    if zic == wic #zic and wic are sorted
-        return DGrad{Nv, L}(zic, z∇ + w∇)
-    elseif zic[2] == wic[1]
-        return MGrad{Nv,2,2 * Nv}(
-            zic[2],
-            z∇[:, 2] + w∇[:, 1],
-            SA[zic[1], wic[2]],
-            hcat(z∇[:, 1], w∇[:, 2]),
-        )
-    elseif zic[1] == wic[2]
-        return MGrad{Nv,2,2 * Nv}(
-            zic[1],
-            z∇[:, 1] + w∇[:, 2],
-            SA[zic[2], wic[1]],
-            hcat(z∇[:, 2], w∇[:, 1]),
-        )
-    elseif zic[1] == wic[1]
-        return MGrad{Nv,2,2 * Nv}(
-            zic[1],
-            z∇[:, 1] + w∇[:, 1],
-            SA[zic[2], wic[2]],
-            hcat(z∇[:, 2], w∇[:, 2]),
-        )
+function Base.:-(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 2, L})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(z.v-w.v, w.i, hcat(z.∇, g) - w.∇)
     else
-        return MGrad{Nv,2,2 * Nv}(
-            zic[2],
-            z∇[:, 2] + w∇[:, 2],
-            SA[zic[1], wic[1]],
-            hcat(z∇[:, 1], w∇[:, 1]),
-        )
+        return ADScaler{Nv, 2, L}(z.v-w.v, w.i, hcat(g, z.∇) - w.∇)
     end
 end
 
-function Base.:-(z::DGrad{Nv,L}, w::DGrad{Nv,L}) where {Nv,L}
-    zic, wic = z.ic, w.ic
-    z∇, w∇ = z.∇, w.∇
-    if zic == wic #zic and wic are sorted
-        return DGrad{Nv, L}(zic, z∇ - w∇)
-    elseif zic[2] == wic[1]
-        return MGrad{Nv,2,2 * Nv}(
-            zic[2],
-            z∇[:, 2] - w∇[:, 1],
-            SA[zic[1], wic[2]],
-            hcat(z∇[:, 1], -w∇[:, 2]),
-        )
-    elseif zic[1] == wic[2]
-        return MGrad{Nv,2,2 * Nv}(
-            zic[1],
-            z∇[:, 1] - w∇[:, 2],
-            SA[zic[2], wic[1]],
-            hcat(z∇[:, 2], -w∇[:, 1]),
-        )
-    elseif zic[1] == wic[1]
-        return MGrad{Nv,2,2 * Nv}(
-            zic[1],
-            z∇[:, 1] - w∇[:, 1],
-            SA[zic[2], wic[2]],
-            hcat(z∇[:, 2], -w∇[:, 2]),
-        )
+function Base.:-(w::ADScaler{Nv, 2, L}, z::ADScaler{Nv, 1, Nv})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(w.v - z.v, w.i, w.∇ - hcat(z.∇, g))
     else
-        return MGrad{Nv,2,2 * Nv}(
-            zic[2],
-            z∇[:, 2] - w∇[:, 2],
-            SA[zic[1], wic[1]],
-            hcat(z∇[:, 1], -w∇[:, 1]),
-        )
+        return ADScaler{Nv, 2, L}(w.v - z.v, w.i, w.∇ - hcat(g, z.∇))
     end
 end
 
-## MGrad and SGrad
-function Base.:+(z::MGrad{Nv, Nc, Lz}, w::SGrad{Nv}) where {Nv, Nc, Lz}
-    return MGrad{Nv,Nc, Lz}(z.ic,z.∇ + w.∇, z.icn, z.∇n)
-end
-
-function Base.:+(w::SGrad{Nv}, z::MGrad{Nv, Nc, Lz}) where {Nv, Nc, Lz}
-    return MGrad{Nv,Nc, Lz}(z.ic,z.∇ + w.∇, z.icn, z.∇n)
-end
-
-function Base.:-(z::MGrad{Nv, Nc, Lz}, w::SGrad{Nv}) where {Nv, Nc, Lz}
-    return MGrad{Nv,Nc, Lz}(z.ic,z.∇ - w.∇, z.icn, z.∇n)
-end
-
-function Base.:-(w::SGrad{Nv}, z::MGrad{Nv, Nc, Lz}) where {Nv, Nc, Lz}
-    return MGrad{Nv,Nc, Lz}(z.ic,w.∇ - z.∇, z.icn, z.∇n)
-end
-
-##  MGrad and DGrad
-function Base.:+(z::MGrad{Nv, Nc, Lz}, w::DGrad{Nv,Lw}) where {Nv, Nc, Lz,Lw}
-    zic, wic = z.ic, w.ic
-    w∇ = w.∇
-    if zic == wic[1]
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            z.∇ + w∇[:, 1],
-            vcat(z.icn, SA[wic[2]]),
-            hcat(z.∇n, w∇[:, 2]),
-        )
+function Base.:*(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 2, L})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    zv, wv = z.v, w.v
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(zv*wv, w.i, hcat(wv*z.∇, g) + zv*w.∇)
     else
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            z.∇ + w∇[:, 2],
-            vcat(z.icn, SA[wic[1]]),
-            hcat(z.∇n, w∇[:, 1]),
-        )
+        return ADScaler{Nv, 2, L}(zv*wv, w.i, hcat(g, wv*z.∇) + zv*w.∇)
     end
 end
 
-function Base.:+(w::DGrad{Nv,Lw}, z::MGrad{Nv, Nc, Lz}) where {Nv, Nc, Lz,Lw}
-    zic, wic = z.ic, w.ic
-    w∇ = w.∇
-    if zic == wic[1]
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            z.∇ + w∇[:, 1],
-            vcat(z.icn, SA[wic[2]]),
-            hcat(z.∇n, w∇[:, 2]),
-        )
+function Base.:*(w::ADScaler{Nv, 2, L}, z::ADScaler{Nv, 1, Nv})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    zv, wv = z.v, w.v
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(zv*wv, w.i, hcat(wv*z.∇, g) + zv*w.∇)
     else
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            z.∇ + w∇[:, 2],
-            vcat(z.icn, SA[wic[1]]),
-            hcat(z.∇n, w∇[:, 1]),
-        )
+        return ADScaler{Nv, 2, L}(zv*wv, w.i, hcat(g, wv*z.∇) + zv*w.∇)
     end
 end
 
-function Base.:-(z::MGrad{Nv, Nc, Lz}, w::DGrad{Nv,Lw}) where {Nv, Nc, Lz,Lw}
-    zic, wic = z.ic, w.ic
-    w∇ = w.∇
-    if zic == wic[1]
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            z.∇ - w∇[:, 1],
-            vcat(z.icn, SA[wic[2]]),
-            hcat(z.∇n, -w∇[:, 2]),
-        )
+function Base.:/(z::ADScaler{Nv, 1, Nv}, w::ADScaler{Nv, 2, L})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    zv, wv = z.v, w.v
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(zv/wv, w.i, hcat(z.∇/wv, g) - zv/(wv*wv)*w.∇)
     else
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            z.∇ - w∇[:, 2],
-            vcat(z.icn, SA[wic[1]]),
-            hcat(z.∇n, -w∇[:, 1]),
-        )
+        return ADScaler{Nv, 2, L}(zv/wv, w.i, hcat(g, z.∇/wv) - zv/(wv*wv)*w.∇)
     end
 end
 
-function Base.:-(w::DGrad{Nv,Lw}, z::MGrad{Nv, Nc, Lz}) where {Nv, Nc, Lz,Lw}
-    zic, wic = z.ic, w.ic
-    w∇ = w.∇
-    if zic == wic[1]
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            w∇[:, 1] - z.∇,
-            vcat(z.icn, SA[wic[2]]),
-            hcat(-z.∇n, w∇[:, 2]),
-        )
+function Base.:/(w::ADScaler{Nv, 2, L}, z::ADScaler{Nv, 1, Nv})::ADScaler{Nv, 2, L} where {Nv, L}
+    g = zeros(SMat{Nv, 1, Nv})
+    zv, wv = z.v, w.v
+    if z.i[1] == w.i[1]
+        return ADScaler{Nv, 2, L}(wv/zv, w.i, hcat(-wv/(zv*zv)*z.∇, g) + w.∇/zv)
     else
-        return MGrad{Nv,Nc+1, Nv*(Nc+1)}(
-            zic,
-            w∇[:, 2] - z.∇,
-            vcat(z.icn, SA[wic[1]]),
-            hcat(-z.∇n, w∇[:, 1]),
-        )
+        return ADScaler{Nv, 2, L}(wv/zv, w.i, hcat(g, -wv/(zv*zv)*z.∇) + w.∇/zv)
     end
 end
 
-## Auto Diff Rule
-
-Base.:(==)(z::Variable, w::Variable)   = z.val == w.val
-Base.:(==)(z::Variable, x::Real)   = z.val == x
-Base.:(==)(x::Real, z::Variable)   = z.val == x
-
-Base.isequal(z::Variable, w::Variable)  = isequal(z.val,w.val) && isequal(z.grad, w.grad)
-Base.isequal(z::Variable, x::Real)   = isequal(z.val, x) && isempty(z.grad)
-Base.isequal(x::Real, z::Variable)   = isequal(z, x)
-
-Base.isless(z::Variable,w::Variable)   = z.val < w.val
-Base.isless(z::Real,w::Variable)   = z < w.val
-Base.isless(z::Variable,w::Real)   = z.val < w
-
-Base.floor(z::Variable)  = floor(z.val)
-Base.ceil(z::Variable)   = ceil(z.val)
-Base.trunc(z::Variable)  = trunc(z.val)
-Base.round(z::Variable)  = round(z.val)
-Base.floor(::Type{T}, z::Variable) where {N, T<:Real} = floor(T, z.val)
-Base.trunc(::Type{T}, z::Variable) where {N, T<:Real} = trunc(T, z.val)
-Base.ceil( ::Type{T}, z::Variable) where {N, T<:Real} = ceil( T, z.val)
-Base.round(::Type{T}, z::Variable) where {N, T<:Real} = round(T, z.val)
-
-Base.abs(z::Variable) = z ≥ 0 ? z : -z
-
-Base.:+(z::Variable, w::Variable)   = Variable(z.val + w.val, z.grad +w.grad)
-Base.:+(z::Real, w::Variable)   = Variable(z+w.val, w.grad)
-Base.:+(z::Variable, w::Real)   = Variable(z.val+w, z.grad)
-
-Base.:-(z::Variable)   = Variable(-z.val, -z.grad)
-Base.:-(z::Variable, w::Variable)   = Variable(z.val - w.val, z.grad - w.grad)
-Base.:-(z::Real, w::Variable)   = Variable(z-w.val, -w.grad)
-Base.:-(z::Variable, w::Real)   = Variable(z.val-w, z.grad)
-
-Base.:*(z::Variable, w::Variable)   = Variable(z.val * w.val, z.grad*w.val+z.val*w.grad)
-Base.:*(x::Real, z::Variable)   = Variable(x*z.val, x*z.grad)
-Base.:*(z::Variable, x::Number)   = Variable(x*z.val, x*z.grad)
-
-Base.:/(z::Variable, w::Variable)   = Variable(z.val/w.val, (z.grad*w.val-z.val*w.grad)/(w.val*w.val))
-Base.:/(z::Real, w::Variable)   = Variable(z/w.val, -z*w.grad/w.val^2)
-Base.:/(z::Variable, x::Real)   = Variable(z.val/x, z.grad/x)
-
-
-Base.:^(z::Variable, n::Integer)  = Variable(z.val^n, z.grad*n*z.val^(n-1))
-Base.:^(z::Variable, n::Rational)   = Variable(z.val^n, z.grad*n*z.val^(n-1))
-
-Base.:^(z::Variable, n::Real)   = Variable(z.val^n, z.grad*n*z.val^(n-1))
-
-function Base.:^(z::Variable, w::Variable)
-    val = Base.:^(z.val, w.val)
-    grad = z.grad * w.val * Base.:^(z.val, w.val - 1) +
-         w.grad * Base.:^(z.val, w.val) * log(z.val)
-    return Variable(val, grad)
-end
-
-Base.mod(z::Variable, n::Real)   = Variable(mod(z.val, n), z.grad)
-
-Base.inv(z::Variable)  = Variable(inv(z.val),-z.grad/z.val^2)
-
-
-for (funsym, exp) in Calculus.symbolic_derivatives_1arg()
-    funsym == :exp && continue
-    funsym == :abs2 && continue
-    funsym == :inv && continue
-    if isdefined(SpecialFunctions, funsym)
-        @eval function SpecialFunctions.$(funsym)(z::Variable)
-            x = z.val
-            xp = z.grad
-            Variable($(funsym)(x),xp*$exp)
-        end
-    elseif isdefined(Base, funsym)
-        @eval function Base.$(funsym)(z::Variable)
-            x = z.val
-            xp = z.grad
-            Variable($(funsym)(x),xp*$exp)
-        end
-    end
-end
-
-# only need to compute exp/cis once
-Base.exp(z::Variable)  = (expval = exp(z.val); Variable(expval, z.grad*expval))
-Base.exp10(x::Variable)  = (y = exp10(x.val); Variable(y, y * log(10) * x.grad))
-
-Base.sinpi(z::Variable)  = Variable(sinpi(z.val), z.grad*cospi(z.val)*π)
-Base.cospi(z::Variable)  = Variable(cospi(z.val), -z.grad*sinpi(z.val)*π)
 
 end

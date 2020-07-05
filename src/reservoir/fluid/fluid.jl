@@ -137,13 +137,20 @@ function update_phase_tn(phase::Phase)::Phase
 end
 
 function update_phase(phase::Phase, connlist::ConnList)::Phase
-    compute_b(phase)
-    compute_μ(phase)
-    compute_ρ(phase)
-    compute_λ(phase)
-    compute_γ(phase, connlist)
-    compute_ΔΨ(phase, connlist)
-    compute_f(phase, connlist)
+    println("SGrad")
+    @time begin
+        compute_b(phase)
+        compute_μ(phase)
+        compute_ρ(phase)
+        compute_λ(phase)
+    end
+    println("DGrad")
+    @time begin
+        compute_γ(phase, connlist)
+        compute_ΔΨ(phase, connlist)
+        compute_f(phase, connlist)
+    end
+
     return phase
 end
 

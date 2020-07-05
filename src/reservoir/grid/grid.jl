@@ -25,4 +25,17 @@ function set_cell_depth(grid::AbstractGrid, d::Float64)::AbstractGrid
     set_cell_depth(grid, d*ones(grid.nc))
 end
 
+function construct_neighbors(grid::AbstractGrid)::Vector{Vector{Int}}
+    neighbors = grid.neighbors
+    connlist = grid.connlist
+    for i = 1:grid.nc
+        neighbors[i] = [i]
+    end
+    for i = 1:connlist.nconn
+        push!(neighbors[connlist.l[i]], connlist.r[i])
+        push!(neighbors[connlist.r[i]], connlist.l[i])
+    end
+    return neighbors
+end
+
 end

@@ -20,14 +20,16 @@ struct CartGrid <: AbstractStructGrid
     d::Vector{Float64} # Depth
 
     connlist::ConnList
+    neighbors::Vector{Vector{Int64}}
 end
 
 function CartGrid(nx::Int, ny::Int, nz::Int)::CartGrid
     nc = nx*ny*nz
     vecs = (:dx, :dy, :dz, :v, :d)
     params = [Vector{Float64}(undef, nc) for v in vecs]
+    neighbors = Vector{Vector{Int}}(undef, nc)
     # !format: off
-    return CartGrid(nc, nx, ny, nz, params..., ConnList())
+    return CartGrid(nc, nx, ny, nz, params..., ConnList(), neighbors)
     # !format: on
 end
 
@@ -110,5 +112,6 @@ function construct_connlist(grid::CartGrid, rock::AbstractRock)::ConnList
         end
     end
     connlist.nconn = length(connlist.trans)
+    construct_neighbors(grid)
     return connlist
 end

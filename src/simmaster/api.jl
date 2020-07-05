@@ -87,8 +87,11 @@ function Sim(input::Dict)::Sim
     nsolver.min_err = get(input, "min_err", 1.0e-6)
     # Construct Linear Solver
     solver_type = get(input, "linear_solver", "GMRES_ILU0")
+    τ = get(input, "τ", 0.1)
     if solver_type == "GMRES_ILU0"
-        lsolver = GMRES_ILU0_Solver()
+        lsolver = GMRES_ILU0_Solver(τ=τ)
+    elseif solver_type == "GMRES_CPR"
+        lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors, τ=τ)
     else
         lsolver = Julia_BackSlash_Solver()
     end
