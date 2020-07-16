@@ -1,7 +1,7 @@
 module Schedule
 
-using ..AutoDiff:data
-using ..Fluid:OWFluid
+using ..AutoDiff:value
+using ..Fluid:OWFluid, SPFluid
 
 
 mutable struct Scheduler
@@ -47,8 +47,8 @@ function update_dt(sch::Scheduler, fluid::OWFluid, converge::Bool)
         ω, ηp, ηs = sch.ω, sch.ηp, sch.ηs
         sch.dt_old = sch.dt
         o = fluid.phases.o
-        rp = (1+ω)*ηp ./ (abs.(data(o.p) .- o.pn) .+ ω*ηp)
-        rs = (1+ω)*ηs ./ (abs.(data(o.s) .- o.sn) .+ ω*ηs)
+        rp = (1+ω)*ηp ./ (abs.(value(o.p) .- o.pn) .+ ω*ηp)
+        rs = (1+ω)*ηs ./ (abs.(value(o.s) .- o.sn) .+ ω*ηs)
     end
     dt = min(sch.dt_old * min(minimum(rp), minimum(rs)), sch.dt_max)
     t_next = sch.t_next
@@ -60,7 +60,7 @@ function update_dt(sch::Scheduler, fluid::OWFluid, converge::Bool)
     end
     sch.dt = dt
     sch.t_current = sch.t_next
-    sch.t_next = sch.t_current + dt
+    sch.t_next = round(sch.t_current + dt, digits=10)
     return nothing
 end
 
@@ -73,5 +73,30 @@ function insert_time_step(scheduler::Scheduler, t::Float64)::Vector{Float64}
     sort!(scheduler.time_step)
 end
 
+
+function update_dt(sch::Scheduler, fluid::SPFluid, converge::Bool)
+    if !converge
+        sch.dt *= 0.5
+        sch.t_next = sch.t_current + sch.dt
+        return nothing
+    else
+        ω, ηp = sch.ω, sch.ηp
+        sch.dt_old = sch.dt
+        phase = fluid.phases[1]
+        rp = minimum((1+ω)*ηp ./ (abs.(value(phase.p) .- phase.pn) .+ ω*ηp))
+    end
+    dt = min(sch.dt_old * rp, sch.dt_max)
+    t_next = sch.t_next
+    for t in sch.time_step
+        if (t_next - t)*(t_next + dt - t) < 0
+            dt = t - t_next
+            break
+        end
+    end
+    sch.dt = dt
+    sch.t_current = sch.t_next
+    sch.t_next = round(sch.t_current + dt, digits=10)
+    return nothing
+end
 
 end

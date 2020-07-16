@@ -13,11 +13,20 @@ mutable struct ConnList
     end
 end
 
-
 function add_conn(conn::ConnList, l::Int, r::Int, trans::Float64, Δd::Float64)::ConnList
     push!(conn.l, l)
     push!(conn.r, r)
     push!(conn.trans, trans)
     push!(conn.Δd, Δd)
     return conn
+end
+
+function sort_conn(conn::ConnList)
+    # Force l[i] < r[i]
+    l, r = conn.l, conn.r
+    for i in eachindex(l)
+        if r[i] < l[i]
+            l[i], r[i] = r[i], l[i]
+        end
+    end
 end

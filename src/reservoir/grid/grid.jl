@@ -35,6 +35,11 @@ function construct_neighbors(grid::AbstractGrid)::Vector{Vector{Int}}
         push!(neighbors[connlist.l[i]], connlist.r[i])
         push!(neighbors[connlist.r[i]], connlist.l[i])
     end
+    # Sort neighbors
+    for i = 1:grid.nc
+        sort!(neighbors[i])
+    end
+    @. grid.num_neighbors = length(grid.neighbors)
     return neighbors
 end
 

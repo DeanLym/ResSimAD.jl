@@ -27,9 +27,12 @@ end
 
 function parse_input_fluid(input::Dict)::Dict
     state_type = input["fluid"]
+
     if state_type == "OW"
-        v = ("po", "sw")
-        for p in v input[p] = convert_float2vec(input[p], input["nc"]) end
+        input["po"] = convert_float2vec(input["po"], input["nc"])
+        input["sw"] = convert_float2vec(input["sw"], input["nc"])
+    else
+        input["p"] = convert_float2vec(input["p"], input["nc"])
     end
     return input
 end

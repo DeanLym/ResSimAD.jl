@@ -5,19 +5,19 @@ using SparseArrays:sparse, SparseMatrixCSC
 
 #! format: off
 using ..Global: M, α, β, g_, gc
-using ..AutoDiff: param, data, ones_tensor, zeros_tensor, grad
+using ..AutoDiff: advector, value, grad, index
 using ..InputParse: parse_input_grid, parse_input_rock, parse_input_fluid
 
-using ..Grid: CartGrid, AbstractGrid, construct_connlist, set_cell_depth,
-                get_grid_index, set_cell_size
+using ..Grid: CartGrid, AbstractGrid, ConnList, construct_connlist, set_cell_depth,
+                get_grid_index, set_cell_size, sort_conn
 using ..Rock: AbstractRock, StandardRock, set_perm, set_poro
-using ..Fluid: AbstractFluid, OWFluid, PVT, PVTC, SWOFTable, SWOFCorey,
-                set_fluid_tn, update_phases, compute_a, update_primary_variable,
+using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
+                set_fluid_tn, update_phases, update_primary_variable,
                 update_fluid_tn, reset_primary_variable
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
 using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJECTOR,
-        get_ctrl_mode, compute_wi, compute_qo, compute_qw, save_result
+        get_ctrl_mode, compute_wi, compute_qo, compute_qw, compute_ql, save_result
 
 using ..Schedule: Scheduler, update_dt, reset_dt, insert_time_step, set_time_step
 
@@ -26,6 +26,8 @@ using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
 #! format: on
 
 abstract type NonlinearSolver end
+abstract type Assembler end
+
 
 struct Sim
     reservoir::AbstractReservoir
@@ -45,6 +47,7 @@ mutable struct NRSolver <: NonlinearSolver
     δx::Vector{Float64}
     residual::Vector{Float64}
     jac::SparseMatrixCSC{Float64,Int}
+    assembler::Assembler
     NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false)
 end
 
@@ -53,23 +56,23 @@ function newton_step(sim::Sim)::Nothing
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
     # Assemble residual
-    nsolver.residual = assemble_residual(fluid)
+    assemble_residual(nsolver, fluid)
     # Assemble jacobian
-    println("Assemble Jacobian")
-    @time nsolver.jac = assemble_jacobian(fluid)
+    # println("\nAssemble Jacobian")
+    assemble_jacobian(nsolver, fluid, facility)
     # Solve equation
-    println("Solve Equation")
-    @time nsolver.δx = solve(lsolver, nsolver.jac, nsolver.residual)
+    # println("Solve Equation")
+    solve(lsolver, nsolver.δx, nsolver.jac, nsolver.residual)
     # println("Solved Equation")
     # Update solution
-    println("Update Solution")
-    update_solution(fluid, nsolver.δx)
+    update_solution(nsolver, fluid)
     # Update dynamic states and then compute new residual
-    println("Update Phases")
-    @time update_phases(fluid, grid.connlist)
-    println("Compute Residual")
-    @time compute_residual(fluid, grid, rock, facility, sch.dt)
+    # println("Update Phases")
+    update_phases(fluid, grid.connlist)
+    # println("Compute Residual")
+    compute_residual(fluid, grid, rock, facility, sch.dt)
     nsolver.newton_iter += 1
+    println("Newton Step ", nsolver.newton_iter)
     return nothing
 end
 
@@ -77,7 +80,7 @@ function step(sim::Sim)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
-    println(sch.t_next)
+    print("Day ", sch.t_next)
     while true
         # Check convergence
         err = compute_residual_error(fluid, grid, rock, sch.dt)
@@ -103,7 +106,7 @@ function step(sim::Sim)::Nothing
     end
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)
-    println("NumNewton: $(nsolver.newton_iter)\n")
+    println("  NumNewton:", nsolver.newton_iter)
     nsolver.newton_iter = 0
     return nothing
 end
@@ -132,5 +135,6 @@ end
 
 include("api.jl")
 include("owfluid_solver.jl")
+include("spfluid_solver.jl")
 
 end

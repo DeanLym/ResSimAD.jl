@@ -11,10 +11,11 @@ struct Julia_BackSlash_Solver <: AbstractLinearSolver end
 
 function solve(
     solver::Julia_BackSlash_Solver,
+    δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
 )::Vector{Float64}
-    return jac \ residual
+    residual .= jac \ residual
 end
 
 ## GMRES Solver with ILU0 preconditioner
@@ -26,16 +27,17 @@ end
 
 function solve(
     solver::GMRES_ILU0_Solver,
+    δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
 )::Vector{Float64}
-    println("Setup ILU")
-    @time prec = ilu(jac, τ=solver.τ)
-    println("GMRES")
-    @time δx, log = gmres(jac, residual, Pl=prec, log=true)
-    println("Number iteration:", log.iters)
+    # println("Setup ILU")
+    prec = ilu(jac, τ=solver.τ)
+    # println("GMRES")
+    _, log = gmres!(δx, jac, residual, Pl=prec, log=true)
+    # println("Number iteration:", log.iters)
     push!(solver.iterations, log.iters)
-    return δx
+    return residual
 end
 
 ## GMRES Solver with CPR preconditioner
@@ -58,16 +60,17 @@ end
 
 function solve(
     solver::GMRES_CPR_Solver,
+    δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
 )::Vector{Float64}
     # println("Setup CPR Preconditioner")
     setup_cpr_preconditioner(solver.cpr_prec, jac)
     println("GMRES")
-    @time δx, log = gmres(jac, residual, Pl=solver.cpr_prec, log=true)
+    @time log = gmres!(δx, residual, jac, Pl=solver.cpr_prec, log=true)
     println("Number iteration:", log.iters)
     push!(solver.iterations, log.iters)
-    return δx
+    return residual
 end
 
 end

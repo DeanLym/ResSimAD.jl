@@ -4,10 +4,10 @@ using DataFrames: DataFrame
 using Statistics: mean
 
 using ..Global: α
-using ..AutoDiff:Tensor, zeros_tensor, ones_tensor, data
+using ..AutoDiff:ADVector, advector, value
 using ..Rock:AbstractRock
 using ..Grid:AbstractStructGrid, get_grid_index
-using ..Fluid:AbstractFluid
+using ..Fluid:AbstractFluid, SPFluid
 
 abstract type AbstractFacility end
 
@@ -35,9 +35,10 @@ mutable struct StandardWell{T} <: AbstractFacility
 
     limits::Dict{Limit, Float64}
 
-    qo::Tensor # Oil Rate
-    qw::Tensor # Water Rate
-    pw::Tensor # Wellbore pressure
+    qo::ADVector # Oil Rate
+    qw::ADVector # Water Rate
+    ql::ADVector # Liquid Rate
+    pw::ADVector # Wellbore pressure
 
     results::DataFrame
 
@@ -52,7 +53,6 @@ mutable struct StandardWell{T} <: AbstractFacility
     end
 end
 
-
 function StandardWell{T}(
     name::String,
     perforation::Vector{Int},
@@ -66,22 +66,23 @@ function StandardWell{T}(
     nperf = length(p.ind) # Number of perforations
     p.wi = Vector{Float64}(undef, nperf)
 
-    p.qo = zeros_tensor(perforation, nv)
-    p.qw = zeros_tensor(perforation, nv)
-    p.pw = zeros_tensor(perforation, nv)
+    p.qo = advector(nperf, 1, nv)
+    p.qw = advector(nperf, 1, nv)
+    p.ql = advector(nperf, 1, nv)
+    p.pw = advector(nperf, 1, nv)
 
     return p
 end
 
 function init_results_df()
     Vec = Vector{Float64}
-    DataFrame(Time=Vec(), ORAT=Vec(), WRAT=Vec(), GRAT=Vec(), WBHP=Vec())
+    DataFrame(Time=Vec(), ORAT=Vec(), WRAT=Vec(), GRAT=Vec(), LRAT=Vec(), WBHP=Vec())
 end
 
 function save_result(well::StandardWell, t::Float64)
-    qo, qw, qg = sum(data(well.qo)), sum(data(well.qw)), 0.0
-    pw = mean(data(well.pw))
-    push!(well.results, [t, qo, qw, qg, pw])
+    qo, qw, qg, ql = sum(value(well.qo)), sum(value(well.qw)), 0.0, sum(value(well.ql))
+    pw = mean(value(well.pw))
+    push!(well.results, [t, qo, qw, qg, ql, pw])
 end
 
 function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::AbstractRock)::Nothing
@@ -95,59 +96,75 @@ function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::Abstract
     return nothing
 end
 
-function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::Tensor
+function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
         λo, po = o.λ, o.p
-        well.qo .= well.wi .* λo[ind] .* (po[ind] .- target)
+        @. well.qo = well.wi * λo[ind] * (po[ind] - target)
     elseif mode == CORAT
-        well.qo .= target * ones_tensor(ind, fluid.nv)
+        @. well.qo = target + 0.0 * o.p[ind]
     elseif mode == CLRAT
         λo, λw = o.λ, w.λ
-        well.qo .= λo[ind] ./ (λo[ind] .+ λw[ind]) * target
+        @. well.qo = λo[ind] / (λo[ind] + λw[ind]) * target
     elseif mode == SHUT
-        well.qo .= zeros_tensor(ind, fluid.nv)
+        @. well.qo = 0.0 * o.p[ind]
     end
     return well.qo
 end
 
-
-
-function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::Tensor
+function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
         λw, pw = w.λ, w.p
-        well.qw .= well.wi .* λw[ind] .* (pw[ind] .- target)
+        @. well.qw = well.wi * λw[ind] * (pw[ind] - target)
     elseif mode == CORAT
         λo, λw = o.λ, w.λ
-        well.qw .= (λw[ind] ./ λo[ind]) * target
+        @. well.qw = (λw[ind] / λo[ind]) * target
     elseif mode == CLRAT
         λo, λw = o.λ, w.λ
-        well.qw .= λw[ind] ./ (λo[ind] .+ λw[ind]) * target
+        @. well.qw = λw[ind] / (λo[ind] + λw[ind]) * target
     elseif mode == SHUT
-        well.qw .= zeros_tensor(ind, fluid.nv)
+        @. well.qw = 0.0 * w.p[ind]
     end
     return well.qw
 end
 
+
+
 function compute_qo(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
-    return nothing
+    @. well.qo = 0.0 * fluid.phases.o.p[well.ind]
+    return well.qo
 end
 
-function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::Tensor
+function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
         λo, λw, pw = o.λ, w.λ, w.p
-        well.qw .= well.wi .* (λo[ind] .+ λw[ind]) .* (pw[ind] .- target)
+        @. well.qw = well.wi * (λo[ind] + λw[ind]) * (pw[ind] - target)
     elseif mode == CWRAT
-        well.qw .= target * ones_tensor(ind, fluid.nv)
+        @. well.qw = target + 0.0*w.p[ind]
     elseif mode == SHUT
-        well.qw .= zeros_tensor(ind, fluid.nv)
+        @. well.qw = 0.0*w.p[ind]
     end
     return well.qw
+end
+
+
+function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
+    mode, target, ind = well.mode, well.target, well.ind
+    phase = fluid.phases[1]
+    if mode == CBHP
+        λ, p = phase.λ, phase.p
+        @. well.ql = well.wi * λ[ind] * (p[ind] - target)
+    elseif mode == CLRAT
+        @. well.ql = target + 0.0 * phase.p[ind]
+    elseif mode == SHUT
+        @. well.ql = 0.0 * phase.p[ind]
+    end
+    return well.ql
 end
 
 

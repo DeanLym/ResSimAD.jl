@@ -12,13 +12,13 @@ include("schedule/schedule.jl")
 include("linearsolver/linearsolver.jl")
 include("simmaster/simmaster.jl")
 
-using .AutoDiff:param, zeros_tensor, Tensor
+using .AutoDiff:value
 # using .Facility:StandardWell
 
 using .SimMaster:Sim, runsim, step, step_to, newton_step, add_well, change_well_mode,
             change_well_target, shut_well, get_well_rates
 
-export param, zeros_tensor, Tensor
+export value
 export Sim, runsim, step, step_to, newton_step
 # export StandardWell
 

@@ -17,12 +17,17 @@ struct SWOFCorey <: AbstractKROW
 end
 
 function SWOFTable(fn::String)
-    table = CSV.read(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1)
-    table = DataFrame(table)
-    rename!(table, [:sw, :krw, :kro, :pcw])
-    krw = interpolate((table.sw,), table.krw, Gridded(Linear()))
-    kro = interpolate((reverse(1 .- table.sw),), reverse(table.kro), Gridded(Linear()))
-    return SWOFTable(krw, kro, table)
+    # table = CSV.read(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1)
+    # table = DataFrame(table)
+    df = DataFrame!(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
+    rename!(df, [:sw, :krw, :kro, :pcw])
+    # Add flat extrapolation
+    insert!.(eachcol(df), 1, [-1.e30, df[1, :krw], df[1, :kro], df[1, :pcw])
+    insert!.(eachcol(df), size(df)[1]+1, [1.e30, df[end,:krw], df[end,:kro], df[end,:pcw])
+    #
+    krw = interpolate((df.sw,), df.krw, Gridded(Linear()))
+    kro = interpolate((reverse(1 .- df.sw),), reverse(df.kro), Gridded(Linear()))
+    return SWOFTable(krw, kro, df)
 end
 
 
@@ -40,7 +45,7 @@ function SWOFCorey(param::Dict{String, Float64})
     return SWOFCorey(params..., ds)
 end
 
-function get_krw(krow::SWOFCorey, krw::Tensor, sw::Tensor)::Tensor
+function get_krw(krow::SWOFCorey, krw::ADVector, sw::ADVector)::ADVector
     krw0, ds, swl, swr, aw = krow.krw0, krow.ds, krow.swi, 1 - krow.sor, krow.aw
     for i = 1:length(sw)
         if sw[i] <= swl
@@ -54,7 +59,7 @@ function get_krw(krow::SWOFCorey, krw::Tensor, sw::Tensor)::Tensor
     return krw
 end
 
-function get_kro(krow::SWOFCorey, kro::Tensor, so::Tensor)::Tensor
+function get_kro(krow::SWOFCorey, kro::ADVector, so::ADVector)::ADVector
     kro0, ds, sor, sol, ao = krow.kro0, krow.ds, krow.sor, 1 - krow.swi, krow.ao
     for i = 1:length(sw)
         if so[i] <= sor
@@ -68,10 +73,10 @@ function get_kro(krow::SWOFCorey, kro::Tensor, so::Tensor)::Tensor
     return kro
 end
 
-function get_krw(krow::SWOFTable, krw::Tensor, sw::Tensor)::Tensor
+function get_krw(krow::SWOFTable, krw::ADVector, sw::ADVector)::ADVector
     krw .= krow.krw.(sw)
 end
 
-function get_kro(krow::SWOFTable, kro::Tensor, so::Tensor)::Tensor
+function get_kro(krow::SWOFTable, kro::ADVector, so::ADVector)::ADVector
     kro .= krow.kro.(so)
 end

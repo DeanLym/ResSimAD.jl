@@ -10,7 +10,6 @@ function init_grid(input::Dict)
     dx, dy, dz = input["dx"], input["dy"], input["dz"]
     set_cell_size(grid, dx, dy, dz)
     set_cell_depth(grid, input["d"])
-    # construct_connlist(grid)
     return grid, input
 end
 
@@ -24,6 +23,27 @@ end
 
 function init_fluid(input::Dict, grid::AbstractGrid)
     input = parse_input_fluid(input)
+    fluid = input["fluid"]
+    if fluid == "OW"
+        return init_owfluid(input, grid)
+    elseif fluid ∈ ["OIL", "WATER", "GAS"]
+        return init_spfluid(input, grid)
+    end
+end
+
+function init_spfluid(input::Dict, grid::AbstractGrid)
+    if input["PVT"] == "PVDO.DAT"
+        pvt = PVT(input["PVT"])
+    elseif input["PVT"] == "PVCDO.DAT"
+        pvt = PVTC(input["PVT"])
+    end
+    ρ = get(input, "ρ", 49.1)
+    nc, nconn = grid.nc, grid.connlist.nconn
+    fluid = SPFluid(nc, nconn, ρ, pvt; name=input["fluid"])
+    return fluid, input
+end
+
+function init_owfluid(input::Dict, grid::AbstractGrid)
     # Construct Property Tables
     if "SWOF" in keys(input)
         krow = SWOFTable(input["SWOF"])
@@ -42,13 +62,28 @@ function init_fluid(input::Dict, grid::AbstractGrid)
     return fluid, input
 end
 
+function set_init_solution(input::Dict, fluid::AbstractFluid)
+    if input["fluid"] == "OW"
+        # Update State
+        po, sw = input["po"], input["sw"]
+        set_fluid_tn(fluid, po, sw)
+        update_primary_variable(fluid, po, sw)
+    elseif input["fluid"] ∈ ["OIL", "WATER", "GAS"]
+        p = input["p"]
+        set_fluid_tn(fluid, p)
+        update_primary_variable(fluid, p)
+    end
+end
+
 function Sim(input::Dict)::Sim
     # Init Grid
     (grid, input) = init_grid(input)
     # Init Rock
     (rock, input) = init_rock(input)
     # Construct ConnList
+    # println("Construct ConnList")
     construct_connlist(grid, rock)
+    sort_conn(grid.connlist)
     # Init State
     (fluid, input) = init_fluid(input, grid)
     # Init Reservoir
@@ -56,19 +91,18 @@ function Sim(input::Dict)::Sim
     # Construct Wells
     wells = Dict{String, AbstractFacility}()
     well_names = Set{String}()
-    nv = fluid.nv
     for p in input["producers"]
         name = p["name"]
         @assert !(name in well_names)
         push!(well_names, name)
-        wells[name] = init_well(PRODUCER, p, nv, grid, rock)
+        wells[name] = init_well(PRODUCER, p, fluid.nv, grid, rock)
     end
 
     for p in input["injectors"]
         name = p["name"]
         @assert !(name in well_names)
         push!(well_names, name)
-        wells[p["name"]] = init_well(INJECTOR, p, nv, grid, rock)
+        wells[p["name"]] = init_well(INJECTOR, p, fluid.nv, grid, rock)
     end
 
     # Construct Scheduler
@@ -96,12 +130,15 @@ function Sim(input::Dict)::Sim
         lsolver = Julia_BackSlash_Solver()
     end
 
-    # Update State
-    po, sw = input["po"], input["sw"]
-    set_fluid_tn(fluid, po, sw)
-    update_primary_variable(fluid, po, sw)
+    set_init_solution(input, fluid)
+    # println("Update Phases")
     update_phases(fluid, grid.connlist)
+    # println("Compute Residual")
     compute_residual(fluid, grid, rock, wells, sch.dt)
+
+    # Init residual and jacobian
+    # println("Init residual and jacobian")
+    init_nsolver(nsolver, grid, fluid)
     return Sim(reservoir, wells, sch, nsolver, lsolver)
 end
 
@@ -171,7 +208,7 @@ end
 ## Define some function for convenience
 
 # Define function po(sim), pw(sim), so(sim), sw(sim) ....
-for v in (:p, :s, :b, :μ, :kr, :λ, :ρ, :γ, :ΔΨ, :f, :ρn, :sn, :bn, :ρs, :pvt)
+for v in (:p, :s, :b, :μ, :kr, :λ, :ρ, :γ, :ΔΨ, :f, :pn, :sn, :bn, :ρs, :pvt)
     for p in ("o", "w", "g")
         @eval function $(Symbol(v,p))(x::Sim)
             getfield(x, :reservoir).fluid.phases[Symbol($p)].$v
