@@ -8,13 +8,11 @@ struct PVT <: AbstractPVT
 end
 
 function PVT(fn::String)
-    # table = CSV.read(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1)
-    # table = DataFrame(table)
     df = DataFrame!(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
     rename!(df, [:p, :b, :μ])
     # Add flat extrapolation
-    insert!.(eachcol(df), 1, [-1.e30, df[1,:b], df[1,:μ])
-    insert!.(eachcol(df), size(df)[1]+1, [1.e30, df[end,:b], df[end,:μ])
+    insert!.(eachcol(df), 1, [-1.e30, df[1,:b], df[1,:μ]])
+    insert!.(eachcol(df), size(df)[1]+1, [1.e30, df[end,:b], df[end,:μ]])
     #
     b = interpolate((df.p,), df.b, Gridded(Linear()))
     μ = interpolate((df.p,), df.μ, Gridded(Linear()))
@@ -44,8 +42,6 @@ function PVTC(param::Dict{String, Float64})
 end
 
 function PVTC(fn::String)
-    # table = CSV.read(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1)
-    # table = DataFrame(table)
     table = DataFrame!(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
     vecs = [:pref, :bref, :c, :μref, :cμ]
     rename!(table, vecs)
