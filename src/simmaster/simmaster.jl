@@ -80,7 +80,7 @@ function step(sim::Sim)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
-    print("Day ", sch.t_next)
+    println("Day ", sch.t_next)
     while true
         # Check convergence
         err = compute_residual_error(fluid, grid, rock, sch.dt)
@@ -103,6 +103,7 @@ function step(sim::Sim)::Nothing
         update_fluid_tn(fluid)
     else
         reset_primary_variable(fluid)
+        println("=== Not Converged ===")
     end
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)

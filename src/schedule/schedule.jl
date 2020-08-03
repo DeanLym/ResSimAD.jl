@@ -36,6 +36,7 @@ end
 function reset_dt(sch::Scheduler)
     sch.dt = sch.dt0
     sch.dt_old = sch.dt
+    sch.t_next = sch.t_current + sch.dt
 end
 
 function update_dt(sch::Scheduler, fluid::OWFluid, converge::Bool)
