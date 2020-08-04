@@ -176,6 +176,38 @@ function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     return nothing
 end
 
+"""
+    change_well_mode(sim::Sim, name::String, mode::String, target::Float64)
+
+Change the control mode of well `name` to be `mode` with target value `target`
+
+# Arguments
+- `sim::Sim`: Sim object
+- `name::String`: name of the well
+- `mode::String`: target mode
+    - "bhp": constant BHP
+    - "shut": shut-in
+    - "orat": constant oil rate
+    - "wrat": constant water rate
+    - "lrat": constatnt liquid rate
+- `target::Float64`
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, change_well_mode
+
+julia> sim, options = get_model("example1");
+
+julia> change_well_mode(sim, "P1", "bhp", 6200.);
+
+julia> println(sim.facility["P1"].mode)
+CBHP
+
+julia> println(sim.facility["P1"].target)
+6200.0
+```
+
+"""
 function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)::Nothing
     @assert name in keys(sim.facility)
     sim.facility[name].mode = get_ctrl_mode[mode]
@@ -184,6 +216,32 @@ function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)
     return nothing
 end
 
+"""
+    change_well_target(sim::Sim, name::String, target::Float64; cut_dt=false)
+
+Change the control target of well `name` to be `target`. cut time step to be
+`sim.scheduler.dt0` if `cut_dt=true`
+
+# Arguments
+- `sim::Sim`: Sim object
+- `name::String`: name of the well
+- `target::Float64`
+- `cut_dt::Boolean`
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, change_well_target
+
+julia> sim, options = get_model("example1");
+
+julia> change_well_target(sim, "P1", 6200.);
+
+julia> println(sim.facility["P1"].target)
+6200.0
+
+```
+
+"""
 function change_well_target(sim::Sim, name::String, target::Float64; cut_dt=false)::Nothing
     @assert name in keys(sim.facility)
     sim.facility[name].target = target
@@ -193,6 +251,41 @@ function change_well_target(sim::Sim, name::String, target::Float64; cut_dt=fals
     return nothing
 end
 
+"""
+    get_well_rates(sim::Sim, name::String, data::String)
+
+Get column `data` from dataframe `sim.facility[name].results`
+
+# Arguments
+- `sim::Sim`: Sim object
+- `name::String`: name of the well
+- `data::String`: column name
+    - "Time": Time steps
+    - "ORAT": Oil rate
+    - "WRAT": Water rate
+    - "GRAT": Gas rate
+    - "LRAT": Liquid rate
+    - "WBHP": BHP
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, runsim, get_well_rates, SILENT
+
+julia> sim, options = get_model("example1");
+
+julia> runsim(sim, verbose=SILENT);
+
+julia> tstep = get_well_rates(sim, "P1", "Time");
+
+julia> qo = get_well_rates(sim, "P1", "ORAT");
+
+julia> length(tstep) > 0
+true
+julia> length(qo) > 0
+true
+```
+
+"""
 function get_well_rates(sim::Sim, name::String, data::String)
     @assert name in keys(sim.facility)
     return sim.facility[name].results[!, data]

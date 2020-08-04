@@ -28,6 +28,8 @@ using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
 abstract type NonlinearSolver end
 abstract type Assembler end
 
+@enum Verbose SILENT BRIEF DEBUG ALL
+
 """
     Sim
 
@@ -55,7 +57,7 @@ mutable struct NRSolver <: NonlinearSolver
     NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false)
 end
 
-function newton_step(sim::Sim)::Nothing
+function newton_step(sim::Sim; verbose=BRIEF)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
@@ -76,15 +78,15 @@ function newton_step(sim::Sim)::Nothing
     # println("Compute Residual")
     compute_residual(fluid, grid, rock, facility, sch.dt)
     nsolver.newton_iter += 1
-    println("Newton Step ", nsolver.newton_iter)
+    if verbose >= DEBUG println("Newton Step ", nsolver.newton_iter) end
     return nothing
 end
 
-function step(sim::Sim)::Nothing
+function step(sim::Sim; verbose=BRIEF)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
-    println("Day ", sch.t_next)
+    if verbose >= BRIEF println("Day ", sch.t_next) end
     while true
         # Check convergence
         err = compute_residual_error(fluid, grid, rock, sch.dt)
@@ -97,7 +99,7 @@ function step(sim::Sim)::Nothing
             nsolver.converged = false
             break
         end
-        newton_step(sim)
+        newton_step(sim; verbose=verbose)
     end
     update_dt(sch, fluid, nsolver.converged)
     push!(nsolver.num_iter, nsolver.newton_iter)
@@ -107,16 +109,16 @@ function step(sim::Sim)::Nothing
         update_fluid_tn(fluid)
     else
         reset_primary_variable(fluid)
-        println("=== Not Converged ===")
+        if verbose >= BRIEF println("=== Not Converged ===") end
     end
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)
-    println("  NumNewton:", nsolver.newton_iter)
+    if verbose >= BRIEF println("  NumNewton:", nsolver.newton_iter) end
     nsolver.newton_iter = 0
     return nothing
 end
 
-function step_to(sim::Sim, t::Float64)::Nothing
+function step_to(sim::Sim, t::Float64; verbose=BRIEF)::Nothing
     sch = sim.scheduler
     insert_time_step(sch, t)
     while sch.t_current < t
@@ -124,10 +126,10 @@ function step_to(sim::Sim, t::Float64)::Nothing
     end
 end
 
-function runsim(sim::Sim)::Nothing
+function runsim(sim::Sim; verbose=BRIEF)::Nothing
     sch = sim.scheduler
     while sch.t_current < sch.time_step[end]
-        step(sim)
+        step(sim; verbose=verbose)
     end
     return nothing
 end

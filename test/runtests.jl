@@ -1,6 +1,3 @@
-using ResSimAD
-using Test
+using Test, Documenter, ResSimAD
 
-@testset "ResSimAD.jl" begin
-    # Write your own tests here.
-end
+doctest(ResSimAD, manual=false)
