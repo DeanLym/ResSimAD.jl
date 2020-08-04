@@ -13,13 +13,11 @@ include("linearsolver/linearsolver.jl")
 include("simmaster/simmaster.jl")
 
 using .AutoDiff:value
-# using .Facility:StandardWell
 
 using .SimMaster:Sim, runsim, step, step_to, newton_step, add_well, change_well_mode,
             change_well_target, shut_well, get_well_rates
 
 export value
 export Sim, runsim, step, step_to, newton_step
-# export StandardWell
 
 end # module

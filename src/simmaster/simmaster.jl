@@ -28,7 +28,11 @@ using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
 abstract type NonlinearSolver end
 abstract type Assembler end
 
+"""
+    Sim
 
+Main Sim object
+"""
 struct Sim
     reservoir::AbstractReservoir
     facility::Dict{String, AbstractFacility}
