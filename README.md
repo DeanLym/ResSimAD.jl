@@ -36,11 +36,12 @@ ResSimAD.jl is currently a private repository. If you have access to this reposi
 please download the source code. Then install manually with
 
 ```julia
-] dev ResSimAD.jl
+] add ResSimAD.jl
 ```
 
 ## Examples
 Example models are available in src/models/
+
 Code for simulating the example models is available in examples/
 
 ## Documentation

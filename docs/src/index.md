@@ -1,9 +1,10 @@
-# ResSimAD.jl Documentation
+# ResSimAD.jl
 
 [![Build Status](https://travis-ci.com/DeanLym/ResSimAD.jl.svg?token=zPX8pK8q8xHrqbTxACjW&branch=master)](https://travis-ci.com/DeanLym/ResSimAD.jl)
 
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://deanlym.github.io/ResSimAD.jl/dev/)
 
-A Reservoir Simulator in a modern programming language.
+A reservoir simulator in a modern programming language.
 
 ## Features
 - Interactivity: run simulations in interactive programming environments such as Jupyter notebook or Juno. With the PyJulia python module, ResSimAD.jl is also accessible from Python.
@@ -31,18 +32,22 @@ For a limited number of test problems, the speed of ResSimAD.jl is comparable to
 - File IO can be completely avoid when using ResSimAD.jl in an interactive environment. Simulation results can stay in memory before they are analyzed or visualized for downstream tasks.
 
 ## Installation
-ResSimAD.jl is not registered, you must install it by cloning. To add this package, use:
+ResSimAD.jl is currently a private repository. If you have access to this repository,
+please download the source code. Then install manually with
 
 ```julia
-Pkg.clone("https://github.com/DeanLym/ResSimAD.jl")
+] add ResSimAD.jl
 ```
 
 ## Examples
-ResSimAD.jl examples are available in the examples folder.
+Example models are available in src/models/
 
+Code for simulating the example models is available in examples/
 
+## Contents
 ```@contents
 ```
 
+## Index
 ```@index
 ```
