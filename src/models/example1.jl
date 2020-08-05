@@ -22,7 +22,6 @@ Example model one.
     - t_end: 1825 Day
 """
 function example1()
-    sim_dir = @__DIR__;
     ## Specify input
     # Grid and Rock
     options = Dict();
@@ -34,9 +33,9 @@ function example1()
     options["fluid"] = "OW"
     options["po"] = 6000.;
     options["sw"] = 0.1;
-    options["PVDO"] = joinpath(sim_dir, "PVDO.DAT");
-    options["PVTW"] = joinpath(sim_dir, "PVTW.DAT");
-    options["SWOF"] = joinpath(sim_dir, "SWOF.DAT");
+    options["PVDO"] = ResSimAD.get_table("PVDO.DAT");
+    options["PVTW"] = ResSimAD.get_table("PVTW.DAT");
+    options["SWOF"] = ResSimAD.get_table("SWOF.DAT");
     # Wells
     options["producers"] = [];
     p1 = Dict();

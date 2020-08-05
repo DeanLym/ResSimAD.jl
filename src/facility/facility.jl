@@ -76,7 +76,7 @@ end
 
 function init_results_df()
     Vec = Vector{Float64}
-    DataFrame(Time=Vec(), ORAT=Vec(), WRAT=Vec(), GRAT=Vec(), LRAT=Vec(), WBHP=Vec())
+    DataFrame(TIME=Vec(), ORAT=Vec(), WRAT=Vec(), GRAT=Vec(), LRAT=Vec(), WBHP=Vec())
 end
 
 function save_result(well::StandardWell, t::Float64)
@@ -166,6 +166,5 @@ function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
     end
     return well.ql
 end
-
 
 end

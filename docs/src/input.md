@@ -1,3 +1,5 @@
+# Input Options
+
 ```@meta
 DocTestSetup = quote
     options = Dict()

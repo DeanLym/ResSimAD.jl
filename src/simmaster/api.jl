@@ -153,7 +153,7 @@ function init_well(T::WellType, well_option::Dict, nv::Int, grid::CartGrid, rock
     #
     well = StandardWell{T}(name, perf, radius, nv)
     # Set control mode and target
-    well.mode = get_ctrl_mode[well_option["mode"]]
+    well.mode = get_ctrl_mode[lowercase(well_option["mode"])]
     well.target = well_option["target"]
     # Set limits
     limits = get(well_option, "limits", Dict{Limit, Float64}())
@@ -165,6 +165,41 @@ function init_well(T::WellType, well_option::Dict, nv::Int, grid::CartGrid, rock
     return well
 end
 
+"""
+    add_well(sim::Sim, welltype::String, well_option::Dict)
+
+Add one well of type `welltype`, with well setups specified in `well_option`
+
+# Arguments
+- `sim::Sim`: Sim object
+- `welltype::String`: type of the well (case insensitive)
+    - "injector": injector
+    - "producer": producer
+- `well_option::Dict`: well setups with keys
+    - "name" -> String, name of the well
+    - "perforation" -> Vector{Tuple{Int, Int, Int}}, indices for perforated blocks
+    - "radius" -> Float64, well radius
+    - "mode" -> String, well control mode
+    - "target" -> Float64, well constrol target
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, add_well
+
+julia> sim, options = get_model("example1");
+
+julia> length(keys(sim.facility))
+2
+
+julia> p2 = Dict("name" => "P2", "perforation"=>[(5,5,1)], "radius"=>0.5, "mode"=>"bhp", "target"=>5600.);
+
+julia> add_well(sim, "producer", p2);
+
+julia> length(keys(sim.facility))
+3
+
+```
+"""
 function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     name = well_option["name"]
     @assert !(name in keys(sim.facility))
@@ -184,7 +219,7 @@ Change the control mode of well `name` to be `mode` with target value `target`
 # Arguments
 - `sim::Sim`: Sim object
 - `name::String`: name of the well
-- `mode::String`: target mode
+- `mode::String`: target mode, not case sensitive
     - "bhp": constant BHP
     - "shut": shut-in
     - "orat": constant oil rate
@@ -210,7 +245,7 @@ julia> println(sim.facility["P1"].target)
 """
 function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)::Nothing
     @assert name in keys(sim.facility)
-    sim.facility[name].mode = get_ctrl_mode[mode]
+    sim.facility[name].mode = get_ctrl_mode[lowercase(mode)]
     sim.facility[name].target = target
     reset_dt(sim.scheduler)
     return nothing
@@ -288,15 +323,29 @@ true
 """
 function get_well_rates(sim::Sim, name::String, data::String)
     @assert name in keys(sim.facility)
-    return sim.facility[name].results[!, data]
+    return sim.facility[name].results[!, uppercase(data)]
 end
 
+"""
+    shut_well(sim::Sim, name::String)
+
+Shut well `name`
+
+"""
 function shut_well(sim::Sim, name::String)::Nothing
     @assert name in keys(sim.facility)
     sim.facility[name].mode = get_ctrl_mode["shut"]
     return nothing
 end
 
+"""
+    change_dt(sim::Sim, dt::Float64)
+
+Set next time step size to be `dt`
+"""
+function change_dt(sim::Sim, dt::Float64)
+    set_dt(sim.scheduler, dt)
+end
 
 ## Define some function for convenience
 
@@ -345,6 +394,13 @@ end
 for v in (:residual, :jac)
     @eval function $v(x::Sim)
         getfield(x, :nsolver).$v
+    end
+end
+
+# Define dt(sim), t_current(sim), t_next(sim)
+for v in (:dt, :t_current, :t_next)
+    @eval function $v(x::Sim)
+        getfield(x, :scheduler).$v
     end
 end
 

@@ -17,7 +17,7 @@ struct SWOFCorey <: AbstractKROW
 end
 
 function SWOFTable(fn::String)
-    df = DataFrame!(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
+    df = DataFrame(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
     rename!(df, [:sw, :krw, :kro, :pcw])
     # Add flat extrapolation
     insert!.(eachcol(df), 1, [-1.e30, df[1, :krw], df[1, :kro], df[1, :pcw]])
