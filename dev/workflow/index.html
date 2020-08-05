@@ -1,2 +1,146 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Basic workflow · ResSimAD.jl</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro&amp;display=swap" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">ResSimAD.jl</span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Basic workflow</a></li><li><a class="tocitem" href="../examples/">Example Models</a></li><li><a class="tocitem" href="../input/">Input Options</a></li><li><a class="tocitem" href="../api/">Reference</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Basic workflow</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Basic workflow</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/DeanLym/ResSimAD.jl/blob/master/docs/src/workflow.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../examples/">Example Models »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 4 August 2020 21:45">Tuesday 4 August 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Basic workflow · ResSimAD.jl</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro&amp;display=swap" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">ResSimAD.jl</span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Basic workflow</a><ul class="internal"><li><a class="tocitem" href="#Specify-simulation-setups"><span>Specify simulation setups</span></a></li><li><a class="tocitem" href="#Run-simluation"><span>Run simluation</span></a></li><li><a class="tocitem" href="#Visualize-and-save-simulation-results"><span>Visualize and save simulation results</span></a></li></ul></li><li><a class="tocitem" href="../examples/">Example Models</a></li><li><a class="tocitem" href="../input/">Input Options</a></li><li><a class="tocitem" href="../api/">Reference</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Basic workflow</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Basic workflow</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/DeanLym/ResSimAD.jl/blob/master/docs/src/workflow.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Basic-workflow"><a class="docs-heading-anchor" href="#Basic-workflow">Basic workflow</a><a id="Basic-workflow-1"></a><a class="docs-heading-anchor-permalink" href="#Basic-workflow" title="Permalink"></a></h1><p>The basic workflow for ResSimAD.jl consists of three steps:</p><ol><li>Specify simulation setups</li><li>Run simulation</li><li>Visualize and save simulation results</li></ol><h2 id="Specify-simulation-setups"><a class="docs-heading-anchor" href="#Specify-simulation-setups">Specify simulation setups</a><a id="Specify-simulation-setups-1"></a><a class="docs-heading-anchor-permalink" href="#Specify-simulation-setups" title="Permalink"></a></h2><p>The most convenient way for specifying simulation setups for ResSimAD.jl is using a nested Dictionary. The following example shows how simulation setups are specified in the <a href="../examples/#ResSimAD.Models.example1"><code>ResSimAD.Models.example1</code></a> model.</p><pre><code class="language-julia">using ResSimAD
+# This example will use the following functions/types from ResSimAD
+# get_table, runsim, Sim, BRIEF, get_well_rates
+
+
+## Specify input
+# Grid and Rock
+options = Dict();
+options[&quot;nx&quot;] = 30; options[&quot;ny&quot;] = 15; options[&quot;nz&quot;] = 1;
+options[&quot;dx&quot;] = 50.; options[&quot;dy&quot;] = 50.; options[&quot;dz&quot;] = 20.;
+options[&quot;d&quot;] = 8000.;
+options[&quot;perm&quot;] = 200.; options[&quot;poro&quot;] = 0.2;
+# Fluid
+options[&quot;fluid&quot;] = &quot;OW&quot;
+options[&quot;po&quot;] = 6000.;
+options[&quot;sw&quot;] = 0.1;
+options[&quot;PVDO&quot;] = get_table(&quot;PVDO.DAT&quot;);
+options[&quot;PVTW&quot;] = get_table(&quot;PVTW.DAT&quot;);
+options[&quot;SWOF&quot;] = get_table(&quot;SWOF.DAT&quot;);
+# Wells
+options[&quot;producers&quot;] = [];
+p1 = Dict();
+p1[&quot;name&quot;] = &quot;P1&quot;; p1[&quot;perforation&quot;] = [(1,1,1)]; p1[&quot;radius&quot;] = 0.5;
+p1[&quot;mode&quot;] = &quot;bhp&quot;; p1[&quot;target&quot;] = 5500.;
+push!(options[&quot;producers&quot;], p1);
+
+options[&quot;injectors&quot;] = [];
+i1 = Dict();
+i1[&quot;name&quot;] = &quot;I1&quot;; i1[&quot;perforation&quot;] = [(30,15,1)]; i1[&quot;radius&quot;] = 0.5;
+i1[&quot;mode&quot;] = &quot;bhp&quot;; i1[&quot;target&quot;] = 6500.;
+push!(options[&quot;injectors&quot;], i1);
+# Schedule
+options[&quot;dt0&quot;] = 0.1
+options[&quot;dt_max&quot;] = 50.; options[&quot;t_end&quot;] = 10 * 182.5;
+options[&quot;min_err&quot;] = 1.0e-3;</code></pre><pre class="documenter-example-output">0.001</pre><p>Currently supported input options are summarized in <a href="../input/#Input-Options">Input Options</a>.</p><p>A <code>Sim</code> object can then be created with <code>options</code>:</p><pre><code class="language-julia">sim = Sim(options);
+println(&quot;Total number of cells:&quot;, sim.nc)</code></pre><pre class="documenter-example-output">Total number of cells:450</pre><h2 id="Run-simluation"><a class="docs-heading-anchor" href="#Run-simluation">Run simluation</a><a id="Run-simluation-1"></a><a class="docs-heading-anchor-permalink" href="#Run-simluation" title="Permalink"></a></h2><p>To run simulation, simply call:</p><pre><code class="language-julia">runsim(sim; verbose=BRIEF)</code></pre><pre class="documenter-example-output">Day 0.1
+  NumNewton:2
+Day 0.2755107314
+  NumNewton:2
+Day 0.6733592896
+  NumNewton:2
+Day 1.481373553
+  NumNewton:2
+Day 3.0669005257
+  NumNewton:3
+Day 5.9308197414
+  NumNewton:3
+Day 10.8553539556
+  NumNewton:4
+Day 19.1116437611
+  NumNewton:4
+Day 32.7944701628
+  NumNewton:4
+Day 54.7265038714
+  NumNewton:4
+Day 88.9157012766
+  NumNewton:5
+Day 138.9157012766
+  NumNewton:6
+Day 188.9157012766
+  NumNewton:5
+Day 238.9157012766
+  NumNewton:4
+Day 288.9157012766
+  NumNewton:4
+Day 338.9157012766
+  NumNewton:4
+Day 388.9157012766
+  NumNewton:4
+Day 438.9157012766
+  NumNewton:4
+Day 488.9157012766
+  NumNewton:3
+Day 538.9157012766
+  NumNewton:3
+Day 588.9157012766
+  NumNewton:3
+Day 638.9157012766
+  NumNewton:3
+Day 688.9157012766
+  NumNewton:2
+Day 738.9157012766
+  NumNewton:2
+Day 788.9157012766
+  NumNewton:2
+Day 838.9157012766
+  NumNewton:2
+Day 888.9157012766
+  NumNewton:2
+Day 938.9157012766
+  NumNewton:2
+Day 988.9157012766
+  NumNewton:2
+Day 1038.9157012766
+  NumNewton:2
+Day 1088.9157012766
+  NumNewton:2
+Day 1138.9157012766
+  NumNewton:2
+Day 1188.9157012766
+  NumNewton:2
+Day 1238.9157012766
+  NumNewton:2
+Day 1288.9157012766
+  NumNewton:2
+Day 1338.9157012766
+  NumNewton:2
+Day 1388.9157012766
+  NumNewton:2
+Day 1438.9157012766
+  NumNewton:2
+Day 1488.9157012766
+  NumNewton:2
+Day 1538.9157012766
+  NumNewton:2
+Day 1588.9157012766
+  NumNewton:2
+Day 1638.9157012766
+  NumNewton:2
+Day 1688.9157012766
+  NumNewton:2
+Day 1738.9157012766
+  NumNewton:2
+Day 1788.9157012766
+  NumNewton:2
+Day 1825.0
+  NumNewton:2</pre><h2 id="Visualize-and-save-simulation-results"><a class="docs-heading-anchor" href="#Visualize-and-save-simulation-results">Visualize and save simulation results</a><a id="Visualize-and-save-simulation-results-1"></a><a class="docs-heading-anchor-permalink" href="#Visualize-and-save-simulation-results" title="Permalink"></a></h2><p>We use the <code>Plots</code> package for results visualizations.</p><h4 id="Plot-production-curve"><a class="docs-heading-anchor" href="#Plot-production-curve">Plot production curve</a><a id="Plot-production-curve-1"></a><a class="docs-heading-anchor-permalink" href="#Plot-production-curve" title="Permalink"></a></h4><pre><code class="language-">using Plots
+t = get_well_rates(sim, &quot;P1&quot;, &quot;TIME&quot;);
+qo = get_well_rates(sim, &quot;P1&quot;, &quot;ORAT&quot;);
+qw = get_well_rates(sim, &quot;I1&quot;, &quot;WRAT&quot;);
+p1 = plot(t, qo, color=:black, marker=true,
+     xlabel=&quot;Day&quot;, ylabel=&quot;Oil Rate (STB/Day)&quot;,
+     title=&quot;P1 Oil Rate&quot;);
+p2 = plot(t, -qw, color=:black, marker=true,
+     xlabel=&quot;Day&quot;, ylabel=&quot;Water Inj. Rate (STB/Day)&quot;,
+     title=&quot;I1 Water Injection Rate&quot;);
+plot(p1, p2, layout=(1,2), legend=false, size=(720,280))</code></pre><h4 id="Plot-state-maps"><a class="docs-heading-anchor" href="#Plot-state-maps">Plot state maps</a><a id="Plot-state-maps-1"></a><a class="docs-heading-anchor-permalink" href="#Plot-state-maps" title="Permalink"></a></h4><pre><code class="language-"># Visualize state maps
+cmap = cgrad(:jet);
+po = reshape(sim.po_rec[t[end]], sim.nx, sim.ny);
+sw = reshape(sim.sw_rec[t[end]], sim.nx, sim.ny);
+p1 = heatmap(po, color=cmap, title=&quot;Po at Day $(t[end])&quot;);
+p2 = heatmap(sw, color=cmap, title=&quot;Sw at Day $(t[end])&quot;);
+plot(p1, p2, layout=(1,2), size=(720,280))</code></pre><h4 id="Plot-newton-iterations"><a class="docs-heading-anchor" href="#Plot-newton-iterations">Plot newton iterations</a><a id="Plot-newton-iterations-1"></a><a class="docs-heading-anchor-permalink" href="#Plot-newton-iterations" title="Permalink"></a></h4><pre><code class="language-">newton_iter = sim.nsolver.num_iter;
+scatter(newton_iter, markershape=:square, size=(360,280), legend=false,
+        xlabel=&quot;Time step&quot;, ylabel=&quot;Newton iterations&quot;)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../examples/">Example Models »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Wednesday 5 August 2020 06:05">Wednesday 5 August 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
