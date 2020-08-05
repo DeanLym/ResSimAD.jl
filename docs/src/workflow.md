@@ -73,6 +73,7 @@ We use the `Plots` package for results visualizations.
 ```@example workflow
 using Plots
 gr(format=:svg) # hide
+ENV["GKSwstype"] = "100" #hide
 
 t = get_well_rates(sim, "P1", "TIME");
 qo = get_well_rates(sim, "P1", "ORAT");
