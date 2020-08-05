@@ -72,6 +72,8 @@ We use the `Plots` package for results visualizations.
 #### Plot production curve
 ```@example workflow
 using Plots
+gr(format=:svg) # hide
+
 t = get_well_rates(sim, "P1", "TIME");
 qo = get_well_rates(sim, "P1", "ORAT");
 qw = get_well_rates(sim, "I1", "WRAT");
