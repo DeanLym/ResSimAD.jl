@@ -4,7 +4,7 @@ The basic workflow for ResSimAD.jl consists of three steps:
 
 1. Specify simulation setups
 2. Run simulation
-3. Visualize and save simulation results
+3. Visualize simulation results
 
 ## Specify simulation setups
 The most convenient way for specifying simulation setups for ResSimAD.jl is using
@@ -13,9 +13,6 @@ in the [`ResSimAD.Models.example1`](@ref) model.
 
 ```@example workflow
 using ResSimAD
-# This example will use the following functions/types from ResSimAD
-# get_table, runsim, Sim, BRIEF, get_well_rates
-
 
 ## Specify input
 # Grid and Rock
@@ -69,15 +66,32 @@ runsim(sim; verbose=BRIEF)
 
 We use the `Plots` package for results visualizations.
 
-#### Plot production curve
+#### Plot production rates
+Production rates for each well are stored in a `DataFrame` at
+`sim.facility[name].results`, where `name` is the name of the well.
+We can also use the [`ResSimAD.get_well_rates`](@ref)
+API function to extract production rates.
+
+
 ```@example workflow
 using Plots
 gr(format=:svg) # hide
 ENV["GKSwstype"] = "100" #hide
 
+# Get time, P1 oil rate, I1 water injection rate
+# Option 1
+t = sim.facility["P1"].results[!, "TIME"];
+qo = sim.facility["P1"].results[!, "ORAT"];
+qw = sim.facility["I1"].results[!, "WRAT"];
+# Note that column name is case sensitive (all letters must be upper case)
+
+# Option 2
 t = get_well_rates(sim, "P1", "TIME");
-qo = get_well_rates(sim, "P1", "ORAT");
-qw = get_well_rates(sim, "I1", "WRAT");
+qo = get_well_rates(sim, "P1", "orat");
+qw = get_well_rates(sim, "I1", "Wrat");
+# Column name will be converted to upper case inside get_well_rates
+# We recommend using Option 2
+
 p1 = plot(t, qo, color=:black, marker=true,
      xlabel="Day", ylabel="Oil Rate (STB/Day)",
      title="P1 Oil Rate");
@@ -88,17 +102,41 @@ plot(p1, p2, layout=(1,2), legend=false, size=(720,280))
 ```
 
 #### Plot state maps
+Snapshots of the primary variables (`po` and `sw` for this oil-water system) at
+each time step are stored in `sim.reservoir.fluid.phases.o.p_rec`
+and `sim.reservoir.fluid.phases.w.s_rec`. We can also use derived properties
+`sim.po_rec` and `sim.sw_rec` or the API function [`ResSimAD.get_state_map`](@ref)
+to access them.
+
+The type for `sim.po_rec` and `sim.sw_rec` is `Dict{Float64, Vector{Float64}}`,
+the keys are time step values (`Float64` rounded to `6` digits).
+
 ```@example workflow
 # Visualize state maps
+
+# Get po, sw at the end of simulation
+# Option 1
+po = sim.reservoir.fluid.phases.o.p_rec[round(t[end], digits=6)];
+sw = sim.reservoir.fluid.phases.w.s_rec[round(t[end], digits=6)];
+# Option 2
+po = sim.po_rec[round(t[end], digits=6)];
+sw = sim.sw_rec[round(t[end], digits=6)];
+# Option 3
+po = get_state_map(sim, "po", t[end]);
+sw = get_state_map(sim, "sw", t[end]);
+# `t` will be rounded to 6 digits inside get_state_map
+# We recommend using Option 3
+
+# Plot state maps
 cmap = cgrad(:jet);
-po = reshape(sim.po_rec[t[end]], sim.nx, sim.ny);
-sw = reshape(sim.sw_rec[t[end]], sim.nx, sim.ny);
-p1 = heatmap(po, color=cmap, title="Po at Day $(t[end])");
-p2 = heatmap(sw, color=cmap, title="Sw at Day $(t[end])");
+p1 = heatmap(reshape(po, sim.nx, sim.ny), color=cmap, title="Po at Day $(t[end])");
+p2 = heatmap(reshape(sw, sim.nx, sim.ny), color=cmap, title="Sw at Day $(t[end])");
 plot(p1, p2, layout=(1,2), size=(720,280))
 ```
 
 #### Plot newton iterations
+Number of newton iterations at each time step is stored in `sim.nsolver.num_iter`,
+we can plot this to check the convergence behavior for this simulation run.
 ```@example workflow
 newton_iter = sim.nsolver.num_iter;
 scatter(newton_iter, markershape=:square, size=(360,280), legend=false,

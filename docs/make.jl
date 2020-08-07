@@ -8,8 +8,8 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Basic workflow" => "workflow.md",
-        "Example Models" => "examples.md",
-        "Input Options" => "input.md",
+        "Example models" => "examples.md",
+        "Input options" => "input.md",
         "Reference" => "api.md",
     ]
 )

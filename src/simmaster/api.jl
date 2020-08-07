@@ -347,6 +347,34 @@ function change_dt(sim::Sim, dt::Float64)
     set_dt(sim.scheduler, dt)
 end
 
+"""
+    get_state_map(sim::Sim, var::String, t::Float64)
+
+Get state map for variable `var` at time `t`.
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, runsim, get_state_map, get_well_rates, SILENT
+
+julia> sim, options = get_model("example1");
+
+julia> runsim(sim, verbose=SILENT);
+
+julia> t = get_well_rates(sim, "P1", "TIME");
+
+julia> po = get_state_map(sim, "po", t[end]);
+
+julia> size(po)
+(450,)
+
+```
+"""
+function get_state_map(sim::Sim, var::String, t::Float64)
+    return @eval $(Symbol(lowercase(var)*"_rec"))($sim)[round($t, digits=6)]
+end
+
+
+
 ## Define some function for convenience
 
 # Define function po(sim), pw(sim), so(sim), sw(sim) ....

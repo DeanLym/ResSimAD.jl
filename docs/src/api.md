@@ -27,6 +27,10 @@ ResSimAD.get_well_rates
 ```
 
 ```@docs
+ResSimAD.get_state_map
+```
+
+```@docs
 ResSimAD.add_well
 ```
 
