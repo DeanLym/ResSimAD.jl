@@ -17,7 +17,8 @@ using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
 using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJECTOR,
-        get_ctrl_mode, compute_wi, compute_qo, compute_qw, compute_ql, save_result
+        get_ctrl_mode, compute_wi, compute_qo, compute_qw, compute_ql, compute_bhp,
+        save_result
 
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step
 
@@ -49,11 +50,12 @@ mutable struct NRSolver <: NonlinearSolver
     min_err::Float64
     num_iter::Vector{Int}
     converged::Bool
+    recompute_residual::Bool
     δx::Vector{Float64}
     residual::Vector{Float64}
     jac::SparseMatrixCSC{Float64,Int}
     assembler::Assembler
-    NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false)
+    NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false, false)
 end
 
 """
@@ -139,6 +141,10 @@ function time_step(sim::Sim; verbose=BRIEF)::Nothing
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
     if verbose >= BRIEF println("Day ", sch.t_next) end
     while true
+        if nsolver.recompute_residual
+            compute_residual(fluid, grid, rock, facility, sch.dt)
+            nsolver.recompute_residual = false
+        end
         # Check convergence
         err = compute_residual_error(fluid, grid, rock, sch.dt)
         if err < nsolver.min_err

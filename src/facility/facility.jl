@@ -24,6 +24,7 @@ const get_ctrl_mode = Dict{String,CtrlMode}(
     "lrat" => CLRAT,
 )
 
+
 mutable struct StandardWell{T} <: AbstractFacility
     name::String
     r::Float64 # Wellbore radius
@@ -38,7 +39,7 @@ mutable struct StandardWell{T} <: AbstractFacility
     qo::ADVector # Oil Rate
     qw::ADVector # Water Rate
     ql::ADVector # Liquid Rate
-    pw::ADVector # Wellbore pressure
+    bhp::ADVector # Bottom hole pressure
 
     results::DataFrame
 
@@ -69,10 +70,19 @@ function StandardWell{T}(
     p.qo = advector(nperf, 1, nv)
     p.qw = advector(nperf, 1, nv)
     p.ql = advector(nperf, 1, nv)
-    p.pw = advector(nperf, 1, nv)
+    p.bhp = advector(nperf, 1, nv)
 
     return p
 end
+
+function isproducer(::StandardWell{PRODUCER})
+    return true
+end
+
+function isproducer(::StandardWell{INJECTOR})
+    return false
+end
+
 
 function init_results_df()
     Vec = Vector{Float64}
@@ -81,8 +91,8 @@ end
 
 function save_result(well::StandardWell, t::Float64)
     qo, qw, qg, ql = sum(value(well.qo)), sum(value(well.qw)), 0.0, sum(value(well.ql))
-    pw = mean(value(well.pw))
-    push!(well.results, [t, qo, qw, qg, ql, pw])
+    bhp = mean(value(well.bhp))
+    push!(well.results, [t, qo, qw, qg, ql, bhp])
 end
 
 function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::AbstractRock)::Nothing
@@ -95,6 +105,7 @@ function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::Abstract
     end
     return nothing
 end
+
 
 function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
@@ -132,7 +143,6 @@ function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVecto
 end
 
 
-
 function compute_qo(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
     @. well.qo = 0.0 * fluid.phases.o.p[well.ind]
     return well.qo
@@ -152,6 +162,37 @@ function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVecto
     return well.qw
 end
 
+function compute_bhp(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
+    mode, target, ind = well.mode, well.target, well.ind
+    o, w = fluid.phases.o, fluid.phases.w
+    if mode == CBHP
+        @. well.bhp = target + 0.0*o.p[ind]
+    elseif mode == CORAT
+        λo, po = o.λ, o.p
+        @. well.bhp = po[ind] - target / (well.wi * λo[ind])
+    elseif mode == CLRAT
+        λo, λw = o.λ, w.λ
+        @. well.bhp = po[ind] - target / (well.wi * (λo[ind] + λw[ind]))
+    elseif mode == SHUT
+        @. well.bhp = o.p[ind]
+    end
+end
+
+function compute_bhp(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVector
+    mode, target, ind = well.mode, well.target, well.ind
+    o, w = fluid.phases.o, fluid.phases.w
+
+    if mode == CBHP
+        @. well.bhp = target + 0.0*o.p[ind]
+    elseif mode == CWRAT
+        λo, λw, po = o.λ, w.λ, o.p
+        @. well.bhp = po[ind] - target / (well.wi * (λo[ind] + λw[ind]))
+    elseif mode == SHUT
+        @. well.bhp = o.p[ind]
+    end
+end
+
+
 
 function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
@@ -166,5 +207,7 @@ function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
     end
     return well.ql
 end
+
+
 
 end

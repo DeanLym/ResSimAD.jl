@@ -12,7 +12,7 @@ a nested Dictionary. The following example shows how simulation setups are speci
 in the [`ResSimAD.Models.example1`](@ref) model.
 
 ```@example workflow
-using ResSimAD
+using ResSimAD: get_table
 
 ## Specify input
 # Grid and Rock
@@ -52,6 +52,8 @@ Currently supported input options are summarized in [Input Options](@ref).
 A `Sim` object can then be created with `options`:
 
 ```@example workflow
+using ResSimAD: Sim
+
 sim = Sim(options);
 println("Total number of cells:", sim.nc)
 ```
@@ -59,7 +61,9 @@ println("Total number of cells:", sim.nc)
 ## Run simluation
 To run simulation, simply call:
 ```@example workflow
-runsim(sim; verbose=BRIEF)
+using ResSimAD: runsim
+
+runsim(sim)
 ```
 
 ## Visualize and save simulation results
@@ -75,6 +79,9 @@ API function to extract production rates.
 
 ```@example workflow
 using Plots
+using Plots.PlotMeasures
+using ResSimAD: get_well_rates
+
 gr(format=:svg) # hide
 ENV["GKSwstype"] = "100" #hide
 
@@ -93,12 +100,12 @@ qw = get_well_rates(sim, "I1", "Wrat");
 # We recommend using Option 2
 
 p1 = plot(t, qo, color=:black, marker=true,
-     xlabel="Day", ylabel="Oil Rate (STB/Day)",
-     title="P1 Oil Rate");
+     xlabel="Day", ylabel="Oil rate (STB/Day)",
+     title="P1 oil rate");
 p2 = plot(t, -qw, color=:black, marker=true,
-     xlabel="Day", ylabel="Water Inj. Rate (STB/Day)",
-     title="I1 Water Injection Rate");
-plot(p1, p2, layout=(1,2), legend=false, size=(720,280))
+     xlabel="Day", ylabel="Water inj. Rate (STB/Day)",
+     title="I1 water injection Rate");
+plot(p1, p2, layout=(1,2), legend=false, size=(720,280), bottom_margin = 10px)
 ```
 
 #### Plot state maps
@@ -113,7 +120,7 @@ the keys are time step values (`Float64` rounded to `6` digits).
 
 ```@example workflow
 # Visualize state maps
-
+using ResSimAD: get_grid_index, isproducer, get_state_map
 # Get po, sw at the end of simulation
 # Option 1
 po = sim.reservoir.fluid.phases.o.p_rec[round(t[end], digits=6)];
@@ -127,11 +134,26 @@ sw = get_state_map(sim, "sw", t[end]);
 # `t` will be rounded to 6 digits inside get_state_map
 # We recommend using Option 3
 
+# Define a function for plotting wells
+function plot_wells_2d(plt, sim; markersize=5, color=:white)
+    for w in values(sim.facility)
+        i, j, _ = get_grid_index(sim.reservoir.grid, w.ind[1])
+        if isproducer(w)
+            marker = :circle
+        else
+            marker = :dtriangle
+        end
+        scatter!(plt, [j,], [i,], m=(marker, markersize, color), legend=false)
+    end
+end
+
 # Plot state maps
 cmap = cgrad(:jet);
 p1 = heatmap(reshape(po, sim.nx, sim.ny), color=cmap, title="Po at Day $(t[end])");
+plot_wells_2d(p1, sim);
 p2 = heatmap(reshape(sw, sim.nx, sim.ny), color=cmap, title="Sw at Day $(t[end])");
-plot(p1, p2, layout=(1,2), size=(720,280))
+plot_wells_2d(p2, sim);
+plot(p1, p2, layout=(1,2), size=(700,450))
 ```
 
 #### Plot newton iterations
@@ -141,4 +163,130 @@ we can plot this to check the convergence behavior for this simulation run.
 newton_iter = sim.nsolver.num_iter;
 scatter(newton_iter, markershape=:square, size=(360,280), legend=false,
         xlabel="Time step", ylabel="Newton iterations")
+```
+
+# Advanced Workflow
+ResSimAD.jl allows flexible control over simulation runs.
+
+API functions [`ResSimAD.time_step`](@ref) and [`ResSimAD.step_to`](@ref) enable simulating the model for a single timestep, or to a specific time, respectively.
+
+API functions [`ResSimAD.change_well_mode`](@ref), [`ResSimAD.change_well_target`](@ref), [`ResSimAD.shut_well`](@ref) and [`ResSimAD.add_well`](@ref) enable dynamic modification of well setups during a simulation run.
+
+After changing well settings, time step size will be cut down to `sim.scheduler.dt0`. We can also use [`ResSimAD.change_dt`](@ref) to change the time step size.
+
+Here is an example where well control settings are changed dynamically during simulation runs. This is very convenient in the context of well control optimizations.
+
+
+```@example workflow
+# Create simulation model
+using ResSimAD: change_well_target, change_dt, step_to, time_step
+
+sim = Sim(options);
+
+# Change BHP control every 100 days
+tsteps = [100., 200., 300.];
+for t in tsteps
+    p1_bhp = rand()*400. + 5500.;
+    i1_bhp = rand()*400. + 6100.;
+    change_well_target(sim, "P1", p1_bhp)
+    change_well_target(sim, "I1", i1_bhp)
+    change_dt(sim, 5.0)
+    step_to(sim, t)
+end
+
+# Change BHP every 5 time steps
+for i = 1:2
+    p1_bhp = rand()*400. + 5500.;
+    i1_bhp = rand()*400. + 6100.;
+    change_well_target(sim, "P1", p1_bhp)
+    change_well_target(sim, "I1", i1_bhp)
+    change_dt(sim, 5.0)
+    for j = 1:5
+        time_step(sim)
+    end
+end
+
+```
+
+```@example workflow
+## Plot results
+
+# BHP
+t = get_well_rates(sim, "P1", "TIME");
+
+pw_p1 = get_well_rates(sim, "P1", "WBHP");
+pw_i1 = get_well_rates(sim, "I1", "WBHP");
+p1 = plot(t, pw_p1, color=:black, marker=true,
+     xlabel="Day", ylabel="BHP (psi)",
+     title="P1 BHP");
+p2 = plot(t, pw_i1, color=:black, marker=true,
+     xlabel="Day", ylabel="BHP (psi)",
+     title="I1 BHP");
+plot(p1, p2, layout=(1,2), legend=false, size=(720,280), bottom_margin = 10px)
+```
+
+```@example workflow
+# Oil rate and water injection rate
+qo = get_well_rates(sim, "P1", "ORAT");
+qw = get_well_rates(sim, "I1", "WRAT");
+p1 = plot(t, qo, color=:black, marker=true,
+     xlabel="Day", ylabel="Oil rate (STB/Day)",
+     title="P1 oil rate");
+p2 = plot(t, -qw, color=:black, marker=true,
+     xlabel="Day", ylabel="Water inj. rate (STB/Day)",
+     title="I1 water injection rate");
+plot(p1, p2, layout=(1,2), legend=false, size=(720,280), bottom_margin = 10px)
+```
+
+```@example workflow
+# Plot state maps
+po = get_state_map(sim, "po", t[end]);
+sw = get_state_map(sim, "sw", t[end]);
+p1 = heatmap(reshape(po, sim.nx, sim.ny), color=cmap, title="Po at day $(t[end])");
+plot_wells_2d(p1, sim);
+p2 = heatmap(reshape(sw, sim.nx, sim.ny), color=cmap, title="Sw at day $(t[end])");
+plot_wells_2d(p2, sim);
+plot(p1, p2, layout=(1,2), size=(700,450))
+```
+
+We can also add new well dynamically. This can be useful for field development optimization.
+
+```@example workflow
+using ResSimAD: add_well
+
+i2 = Dict("name" => "I2", "perforation"=>[(8,12,1)],
+          "radius"=>0.5, "mode"=>"bhp", "target"=>6500.);
+
+add_well(sim, "injector", i2);
+
+t_end = t[end] + 500.;
+step_to(sim, t_end);
+
+```
+
+```@example workflow
+# Plot production curves
+qo = get_well_rates(sim, "P1", "ORAT");
+t2 = get_well_rates(sim, "I2", "TIME");
+qw1 = get_well_rates(sim, "I1", "WRAT");
+qw2 = get_well_rates(sim, "I2", "WRAT");
+p1 = plot(t, qo, color=:black, marker=true, label = "P1",
+     xlabel="Day", ylabel="Oil rate (STB/Day)",
+     title="P1 oil rate");
+p2 = plot(t, -qw1, color=:blue, marker=true, label="I1");
+plot!(p2, t2, -qw2, color=:red, marker=true, label="I2",
+     xlabel="Day", ylabel="Water inj. rate (STB/Day)",
+     title="Water injection rate");
+plot(p1, p2, layout=(1,2), size=(720,280), bottom_margin = 10px)
+```
+
+```@example workflow
+# Plot state maps
+po = get_state_map(sim, "po", t_end);
+sw = get_state_map(sim, "sw", t_end);
+p1 = heatmap(reshape(po, sim.nx, sim.ny), color=cmap, title="Po at day $(t[end])");
+plot_wells_2d(p1, sim);
+p2 = heatmap(reshape(sw, sim.nx, sim.ny), color=cmap, title="Sw at day $(t[end])");
+plot_wells_2d(p2, sim);
+plot(p1, p2, layout=(1,2), size=(700,450))
 ```

@@ -42,6 +42,24 @@ function get_grid_index(grid::AbstractStructGrid, i::Int, j::Int, k::Int)::Int
 end
 
 
+function get_grid_index(grid::AbstractStructGrid, ind::Int)
+    x, y= ind, grid.nx * grid.ny
+    if x % y == 0
+        k = x ÷ y
+    else
+        k = x ÷ y + 1
+    end
+    x -= (k-1)*y
+    y = grid.nx
+    if x%y == 0
+        j = x ÷ y
+    else
+        j = x ÷ y + 1
+    end
+    i = x - (j-1)*y
+    return i, j, k
+end
+
 function set_cell_size(
     grid::CartGrid,
     dx::Float64,

@@ -91,16 +91,15 @@ function update_dt(sch::Scheduler, fluid::SPFluid, converge::Bool)
         rp = minimum((1+ω)*ηp ./ (abs.(value(phase.p) .- phase.pn) .+ ω*ηp))
     end
     dt = min(dt_old * rp, sch.dt_max)
-    t_next = sch.t_next
+    sch.t_current = sch.t_next
+    sch.t_next = sch.t_current + dt
     for t in sch.time_step
-        if (t_next - t)*(t_next + dt - t) < 0
-            dt = t - t_next
+        if (sch.t_current - t)*(sch.t_current + dt - t) < 0
+            sch.t_next = t
             break
         end
     end
-    sch.dt = dt
-    sch.t_current = sch.t_next
-    sch.t_next = round(sch.t_current + dt, digits=10)
+    sch.dt = sch.t_next - sch.t_current
     return nothing
 end
 

@@ -3,6 +3,13 @@ get_well_type =
     Dict{String,WellType}("producer" => PRODUCER, "injector" => INJECTOR)
 
 
+function compute_residual(sim::Sim)
+    reservoir = sim.reservoir
+    grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
+    facility,sch = sim.facility, sim.scheduler
+    compute_residual(fluid, grid, rock, facility, sch.dt)
+end
+
 function init_grid(input::Dict)
     input = parse_input_grid(input)
     nx, ny, nz = input["nx"], input["ny"], input["nz"]
@@ -208,6 +215,7 @@ function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     nv, grid, rock = reservoir.fluid.nv, reservoir.grid, reservoir.rock
     sim.facility[name] = init_well(T, well_option, nv, grid, rock)
     reset_dt(sim.scheduler)
+    sim.nsolver.recompute_residual = true
     return nothing
 end
 
@@ -248,20 +256,19 @@ function change_well_mode(sim::Sim, name::String, mode::String, target::Float64)
     sim.facility[name].mode = get_ctrl_mode[lowercase(mode)]
     sim.facility[name].target = target
     reset_dt(sim.scheduler)
+    sim.nsolver.recompute_residual = true
     return nothing
 end
 
 """
-    change_well_target(sim::Sim, name::String, target::Float64; cut_dt=false)
+    change_well_target(sim::Sim, name::String, target::Float64)
 
-Change the control target of well `name` to be `target`. cut time step to be
-`sim.scheduler.dt0` if `cut_dt=true`
+Change the control target of well `name` to be `target`.
 
 # Arguments
 - `sim::Sim`: Sim object
 - `name::String`: name of the well
-- `target::Float64`
-- `cut_dt::Boolean`
+- `target::Float64`: well control target
 
 # Examples
 ```jldoctest
@@ -277,13 +284,37 @@ julia> println(sim.facility["P1"].target)
 ```
 
 """
-function change_well_target(sim::Sim, name::String, target::Float64; cut_dt=false)::Nothing
+function change_well_target(sim::Sim, name::String, target::Float64)::Nothing
     @assert name in keys(sim.facility)
     sim.facility[name].target = target
-    if cut_dt
-        reset_dt(sim.scheduler)
-    end
+    reset_dt(sim.scheduler)
+    sim.nsolver.recompute_residual = true
     return nothing
+end
+
+
+"""
+    shut_well(sim::Sim, name::String)
+
+Shut well `name`
+
+"""
+function shut_well(sim::Sim, name::String)::Nothing
+    @assert name in keys(sim.facility)
+    sim.facility[name].mode = get_ctrl_mode["shut"]
+    reset_dt(sim.scheduler)
+    sim.nsolver.recompute_residual = true
+    return nothing
+end
+
+"""
+    change_dt(sim::Sim, dt::Float64)
+
+Set next time step size to be `dt`
+"""
+function change_dt(sim::Sim, dt::Float64)
+    set_dt(sim.scheduler, dt)
+    sim.nsolver.recompute_residual = true
 end
 
 """
@@ -324,27 +355,6 @@ true
 function get_well_rates(sim::Sim, name::String, data::String)
     @assert name in keys(sim.facility)
     return sim.facility[name].results[!, uppercase(data)]
-end
-
-"""
-    shut_well(sim::Sim, name::String)
-
-Shut well `name`
-
-"""
-function shut_well(sim::Sim, name::String)::Nothing
-    @assert name in keys(sim.facility)
-    sim.facility[name].mode = get_ctrl_mode["shut"]
-    return nothing
-end
-
-"""
-    change_dt(sim::Sim, dt::Float64)
-
-Set next time step size to be `dt`
-"""
-function change_dt(sim::Sim, dt::Float64)
-    set_dt(sim.scheduler, dt)
 end
 
 """

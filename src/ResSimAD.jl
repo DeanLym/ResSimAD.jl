@@ -14,6 +14,10 @@ include("simmaster/simmaster.jl")
 include("models/models.jl")
 using .AutoDiff:value
 
+using .Grid: get_grid_index
+
+using .Facility: isproducer
+
 using .SimMaster:Sim, runsim, time_step, step_to, newton_step, add_well, change_well_mode,
             change_well_target, shut_well, get_well_rates, change_dt, get_residual_error,
             get_state_map
@@ -22,6 +26,7 @@ using. SimMaster: SILENT, BRIEF, DEBUG, ALL
 using .Models: get_model, get_table
 
 export value
+export get_grid_index
 export change_dt
 export Sim, runsim, time_step, step_to, newton_step
 export get_model, get_table, get_state_map, get_well_rates

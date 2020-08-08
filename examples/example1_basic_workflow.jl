@@ -2,10 +2,10 @@ using Revise
 using ResSimAD:get_model, runsim, get_well_rates, get_state_map
 using Plots
 
-## Create Simulation model
+## Create simulation model
 sim, options = get_model("example1");
 
-## Run Simluation
+## Run simluation
 runsim(sim)
 
 ## Plot results

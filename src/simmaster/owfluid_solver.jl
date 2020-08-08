@@ -30,6 +30,7 @@ function compute_residual(
     for well in values(wells)
         compute_qo(well, fluid)
         compute_qw(well, fluid)
+        compute_bhp(well, fluid)
         # Add well rate to residual
         ind = well.ind
         @. ro[ind] -= value(well.qo)
