@@ -23,13 +23,13 @@ using .SimMaster:Sim, runsim, time_step, step_to, newton_step, add_well, change_
             get_state_map
 using. SimMaster: SILENT, BRIEF, DEBUG, ALL
 
-using .Models: get_model, get_table
+using .Models: get_model, get_example_data
 
 export value
 export get_grid_index
 export change_dt
 export Sim, runsim, time_step, step_to, newton_step
-export get_model, get_table, get_state_map, get_well_rates
+export get_model, get_example_data, get_state_map, get_well_rates
 export get_residual_error
 export change_well_mode, change_well_target, shut_well, add_well
 export SILENT, BRIEF, DEBUG, ALL

@@ -1,4 +1,3 @@
-using ResSimAD
 
 @doc raw"""
     example1()
@@ -33,9 +32,9 @@ function example1()
     options["fluid"] = "OW"
     options["po"] = 6000.;
     options["sw"] = 0.1;
-    options["PVDO"] = ResSimAD.get_table("PVDO.DAT");
-    options["PVTW"] = ResSimAD.get_table("PVTW.DAT");
-    options["SWOF"] = ResSimAD.get_table("SWOF.DAT");
+    options["PVDO"] = get_example_data("PVDO.DAT");
+    options["PVTW"] = get_example_data("PVTW.DAT");
+    options["SWOF"] = get_example_data("SWOF.DAT");
     # Wells
     options["producers"] = [];
     p1 = Dict();

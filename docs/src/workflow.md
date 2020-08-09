@@ -12,7 +12,7 @@ a nested Dictionary. The following example shows how simulation setups are speci
 in the [`ResSimAD.Models.example1`](@ref) model.
 
 ```@example workflow
-using ResSimAD: get_table
+using ResSimAD: get_example_data
 
 ## Specify input
 # Grid and Rock
@@ -25,9 +25,9 @@ options["perm"] = 200.; options["poro"] = 0.2;
 options["fluid"] = "OW"
 options["po"] = 6000.;
 options["sw"] = 0.1;
-options["PVDO"] = get_table("PVDO.DAT");
-options["PVTW"] = get_table("PVTW.DAT");
-options["SWOF"] = get_table("SWOF.DAT");
+options["PVDO"] = get_example_data("PVDO.DAT");
+options["PVTW"] = get_example_data("PVTW.DAT");
+options["SWOF"] = get_example_data("SWOF.DAT");
 # Wells
 options["producers"] = [];
 p1 = Dict();
@@ -259,7 +259,7 @@ i2 = Dict("name" => "I2", "perforation"=>[(8,12,1)],
 
 add_well(sim, "injector", i2);
 
-t_end = t[end] + 500.;
+t_end = 1500.;
 step_to(sim, t_end);
 
 ```
