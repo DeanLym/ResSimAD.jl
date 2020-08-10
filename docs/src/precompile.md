@@ -132,16 +132,59 @@ Running simulation (2nd time) takes:
 
 ## What precompiling does
 
-To do this, we first create a precompile execution file (available at `precompile/precompule_execution_file.jl`). This file executes the most commonly used ResSimAD.jl API functions. Next, copy this file to some folder and run the following code,
+The PackageCompiler first runs a precompile execution file (`precompile/precompule_execution_file.jl`). This file executes the most commonly used ResSimAD.jl API functions. All functions and subroutines that were executed get compiled and stored. These compiled functions are combined with the default Julia system image to form a new system image. The new system image replaces the default Julia system image.
+
+Future Julia sessions will launch with this new system image. The compiled functions will be loaded automatically. As a result, importing ResSimAD.jl, creating `Sim` object and running simulation for the first time become much faster.
+
+This also means the ResSimAD.jl is locked to the version that gets compiled. Therefore, any modification to the ResSimAD.jl package (if you are developing ResSimAD.jl) or any version update will be shadowed. To solve this problem, there are three options
+
+- Re-precompile ResSimAD.jl.
+
+- In stead of replacing the default system image with the new system image, we can keep both system images:
+
+```julia
+using ResSimAD
+
+replace_default = 0
+
+fn = joinpath(pkgdir(ResSimAD), "precompile", "precompile.jl");
+
+include(fn)
+
+```
+
+This will create a new system image called `ResSimADSysImg.so`. Then we can launch Julia with this new system image to speed up ResSimAD.jl:
+
+```shell
+julia -J ResSimADSysImg.so
+```
+
+or launch Julia with the default system image as usual (for example when developing ResSimAD.jl where you are constantly modifying ResSimAD.jl or when you are using Julia for other tasks).
+```shell
+julia
+```
+
+We can also specify the path for the new system image:
+
+```julia
+using ResSimAD
+
+replace_default = 0
+
+sysimage_path = "mypath/mysysimg.so"
+
+fn = joinpath(pkgdir(ResSimAD), "precompile", "precompile.jl");
+
+include(fn)
+
+
+```
+
+- Restore default system image: if the default system image is replaced, we can restore it with
+
 ```julia
 using PackageCompiler
-create_sysimage(:ResSimAD; sysimage_path="ResSimADSysImg.so",
-                precompile_execution_file="precompile_execution_file.jl")
+restore_default_sysimage()
 ```
-a custom system image `ResSimADSysImg` will be created in
 
- When we provide this file to the package compiler, all functions and subroutines that get executed in this file will be compiled. The compiled functions will be stored in a custom system image. We can specify Jul
-
-The same applies to plotting production curves and state maps. The first line plot
-and the first heat map take much longer to show up than later plots. This is often
-referred to as the "time to first plot" problem.
+This will restore the default system image. The new system image that contains precompiled ResSimAD.jl related functions will be discarded .

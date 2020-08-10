@@ -35,6 +35,8 @@ function CartGrid(nx::Int, ny::Int, nz::Int)::CartGrid
     # !format: on
 end
 
+grid_info(grid::CartGrid) = "Cartesian grid - ($(grid.nx), $(grid.ny), $(grid.nz))"
+
 
 function get_grid_index(grid::AbstractStructGrid, i::Int, j::Int, k::Int)::Int
     @assert 0 < i <= grid.nx && 0 < j <= grid.ny && 0 < k <= grid.nz

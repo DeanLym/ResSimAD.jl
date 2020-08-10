@@ -168,6 +168,9 @@ struct OWFluid <: AbstractFluid
     end
 end
 
+fluid_system(::OWFluid) = "OW"
+
+
 function compute_kr(fluid::OWFluid)::OWFluid
     phases = fluid.phases
     get_kro(fluid.krow, phases.o.kr, phases.o.s)

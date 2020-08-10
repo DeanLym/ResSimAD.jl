@@ -20,7 +20,8 @@ using .Facility: isproducer
 
 using .SimMaster:Sim, runsim, time_step, step_to, newton_step, add_well, change_well_mode,
             change_well_target, shut_well, get_well_rates, change_dt, get_residual_error,
-            get_state_map
+            get_state_map, set_perm, set_poro
+
 using. SimMaster: SILENT, BRIEF, DEBUG, ALL
 
 using .Models: get_model, get_example_data
@@ -28,6 +29,7 @@ using .Models: get_model, get_example_data
 export value
 export get_grid_index
 export change_dt
+export set_perm, set_poro
 export Sim, runsim, time_step, step_to, newton_step
 export get_model, get_example_data, get_state_map, get_well_rates
 export get_residual_error

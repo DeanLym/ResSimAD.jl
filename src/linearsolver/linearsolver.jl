@@ -18,12 +18,16 @@ function solve(
     residual .= jac \ residual
 end
 
+lsolver_info(::Julia_BackSlash_Solver) = "Julia backslash"
+
 ## GMRES Solver with ILU0 preconditioner
 struct GMRES_ILU0_Solver <: AbstractLinearSolver
     τ::Float64
     iterations::Vector{Int64}
     GMRES_ILU0_Solver(; τ=0.1) = new(τ, Int[])
 end
+
+lsolver_info(::GMRES_ILU0_Solver) = "GMRES ILU"
 
 function solve(
     solver::GMRES_ILU0_Solver,
@@ -57,6 +61,8 @@ function GMRES_CPR_Solver(
     cpr_prec = CPRPreconditioner(nc, neighbors, τ)
     return GMRES_CPR_Solver(cpr_prec, Int[])
 end
+
+lsolver_info(::GMRES_CPR_Solver) = "GMRES CPR"
 
 function solve(
     solver::GMRES_CPR_Solver,

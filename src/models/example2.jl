@@ -7,7 +7,7 @@ Example model one.
 
 # Model description
 - Dimension: $60\times60\times1$
-- Grid size: $200.0\200.0\times60.0$ (ft)
+- Grid size: $200.0\times200.0\times60.0$ (ft)
 - Permeability: bimodal channel system
 - Porosity: 0.2
 - Fluid: Oil-Water

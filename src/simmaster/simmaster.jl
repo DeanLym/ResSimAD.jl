@@ -9,11 +9,11 @@ using ..AutoDiff: advector, value, grad, index
 using ..InputParse: parse_input_grid, parse_input_rock, parse_input_fluid
 
 using ..Grid: CartGrid, AbstractGrid, ConnList, construct_connlist, set_cell_depth,
-                get_grid_index, set_cell_size, sort_conn
+                get_grid_index, set_cell_size, sort_conn, grid_info
 using ..Rock: AbstractRock, StandardRock, set_perm, set_poro
 using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
                 set_fluid_tn, update_phases, update_primary_variable,
-                update_fluid_tn, reset_primary_variable
+                update_fluid_tn, reset_primary_variable, fluid_system
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
 using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJECTOR,
@@ -23,8 +23,10 @@ using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJ
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step
 
 using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
-        GMRES_ILU0_Solver, GMRES_CPR_Solver, solve
+        GMRES_ILU0_Solver, GMRES_CPR_Solver, solve, lsolver_info
 #! format: on
+
+import Base.show
 
 abstract type NonlinearSolver end
 abstract type Assembler end
@@ -57,6 +59,8 @@ mutable struct NRSolver <: NonlinearSolver
     assembler::Assembler
     NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false, false)
 end
+
+nsolver_info(::NRSolver) = "Newton Raphson"
 
 """
     newton_step(sim::Sim; verbose=BRIEF)
@@ -253,5 +257,18 @@ end
 include("api.jl")
 include("owfluid_solver.jl")
 include("spfluid_solver.jl")
+
+function Base.show(io::IO, sim::Sim)
+    println(io, "Sim model")
+    println(io, "Grid: ", grid_info(sim.reservoir.grid))
+    println(io, "Number of cells: ", sim.nc)
+    println(io, "Number of connections: ", sim.connlist.nconn)
+    println(io, "Fluid system: ", fluid_system(sim.reservoir.fluid))
+    println(io, "Wells: ", collect(keys(sim.facility)))
+    println(io, "Nonlinear solver: ", nsolver_info(sim.nsolver))
+    println(io, "Linear solver: ", lsolver_info(sim.lsolver))
+end
+
+
 
 end

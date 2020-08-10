@@ -112,7 +112,11 @@ function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVecto
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
         λo, po = o.λ, o.p
-        @. well.qo = well.wi * λo[ind] * (po[ind] - target)
+        if any(po[ind] .< target)
+            @. well.qo = 0.0 * po[ind]
+        else
+            @. well.qo = well.wi * λo[ind] * (po[ind] - target)
+        end
     elseif mode == CORAT
         @. well.qo = target + 0.0 * o.p[ind]
     elseif mode == CLRAT
@@ -129,7 +133,11 @@ function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVecto
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
         λw, pw = w.λ, w.p
-        @. well.qw = well.wi * λw[ind] * (pw[ind] - target)
+        if any(pw[ind] .< target)
+            @. well.qw = 0.0*pw[ind]
+        else
+            @. well.qw = well.wi * λw[ind] * (pw[ind] - target)
+        end
     elseif mode == CORAT
         λo, λw = o.λ, w.λ
         @. well.qw = (λw[ind] / λo[ind]) * target
@@ -153,7 +161,12 @@ function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVecto
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
         λo, λw, pw = o.λ, w.λ, w.p
-        @. well.qw = well.wi * (λo[ind] + λw[ind]) * (pw[ind] - target)
+        if any(pw[ind] .> target)
+            # Avoid inverse flow
+            @. well.qw = 0.0*pw[ind]
+        else
+            @. well.qw = well.wi * (λo[ind] + λw[ind]) * (pw[ind] - target)
+        end
     elseif mode == CWRAT
         @. well.qw = target + 0.0*w.p[ind]
     elseif mode == SHUT
