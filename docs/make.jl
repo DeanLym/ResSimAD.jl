@@ -7,12 +7,13 @@ makedocs(
     ),
     pages = [
         "Home" => "index.md",
-        "Workflow" => "workflow.md",
+        "Basic workflow" => "workflow.md",
+        "Advanced workflow" => "workflow2.md",
         "Precompile" => "precompile.md",
-        "Multiple simluations in parallel" => "parallel.md",
+        "Python usage" => "python.md",
         "Example models" => "examples.md",
         "Input options" => "input.md",
-        "Reference" => "api.md",
+        "API functions" => "api.md",
     ]
 )
 

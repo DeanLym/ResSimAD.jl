@@ -46,6 +46,8 @@ Code for simulating the example models is available in examples/
 
 ## Contents
 ```@contents
+Pages = ["workflow.md", "workflow2.md", "precompile.md", "python.md", "input.md", "examples.md", "api.md"]
+Depth = 2
 ```
 
 ## Index
