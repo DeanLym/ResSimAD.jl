@@ -8,7 +8,7 @@ documentation:
 
 > Julia is, in general, a "just-barely-ahead-of-time" compiled language. When you call a function for the first time, Julia compiles it for precisely the types of the arguments given. This can take some time. All subsequent calls within that same session use this fast compiled function, but if you restart Julia you lose all the compiled work.
 
-In a new Julia session, it may feel slow when importing ResSimAD, creating `Sim`
+In a new Julia session, it may feel slow when importing `ResSimAD`, creating `Sim`
 object, running simulation for the first time. This is because there are a lot of
 functions getting compiled "just-barely-ahead-of-time". These include functions
 in the ResSimAD.jl package itself and many methods in the dependencies of ResSimAD.jl.

@@ -228,11 +228,15 @@ Change the control mode of well `name` to be `mode` with target value `target`
 - `sim::Sim`: Sim object
 - `name::String`: name of the well
 - `mode::String`: target mode, not case sensitive
-    - "bhp": constant BHP
-    - "shut": shut-in
-    - "orat": constant oil rate
-    - "wrat": constant water rate
-    - "lrat": constatnt liquid rate
+    - producers:
+        - "bhp": constant BHP
+        - "shut": shut-in
+        - "orat": constant oil rate
+        - "wrat": constant water rate
+        - "lrat": constatnt liquid rate
+    - injectors:
+        - "bhp": constant BHP
+        - "wrat": constant water rate
 - `target::Float64`
 
 # Examples
@@ -325,8 +329,8 @@ Get column `data` from dataframe `sim.facility[name].results`
 # Arguments
 - `sim::Sim`: Sim object
 - `name::String`: name of the well
-- `data::String`: column name
-    - "Time": Time steps
+- `data::String`: column name (case insensitive)
+    - "TIME": Time steps
     - "ORAT": Oil rate
     - "WRAT": Water rate
     - "GRAT": Gas rate

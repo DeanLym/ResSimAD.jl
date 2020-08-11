@@ -2,7 +2,7 @@
 @doc raw"""
     example1()
 
-Example model one.
+Example model 1.
 
 # Model description
 - Dimension: $30\times15\times1$

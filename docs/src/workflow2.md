@@ -1,6 +1,6 @@
-# Advanced Workflow
+# Advanced workflow
 
-## Dynamic simulation contorl
+## Dynamic simulation control
 `ResSimAD.jl` allows flexible control over simulation runs.
 
 API functions [`ResSimAD.time_step`](@ref) and [`ResSimAD.step_to`](@ref) enable simulating the model for a single timestep, or to a specific time, respectively.
@@ -152,20 +152,19 @@ With the Julia [Distributed](https://docs.julialang.org/en/v1/manual/distributed
 provide an example:
 
 First, launch Julia worker processes.
-```@example workflow2
+
+```julia
 using Distributed: addprocs, @everywhere, @spawnat, fetch, workers
 
 # Launch 5 Julia worker processes
 nrun = 5
-addprocs(nrun)
+addprocs(nrun);
 
-# Check number of workers
-println("Number of workers:", length(workers()))
 ```
 
 Then import `ResSimAD.jl` and define a `forecast` function on all worker processes with the `@everywhere` macro.
 
-```@example workflow2
+```julia
 @everywhere using ResSimAD: get_model, Sim, runsim, SILENT, get_well_rates
 
 @everywhere function forecast(perm)
@@ -205,6 +204,7 @@ end
 We can then plot simulation results
 
 ```@example workflow2
+nrun = 5; # hide
 perms = rand(nrun) * 200.0 .+ 100.0; # hide
 using ResSimAD # hide
 function forecast(perm) # hide

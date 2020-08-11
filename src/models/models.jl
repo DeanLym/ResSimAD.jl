@@ -10,9 +10,25 @@ end
 
 include("example1.jl")
 include("example2.jl")
+include("example3.jl")
 
-function get_model(name::String)
-    return @eval $(Symbol(name))()
+
+"""
+    get_model(example_name::String)
+
+Get example model `example_name`.
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model
+
+julia> sim, options = get_model("example1");
+
+```
+
+"""
+function get_model(example_name::String)
+    return @eval $(Symbol(example_name))()
 end
 
 

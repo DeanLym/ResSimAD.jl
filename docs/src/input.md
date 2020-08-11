@@ -1,4 +1,4 @@
-# Input Options
+# Input options
 
 ```@meta
 DocTestSetup = quote

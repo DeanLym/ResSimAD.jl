@@ -47,7 +47,7 @@ options["min_err"] = 1.0e-3;
 
 ```
 
-Currently supported input options are summarized in [Input Options](@ref).
+Currently supported input options are summarized in [Input options](@ref).
 
 A `Sim` object can then be created with `options`:
 

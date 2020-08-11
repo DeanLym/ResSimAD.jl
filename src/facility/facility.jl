@@ -90,9 +90,9 @@ function init_results_df()
 end
 
 function save_result(well::StandardWell, t::Float64)
-    qo, qw, qg, ql = sum(value(well.qo)), sum(value(well.qw)), 0.0, sum(value(well.ql))
+    qo, qw, qg = sum(value(well.qo)), sum(value(well.qw)), 0.0
     bhp = mean(value(well.bhp))
-    push!(well.results, [t, qo, qw, qg, ql, bhp])
+    push!(well.results, [t, qo, qw, qg, qo+qw, bhp])
 end
 
 function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::AbstractRock)::Nothing
@@ -146,6 +146,8 @@ function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVecto
         @. well.qw = λw[ind] / (λo[ind] + λw[ind]) * target
     elseif mode == SHUT
         @. well.qw = 0.0 * w.p[ind]
+    else
+        throw(ErrorException("Mode $mode not supported for producer"))
     end
     return well.qw
 end
@@ -171,9 +173,12 @@ function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVecto
         @. well.qw = target + 0.0*w.p[ind]
     elseif mode == SHUT
         @. well.qw = 0.0*w.p[ind]
+    else
+        throw(ErrorException("Mode $mode not supported for injector"))
     end
     return well.qw
 end
+
 
 function compute_bhp(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
@@ -185,7 +190,7 @@ function compute_bhp(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVect
         @. well.bhp = po[ind] - target / (well.wi * λo[ind])
     elseif mode == CLRAT
         λo, λw = o.λ, w.λ
-        @. well.bhp = po[ind] - target / (well.wi * (λo[ind] + λw[ind]))
+        @. well.bhp = o.p[ind] - target / (well.wi * (λo[ind] + λw[ind]))
     elseif mode == SHUT
         @. well.bhp = o.p[ind]
     end

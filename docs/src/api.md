@@ -1,4 +1,8 @@
 ```@docs
+ResSimAD.get_model
+```
+
+```@docs
 ResSimAD.runsim
 ```
 

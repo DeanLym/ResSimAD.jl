@@ -7,13 +7,12 @@
 A reservoir simulator in a modern programming language.
 
 ## Features
-- Interactivity: run simulations in interactive programming environments such as Jupyter notebook or Juno. With the PyJulia python module, ResSimAD.jl is also accessible from Python.
-- Dynamic control: run simulation timestep by timestep, or newton step by newton step, and modify parameters or controls dynamically.
-- Real-time feedback: extract reservoir dynamic states for analysis and visualization.
-- Distributed computing: with packages such as ClusterManagers.jl, it is very convenient to run multiple simulations in parallel on a HPC cluster. This is very useful for field optimization and history matching.
+- **Interactivity**: run simulations in interactive programming environments such as `Jupyter notebook` or `Juno`. With the `PyJulia` python module, ResSimAD.jl is also accessible from `Python`.
+- **Dynamic control**: run simulation timestep by timestep, or newton step by newton step, and modify parameters or controls dynamically.
+- **Distributed computing**: with the `Distributed` Julia module, it is very convenient to run multiple simulations in parallel. In addition, with the ClusterManagers.jl package, it is very convenient to run multiple simulations in parallel on a HPC cluster. This is very useful for tasks such as field optimization and history matching that require simulating a large number of models.
 
 ## Automatic Differentaition (AD)
-An operator-overloading-based forward mode AD framework is developed to compute gradients automatically. Instead of using existing Julia AD packages such as Zygote, Tracker or DualNumbers, a customized AD framework is developed here for the sake of efficiency. The AD framework underlying ResSimAD.jl is tailored for the operations in reservoir simulation. This allows maximum level of optimization which makes this AD framework almost as fast as hand-written differentiation. On the other hand, the AD framework may need to be extended if some new operations are introduced when extending the functionality of ResSimAD.jl.
+An operator-overloading-based forward mode AD framework is developed to compute gradients automatically. Instead of using existing Julia AD packages such as Zygote, Tracker or DualNumbers, a customized AD framework is developed here for the sake of efficiency. The AD framework underlying `ResSimAD.jl` is tailored for the operations in reservoir simulation. This allows maximum level of optimization which makes this AD framework almost as fast as hand-written differentiation. On the other hand, the AD framework may need to be extended if some new operations are introduced when extending the functionality of ResSimAD.jl.
 
 ## Functionality
 Functionality-wise, ResSimAD.jl is still at a very early stage. It currently works for simple simulation models:
@@ -38,11 +37,6 @@ please download the source code. Then install manually with
 ```julia
 ] add ResSimAD.jl
 ```
-
-## Examples
-Example models are available in src/models/
-
-Code for simulating the example models is available in examples/
 
 ## Contents
 ```@contents
