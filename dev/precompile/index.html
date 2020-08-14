@@ -7,7 +7,7 @@ println(&quot;Creating Sim object (1st time) takes:&quot;)
 
 println(&quot;Running simulation (1st time) takes:&quot;)
 
-@time runsim(sim; verbose=SILENT);
+@time runsim(sim);
 
 
 println(&quot;\nImporting ResSimAD (2nd time) takes:&quot;)
@@ -18,7 +18,7 @@ println(&quot;Creating Sim object (2nd time) takes:&quot;)
 
 println(&quot;Running simulation (2nd time) takes:&quot;)
 
-@time runsim(sim; verbose=SILENT);
+@time runsim(sim);
 </code></pre><p>There are huge differences in the execution time between the first calls and the second calls:</p><pre><code class="language-julia">Importing ResSimAD (1st time) takes:
   2.962693 seconds (6.16 M allocations: 384.068 MiB)
 Creating Sim object (1st time) takes:
@@ -48,7 +48,7 @@ println(&quot;Creating Sim object (1st time) takes:&quot;)
 
 println(&quot;Running simulation (1st time) takes:&quot;)
 
-@time runsim(sim; verbose=SILENT);
+@time runsim(sim);
 
 
 println(&quot;\nImporting ResSimAD (2nd time) takes:&quot;)
@@ -59,7 +59,7 @@ println(&quot;Creating Sim object (2nd time) takes:&quot;)
 
 println(&quot;Running simulation (2nd time) takes:&quot;)
 
-@time runsim(sim; verbose=SILENT);
+@time runsim(sim);
 </code></pre><p>This time, importing ResSimAD.jl, creating <code>Sim</code> object and running simulation for the first time becomes almost as fast as the second calls:</p><pre><code class="language-julia">Importing ResSimAD (1st time) takes:
   0.001425 seconds (1.16 k allocations: 58.562 KiB)
 Creating Sim object (1st time) takes:
@@ -91,4 +91,4 @@ fn = joinpath(pkgdir(ResSimAD), &quot;precompile&quot;, &quot;precompile.jl&quot
 include(fn)
 
 </code></pre><ul><li>Restore default system image: if the default system image is replaced, we can restore it with</li></ul><pre><code class="language-julia">using PackageCompiler
-restore_default_sysimage()</code></pre><p>This will restore the default system image. The new system image that contains precompiled ResSimAD.jl related functions will be discarded .</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../workflow2/">« Advanced workflow</a><a class="docs-footer-nextpage" href="../python/">Python usage »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 11 August 2020 07:37">Tuesday 11 August 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+restore_default_sysimage()</code></pre><p>This will restore the default system image. The new system image that contains precompiled ResSimAD.jl related functions will be discarded .</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../workflow2/">« Advanced workflow</a><a class="docs-footer-nextpage" href="../python/">Python usage »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 14 August 2020 19:21">Friday 14 August 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
