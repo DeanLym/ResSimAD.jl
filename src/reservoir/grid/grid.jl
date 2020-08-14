@@ -1,5 +1,9 @@
 module Grid
 
+using Memento
+const LOGGER = getlogger(@__MODULE__)
+__init__() = Memento.register(LOGGER)
+
 using ..Global: α
 using ..Rock: AbstractRock
 
@@ -22,6 +26,7 @@ function set_cell_depth(grid::AbstractGrid, d::Vector{Float64})::AbstractGrid
 end
 
 function set_cell_depth(grid::AbstractGrid, d::Float64)::AbstractGrid
+    notice(LOGGER, "Setting constant depth = $(round(d, digits=3)) for all cells")
     set_cell_depth(grid, d*ones(grid.nc))
 end
 

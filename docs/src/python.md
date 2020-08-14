@@ -152,7 +152,7 @@ using Distributed
     _, options = get_model("example1")
     options["perm"] = perm
     sim = Sim(options);
-    runsim(sim, verbose=SILENT);
+    runsim(sim);
     t = get_well_rates(sim, "P1", "TIME")
     qo = get_well_rates(sim, "P1", "ORAT")
     qw = get_well_rates(sim, "P1", "WRAT")

@@ -11,6 +11,7 @@ end
 include("example1.jl")
 include("example2.jl")
 include("example3.jl")
+include("example4.jl")
 
 
 """

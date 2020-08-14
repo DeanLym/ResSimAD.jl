@@ -62,15 +62,17 @@ function get_grid_index(grid::AbstractStructGrid, ind::Int)
     return i, j, k
 end
 
-function set_cell_size(
-    grid::CartGrid,
-    dx::Float64,
-    dy::Float64,
-    dz::Float64,
-)::CartGrid
-    @assert dx > 0 && dy > 0 && dz > 0
-    I = ones(Int, grid.nc)
-    set_cell_size(grid, dx * I, dy * I, dz * I)
+
+function compute_cell_depth(tops::Vector{Float64}, dz::Vector{Float64}, nx::Int, ny::Int, nz::Int)
+    info(LOGGER, "Computing cell depths from tops")
+    n = nx * ny
+    d = Vector{Float64}(undef, n*nz)
+    @. d[1:n] = tops
+    for z = 2:nz
+        i0, i1, i2 = n*(z-2), n*(z-1), n*z
+        @. d[i1+1:i2] = d[i0+1:i1] + (dz[i0+1:i1] + dz[i1+1:i2])/2
+    end
+    return d
 end
 
 
@@ -80,7 +82,9 @@ function set_cell_size(
     dy::Vector{Float64},
     dz::Vector{Float64},
 )::CartGrid
-    @assert all(dx .> 0) && all(dy .> 0) && all(dz .> 0)
+    if any(dx .≤ 0) || any(dy .≤ 0) || any(dz .≤ 0)
+        error(LOGGER, "Negative value in dx, dy or dz")
+    end
     grid.dx .= dx
     grid.dy .= dy
     grid.dz .= dz
@@ -91,6 +95,7 @@ end
 
 
 function construct_connlist(grid::CartGrid, rock::AbstractRock)::ConnList
+    info(LOGGER, "Constructing connection list for Cartesian grid")
     connlist = grid.connlist
     dx, dy, dz = grid.dx, grid.dy, grid.dz
     kx, ky, kz = rock.kx, rock.ky, rock.kz #

@@ -108,10 +108,15 @@ We can also add new well dynamically. This can be useful for field development o
 ```@example workflow2
 using ResSimAD: add_well
 
-i2 = Dict("name" => "I2", "perforation"=>[(8,12,1)],
-          "radius"=>0.5, "mode"=>"bhp", "target"=>6500.);
+new_well = Dict([
+    ("name", "I2"),
+    ("perforation", [(8,12,1)]),
+    ("radius", 0.5),
+    ("mode", "bhp"),
+    ("target", 6500.)
+])
 
-add_well(sim, "injector", i2);
+add_well(sim, "injector", new_well);
 
 t_end = 1200.;
 step_to(sim, t_end);
@@ -171,7 +176,7 @@ Then import `ResSimAD.jl` and define a `forecast` function on all worker process
     _, options = get_model("example1")
     options["perm"] = perm
     sim = Sim(options);
-    runsim(sim, verbose=SILENT);
+    runsim(sim);
     t = get_well_rates(sim, "P1", "TIME")
     qo = get_well_rates(sim, "P1", "ORAT")
     qw = get_well_rates(sim, "P1", "WRAT")
@@ -207,11 +212,12 @@ We can then plot simulation results
 nrun = 5; # hide
 perms = rand(nrun) * 200.0 .+ 100.0; # hide
 using ResSimAD # hide
+ResSimAD.silence() # hide
 function forecast(perm) # hide
     _, options = get_model("example1") # hide
     options["perm"] = perm # hide
     sim = Sim(options); # hide
-    runsim(sim, verbose=SILENT); # hide
+    runsim(sim); # hide
     t = get_well_rates(sim, "P1", "TIME") # hide
     qo = get_well_rates(sim, "P1", "ORAT") # hide
     qw = get_well_rates(sim, "P1", "WRAT") # hide

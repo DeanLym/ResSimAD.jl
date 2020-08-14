@@ -45,3 +45,15 @@ ResSimAD.shut_well
 ```@docs
 ResSimAD.change_dt
 ```
+
+```@docs
+ResSimAD.silence
+```
+
+```@docs
+ResSimAD.debug
+```
+
+```@docs
+ResSimAD.verbose
+```

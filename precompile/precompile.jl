@@ -11,7 +11,7 @@ end
 
 if replace_default == 0
     println("Precompiling ResSimAD.jl.")
-    println("Custom system image 'ResSimADSysImg.so' will be created.")
+    println("Custom system image will be created at $sysimage_path.")
     create_sysimage(:ResSimAD; sysimage_path=sysimage_path,
                     precompile_execution_file=joinpath(dir, "precompile_execution_file.jl"))
 else

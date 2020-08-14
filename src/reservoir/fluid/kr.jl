@@ -16,19 +16,6 @@ struct SWOFCorey <: AbstractKROW
     ds::Float64
 end
 
-function SWOFTable(fn::String)
-    df = DataFrame(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
-    rename!(df, [:sw, :krw, :kro, :pcw])
-    # Add flat extrapolation
-    insert!.(eachcol(df), 1, [-1.e30, df[1, :krw], df[1, :kro], df[1, :pcw]])
-    insert!.(eachcol(df), size(df)[1]+1, [1.e30, df[end,:krw], df[end,:kro], df[end,:pcw]])
-    #
-    krw = interpolate((df.sw,), df.krw, Gridded(Linear()))
-    kro = interpolate((reverse(1 .- df.sw),), reverse(df.kro), Gridded(Linear()))
-    return SWOFTable(krw, kro, df)
-end
-
-
 function SWOFTable(table::DataFrame)
     krw = interpolate((table.sw[:],), table.krw[:], Gridded(Linear()))
     kro = interpolate((reverse(1 .- table.sw[:]),), reverse(table.kro[:]), Gridded(Linear()))
@@ -37,11 +24,19 @@ end
 
 
 function SWOFCorey(param::Dict{String, Float64})
-    vecs = ["swi", "sor", "aw", "ao", "krw0", "kro0"]
+    vecs = ("swi", "sor", "aw", "ao", "krw0", "kro0")
     params = [param[v] for v in vecs]
     ds = 1 - param["swi"] - param["sor"]
     return SWOFCorey(params..., ds)
 end
+
+function SWOFCorey(table::DataFrame)
+    vecs = (:swi, :sor, :aw, :ao, :krw0, :kro0)
+    params = [table[1, v] for v in vecs]
+    ds = 1 - table[1, :swi] - table[1, :sor]
+    return SWOFCorey(params..., ds)
+end
+
 
 function get_krw(krow::SWOFCorey, krw::ADVector, sw::ADVector)::ADVector
     krw0, ds, swl, swr, aw = krow.krw0, krow.ds, krow.swi, 1 - krow.sor, krow.aw

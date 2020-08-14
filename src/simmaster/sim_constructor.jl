@@ -1,0 +1,190 @@
+const get_well_type =
+    Dict{String,WellType}("producer" => PRODUCER, "injector" => INJECTOR)
+
+function init_grid(grid_opt::Dict)
+    info(LOGGER, "Initializing grid")
+    grid_type = grid_opt["type"]
+    if grid_type == "Cartesian"
+        nx, ny, nz = grid_opt["nx"], grid_opt["ny"], grid_opt["nz"]
+        grid = CartGrid(nx, ny, nz)
+        dx, dy, dz = grid_opt["dx"], grid_opt["dy"], grid_opt["dz"]
+        set_cell_size(grid, dx, dy, dz)
+        set_cell_depth(grid, grid_opt["d"])
+        info(LOGGER, "Grid dimension: $(grid.nx), $(grid.ny), $(grid.nz)")
+        info(LOGGER, "Number of cells: $(grid.nc)")
+        return grid
+    else
+        error(LOGGER, "Unsupported grid type $grid_type")
+    end
+end
+
+
+function init_rock(rock_opt::Dict, nc::Int)
+    info(LOGGER, "Initializing rock")
+    rock = StandardRock(nc)
+    set_perm(rock, rock_opt["permx"], rock_opt["permy"], rock_opt["permz"])
+    set_poro(rock, rock_opt["poro"])
+    return rock
+end
+
+function init_fluid(fluid_opt::Dict, nc::Int, nconn::Int)
+    info(LOGGER, "Initializing fluid")
+
+    fluid_type = fluid_opt["type"]
+    if fluid_type == "OW"
+        info(LOGGER, "Fluid system: $fluid_type")
+
+        ρo, ρw = fluid_opt["ρo"], fluid_opt["ρw"]
+
+        pvto_type, pvto_input = fluid_opt["PVTO_TYPE"], fluid_opt["PVTO"]
+        if pvto_type == "PVDO"
+            pvto = PVT(pvto_input)
+        else
+            pvto = PVTC(pvto_input)
+        end
+
+        pvtw = PVTC(fluid_opt["PVTW"])
+
+        swof_type, swof_input = fluid_opt["SWOF_TYPE"], fluid_opt["SWOF"]
+
+        if swof_type == "SWOF"
+            swof = SWOFTable(swof_input)
+        else
+            swof = SWOFCorey(swof_input)
+        end
+        fluid = OWFluid(nc, nconn, ρo, ρw, pvto, pvtw, swof)
+        po, sw = fluid_opt["po"], fluid_opt["sw"]
+        set_fluid_tn(fluid, po, sw)
+        update_primary_variable(fluid, po, sw)
+        return fluid
+    else
+        error(LOGGER, "Unsupported fluid type $fluid_type")
+    end
+end
+
+
+function init_well(T::WellType, well_option::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
+    name = well_option["name"]
+    perf = Vector{Int}()
+    for indices in well_option["perforation"]
+        push!(perf, get_grid_index(grid, indices...))
+    end
+    radius = get(well_option, "radius", 0.5)
+    #
+    well = StandardWell{T}(name, perf, radius, nv)
+    # Set control mode and target
+    well.mode = get_ctrl_mode[lowercase(well_option["mode"])]
+    well.target = well_option["target"]
+    # Set limits
+    limits = get(well_option, "limits", Dict{Limit, Float64}())
+    for (k,v) in limits
+        well.limits[k] = v
+    end
+    # Comput well index
+    compute_wi(well, grid, rock)
+    return well
+end
+
+function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
+    name = w["name"]
+    perf = Vector{Int}()
+    for indices in w["perforation"]
+        push!(perf, get_grid_index(grid, indices...))
+    end
+    radius = w["radius"]
+    well = StandardWell{T}(name, perf, radius, nv)
+    # Set control mode and target
+    well.mode = w["mode"]
+    well.target = w["target"]
+    # Set limits
+    # limits = get(well_option, "limits", Dict{Limit, Float64}())
+    # for (k,v) in limits
+    #     well.limits[k] = v
+    # end
+    compute_wi(well, grid, rock)
+    return well
+end
+
+function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
+    info(LOGGER, "Initializing facility")
+    v = ("producers", "injectors")
+    facility = Dict{String, AbstractFacility}()
+    for p in v
+        T = get_well_type[p[1:end-1]]
+        if facility_opt["num_$p"] > 0
+            for w in facility_opt[p]
+                facility[w["name"]] = init_well(T, w, nv, grid, rock)
+            end
+        end
+    end
+
+    return facility
+end
+
+
+function init_scheduler(scheduler_opt::Dict)
+    info(LOGGER, "Initializing scheduler")
+    sch = Scheduler()
+    sch.t_current = scheduler_opt["t_current"]
+    sch.dt_max = scheduler_opt["dt_max"]
+    sch.dt0 = scheduler_opt["dt0"]
+    reset_dt(sch)
+    set_time_step(sch, scheduler_opt["time_step"])
+    return sch
+end
+
+function init_nsolver(nsolver_opt::Dict)
+    info(LOGGER, "Initializing nonlinear solver")
+    nsolver = NRSolver()
+    nsolver.max_newton_iter = nsolver_opt["max_newton_iter"]
+    nsolver.min_err =  nsolver_opt["min_err"]
+    return nsolver
+end
+
+function init_lsolver(lsolver_opt::Dict)
+    info(LOGGER, "Initializing linear solver")
+    solver_type = lsolver_opt["type"]
+    if solver_type == "GMRES_ILU0"
+        lsolver = GMRES_ILU0_Solver(τ=lsolver_opt["τ"])
+    # elseif solver_type == "GMRES_CPR"
+    #     lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors, τ=τ)
+    else
+        lsolver = Julia_BackSlash_Solver()
+    end
+end
+
+function Sim(options::Dict)
+    info(LOGGER, "Creating simulation model")
+    parsed_options = parse_input(options)
+
+    grid = init_grid(parsed_options["grid_opt"])
+
+    nc = grid.nc
+    rock = init_rock(parsed_options["rock_opt"], nc)
+
+    construct_connlist(grid, rock)
+    sort_conn(grid.connlist)
+    info(LOGGER, "Number of connections: $(grid.connlist.nconn)")
+
+    nconn = grid.connlist.nconn
+    fluid = init_fluid(parsed_options["fluid_opt"], nc, nconn)
+
+    reservoir = StandardReservoir(grid, rock, fluid)
+
+    nv = fluid.nv
+    facility = init_facility(parsed_options["facility_opt"], nv, grid, rock)
+
+    scheduler = init_scheduler(parsed_options["scheduler_opt"])
+
+    nsolver = init_nsolver(parsed_options["nsolver_opt"])
+
+    lsolver = init_lsolver(parsed_options["lsolver_opt"])
+
+    update_phases(fluid, grid.connlist)
+
+    compute_residual(fluid, grid, rock, facility, scheduler.dt)
+
+    init_nsolver(nsolver, grid, fluid)
+
+    return Sim(reservoir, facility, scheduler, nsolver, lsolver)
+end

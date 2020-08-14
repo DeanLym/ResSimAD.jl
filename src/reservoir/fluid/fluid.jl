@@ -1,5 +1,10 @@
 module Fluid
 
+using Memento
+const LOGGER = getlogger(@__MODULE__)
+__init__() = Memento.register(LOGGER)
+
+
 using DataFrames
 using CSV
 using Interpolations
@@ -155,6 +160,7 @@ end
 
 ## OWFluid
 struct OWFluid <: AbstractFluid
+    nc::Int
     nv::Int
     phases::NamedTuple{(:o, :w), Tuple{Phase, Phase}}
     components::NamedTuple{(:o, :w), Tuple{Component, Component}}
@@ -164,7 +170,7 @@ struct OWFluid <: AbstractFluid
         nv = 2
         phases = (o = Phase(nc, nconn, nv, ρo, pvto), w=Phase(nc, nconn, nv, ρw, pvtw))
         components = (o = Component(nc, nv), w= Component(nc, nv))
-        return new(nv, phases, components, krow)
+        return new(nc, nv, phases, components, krow)
     end
 end
 
@@ -178,10 +184,25 @@ function compute_kr(fluid::OWFluid)::OWFluid
     return fluid
 end
 
+function set_fluid_tn(fluid::OWFluid, po::Float64, sw::Float64)
+    I = ones(fluid.nc)
+    notice(LOGGER, "Setting constant pon = $(round(po, digits=3)) for all cells")
+    notice(LOGGER, "Setting constant swn = $(round(sw, digits=3)) for all cells")
+    set_fluid_tn(fluid, po*I, sw*I)
+end
+
+
 function set_fluid_tn(fluid::OWFluid, po::Vector{Float64}, sw::Vector{Float64})
     phases = fluid.phases
     set_phase_tn(phases.o, po, 1 .- sw)
     set_phase_tn(phases.w, po, sw)
+end
+
+function update_primary_variable(fluid::OWFluid, po::Float64, sw::Float64)
+    I = ones(fluid.nc)
+    notice(LOGGER, "Setting constant po = $(round(po, digits=3)) for all cells")
+    notice(LOGGER, "Setting constant sw = $(round(sw, digits=3)) for all cells")
+    update_primary_variable(fluid, po*I, sw*I)
 end
 
 function update_primary_variable(fluid::OWFluid, po::Vector{Float64}, sw::Vector{Float64})

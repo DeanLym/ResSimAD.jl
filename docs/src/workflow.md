@@ -54,8 +54,7 @@ A `Sim` object can then be created with `options`:
 ```@example workflow
 using ResSimAD: Sim
 
-sim = Sim(options);
-println("Total number of cells:", sim.nc)
+sim = Sim(options)
 ```
 
 ## Run simluation

@@ -5,7 +5,6 @@ using ..Fluid:OWFluid, SPFluid
 
 
 mutable struct Scheduler
-    t0::Float64
     dt_old::Float64
     dt::Float64
     dt_max::Float64
@@ -18,7 +17,6 @@ mutable struct Scheduler
     time_step::Vector{Float64}
     function Scheduler()
         sch = new()
-        sch.t0 = 0.0
         sch.dt0 = 0.01
         sch.dt = sch.dt0
         sch.dt_old = sch.dt

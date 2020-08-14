@@ -6,7 +6,7 @@ println("Creating Sim object (1st time) takes:")
 
 println("Running simulation (1st time) takes:")
 
-@time runsim(sim; verbose=SILENT);
+@time runsim(sim);
 
 
 println("\nImporting ResSimAD (2nd time) takes:")
@@ -17,7 +17,7 @@ println("Creating Sim object (2nd time) takes:")
 
 println("Running simulation (2nd time) takes:")
 
-@time runsim(sim; verbose=SILENT);
+@time runsim(sim);
 
 
 using ResSimAD

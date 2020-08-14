@@ -1,19 +1,30 @@
 module SimMaster
 
+using Memento
+using Formatting:format, FormatExpr, fmt, FormatSpec
+
+const LOGGER = getlogger(@__MODULE__)
+__init__() = Memento.register(LOGGER)
+
 using LinearAlgebra:norm
 using SparseArrays:sparse, SparseMatrixCSC
 
 #! format: off
 using ..Global: M, α, β, g_, gc
+
 using ..AutoDiff: advector, value, grad, index
-using ..InputParse: parse_input_grid, parse_input_rock, parse_input_fluid
+
+using ..InputParser: parse_input, parse_well_option
 
 using ..Grid: CartGrid, AbstractGrid, ConnList, construct_connlist, set_cell_depth,
-                get_grid_index, set_cell_size, sort_conn, grid_info
+                get_grid_index, set_cell_size, sort_conn, grid_info, compute_cell_depth
+
 using ..Rock: AbstractRock, StandardRock, set_perm, set_poro
+
 using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
                 set_fluid_tn, update_phases, update_primary_variable,
                 update_fluid_tn, reset_primary_variable, fluid_system
+
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
 using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJECTOR,
@@ -28,10 +39,10 @@ using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
 
 import Base.show
 
-abstract type NonlinearSolver end
+abstract type AbstractNonlinearSolver end
 abstract type Assembler end
 
-@enum Verbose SILENT BRIEF DEBUG ALL
+const log_fmt = FormatExpr("T = {:>10.3f}, DT = {:>8.3f}, NI = {:>4d}, LI ={:>6d}")
 
 """
     Sim
@@ -42,11 +53,22 @@ struct Sim
     reservoir::AbstractReservoir
     facility::Dict{String, AbstractFacility}
     scheduler::Scheduler
-    nsolver::NonlinearSolver
+    nsolver::AbstractNonlinearSolver
     lsolver::AbstractLinearSolver
 end
 
-mutable struct NRSolver <: NonlinearSolver
+function Base.show(io::IO, sim::Sim)
+    println(io, "Sim model")
+    println(io, "Grid: ", grid_info(sim.reservoir.grid))
+    println(io, "Number of cells: ", sim.nc)
+    println(io, "Number of connections: ", sim.connlist.nconn)
+    println(io, "Fluid system: ", fluid_system(sim.reservoir.fluid))
+    println(io, "Wells: ", collect(keys(sim.facility)))
+    println(io, "Linear solver: ", lsolver_info(sim.lsolver))
+end
+
+
+mutable struct NRSolver <: AbstractNonlinearSolver
     max_newton_iter::Int
     newton_iter::Int
     min_err::Float64
@@ -60,17 +82,15 @@ mutable struct NRSolver <: NonlinearSolver
     NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false, false)
 end
 
-nsolver_info(::NRSolver) = "Newton Raphson"
-
 """
-    newton_step(sim::Sim; verbose=BRIEF)
+    newton_step(sim::Sim)
 
 Simulate for one newton step.
 
 # Examples
 
 ```jldoctest
-julia> using ResSimAD: get_model, newton_step, get_residual_error, SILENT
+julia> using ResSimAD: get_model, newton_step, get_residual_error
 
 julia> using Printf: @printf
 
@@ -89,40 +109,35 @@ julia> @printf("%.3e",get_residual_error(sim))
 ```
 
 """
-function newton_step(sim::Sim; verbose=BRIEF)::Nothing
+function newton_step(sim::Sim)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
     # Assemble residual
     assemble_residual(nsolver, fluid)
     # Assemble jacobian
-    # println("\nAssemble Jacobian")
     assemble_jacobian(nsolver, fluid, facility)
     # Solve equation
-    # println("Solve Equation")
     solve(lsolver, nsolver.δx, nsolver.jac, nsolver.residual)
-    # println("Solved Equation")
     # Update solution
     update_solution(nsolver, fluid)
     # Update dynamic states and then compute new residual
-    # println("Update Phases")
     update_phases(fluid, grid.connlist)
-    # println("Compute Residual")
     compute_residual(fluid, grid, rock, facility, sch.dt)
     nsolver.newton_iter += 1
-    if verbose >= DEBUG println("Newton Step ", nsolver.newton_iter) end
     return nothing
 end
 
+
 """
-    time_step(sim::Sim; verbose=BRIEF)
+    time_step(sim::Sim)
 
 Simluate for one time step. Time step length is `sim.scheduler.dt`.
 
 # Examples
 
 ```jldoctest
-julia> using ResSimAD: get_model, time_step, SILENT
+julia> using ResSimAD: get_model, time_step
 
 julia> sim, options = get_model("example1");
 
@@ -132,18 +147,19 @@ julia> sim.scheduler.t_current
 julia> sim.scheduler.dt
 0.1
 
-julia> time_step(sim, verbose=SILENT);
+julia> time_step(sim);
 
 julia> sim.scheduler.t_current
 0.1
 ```
 
 """
-function time_step(sim::Sim; verbose=BRIEF)::Nothing
+function time_step(sim::Sim)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
-    if verbose >= BRIEF println("Day ", sch.t_next) end
+    dt, t = sch.dt, sch.t_next
+    linear_iter = 0
     while true
         if nsolver.recompute_residual
             compute_residual(fluid, grid, rock, facility, sch.dt)
@@ -160,62 +176,63 @@ function time_step(sim::Sim; verbose=BRIEF)::Nothing
             nsolver.converged = false
             break
         end
-        newton_step(sim; verbose=verbose)
+        newton_step(sim)
+        linear_iter += lsolver.iterations[end]
     end
     update_dt(sch, fluid, nsolver.converged)
     push!(nsolver.num_iter, nsolver.newton_iter)
+    info(LOGGER, format(log_fmt, t, dt, nsolver.newton_iter, linear_iter))
     if nsolver.converged
         save_fluid_results(reservoir, sch.t_current)
         save_facility_results(facility, sch.t_current)
         update_fluid_tn(fluid)
     else
         reset_primary_variable(fluid)
-        if verbose >= BRIEF println("[WARNING] Converge failed, cut time step.") end
+        warn(LOGGER, "Convergence failed, cutting time step to $(sch.dt)")
     end
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)
-    if verbose >= BRIEF println("  NumNewton:", nsolver.newton_iter) end
     nsolver.newton_iter = 0
     return nothing
 end
 
 """
-    step_to(sim::Sim, t::Float64; verbose=BRIEF)
+    step_to(sim::Sim, t::Float64)
 
 Simluate until day `t`.
 
 # Examples
 ```jldoctest
-julia> using ResSimAD: get_model, step_to, SILENT
+julia> using ResSimAD: get_model, step_to
 
 julia> sim, options = get_model("example1");
 
 julia> sim.scheduler.t_current
 0.0
 
-julia> step_to(sim, 100.0, verbose=SILENT);
+julia> step_to(sim, 100.0);
 
 julia> sim.scheduler.t_current
 100.0
 ```
 
 """
-function step_to(sim::Sim, t::Float64; verbose=BRIEF)::Nothing
+function step_to(sim::Sim, t::Float64)::Nothing
     sch = sim.scheduler
     insert_time_step(sch, t)
     while sch.t_current < t
-        time_step(sim; verbose=verbose)
+        time_step(sim)
     end
 end
 
 """
-    runsim(sim::Sim; verbose=BRIEF)
+    runsim(sim::Sim)
 
 Run simulation from day `sim.scheduler.t_current` to day `sim.scheduler.time_step[end]`
 
 # Examples
 ```jldoctest
-julia> using ResSimAD: get_model, runsim, SILENT
+julia> using ResSimAD: get_model, runsim
 
 julia> sim, options = get_model("example1");
 
@@ -225,21 +242,24 @@ julia> sim.scheduler.t_current
 julia> sim.scheduler.time_step[end]
 1825.0
 
-julia> runsim(sim, verbose=SILENT);
+julia> runsim(sim);
 
 julia> sim.scheduler.t_current
 1825.0
 ```
 
 """
-function runsim(sim::Sim; verbose=BRIEF)::Nothing
+function runsim(sim::Sim)::Nothing
+    info(LOGGER, "Start simulation")
     sch = sim.scheduler
+    t0 = time()
     while sch.t_current < sch.time_step[end]
-        time_step(sim; verbose=verbose)
+        time_step(sim)
     end
+    dt = round(time() - t0; digits = 3)
+    info(LOGGER, "Simulation finished, elapsed time: $(dt) seconds")
     return nothing
 end
-
 
 function get_residual_error(sim::Sim)
     reservoir = sim.reservoir
@@ -254,20 +274,12 @@ function save_facility_results(facility::Dict{String, AbstractFacility}, t::Floa
     end
 end
 
-include("api.jl")
+include("sim_constructor.jl")
+include("api_functions.jl")
+include("derived_property.jl")
+
 include("owfluid_solver.jl")
 include("spfluid_solver.jl")
-
-function Base.show(io::IO, sim::Sim)
-    println(io, "Sim model")
-    println(io, "Grid: ", grid_info(sim.reservoir.grid))
-    println(io, "Number of cells: ", sim.nc)
-    println(io, "Number of connections: ", sim.connlist.nconn)
-    println(io, "Fluid system: ", fluid_system(sim.reservoir.fluid))
-    println(io, "Wells: ", collect(keys(sim.facility)))
-    println(io, "Nonlinear solver: ", nsolver_info(sim.nsolver))
-    println(io, "Linear solver: ", lsolver_info(sim.lsolver))
-end
 
 
 

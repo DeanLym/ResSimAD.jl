@@ -40,12 +40,12 @@ function compute_residual(
     return fluid
 end
 
-function assemble_residual(nsolver::NonlinearSolver, fluid::OWFluid)
+function assemble_residual(nsolver::AbstractNonlinearSolver, fluid::OWFluid)
     @. nsolver.residual[1:2:end] = fluid.components.w.r
     @. nsolver.residual[2:2:end] = fluid.components.o.r
 end
 
-function update_solution(nsolver::NonlinearSolver, fluid::OWFluid)
+function update_solution(nsolver::AbstractNonlinearSolver, fluid::OWFluid)
     o, w = fluid.phases.o, fluid.phases.w
     assembler = nsolver.assembler
     @. assembler.po = value(o.p) - nsolver.δx[1:2:end]
@@ -56,7 +56,6 @@ function update_solution(nsolver::NonlinearSolver, fluid::OWFluid)
     update_primary_variable(fluid, assembler.po, assembler.sw)
     return fluid
 end
-
 
 function compute_residual_error(fluid::OWFluid, grid::AbstractGrid, rock::AbstractRock, dt::Float64)
     a = dt .* M ./ (grid.v .* rock.ϕ)
@@ -159,7 +158,7 @@ function OWAssembler(
 end
 
 
-function init_nsolver(nsolver::NonlinearSolver, grid::AbstractGrid, fluid::OWFluid)
+function init_nsolver(nsolver::AbstractNonlinearSolver, grid::AbstractGrid, fluid::OWFluid)
     nc = grid.nc
     nsolver.residual = zeros(2*nc)
     nsolver.δx = zeros(2*nc)
@@ -190,7 +189,7 @@ function init_nsolver(nsolver::NonlinearSolver, grid::AbstractGrid, fluid::OWFlu
 end
 
 
-function assemble_jacobian(nsolver::NonlinearSolver, fluid::OWFluid, wells::Dict{String, AbstractFacility},)
+function assemble_jacobian(nsolver::AbstractNonlinearSolver, fluid::OWFluid, wells::Dict{String, AbstractFacility},)
     nzval, assembler = nsolver.jac.nzval, nsolver.assembler
     # Accumulation term
     aw, ao = fluid.components.w.a, fluid.components.o.a
