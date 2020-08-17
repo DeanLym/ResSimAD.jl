@@ -127,10 +127,12 @@ function parse_ow_fluid(options, keywords, nc, fluid_opt)
 
     v = ("equil", "po")
     p = check_complementary_keywords(v, keywords)
+    fluid_opt["po_type"] = p
     if p == "po"
-        fluid_opt["po"] = parse_vector_keyword(p, options, nc)
+        fluid_opt[p] = parse_vector_keyword(p, options, nc)
     else
-        error(LOGGER, "Keyword \"equil\" not supported yet.")
+        check_keyword_type(p, options, (Tuple{Float64, Float64},))
+        fluid_opt[p] = options[p]
     end
     return fluid_opt
 end

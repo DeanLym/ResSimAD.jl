@@ -53,6 +53,7 @@ end
 
 
 function parse_vector_keyword(p, options, nc)
+    check_keyword_type(p, options, (Float64, Vector{Float64}, String))
     if isa(options[p], String)
         x = read_vector_keyword(options[p], nc)
     else
@@ -60,17 +61,4 @@ function parse_vector_keyword(p, options, nc)
     end
     x = check_dimension(x, nc, p)
     return x
-end
-
-
-function parse_vector_keywords(p, options, nc)
-    check_keywords_type(v, options, (Float64, Vector{Float64}, String))
-    for p in v
-        if isa(options[p], String)
-            out_opt[p] = read_vector_keyword(options[p], nc)
-        else
-            out_opt[p] = options[p]
-        end
-        out_opt[p] = check_dimension(out_opt[p], nc, p)
-    end
 end

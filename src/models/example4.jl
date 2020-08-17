@@ -22,8 +22,8 @@ Example model 4.
     - I1: injector at (8, 24, 1), constant BHP 6100.0 psi
     - I2: injector at (36, 11, 1), constant water rate 800.0 STB/Day
 - Schedule:
-    - dt0: 0.1 Day
-    - dt_max: 50.0 Day
+    - dt0: 0.01 Day
+    - dt_max: 30.0 Day
     - t_end: 1825.0 Day
 """
 function example4()
@@ -39,8 +39,8 @@ function example4()
     options["multpermz"] = 0.25;
     # Fluid
     options["fluid"] = "OW"
-    # options["equil"] = (6000.0, 3000.0);
-    options["po"] = 6000.0;
+    options["equil"] = (8000.0, 6000.0);
+    # options["po"] = 6000.0;
     options["sw"] = 0.1;
     options["PVDO"] = get_example_data("PVDO.DAT");
     options["PVTW"] = get_example_data("PVTW.DAT");
@@ -72,12 +72,17 @@ function example4()
         push!(options["injectors"], well);
     end
 
-    # Schedule
-    options["dt0"] = 0.01
-    options["dt_max"] = 50.; options["t_end"] = 10 * 182.5;
+    # Nonlinear solver options
+    options["max_newton_iter"] = 15
     options["min_err"] = 1.0e-3
 
+    # Linear solver options
+    options["linear_solver"] = "GMRES_CPR"
+
+    # Schedule
+    options["dt0"] = 0.01
+    options["dt_max"] = 30.; options["t_end"] = 10 * 182.5;
+
     sim = Sim(options)
-    # sim = nothing
     return sim, options
 end

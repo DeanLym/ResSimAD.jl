@@ -27,8 +27,9 @@ function init_rock(rock_opt::Dict, nc::Int)
     return rock
 end
 
-function init_fluid(fluid_opt::Dict, nc::Int, nconn::Int)
+function init_fluid(fluid_opt::Dict, grid::AbstractGrid)
     info(LOGGER, "Initializing fluid")
+    nc, nconn = grid.nc, grid.connlist.nconn
 
     fluid_type = fluid_opt["type"]
     if fluid_type == "OW"
@@ -53,7 +54,17 @@ function init_fluid(fluid_opt::Dict, nc::Int, nconn::Int)
             swof = SWOFCorey(swof_input)
         end
         fluid = OWFluid(nc, nconn, ρo, ρw, pvto, pvtw, swof)
-        po, sw = fluid_opt["po"], fluid_opt["sw"]
+        # Set initial state
+        sw = fluid_opt["sw"]
+        po_type = fluid_opt["po_type"]
+        if po_type == "po"
+            po = fluid_opt["po"]
+        else # po_type == "equil"
+            # compute po from equil
+            dref, pref = fluid_opt["equil"]
+            Δd = mean(grid.dz) / 5.
+            po = equil(fluid, dref, pref, grid.d, Δd)
+        end
         set_fluid_tn(fluid, po, sw)
         update_primary_variable(fluid, po, sw)
         return fluid
@@ -62,28 +73,6 @@ function init_fluid(fluid_opt::Dict, nc::Int, nconn::Int)
     end
 end
 
-
-function init_well(T::WellType, well_option::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
-    name = well_option["name"]
-    perf = Vector{Int}()
-    for indices in well_option["perforation"]
-        push!(perf, get_grid_index(grid, indices...))
-    end
-    radius = get(well_option, "radius", 0.5)
-    #
-    well = StandardWell{T}(name, perf, radius, nv)
-    # Set control mode and target
-    well.mode = get_ctrl_mode[lowercase(well_option["mode"])]
-    well.target = well_option["target"]
-    # Set limits
-    limits = get(well_option, "limits", Dict{Limit, Float64}())
-    for (k,v) in limits
-        well.limits[k] = v
-    end
-    # Comput well index
-    compute_wi(well, grid, rock)
-    return well
-end
 
 function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
     name = w["name"]
@@ -141,13 +130,13 @@ function init_nsolver(nsolver_opt::Dict)
     return nsolver
 end
 
-function init_lsolver(lsolver_opt::Dict)
+function init_lsolver(lsolver_opt::Dict, grid::AbstractGrid)
     info(LOGGER, "Initializing linear solver")
     solver_type = lsolver_opt["type"]
     if solver_type == "GMRES_ILU0"
-        lsolver = GMRES_ILU0_Solver(τ=lsolver_opt["τ"])
-    # elseif solver_type == "GMRES_CPR"
-    #     lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors, τ=τ)
+        lsolver = GMRES_ILU0_Solver()
+    elseif solver_type == "GMRES_CPR"
+        lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors)
     else
         lsolver = Julia_BackSlash_Solver()
     end
@@ -167,7 +156,7 @@ function Sim(options::Dict)
     info(LOGGER, "Number of connections: $(grid.connlist.nconn)")
 
     nconn = grid.connlist.nconn
-    fluid = init_fluid(parsed_options["fluid_opt"], nc, nconn)
+    fluid = init_fluid(parsed_options["fluid_opt"], grid)
 
     reservoir = StandardReservoir(grid, rock, fluid)
 
@@ -178,7 +167,7 @@ function Sim(options::Dict)
 
     nsolver = init_nsolver(parsed_options["nsolver_opt"])
 
-    lsolver = init_lsolver(parsed_options["lsolver_opt"])
+    lsolver = init_lsolver(parsed_options["lsolver_opt"], grid)
 
     update_phases(fluid, grid.connlist)
 

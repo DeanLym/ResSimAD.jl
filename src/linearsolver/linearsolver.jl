@@ -1,5 +1,10 @@
 module LinearSolver
 
+using Memento
+
+const LOGGER = getlogger(@__MODULE__)
+__init__() = Memento.register(LOGGER)
+
 using SparseArrays:SparseMatrixCSC, sparse
 using IterativeSolvers, IncompleteLU
 
@@ -35,11 +40,8 @@ function solve(
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
 )::Vector{Float64}
-    # println("Setup ILU")
     prec = ilu(jac, τ=solver.τ)
-    # println("GMRES")
     _, log = gmres!(δx, jac, residual, Pl=prec, log=true)
-    # println("Number iteration:", log.iters)
     push!(solver.iterations, log.iters)
     return residual
 end
@@ -56,7 +58,7 @@ end
 function GMRES_CPR_Solver(
     nc::Int64,
     neighbors::Vector{Vector{Int}};
-    τ=0.1,
+    τ=0.5,
 )
     cpr_prec = CPRPreconditioner(nc, neighbors, τ)
     return GMRES_CPR_Solver(cpr_prec, Int[])
@@ -70,11 +72,9 @@ function solve(
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
 )::Vector{Float64}
-    # println("Setup CPR Preconditioner")
     setup_cpr_preconditioner(solver.cpr_prec, jac)
-    println("GMRES")
-    @time log = gmres!(δx, residual, jac, Pl=solver.cpr_prec, log=true)
-    println("Number iteration:", log.iters)
+    # _, log = gmres!(δx, jac, residual, Pl=prec, log=true)
+    _, log = gmres!(δx, jac, residual, Pl=solver.cpr_prec, log=true, maxiter=200)
     push!(solver.iterations, log.iters)
     return residual
 end

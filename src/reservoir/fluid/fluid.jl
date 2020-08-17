@@ -270,4 +270,6 @@ function update_phases(fluid::SPFluid, connlist::ConnList)
 end
 
 
+include("equil.jl")
+
 end

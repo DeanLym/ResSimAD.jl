@@ -8,6 +8,7 @@ __init__() = Memento.register(LOGGER)
 
 using LinearAlgebra:norm
 using SparseArrays:sparse, SparseMatrixCSC
+using Statistics
 
 #! format: off
 using ..Global: M, α, β, g_, gc
@@ -23,7 +24,7 @@ using ..Rock: AbstractRock, StandardRock, set_perm, set_poro
 
 using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
                 set_fluid_tn, update_phases, update_primary_variable,
-                update_fluid_tn, reset_primary_variable, fluid_system
+                update_fluid_tn, reset_primary_variable, fluid_system, equil
 
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
@@ -42,7 +43,7 @@ import Base.show
 abstract type AbstractNonlinearSolver end
 abstract type Assembler end
 
-const log_fmt = FormatExpr("T = {:>10.3f}, DT = {:>8.3f}, NI = {:>4d}, LI ={:>6d}")
+const log_fmt = FormatExpr("Day = {:>10.3f}, ΔT = {:>8.3f}, NI = {:>4d}, LI ={:>6d}, t = {:>8.3f}secs")
 
 """
     Sim
@@ -155,6 +156,7 @@ julia> sim.scheduler.t_current
 
 """
 function time_step(sim::Sim)::Nothing
+    t0 = time()
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
@@ -181,17 +183,20 @@ function time_step(sim::Sim)::Nothing
     end
     update_dt(sch, fluid, nsolver.converged)
     push!(nsolver.num_iter, nsolver.newton_iter)
-    info(LOGGER, format(log_fmt, t, dt, nsolver.newton_iter, linear_iter))
+
     if nsolver.converged
         save_fluid_results(reservoir, sch.t_current)
         save_facility_results(facility, sch.t_current)
         update_fluid_tn(fluid)
     else
         reset_primary_variable(fluid)
-        warn(LOGGER, "Convergence failed, cutting time step to $(sch.dt)")
+        warn(LOGGER, "Convergence failed, cutting time step size to $(round(sch.dt, digits=3)) days")
     end
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)
+    if nsolver.converged
+        info(LOGGER, format(log_fmt, t, dt, nsolver.newton_iter, linear_iter, time() - t0))
+    end
     nsolver.newton_iter = 0
     return nothing
 end
@@ -250,7 +255,6 @@ julia> sim.scheduler.t_current
 
 """
 function runsim(sim::Sim)::Nothing
-    info(LOGGER, "Start simulation")
     sch = sim.scheduler
     t0 = time()
     while sch.t_current < sch.time_step[end]

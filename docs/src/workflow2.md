@@ -159,7 +159,7 @@ provide an example:
 First, launch Julia worker processes.
 
 ```julia
-using Distributed: addprocs, @everywhere, @spawnat, fetch, workers
+using Distributed: addprocs, @everywhere, @spawnat, fetch, workers, rmprocs
 
 # Launch 5 Julia worker processes
 nrun = 5
@@ -170,7 +170,7 @@ addprocs(nrun);
 Then import `ResSimAD.jl` and define a `forecast` function on all worker processes with the `@everywhere` macro.
 
 ```julia
-@everywhere using ResSimAD: get_model, Sim, runsim, SILENT, get_well_rates
+@everywhere using ResSimAD: get_model, Sim, runsim, get_well_rates
 
 @everywhere function forecast(perm)
     _, options = get_model("example1")
@@ -225,6 +225,9 @@ function forecast(perm) # hide
 end # hide
 results = [] # hide
 for i = 1:nrun push!(results, forecast(perms[i])) end # hide
+using Plots
+using Plots.PlotMeasures
+cmap = cgrad(:jet);
 
 p1 = plot(xlabel="Day", ylabel="Oil rate (STB/Day)", title="P1 oil rate");
 p2 = plot(xlabel="Day", ylabel="Water rate (STB/Day)", title="P1 water rate");
@@ -234,4 +237,13 @@ for i = 1:nrun
     plot!(p2, t, qw, label="run $i", linewidth=2, marker=true)
 end
 plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)
+```
+
+The worker Julia processes will be automatically terminated if the main Julia process
+terminates. Alternative, we can terminate the worker Julia processes manually:
+
+```julia
+for worker in workers()
+    rmprocs(worker)
+end
 ```

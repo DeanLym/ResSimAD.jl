@@ -25,3 +25,7 @@ ResSimAD.Models.example2
 ```@docs
 ResSimAD.Models.example3
 ```
+
+```@docs
+ResSimAD.Models.example4
+```

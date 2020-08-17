@@ -73,7 +73,7 @@ julia> silence();
 
 """
 function silence()
-    setlevel!(getlogger("ResSimAD"), "error"; recursive=true)
+    setlevel!(getlogger("root"), "error"; recursive=true)
 end
 
 """
@@ -91,7 +91,7 @@ julia> debug();
 
 """
 function debug()
-    setlevel!(getlogger("ResSimAD"), "debug"; recursive=true)
+    setlevel!(getlogger("root"), "debug"; recursive=true)
 end
 
 """
@@ -118,7 +118,7 @@ julia> verbose("debug");
 
 """
 function verbose(level::String)
-    setlevel!(getlogger("ResSimAD"), level; recursive=true);
+    setlevel!(getlogger("root"), level; recursive=true);
 end
 
 end # module
