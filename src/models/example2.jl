@@ -20,7 +20,7 @@ Example model 2.
     - I2: injector at (25, 53, 1), constant BHP 6100.0 psi
 - Schedule:
     - dt0: 2.0 Day
-    - dt_max: 30.0 Day
+    - dt_max: 50.0 Day
     - t_end: 1825.0 Day
 """
 function example2()
@@ -58,7 +58,7 @@ function example2()
 
     # Schedule
     options["dt0"] = 2.0
-    options["dt_max"] = 30.; options["t_end"] = 10 * 182.5;
+    options["dt_max"] = 50.; options["t_end"] = 10 * 182.5;
     options["min_err"] = 1.0e-3
 
     sim = Sim(options)
