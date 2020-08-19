@@ -237,3 +237,68 @@ julia> size(po)
 function get_state_map(sim::Sim, var::String, t::Float64)
     return @eval $(Symbol(lowercase(var)*"_rec"))($sim)[round($t, digits=6)]
 end
+
+
+"""
+    save_results(sim::Sim; dir::String="./", state_report::String="report")
+
+Save simulation results to `dir`. Well results will be saved to `wellname.csv`.
+State maps for primary variables will be saved to `state.h5`.
+
+# Arguments
+- `sim::Sim`: Sim object
+- `dir::String`: target folder
+- `state_report::String`:
+    - "nothing": no state maps will be saved
+    - "report": state maps at days `sim.scheduler.time_step` will be saved
+    - "all": state maps at all time steps will be saved
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, runsim, silence, save_results
+
+julia> silence();
+
+julia> sim, options = get_model("example1");
+
+julia> runsim(sim);
+
+julia> save_results(sim);
+
+```
+
+"""
+function save_results(sim::Sim; dir::String="./", state_report::String="report")
+    if !(ispath(dir))
+        mkdir(dir)
+    end
+    info(LOGGER, "Saving simulation results")
+    # Save production curves
+    for w in values(sim.facility)
+        CSV.write(joinpath(dir, w.name * ".csv"), w.results)
+    end
+    # Save statemaps
+    state_report = lowercase(state_report)
+    if state_report == "nothing"
+        return nothing
+    end
+    vars = primary_variables(sim.reservoir.fluid)
+    if state_report == "report"
+        tstep = sim.scheduler.time_step
+    elseif state_report == "all"
+        tstep = get_well_rates(sim, collect(keys(sim.facility))[1], "time")
+    end
+    info(LOGGER, "Saving state maps at Days $tstep")
+    nt = length(tstep)
+    fid = h5open(joinpath(dir, "state.h5"), "w")
+    write(fid, "t", tstep)
+    for v in vars
+        data = zeros(nt, sim.nc)
+        for it = 1:nt
+            data[it, :] = get_state_map(sim, v, tstep[it])
+        end
+        write(fid, v, data)
+    end
+    close(fid)
+    return nothing
+end

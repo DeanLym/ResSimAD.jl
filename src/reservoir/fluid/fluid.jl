@@ -176,6 +176,7 @@ end
 
 fluid_system(::OWFluid) = "OW"
 
+primary_variables(::OWFluid) = ("po", "sw")
 
 function compute_kr(fluid::OWFluid)::OWFluid
     phases = fluid.phases
@@ -190,7 +191,6 @@ function set_fluid_tn(fluid::OWFluid, po::Float64, sw::Float64)
     notice(LOGGER, "Setting constant swn = $(round(sw, digits=3)) for all cells")
     set_fluid_tn(fluid, po*I, sw*I)
 end
-
 
 function set_fluid_tn(fluid::OWFluid, po::Vector{Float64}, sw::Vector{Float64})
     phases = fluid.phases

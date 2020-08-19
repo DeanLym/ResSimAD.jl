@@ -1,0 +1,54 @@
+[info]: 2020-08-18T22:32:41.619
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 8.1 GB
+
+[info]: Sim model
+Grid: Cartesian grid - (30, 15, 1)
+Number of cells: 450
+Number of connections: 855
+Fluid system: OW
+Wells: ["I1", "P1"]
+Linear solver: GMRES ILU
+
+[info]: ResSimAD simulation run 1
+[info]: Elapsed time for run 1: 0.524 seconds
+
+[info]: ResSimAD simulation run 2
+[info]: Elapsed time for run 2: 0.507 seconds
+
+[info]: ResSimAD simulation run 3
+[info]: Elapsed time for run 3: 0.499 seconds
+
+[info]: ResSimAD simulation run 4
+[info]: Elapsed time for run 4: 0.498 seconds
+
+[info]: ResSimAD simulation run 5
+[info]: Elapsed time for run 5: 0.506 seconds
+
+[info]: Average run time for the 5 simulations: 0.507 seconds
+[info]: 2020-08-18T22:33:26.914
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 8.1 GB
+
+[info]: Eclipse run 1
+[info]: Elapsed time for run 1: 0.35 seconds
+
+[info]: Eclipse run 2
+[info]: Elapsed time for run 2: 0.33 seconds
+
+[info]: Eclipse run 3
+[info]: Elapsed time for run 3: 0.3 seconds
+
+[info]: Eclipse run 4
+[info]: Elapsed time for run 4: 0.26 seconds
+
+[info]: Eclipse run 5
+[info]: Elapsed time for run 5: 0.35 seconds
+
+[info]: Average run time for the 5 simulations: 0.318 seconds

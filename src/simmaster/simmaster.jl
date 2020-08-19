@@ -1,5 +1,7 @@
 module SimMaster
 
+using CSV
+using HDF5
 using Memento
 using Formatting:format, FormatExpr, fmt, FormatSpec
 
@@ -24,7 +26,8 @@ using ..Rock: AbstractRock, StandardRock, set_perm, set_poro
 
 using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
                 set_fluid_tn, update_phases, update_primary_variable,
-                update_fluid_tn, reset_primary_variable, fluid_system, equil
+                update_fluid_tn, reset_primary_variable, fluid_system, equil,
+                primary_variables
 
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 

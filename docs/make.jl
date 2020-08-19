@@ -10,6 +10,7 @@ makedocs(
         "Basic workflow" => "workflow.md",
         "Advanced workflow" => "workflow2.md",
         "Precompile" => "precompile.md",
+        "Benchmark" => "benchmark.md",
         "Python usage" => "python.md",
         "Example models" => "examples.md",
         "Input options" => "input.md",
