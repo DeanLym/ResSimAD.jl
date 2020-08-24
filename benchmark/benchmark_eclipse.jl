@@ -27,14 +27,14 @@ function run_benchmark_eclipse(model_name, dir)
     info(logger, "Free memory $(round(Sys.free_memory() / 2^30, digits=1)) GB\n")
 
     ## Benchmark Eclipse run
-
+    logs = []
     runtimes = []
     for irun = 1:5
         info(logger, "Eclipse run $irun")
         # Launch eclipse, direct log to a pipe
         out = Pipe();
         cmd1 = `eclipse.exe $(uppercase(model_name))`;
-        log = run(pipeline(cmd1, stdout=out));
+        run(pipeline(cmd1, stdout=out));
         close(out.in);
 
         # Read elapsed time from log
@@ -42,10 +42,19 @@ function run_benchmark_eclipse(model_name, dir)
         ret = match(r"elapsed\s*.*", log);
         elapsed_time = parse(Float64, match(r"\d*\.\d*", ret.match).match);
         push!(runtimes, elapsed_time)
+        push!(logs, log)
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
     end
 
-    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds\n")
+
+    # Write run logs to log file
+    for (irun, log) in enumerate(logs)
+        info(logger, "\nRun $irun log:")
+        info(logger, log)
+    end
+    # Remove log-file from handlers
+    logger.handlers = filter!(x -> x[1]=="console", logger.handlers)
 
     writedlm(joinpath(dir, "average_runtime.txt"), runtimes)
 

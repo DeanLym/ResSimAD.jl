@@ -38,6 +38,8 @@ EQUALS
 TOPS
 450*7990/
 
+
+
 PROPS     == pvt and relperm tables =============================
 
 PVTW
@@ -126,20 +128,20 @@ RPTSOL
 SUMMARY    == output written to summary *.RSM file ====================
 
 WOPR       -- 'W'ell 'O'il 'P'roduction 'R'ate
-'P1'
+'PROD'
 /
 
 WWPR       -- 'W'ell 'W'ater 'P'roduction 'R'ate
-'P1'
+'PROD'
 /
 
 WWIR
-'I1'
+'INJ'
 /
 
 WBHP       -- and the bottom hole pressure of 'PROD'
- 'P1'
- 'I1'
+ 'PROD'
+ 'INJ'
 /
 
 SCHEDULE   == operations to be simulated ==============================
@@ -153,42 +155,42 @@ RPTRST    -- request restart file
 
 
 TUNING  -- min/max timestep (3 sections)
-0.1 30.0  /
+0.1 30  /
 5*  0.1 /
 2* 100 /
 
 WELSPECS   == WELL SPECIFICATION DATA ================================
 --   WELL   GROUP LOCATION  BHP   PI
 --   NAME   NAME    I   J    DEPTH DEFN
-    'P1' 'W1'     1  1    -1 'OIL'   2* 'STOP' / -- see ECL Manual for details
+    'PROD' 'W1'     1  1    -1 'OIL'   2* 'STOP' / -- see ECL Manual for details
 /
 
 COMPDAT    -- COMPLETION SPECIFICATION DATA
 --   WELL  LOCATION          OPEN/ SAT CONN  WELL  KH  S  D  AXIS
 --   NAME    I   J  K1  K2   SHUT  TAB FACT  DIAM
-    'P1'   1  1  1   1   'OPEN'  0   -1   1.0 / --see ECL manual for details
+    'PROD'   1  1  1   1   'OPEN'  0   -1   1.0 / --see ECL manual for details
 /
 
 WCONPROD   -- PRODUCTION WELL CONTROLS
 --   WELL    OPEN/  CTRL     OIL  WATER   GAS  LIQU   RES   BHP
 --   NAME    SHUT   MODE    RATE   RATE  RATE  RATE  RATE
-    'P1'  'OPEN' 'BHP'   5*                      5500  / --see ECL manual for details
+    'PROD'  'OPEN' 'BHP'   5*                      5500  / --see ECL manual for details
 /
 
 WELSPECS   == WELL SPECIFICATION DATA ================================
 --   WELL   GROUP LOCATION  BHP   PI
 --   NAME   NAME    I  J   DEPTH DEFN
-    'I1' 'W1'      30  15    -1 'WATER'   2* 'STOP' / -- see ECL Manual for details
+    'INJ' 'W1'      30  15    -1 'WATER'   2* 'STOP' / -- see ECL Manual for details
 /
 
 COMPDAT    -- COMPLETION SPECIFICATION DATA
 --   WELL  LOCATION          OPEN/ SAT CONN  WELL  KH  S  D  AXIS
 --   NAME    I   J  K1  K2   SHUT  TAB FACT  DIAM
-    'I1'    30   15  1   1  'OPEN'  0   -1   1.0 / --see ECL manual for details
+    'INJ'    30   15  1   1  'OPEN'  0   -1   1.0 / --see ECL manual for details
 /
 
 WCONINJE   -- INJECTION WELL CONTROLS
-    'I1'  'WATER' 'OPEN'   'BHP'   2*   6500  / --see ECL manual for details
+    'INJ'  'WATER' 'OPEN'   'BHP'   2*   6500  / --see ECL manual for details
 /
 
 -- timesteps can be refined by entering multiple TSTEP keywords

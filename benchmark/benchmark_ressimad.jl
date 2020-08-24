@@ -53,7 +53,12 @@ function run_benchmark_ressimad(model_name, dir)
     end
 
     info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+    # Remove log-file from handlers
+    logger.handlers = filter!(x -> x[1]=="console", logger.handlers)
 
     # Save average run time to file
     writedlm(joinpath(results_dir, "average_runtime.txt"), runtimes)
+
+    # Remove log file
+
 end

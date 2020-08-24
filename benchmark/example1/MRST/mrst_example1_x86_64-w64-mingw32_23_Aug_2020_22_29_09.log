@@ -1,0 +1,491 @@
+[info]: MRST run 1
+[info]: Elapsed time for run 1: 10.749 seconds
+
+[info]: MRST run 2
+[info]: Elapsed time for run 2: 10.218 seconds
+
+[info]: MRST run 3
+[info]: Elapsed time for run 3: 10.472 seconds
+
+[info]: MRST run 4
+[info]: Elapsed time for run 4: 10.155 seconds
+
+[info]: MRST run 5
+[info]: Elapsed time for run 5: 10.296 seconds
+
+[info]: Average run time for the 5 simulations: 10.378 seconds
+[info]: 
+Run 1 log:
+[info]:  
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/70:                                    -> 864 Seconds
+Solving timestep 02/70: 864 Seconds                        -> 5 Days, 15 Hours, 33.23 Seconds
+Solving timestep 03/70: 5 Days, 15 Hours, 33.23 Seconds    -> 11 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 04/70: 11 Days, 5 Hours, 2802.46 Seconds  -> 16 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 05/70: 16 Days, 20 Hours, 1971.69 Seconds -> 22 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 06/70: 22 Days, 11 Hours, 1140.92 Seconds -> 28 Days, 2 Hours, 310.15 Seconds
+Solving timestep 07/70: 28 Days, 2 Hours, 310.15 Seconds   -> 56 Days, 3 Hours, 3356.31 Seconds
+Solving timestep 08/70: 56 Days, 3 Hours, 3356.31 Seconds  -> 84 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 09/70: 84 Days, 5 Hours, 2802.46 Seconds  -> 112 Days, 7 Hours, 2248.62 Seconds
+Solving timestep 10/70: 112 Days, 7 Hours, 2248.62 Seconds -> 140 Days, 9 Hours, 1694.77 Seconds
+Solving timestep 11/70: 140 Days, 9 Hours, 1694.77 Seconds -> 168 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 12/70: 168 Days, 11 Hours, 1140.92 Seconds -> 196 Days, 13 Hours, 587.08 Seconds
+Solving timestep 13/70: 196 Days, 13 Hours, 587.08 Seconds -> 224 Days, 15 Hours, 33.23 Seconds
+Solving timestep 14/70: 224 Days, 15 Hours, 33.23 Seconds  -> 252 Days, 16 Hours, 3079.38 Seconds
+Solving timestep 15/70: 252 Days, 16 Hours, 3079.38 Seconds -> 280 Days, 18 Hours, 2525.54 Seconds
+Solving timestep 16/70: 280 Days, 18 Hours, 2525.54 Seconds -> 308 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 17/70: 308 Days, 20 Hours, 1971.69 Seconds -> 336 Days, 22 Hours, 1417.85 Seconds
+Solving timestep 18/70: 336 Days, 22 Hours, 1417.85 Seconds -> 365 Days, 863 Seconds, 1000.00 Milliseconds
+Solving timestep 19/70: 365 Days, 863 Seconds, 1000.00 Milliseconds -> 1 Year, 27 Days, 20.27 Hours
+Solving timestep 20/70: 1 Year, 27 Days, 20.27 Hours       -> 1 Year, 55 Days, 22.11 Hours
+Solving timestep 21/70: 1 Year, 55 Days, 22.11 Hours       -> 1 Year, 83 Days, 23.96 Hours
+Solving timestep 22/70: 1 Year, 83 Days, 23.96 Hours       -> 1 Year, 112 Days, 1.80 Hour
+Solving timestep 23/70: 1 Year, 112 Days, 1.80 Hour        -> 1 Year, 140 Days, 3.65 Hours
+Solving timestep 24/70: 1 Year, 140 Days, 3.65 Hours       -> 1 Year, 168 Days, 5.50 Hours
+Solving timestep 25/70: 1 Year, 168 Days, 5.50 Hours       -> 1 Year, 196 Days, 7.34 Hours
+Solving timestep 26/70: 1 Year, 196 Days, 7.34 Hours       -> 1 Year, 224 Days, 9.19 Hours
+Solving timestep 27/70: 1 Year, 224 Days, 9.19 Hours       -> 1 Year, 252 Days, 11.04 Hours
+Solving timestep 28/70: 1 Year, 252 Days, 11.04 Hours      -> 1 Year, 280 Days, 12.88 Hours
+Solving timestep 29/70: 1 Year, 280 Days, 12.88 Hours      -> 1 Year, 308 Days, 14.73 Hours
+Solving timestep 30/70: 1 Year, 308 Days, 14.73 Hours      -> 1 Year, 336 Days, 16.57 Hours
+Solving timestep 31/70: 1 Year, 336 Days, 16.57 Hours      -> 1 Year, 364 Days, 18.42 Hours
+Solving timestep 32/70: 1 Year, 364 Days, 18.42 Hours      -> 2 Years, 27 Days, 14.45 Hours
+Solving timestep 33/70: 2 Years, 27 Days, 14.45 Hours      -> 2 Years, 55 Days, 16.29 Hours
+Solving timestep 34/70: 2 Years, 55 Days, 16.29 Hours      -> 2 Years, 83 Days, 18.14 Hours
+Solving timestep 35/70: 2 Years, 83 Days, 18.14 Hours      -> 2 Years, 111 Days, 19.98 Hours
+Solving timestep 36/70: 2 Years, 111 Days, 19.98 Hours     -> 2 Years, 139 Days, 21.83 Hours
+Solving timestep 37/70: 2 Years, 139 Days, 21.83 Hours     -> 2 Years, 167 Days, 23.68 Hours
+Solving timestep 38/70: 2 Years, 167 Days, 23.68 Hours     -> 2 Years, 196 Days, 1.52 Hour
+Solving timestep 39/70: 2 Years, 196 Days, 1.52 Hour       -> 2 Years, 224 Days, 3.37 Hours
+Solving timestep 40/70: 2 Years, 224 Days, 3.37 Hours      -> 2 Years, 252 Days, 5.22 Hours
+Solving timestep 41/70: 2 Years, 252 Days, 5.22 Hours      -> 2 Years, 280 Days, 7.06 Hours
+Solving timestep 42/70: 2 Years, 280 Days, 7.06 Hours      -> 2 Years, 308 Days, 8.91 Hours
+Solving timestep 43/70: 2 Years, 308 Days, 8.91 Hours      -> 2 Years, 336 Days, 10.75 Hours
+Solving timestep 44/70: 2 Years, 336 Days, 10.75 Hours     -> 2 Years, 364 Days, 12.60 Hours
+Solving timestep 45/70: 2 Years, 364 Days, 12.60 Hours     -> 3 Years, 27 Days, 8.63 Hours
+Solving timestep 46/70: 3 Years, 27 Days, 8.63 Hours       -> 3 Years, 55 Days, 10.47 Hours
+Solving timestep 47/70: 3 Years, 55 Days, 10.47 Hours      -> 3 Years, 83 Days, 12.32 Hours
+Solving timestep 48/70: 3 Years, 83 Days, 12.32 Hours      -> 3 Years, 111 Days, 14.16 Hours
+Solving timestep 49/70: 3 Years, 111 Days, 14.16 Hours     -> 3 Years, 139 Days, 16.01 Hours
+Solving timestep 50/70: 3 Years, 139 Days, 16.01 Hours     -> 3 Years, 167 Days, 17.86 Hours
+Solving timestep 51/70: 3 Years, 167 Days, 17.86 Hours     -> 3 Years, 195 Days, 19.70 Hours
+Solving timestep 52/70: 3 Years, 195 Days, 19.70 Hours     -> 3 Years, 223 Days, 21.55 Hours
+Solving timestep 53/70: 3 Years, 223 Days, 21.55 Hours     -> 3 Years, 251 Days, 23.40 Hours
+Solving timestep 54/70: 3 Years, 251 Days, 23.40 Hours     -> 3 Years, 280 Days, 1.24 Hour
+Solving timestep 55/70: 3 Years, 280 Days, 1.24 Hour       -> 3 Years, 308 Days, 3.09 Hours
+Solving timestep 56/70: 3 Years, 308 Days, 3.09 Hours      -> 3 Years, 336 Days, 4.93 Hours
+Solving timestep 57/70: 3 Years, 336 Days, 4.93 Hours      -> 3 Years, 364 Days, 6.78 Hours
+Solving timestep 58/70: 3 Years, 364 Days, 6.78 Hours      -> 4 Years, 27 Days, 2.81 Hours
+Solving timestep 59/70: 4 Years, 27 Days, 2.81 Hours       -> 4 Years, 55 Days, 4.65 Hours
+Solving timestep 60/70: 4 Years, 55 Days, 4.65 Hours       -> 4 Years, 83 Days, 6.50 Hours
+Solving timestep 61/70: 4 Years, 83 Days, 6.50 Hours       -> 4 Years, 111 Days, 8.34 Hours
+Solving timestep 62/70: 4 Years, 111 Days, 8.34 Hours      -> 4 Years, 139 Days, 10.19 Hours
+Solving timestep 63/70: 4 Years, 139 Days, 10.19 Hours     -> 4 Years, 167 Days, 12.04 Hours
+Solving timestep 64/70: 4 Years, 167 Days, 12.04 Hours     -> 4 Years, 195 Days, 13.88 Hours
+Solving timestep 65/70: 4 Years, 195 Days, 13.88 Hours     -> 4 Years, 223 Days, 15.73 Hours
+Solving timestep 66/70: 4 Years, 223 Days, 15.73 Hours     -> 4 Years, 251 Days, 17.58 Hours
+Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days, 19.42 Hours
+Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
+Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
+Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 749 Milliseconds ***
+
+[info]: 
+Run 2 log:
+[info]:  
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/70:                                    -> 864 Seconds
+Solving timestep 02/70: 864 Seconds                        -> 5 Days, 15 Hours, 33.23 Seconds
+Solving timestep 03/70: 5 Days, 15 Hours, 33.23 Seconds    -> 11 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 04/70: 11 Days, 5 Hours, 2802.46 Seconds  -> 16 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 05/70: 16 Days, 20 Hours, 1971.69 Seconds -> 22 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 06/70: 22 Days, 11 Hours, 1140.92 Seconds -> 28 Days, 2 Hours, 310.15 Seconds
+Solving timestep 07/70: 28 Days, 2 Hours, 310.15 Seconds   -> 56 Days, 3 Hours, 3356.31 Seconds
+Solving timestep 08/70: 56 Days, 3 Hours, 3356.31 Seconds  -> 84 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 09/70: 84 Days, 5 Hours, 2802.46 Seconds  -> 112 Days, 7 Hours, 2248.62 Seconds
+Solving timestep 10/70: 112 Days, 7 Hours, 2248.62 Seconds -> 140 Days, 9 Hours, 1694.77 Seconds
+Solving timestep 11/70: 140 Days, 9 Hours, 1694.77 Seconds -> 168 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 12/70: 168 Days, 11 Hours, 1140.92 Seconds -> 196 Days, 13 Hours, 587.08 Seconds
+Solving timestep 13/70: 196 Days, 13 Hours, 587.08 Seconds -> 224 Days, 15 Hours, 33.23 Seconds
+Solving timestep 14/70: 224 Days, 15 Hours, 33.23 Seconds  -> 252 Days, 16 Hours, 3079.38 Seconds
+Solving timestep 15/70: 252 Days, 16 Hours, 3079.38 Seconds -> 280 Days, 18 Hours, 2525.54 Seconds
+Solving timestep 16/70: 280 Days, 18 Hours, 2525.54 Seconds -> 308 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 17/70: 308 Days, 20 Hours, 1971.69 Seconds -> 336 Days, 22 Hours, 1417.85 Seconds
+Solving timestep 18/70: 336 Days, 22 Hours, 1417.85 Seconds -> 365 Days, 863 Seconds, 1000.00 Milliseconds
+Solving timestep 19/70: 365 Days, 863 Seconds, 1000.00 Milliseconds -> 1 Year, 27 Days, 20.27 Hours
+Solving timestep 20/70: 1 Year, 27 Days, 20.27 Hours       -> 1 Year, 55 Days, 22.11 Hours
+Solving timestep 21/70: 1 Year, 55 Days, 22.11 Hours       -> 1 Year, 83 Days, 23.96 Hours
+Solving timestep 22/70: 1 Year, 83 Days, 23.96 Hours       -> 1 Year, 112 Days, 1.80 Hour
+Solving timestep 23/70: 1 Year, 112 Days, 1.80 Hour        -> 1 Year, 140 Days, 3.65 Hours
+Solving timestep 24/70: 1 Year, 140 Days, 3.65 Hours       -> 1 Year, 168 Days, 5.50 Hours
+Solving timestep 25/70: 1 Year, 168 Days, 5.50 Hours       -> 1 Year, 196 Days, 7.34 Hours
+Solving timestep 26/70: 1 Year, 196 Days, 7.34 Hours       -> 1 Year, 224 Days, 9.19 Hours
+Solving timestep 27/70: 1 Year, 224 Days, 9.19 Hours       -> 1 Year, 252 Days, 11.04 Hours
+Solving timestep 28/70: 1 Year, 252 Days, 11.04 Hours      -> 1 Year, 280 Days, 12.88 Hours
+Solving timestep 29/70: 1 Year, 280 Days, 12.88 Hours      -> 1 Year, 308 Days, 14.73 Hours
+Solving timestep 30/70: 1 Year, 308 Days, 14.73 Hours      -> 1 Year, 336 Days, 16.57 Hours
+Solving timestep 31/70: 1 Year, 336 Days, 16.57 Hours      -> 1 Year, 364 Days, 18.42 Hours
+Solving timestep 32/70: 1 Year, 364 Days, 18.42 Hours      -> 2 Years, 27 Days, 14.45 Hours
+Solving timestep 33/70: 2 Years, 27 Days, 14.45 Hours      -> 2 Years, 55 Days, 16.29 Hours
+Solving timestep 34/70: 2 Years, 55 Days, 16.29 Hours      -> 2 Years, 83 Days, 18.14 Hours
+Solving timestep 35/70: 2 Years, 83 Days, 18.14 Hours      -> 2 Years, 111 Days, 19.98 Hours
+Solving timestep 36/70: 2 Years, 111 Days, 19.98 Hours     -> 2 Years, 139 Days, 21.83 Hours
+Solving timestep 37/70: 2 Years, 139 Days, 21.83 Hours     -> 2 Years, 167 Days, 23.68 Hours
+Solving timestep 38/70: 2 Years, 167 Days, 23.68 Hours     -> 2 Years, 196 Days, 1.52 Hour
+Solving timestep 39/70: 2 Years, 196 Days, 1.52 Hour       -> 2 Years, 224 Days, 3.37 Hours
+Solving timestep 40/70: 2 Years, 224 Days, 3.37 Hours      -> 2 Years, 252 Days, 5.22 Hours
+Solving timestep 41/70: 2 Years, 252 Days, 5.22 Hours      -> 2 Years, 280 Days, 7.06 Hours
+Solving timestep 42/70: 2 Years, 280 Days, 7.06 Hours      -> 2 Years, 308 Days, 8.91 Hours
+Solving timestep 43/70: 2 Years, 308 Days, 8.91 Hours      -> 2 Years, 336 Days, 10.75 Hours
+Solving timestep 44/70: 2 Years, 336 Days, 10.75 Hours     -> 2 Years, 364 Days, 12.60 Hours
+Solving timestep 45/70: 2 Years, 364 Days, 12.60 Hours     -> 3 Years, 27 Days, 8.63 Hours
+Solving timestep 46/70: 3 Years, 27 Days, 8.63 Hours       -> 3 Years, 55 Days, 10.47 Hours
+Solving timestep 47/70: 3 Years, 55 Days, 10.47 Hours      -> 3 Years, 83 Days, 12.32 Hours
+Solving timestep 48/70: 3 Years, 83 Days, 12.32 Hours      -> 3 Years, 111 Days, 14.16 Hours
+Solving timestep 49/70: 3 Years, 111 Days, 14.16 Hours     -> 3 Years, 139 Days, 16.01 Hours
+Solving timestep 50/70: 3 Years, 139 Days, 16.01 Hours     -> 3 Years, 167 Days, 17.86 Hours
+Solving timestep 51/70: 3 Years, 167 Days, 17.86 Hours     -> 3 Years, 195 Days, 19.70 Hours
+Solving timestep 52/70: 3 Years, 195 Days, 19.70 Hours     -> 3 Years, 223 Days, 21.55 Hours
+Solving timestep 53/70: 3 Years, 223 Days, 21.55 Hours     -> 3 Years, 251 Days, 23.40 Hours
+Solving timestep 54/70: 3 Years, 251 Days, 23.40 Hours     -> 3 Years, 280 Days, 1.24 Hour
+Solving timestep 55/70: 3 Years, 280 Days, 1.24 Hour       -> 3 Years, 308 Days, 3.09 Hours
+Solving timestep 56/70: 3 Years, 308 Days, 3.09 Hours      -> 3 Years, 336 Days, 4.93 Hours
+Solving timestep 57/70: 3 Years, 336 Days, 4.93 Hours      -> 3 Years, 364 Days, 6.78 Hours
+Solving timestep 58/70: 3 Years, 364 Days, 6.78 Hours      -> 4 Years, 27 Days, 2.81 Hours
+Solving timestep 59/70: 4 Years, 27 Days, 2.81 Hours       -> 4 Years, 55 Days, 4.65 Hours
+Solving timestep 60/70: 4 Years, 55 Days, 4.65 Hours       -> 4 Years, 83 Days, 6.50 Hours
+Solving timestep 61/70: 4 Years, 83 Days, 6.50 Hours       -> 4 Years, 111 Days, 8.34 Hours
+Solving timestep 62/70: 4 Years, 111 Days, 8.34 Hours      -> 4 Years, 139 Days, 10.19 Hours
+Solving timestep 63/70: 4 Years, 139 Days, 10.19 Hours     -> 4 Years, 167 Days, 12.04 Hours
+Solving timestep 64/70: 4 Years, 167 Days, 12.04 Hours     -> 4 Years, 195 Days, 13.88 Hours
+Solving timestep 65/70: 4 Years, 195 Days, 13.88 Hours     -> 4 Years, 223 Days, 15.73 Hours
+Solving timestep 66/70: 4 Years, 223 Days, 15.73 Hours     -> 4 Years, 251 Days, 17.58 Hours
+Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days, 19.42 Hours
+Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
+Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
+Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 218 Milliseconds ***
+
+[info]: 
+Run 3 log:
+[info]:  
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/70:                                    -> 864 Seconds
+Solving timestep 02/70: 864 Seconds                        -> 5 Days, 15 Hours, 33.23 Seconds
+Solving timestep 03/70: 5 Days, 15 Hours, 33.23 Seconds    -> 11 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 04/70: 11 Days, 5 Hours, 2802.46 Seconds  -> 16 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 05/70: 16 Days, 20 Hours, 1971.69 Seconds -> 22 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 06/70: 22 Days, 11 Hours, 1140.92 Seconds -> 28 Days, 2 Hours, 310.15 Seconds
+Solving timestep 07/70: 28 Days, 2 Hours, 310.15 Seconds   -> 56 Days, 3 Hours, 3356.31 Seconds
+Solving timestep 08/70: 56 Days, 3 Hours, 3356.31 Seconds  -> 84 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 09/70: 84 Days, 5 Hours, 2802.46 Seconds  -> 112 Days, 7 Hours, 2248.62 Seconds
+Solving timestep 10/70: 112 Days, 7 Hours, 2248.62 Seconds -> 140 Days, 9 Hours, 1694.77 Seconds
+Solving timestep 11/70: 140 Days, 9 Hours, 1694.77 Seconds -> 168 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 12/70: 168 Days, 11 Hours, 1140.92 Seconds -> 196 Days, 13 Hours, 587.08 Seconds
+Solving timestep 13/70: 196 Days, 13 Hours, 587.08 Seconds -> 224 Days, 15 Hours, 33.23 Seconds
+Solving timestep 14/70: 224 Days, 15 Hours, 33.23 Seconds  -> 252 Days, 16 Hours, 3079.38 Seconds
+Solving timestep 15/70: 252 Days, 16 Hours, 3079.38 Seconds -> 280 Days, 18 Hours, 2525.54 Seconds
+Solving timestep 16/70: 280 Days, 18 Hours, 2525.54 Seconds -> 308 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 17/70: 308 Days, 20 Hours, 1971.69 Seconds -> 336 Days, 22 Hours, 1417.85 Seconds
+Solving timestep 18/70: 336 Days, 22 Hours, 1417.85 Seconds -> 365 Days, 863 Seconds, 1000.00 Milliseconds
+Solving timestep 19/70: 365 Days, 863 Seconds, 1000.00 Milliseconds -> 1 Year, 27 Days, 20.27 Hours
+Solving timestep 20/70: 1 Year, 27 Days, 20.27 Hours       -> 1 Year, 55 Days, 22.11 Hours
+Solving timestep 21/70: 1 Year, 55 Days, 22.11 Hours       -> 1 Year, 83 Days, 23.96 Hours
+Solving timestep 22/70: 1 Year, 83 Days, 23.96 Hours       -> 1 Year, 112 Days, 1.80 Hour
+Solving timestep 23/70: 1 Year, 112 Days, 1.80 Hour        -> 1 Year, 140 Days, 3.65 Hours
+Solving timestep 24/70: 1 Year, 140 Days, 3.65 Hours       -> 1 Year, 168 Days, 5.50 Hours
+Solving timestep 25/70: 1 Year, 168 Days, 5.50 Hours       -> 1 Year, 196 Days, 7.34 Hours
+Solving timestep 26/70: 1 Year, 196 Days, 7.34 Hours       -> 1 Year, 224 Days, 9.19 Hours
+Solving timestep 27/70: 1 Year, 224 Days, 9.19 Hours       -> 1 Year, 252 Days, 11.04 Hours
+Solving timestep 28/70: 1 Year, 252 Days, 11.04 Hours      -> 1 Year, 280 Days, 12.88 Hours
+Solving timestep 29/70: 1 Year, 280 Days, 12.88 Hours      -> 1 Year, 308 Days, 14.73 Hours
+Solving timestep 30/70: 1 Year, 308 Days, 14.73 Hours      -> 1 Year, 336 Days, 16.57 Hours
+Solving timestep 31/70: 1 Year, 336 Days, 16.57 Hours      -> 1 Year, 364 Days, 18.42 Hours
+Solving timestep 32/70: 1 Year, 364 Days, 18.42 Hours      -> 2 Years, 27 Days, 14.45 Hours
+Solving timestep 33/70: 2 Years, 27 Days, 14.45 Hours      -> 2 Years, 55 Days, 16.29 Hours
+Solving timestep 34/70: 2 Years, 55 Days, 16.29 Hours      -> 2 Years, 83 Days, 18.14 Hours
+Solving timestep 35/70: 2 Years, 83 Days, 18.14 Hours      -> 2 Years, 111 Days, 19.98 Hours
+Solving timestep 36/70: 2 Years, 111 Days, 19.98 Hours     -> 2 Years, 139 Days, 21.83 Hours
+Solving timestep 37/70: 2 Years, 139 Days, 21.83 Hours     -> 2 Years, 167 Days, 23.68 Hours
+Solving timestep 38/70: 2 Years, 167 Days, 23.68 Hours     -> 2 Years, 196 Days, 1.52 Hour
+Solving timestep 39/70: 2 Years, 196 Days, 1.52 Hour       -> 2 Years, 224 Days, 3.37 Hours
+Solving timestep 40/70: 2 Years, 224 Days, 3.37 Hours      -> 2 Years, 252 Days, 5.22 Hours
+Solving timestep 41/70: 2 Years, 252 Days, 5.22 Hours      -> 2 Years, 280 Days, 7.06 Hours
+Solving timestep 42/70: 2 Years, 280 Days, 7.06 Hours      -> 2 Years, 308 Days, 8.91 Hours
+Solving timestep 43/70: 2 Years, 308 Days, 8.91 Hours      -> 2 Years, 336 Days, 10.75 Hours
+Solving timestep 44/70: 2 Years, 336 Days, 10.75 Hours     -> 2 Years, 364 Days, 12.60 Hours
+Solving timestep 45/70: 2 Years, 364 Days, 12.60 Hours     -> 3 Years, 27 Days, 8.63 Hours
+Solving timestep 46/70: 3 Years, 27 Days, 8.63 Hours       -> 3 Years, 55 Days, 10.47 Hours
+Solving timestep 47/70: 3 Years, 55 Days, 10.47 Hours      -> 3 Years, 83 Days, 12.32 Hours
+Solving timestep 48/70: 3 Years, 83 Days, 12.32 Hours      -> 3 Years, 111 Days, 14.16 Hours
+Solving timestep 49/70: 3 Years, 111 Days, 14.16 Hours     -> 3 Years, 139 Days, 16.01 Hours
+Solving timestep 50/70: 3 Years, 139 Days, 16.01 Hours     -> 3 Years, 167 Days, 17.86 Hours
+Solving timestep 51/70: 3 Years, 167 Days, 17.86 Hours     -> 3 Years, 195 Days, 19.70 Hours
+Solving timestep 52/70: 3 Years, 195 Days, 19.70 Hours     -> 3 Years, 223 Days, 21.55 Hours
+Solving timestep 53/70: 3 Years, 223 Days, 21.55 Hours     -> 3 Years, 251 Days, 23.40 Hours
+Solving timestep 54/70: 3 Years, 251 Days, 23.40 Hours     -> 3 Years, 280 Days, 1.24 Hour
+Solving timestep 55/70: 3 Years, 280 Days, 1.24 Hour       -> 3 Years, 308 Days, 3.09 Hours
+Solving timestep 56/70: 3 Years, 308 Days, 3.09 Hours      -> 3 Years, 336 Days, 4.93 Hours
+Solving timestep 57/70: 3 Years, 336 Days, 4.93 Hours      -> 3 Years, 364 Days, 6.78 Hours
+Solving timestep 58/70: 3 Years, 364 Days, 6.78 Hours      -> 4 Years, 27 Days, 2.81 Hours
+Solving timestep 59/70: 4 Years, 27 Days, 2.81 Hours       -> 4 Years, 55 Days, 4.65 Hours
+Solving timestep 60/70: 4 Years, 55 Days, 4.65 Hours       -> 4 Years, 83 Days, 6.50 Hours
+Solving timestep 61/70: 4 Years, 83 Days, 6.50 Hours       -> 4 Years, 111 Days, 8.34 Hours
+Solving timestep 62/70: 4 Years, 111 Days, 8.34 Hours      -> 4 Years, 139 Days, 10.19 Hours
+Solving timestep 63/70: 4 Years, 139 Days, 10.19 Hours     -> 4 Years, 167 Days, 12.04 Hours
+Solving timestep 64/70: 4 Years, 167 Days, 12.04 Hours     -> 4 Years, 195 Days, 13.88 Hours
+Solving timestep 65/70: 4 Years, 195 Days, 13.88 Hours     -> 4 Years, 223 Days, 15.73 Hours
+Solving timestep 66/70: 4 Years, 223 Days, 15.73 Hours     -> 4 Years, 251 Days, 17.58 Hours
+Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days, 19.42 Hours
+Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
+Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
+Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 472 Milliseconds ***
+
+[info]: 
+Run 4 log:
+[info]:  
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/70:                                    -> 864 Seconds
+Solving timestep 02/70: 864 Seconds                        -> 5 Days, 15 Hours, 33.23 Seconds
+Solving timestep 03/70: 5 Days, 15 Hours, 33.23 Seconds    -> 11 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 04/70: 11 Days, 5 Hours, 2802.46 Seconds  -> 16 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 05/70: 16 Days, 20 Hours, 1971.69 Seconds -> 22 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 06/70: 22 Days, 11 Hours, 1140.92 Seconds -> 28 Days, 2 Hours, 310.15 Seconds
+Solving timestep 07/70: 28 Days, 2 Hours, 310.15 Seconds   -> 56 Days, 3 Hours, 3356.31 Seconds
+Solving timestep 08/70: 56 Days, 3 Hours, 3356.31 Seconds  -> 84 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 09/70: 84 Days, 5 Hours, 2802.46 Seconds  -> 112 Days, 7 Hours, 2248.62 Seconds
+Solving timestep 10/70: 112 Days, 7 Hours, 2248.62 Seconds -> 140 Days, 9 Hours, 1694.77 Seconds
+Solving timestep 11/70: 140 Days, 9 Hours, 1694.77 Seconds -> 168 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 12/70: 168 Days, 11 Hours, 1140.92 Seconds -> 196 Days, 13 Hours, 587.08 Seconds
+Solving timestep 13/70: 196 Days, 13 Hours, 587.08 Seconds -> 224 Days, 15 Hours, 33.23 Seconds
+Solving timestep 14/70: 224 Days, 15 Hours, 33.23 Seconds  -> 252 Days, 16 Hours, 3079.38 Seconds
+Solving timestep 15/70: 252 Days, 16 Hours, 3079.38 Seconds -> 280 Days, 18 Hours, 2525.54 Seconds
+Solving timestep 16/70: 280 Days, 18 Hours, 2525.54 Seconds -> 308 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 17/70: 308 Days, 20 Hours, 1971.69 Seconds -> 336 Days, 22 Hours, 1417.85 Seconds
+Solving timestep 18/70: 336 Days, 22 Hours, 1417.85 Seconds -> 365 Days, 863 Seconds, 1000.00 Milliseconds
+Solving timestep 19/70: 365 Days, 863 Seconds, 1000.00 Milliseconds -> 1 Year, 27 Days, 20.27 Hours
+Solving timestep 20/70: 1 Year, 27 Days, 20.27 Hours       -> 1 Year, 55 Days, 22.11 Hours
+Solving timestep 21/70: 1 Year, 55 Days, 22.11 Hours       -> 1 Year, 83 Days, 23.96 Hours
+Solving timestep 22/70: 1 Year, 83 Days, 23.96 Hours       -> 1 Year, 112 Days, 1.80 Hour
+Solving timestep 23/70: 1 Year, 112 Days, 1.80 Hour        -> 1 Year, 140 Days, 3.65 Hours
+Solving timestep 24/70: 1 Year, 140 Days, 3.65 Hours       -> 1 Year, 168 Days, 5.50 Hours
+Solving timestep 25/70: 1 Year, 168 Days, 5.50 Hours       -> 1 Year, 196 Days, 7.34 Hours
+Solving timestep 26/70: 1 Year, 196 Days, 7.34 Hours       -> 1 Year, 224 Days, 9.19 Hours
+Solving timestep 27/70: 1 Year, 224 Days, 9.19 Hours       -> 1 Year, 252 Days, 11.04 Hours
+Solving timestep 28/70: 1 Year, 252 Days, 11.04 Hours      -> 1 Year, 280 Days, 12.88 Hours
+Solving timestep 29/70: 1 Year, 280 Days, 12.88 Hours      -> 1 Year, 308 Days, 14.73 Hours
+Solving timestep 30/70: 1 Year, 308 Days, 14.73 Hours      -> 1 Year, 336 Days, 16.57 Hours
+Solving timestep 31/70: 1 Year, 336 Days, 16.57 Hours      -> 1 Year, 364 Days, 18.42 Hours
+Solving timestep 32/70: 1 Year, 364 Days, 18.42 Hours      -> 2 Years, 27 Days, 14.45 Hours
+Solving timestep 33/70: 2 Years, 27 Days, 14.45 Hours      -> 2 Years, 55 Days, 16.29 Hours
+Solving timestep 34/70: 2 Years, 55 Days, 16.29 Hours      -> 2 Years, 83 Days, 18.14 Hours
+Solving timestep 35/70: 2 Years, 83 Days, 18.14 Hours      -> 2 Years, 111 Days, 19.98 Hours
+Solving timestep 36/70: 2 Years, 111 Days, 19.98 Hours     -> 2 Years, 139 Days, 21.83 Hours
+Solving timestep 37/70: 2 Years, 139 Days, 21.83 Hours     -> 2 Years, 167 Days, 23.68 Hours
+Solving timestep 38/70: 2 Years, 167 Days, 23.68 Hours     -> 2 Years, 196 Days, 1.52 Hour
+Solving timestep 39/70: 2 Years, 196 Days, 1.52 Hour       -> 2 Years, 224 Days, 3.37 Hours
+Solving timestep 40/70: 2 Years, 224 Days, 3.37 Hours      -> 2 Years, 252 Days, 5.22 Hours
+Solving timestep 41/70: 2 Years, 252 Days, 5.22 Hours      -> 2 Years, 280 Days, 7.06 Hours
+Solving timestep 42/70: 2 Years, 280 Days, 7.06 Hours      -> 2 Years, 308 Days, 8.91 Hours
+Solving timestep 43/70: 2 Years, 308 Days, 8.91 Hours      -> 2 Years, 336 Days, 10.75 Hours
+Solving timestep 44/70: 2 Years, 336 Days, 10.75 Hours     -> 2 Years, 364 Days, 12.60 Hours
+Solving timestep 45/70: 2 Years, 364 Days, 12.60 Hours     -> 3 Years, 27 Days, 8.63 Hours
+Solving timestep 46/70: 3 Years, 27 Days, 8.63 Hours       -> 3 Years, 55 Days, 10.47 Hours
+Solving timestep 47/70: 3 Years, 55 Days, 10.47 Hours      -> 3 Years, 83 Days, 12.32 Hours
+Solving timestep 48/70: 3 Years, 83 Days, 12.32 Hours      -> 3 Years, 111 Days, 14.16 Hours
+Solving timestep 49/70: 3 Years, 111 Days, 14.16 Hours     -> 3 Years, 139 Days, 16.01 Hours
+Solving timestep 50/70: 3 Years, 139 Days, 16.01 Hours     -> 3 Years, 167 Days, 17.86 Hours
+Solving timestep 51/70: 3 Years, 167 Days, 17.86 Hours     -> 3 Years, 195 Days, 19.70 Hours
+Solving timestep 52/70: 3 Years, 195 Days, 19.70 Hours     -> 3 Years, 223 Days, 21.55 Hours
+Solving timestep 53/70: 3 Years, 223 Days, 21.55 Hours     -> 3 Years, 251 Days, 23.40 Hours
+Solving timestep 54/70: 3 Years, 251 Days, 23.40 Hours     -> 3 Years, 280 Days, 1.24 Hour
+Solving timestep 55/70: 3 Years, 280 Days, 1.24 Hour       -> 3 Years, 308 Days, 3.09 Hours
+Solving timestep 56/70: 3 Years, 308 Days, 3.09 Hours      -> 3 Years, 336 Days, 4.93 Hours
+Solving timestep 57/70: 3 Years, 336 Days, 4.93 Hours      -> 3 Years, 364 Days, 6.78 Hours
+Solving timestep 58/70: 3 Years, 364 Days, 6.78 Hours      -> 4 Years, 27 Days, 2.81 Hours
+Solving timestep 59/70: 4 Years, 27 Days, 2.81 Hours       -> 4 Years, 55 Days, 4.65 Hours
+Solving timestep 60/70: 4 Years, 55 Days, 4.65 Hours       -> 4 Years, 83 Days, 6.50 Hours
+Solving timestep 61/70: 4 Years, 83 Days, 6.50 Hours       -> 4 Years, 111 Days, 8.34 Hours
+Solving timestep 62/70: 4 Years, 111 Days, 8.34 Hours      -> 4 Years, 139 Days, 10.19 Hours
+Solving timestep 63/70: 4 Years, 139 Days, 10.19 Hours     -> 4 Years, 167 Days, 12.04 Hours
+Solving timestep 64/70: 4 Years, 167 Days, 12.04 Hours     -> 4 Years, 195 Days, 13.88 Hours
+Solving timestep 65/70: 4 Years, 195 Days, 13.88 Hours     -> 4 Years, 223 Days, 15.73 Hours
+Solving timestep 66/70: 4 Years, 223 Days, 15.73 Hours     -> 4 Years, 251 Days, 17.58 Hours
+Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days, 19.42 Hours
+Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
+Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
+Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 155 Milliseconds ***
+
+[info]: 
+Run 5 log:
+[info]:  
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/70:                                    -> 864 Seconds
+Solving timestep 02/70: 864 Seconds                        -> 5 Days, 15 Hours, 33.23 Seconds
+Solving timestep 03/70: 5 Days, 15 Hours, 33.23 Seconds    -> 11 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 04/70: 11 Days, 5 Hours, 2802.46 Seconds  -> 16 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 05/70: 16 Days, 20 Hours, 1971.69 Seconds -> 22 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 06/70: 22 Days, 11 Hours, 1140.92 Seconds -> 28 Days, 2 Hours, 310.15 Seconds
+Solving timestep 07/70: 28 Days, 2 Hours, 310.15 Seconds   -> 56 Days, 3 Hours, 3356.31 Seconds
+Solving timestep 08/70: 56 Days, 3 Hours, 3356.31 Seconds  -> 84 Days, 5 Hours, 2802.46 Seconds
+Solving timestep 09/70: 84 Days, 5 Hours, 2802.46 Seconds  -> 112 Days, 7 Hours, 2248.62 Seconds
+Solving timestep 10/70: 112 Days, 7 Hours, 2248.62 Seconds -> 140 Days, 9 Hours, 1694.77 Seconds
+Solving timestep 11/70: 140 Days, 9 Hours, 1694.77 Seconds -> 168 Days, 11 Hours, 1140.92 Seconds
+Solving timestep 12/70: 168 Days, 11 Hours, 1140.92 Seconds -> 196 Days, 13 Hours, 587.08 Seconds
+Solving timestep 13/70: 196 Days, 13 Hours, 587.08 Seconds -> 224 Days, 15 Hours, 33.23 Seconds
+Solving timestep 14/70: 224 Days, 15 Hours, 33.23 Seconds  -> 252 Days, 16 Hours, 3079.38 Seconds
+Solving timestep 15/70: 252 Days, 16 Hours, 3079.38 Seconds -> 280 Days, 18 Hours, 2525.54 Seconds
+Solving timestep 16/70: 280 Days, 18 Hours, 2525.54 Seconds -> 308 Days, 20 Hours, 1971.69 Seconds
+Solving timestep 17/70: 308 Days, 20 Hours, 1971.69 Seconds -> 336 Days, 22 Hours, 1417.85 Seconds
+Solving timestep 18/70: 336 Days, 22 Hours, 1417.85 Seconds -> 365 Days, 863 Seconds, 1000.00 Milliseconds
+Solving timestep 19/70: 365 Days, 863 Seconds, 1000.00 Milliseconds -> 1 Year, 27 Days, 20.27 Hours
+Solving timestep 20/70: 1 Year, 27 Days, 20.27 Hours       -> 1 Year, 55 Days, 22.11 Hours
+Solving timestep 21/70: 1 Year, 55 Days, 22.11 Hours       -> 1 Year, 83 Days, 23.96 Hours
+Solving timestep 22/70: 1 Year, 83 Days, 23.96 Hours       -> 1 Year, 112 Days, 1.80 Hour
+Solving timestep 23/70: 1 Year, 112 Days, 1.80 Hour        -> 1 Year, 140 Days, 3.65 Hours
+Solving timestep 24/70: 1 Year, 140 Days, 3.65 Hours       -> 1 Year, 168 Days, 5.50 Hours
+Solving timestep 25/70: 1 Year, 168 Days, 5.50 Hours       -> 1 Year, 196 Days, 7.34 Hours
+Solving timestep 26/70: 1 Year, 196 Days, 7.34 Hours       -> 1 Year, 224 Days, 9.19 Hours
+Solving timestep 27/70: 1 Year, 224 Days, 9.19 Hours       -> 1 Year, 252 Days, 11.04 Hours
+Solving timestep 28/70: 1 Year, 252 Days, 11.04 Hours      -> 1 Year, 280 Days, 12.88 Hours
+Solving timestep 29/70: 1 Year, 280 Days, 12.88 Hours      -> 1 Year, 308 Days, 14.73 Hours
+Solving timestep 30/70: 1 Year, 308 Days, 14.73 Hours      -> 1 Year, 336 Days, 16.57 Hours
+Solving timestep 31/70: 1 Year, 336 Days, 16.57 Hours      -> 1 Year, 364 Days, 18.42 Hours
+Solving timestep 32/70: 1 Year, 364 Days, 18.42 Hours      -> 2 Years, 27 Days, 14.45 Hours
+Solving timestep 33/70: 2 Years, 27 Days, 14.45 Hours      -> 2 Years, 55 Days, 16.29 Hours
+Solving timestep 34/70: 2 Years, 55 Days, 16.29 Hours      -> 2 Years, 83 Days, 18.14 Hours
+Solving timestep 35/70: 2 Years, 83 Days, 18.14 Hours      -> 2 Years, 111 Days, 19.98 Hours
+Solving timestep 36/70: 2 Years, 111 Days, 19.98 Hours     -> 2 Years, 139 Days, 21.83 Hours
+Solving timestep 37/70: 2 Years, 139 Days, 21.83 Hours     -> 2 Years, 167 Days, 23.68 Hours
+Solving timestep 38/70: 2 Years, 167 Days, 23.68 Hours     -> 2 Years, 196 Days, 1.52 Hour
+Solving timestep 39/70: 2 Years, 196 Days, 1.52 Hour       -> 2 Years, 224 Days, 3.37 Hours
+Solving timestep 40/70: 2 Years, 224 Days, 3.37 Hours      -> 2 Years, 252 Days, 5.22 Hours
+Solving timestep 41/70: 2 Years, 252 Days, 5.22 Hours      -> 2 Years, 280 Days, 7.06 Hours
+Solving timestep 42/70: 2 Years, 280 Days, 7.06 Hours      -> 2 Years, 308 Days, 8.91 Hours
+Solving timestep 43/70: 2 Years, 308 Days, 8.91 Hours      -> 2 Years, 336 Days, 10.75 Hours
+Solving timestep 44/70: 2 Years, 336 Days, 10.75 Hours     -> 2 Years, 364 Days, 12.60 Hours
+Solving timestep 45/70: 2 Years, 364 Days, 12.60 Hours     -> 3 Years, 27 Days, 8.63 Hours
+Solving timestep 46/70: 3 Years, 27 Days, 8.63 Hours       -> 3 Years, 55 Days, 10.47 Hours
+Solving timestep 47/70: 3 Years, 55 Days, 10.47 Hours      -> 3 Years, 83 Days, 12.32 Hours
+Solving timestep 48/70: 3 Years, 83 Days, 12.32 Hours      -> 3 Years, 111 Days, 14.16 Hours
+Solving timestep 49/70: 3 Years, 111 Days, 14.16 Hours     -> 3 Years, 139 Days, 16.01 Hours
+Solving timestep 50/70: 3 Years, 139 Days, 16.01 Hours     -> 3 Years, 167 Days, 17.86 Hours
+Solving timestep 51/70: 3 Years, 167 Days, 17.86 Hours     -> 3 Years, 195 Days, 19.70 Hours
+Solving timestep 52/70: 3 Years, 195 Days, 19.70 Hours     -> 3 Years, 223 Days, 21.55 Hours
+Solving timestep 53/70: 3 Years, 223 Days, 21.55 Hours     -> 3 Years, 251 Days, 23.40 Hours
+Solving timestep 54/70: 3 Years, 251 Days, 23.40 Hours     -> 3 Years, 280 Days, 1.24 Hour
+Solving timestep 55/70: 3 Years, 280 Days, 1.24 Hour       -> 3 Years, 308 Days, 3.09 Hours
+Solving timestep 56/70: 3 Years, 308 Days, 3.09 Hours      -> 3 Years, 336 Days, 4.93 Hours
+Solving timestep 57/70: 3 Years, 336 Days, 4.93 Hours      -> 3 Years, 364 Days, 6.78 Hours
+Solving timestep 58/70: 3 Years, 364 Days, 6.78 Hours      -> 4 Years, 27 Days, 2.81 Hours
+Solving timestep 59/70: 4 Years, 27 Days, 2.81 Hours       -> 4 Years, 55 Days, 4.65 Hours
+Solving timestep 60/70: 4 Years, 55 Days, 4.65 Hours       -> 4 Years, 83 Days, 6.50 Hours
+Solving timestep 61/70: 4 Years, 83 Days, 6.50 Hours       -> 4 Years, 111 Days, 8.34 Hours
+Solving timestep 62/70: 4 Years, 111 Days, 8.34 Hours      -> 4 Years, 139 Days, 10.19 Hours
+Solving timestep 63/70: 4 Years, 139 Days, 10.19 Hours     -> 4 Years, 167 Days, 12.04 Hours
+Solving timestep 64/70: 4 Years, 167 Days, 12.04 Hours     -> 4 Years, 195 Days, 13.88 Hours
+Solving timestep 65/70: 4 Years, 195 Days, 13.88 Hours     -> 4 Years, 223 Days, 15.73 Hours
+Solving timestep 66/70: 4 Years, 223 Days, 15.73 Hours     -> 4 Years, 251 Days, 17.58 Hours
+Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days, 19.42 Hours
+Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
+Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
+Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 296 Milliseconds ***
+
