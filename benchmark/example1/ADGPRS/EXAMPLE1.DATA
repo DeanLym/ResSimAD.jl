@@ -1,5 +1,5 @@
 -- Dead Oil Model--
--- 3D case-
+-- 2D case-
 
 VERBOSE
 BRIEF BRIEF /
@@ -183,11 +183,11 @@ P1  OPEN BHP 5* 379.2117 /
 
 TUNING
 --MIN-TSTEP-SIZE MAX-TSTEP-SIZE * MAX-TSTEP-INCREMENT-MULT
-0.01 50.0 * 2/
+0.01 30.0 * 2/
 --0.01 10.0 * 2/
 /
 
 TSTEP
-10*182.5 /
+1825.0 /
 
 END

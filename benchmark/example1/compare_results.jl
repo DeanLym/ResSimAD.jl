@@ -1,9 +1,12 @@
 using HDF5
 using ResSimAD
 using Plots
+using Plots.PlotMeasures
 using CSV
 using DataFrames
 using DelimitedFiles
+using Statistics
+
 ## Load simulation results
 dir = joinpath(pkgdir(ResSimAD), "benchmark", "example1")
 results = Dict()
@@ -51,7 +54,7 @@ close(fid)
 
 runtimes["Eclipse"] = readdlm(joinpath(dir, "Eclipse", "results", "average_runtime.txt"))
 
-# Load MRST results
+# load MRST results
 results["MRST"] = Dict()
 
 data_types = Dict([
@@ -69,17 +72,70 @@ for (iw, wn) in enumerate(wnames)
 end
 
 runtimes["MRST"] = readdlm(joinpath(dir, "MRST", "results", "average_runtime.txt"))
+
+# load ADGPRS resuls
+results["ADGPRS"] = Dict()
+
+file = joinpath(dir, "ADGPRS", "results", "OUTPUT.rates.txt")
+header = String.(readdlm(file)[1,:])
+data = readdlm(file,skipstart=1)
+df = DataFrame(data)
+rename!(df, header)
+
+data_types = Dict([
+    ("P1", [("oil rate", "OPR"), ("water rate", "WPR",)]),
+    ("I1", [("water inj. rate", "WIR")])
+])
+
+results["ADGPRS"]["Day"] = df[!, "Day"]
+
+for (iw, wn) in enumerate(wnames)
+    for (key, col) in data_types[wn]
+        results["ADGPRS"][wn * " " * key] = df[!, string(wn, ":", col)] *6.28981
+    end
+end
+
+runtimes["ADGPRS"] = readdlm(joinpath(dir, "ADGPRS", "results", "average_runtime.txt"))
+
+# load OPM results
+results["OPM"] = Dict()
+
+file = joinpath(dir, "OPM", "results", "results.h5")
+fid = h5open(file, "r")
+
+results["OPM"]["Day"] = read(fid, "YEARS") * 365.
+
+data_types = Dict([
+    ("P1", [("oil rate", "WOPR"), ("water rate", "WWPR",)]),
+    ("I1", [("water inj. rate", "WWIR")])
+])
+
+for (iw, wn) in enumerate(wnames)
+    for (key, col) in data_types[wn]
+        results["OPM"][wn * " " * key] = read(fid, string(col, ":", wn))
+    end
+end
+
+close(fid)
+
+runtimes["OPM"] = readdlm(joinpath(dir, "OPM", "results", "average_runtime.txt"))
+
+
 ## Plot results
 linetypes = Dict([
     ("ResSimAD", :path),
     ("MRST", :scatter),
     ("Eclipse", :scatter),
+    ("ADGPRS", :scatter),
+    ("OPM", :scatter),
 ])
 
 markers = Dict([
     ("ResSimAD", :hline),
     ("MRST", :diamond),
     ("Eclipse", :circle),
+    ("ADGPRS", :hexagon),
+    ("OPM", :star4),
 ])
 
 plts = []
@@ -88,24 +144,23 @@ for key in to_plot
     p = plot(xlabel="Day", ylabel=key * " (stb/day)", size=(420, 320),
              legend=:right, title=key)
     for case in sort(collect(keys(results)))
-        plot!(p, results[case]["Day"][5:3:end], abs.(results[case][key][5:3:end]), label=case,
+        plot!(p, results[case]["Day"][7:3:end], abs.(results[case][key][7:3:end]), label=case,
                 line=(linetypes[case], 3.0), marker=markers[case])
     end
     push!(plts, p)
 end
 
-for p in plts
-    display(p)
-end
+plot(plts..., layout=(3,1), size=(320,820), left_margin=20px)
+
 
 p1 = plot(ylabel="Average run time (seconds)", legend=false);
-for key in keys(runtimes)
-    bar!(p1, [key], [mean(runtimes[key])])
+for key in sort!(collect(keys(runtimes)))
+    bar!(p1, [key], [mean(runtimes[key])], color=:gray)
 end
 
 p2 = plot(ylabel="Average run time (seconds)", legend=false);
-for key in ["Eclipse", "ResSimAD"]
-    bar!(p2, [key], [mean(runtimes[key])])
+for key in sort!(["Eclipse", "ResSimAD", "ADGPRS", "OPM"])
+    bar!(p2, [key], [mean(runtimes[key])], color=:gray)
 end
 
-plot(p1, p2, layout=(1,2), size=(840, 320))
+plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)

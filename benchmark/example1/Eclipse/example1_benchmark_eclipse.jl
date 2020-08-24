@@ -1,7 +1,6 @@
 using ResSimAD
 """
-Simulate example1 with Eclipse (v2017.2)
-To run this script, add Eclipse bin folder to the PATH environmental variable
+Simulate example1 with Eclipse
 """
 
 include(joinpath(pkgdir(ResSimAD), "benchmark", "benchmark_eclipse.jl"))

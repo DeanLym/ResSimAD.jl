@@ -4,7 +4,7 @@ using Statistics
 using Dates
 using DelimitedFiles
 
-function run_benchmark_mrst(model_name, dir)
+function run_benchmark_adgprs(model_name, dir)
     cd(dir)
     ## Setup logging
     # Get system information
@@ -13,7 +13,7 @@ function run_benchmark_mrst(model_name, dir)
     time_now = now()
     timestamp = Dates.format(now(), "dd_u_yyyy_HH_MM_SS")
     logger = getlogger("root")
-    log_file = joinpath(dir, "mrst_$(model_name)_$(machine)_$(timestamp).log")
+    log_file = joinpath(dir, "adgprs_$(model_name)_$(machine)_$(timestamp).log")
     push!(logger, DefaultHandler(log_file,  DefaultFormatter("[{level}]: {msg}")))
 
     # Add timestamp
@@ -26,28 +26,27 @@ function run_benchmark_mrst(model_name, dir)
     info(logger, "Total memory $(round(Sys.total_memory() / 2^30, digits=1)) GB")
     info(logger, "Free memory $(round(Sys.free_memory() / 2^30, digits=1)) GB\n")
 
+    ## Benchmark ADGPRS run
     logs = []
     runtimes = []
     for irun = 1:5
-        info(logger, "MRST run $irun")
-
-        # Launch MRST
+        info(logger, "ADGPRS run $irun")
+        # Launch ADGPRS, direct log to a pipe
         out = Pipe();
-        cmd1 = `matlab.exe -nodesktop -nosplash -nojvm -minimize -r "run ('example1.m'), quit" -wait -log`
-        run(pipeline(cmd1, stderr=out));
+        cmd1 = `ADGPRS $(uppercase(model_name)*".DATA") 1 0`;
+        run(pipeline(cmd1, stdout=out));
         close(out.in);
 
-        # Read runtime from log
+        # Read elapsed time from log
         log = String(read(out));
-        secs = match(r"\d+", match(r"control steps.*Seconds", log).match).match
-        millisecs = match(r"\d+", match(r"\d* Milliseconds \*\*\*", log).match).match
-        elapsed_time = parse(Float64, secs) + parse(Float64, millisecs) / 1000.
+        ret = match(r"\d*\.\d* seconds", log);
+        elapsed_time = parse(Float64, match(r"\d*\.\d*", ret.match).match);
         push!(runtimes, elapsed_time)
         push!(logs, log)
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
     end
 
-    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds\n")
 
     # Write run logs to log file
     for (irun, log) in enumerate(logs)
@@ -59,15 +58,23 @@ function run_benchmark_mrst(model_name, dir)
 
     writedlm(joinpath(dir, "average_runtime.txt"), runtimes)
 
+    ## Remove some files
+    files = readdir()
+
+    for file in files
+        if endswith(file, ".log.txt") || contains(file, "OUTPUT.FIPS.txt") || file == "fort.66"
+            rm(file)
+        end
+    end
+
     results_dir = joinpath(dir, "results")
     if !(isdir(results_dir))
         mkdir(results_dir)
     end
 
-    files = ("qo.txt", "qw.txt", "t.txt", "average_runtime.txt")
+    files = ("OUTPUT.rates.txt", "average_runtime.txt")
     for file in files
         mv(joinpath(dir,file), joinpath(results_dir, file); force=true)
     end
-
 
 end

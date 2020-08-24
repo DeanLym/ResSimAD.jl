@@ -3,8 +3,10 @@ using Memento
 using Statistics
 using Dates
 using DelimitedFiles
+using PyCall
+using HDF5
 
-function run_benchmark_mrst(model_name, dir)
+function run_benchmark_opm(model_name, dir)
     cd(dir)
     ## Setup logging
     # Get system information
@@ -13,7 +15,7 @@ function run_benchmark_mrst(model_name, dir)
     time_now = now()
     timestamp = Dates.format(now(), "dd_u_yyyy_HH_MM_SS")
     logger = getlogger("root")
-    log_file = joinpath(dir, "mrst_$(model_name)_$(machine)_$(timestamp).log")
+    log_file = joinpath(dir, "opm_$(model_name)_$(machine)_$(timestamp).log")
     push!(logger, DefaultHandler(log_file,  DefaultFormatter("[{level}]: {msg}")))
 
     # Add timestamp
@@ -26,28 +28,27 @@ function run_benchmark_mrst(model_name, dir)
     info(logger, "Total memory $(round(Sys.total_memory() / 2^30, digits=1)) GB")
     info(logger, "Free memory $(round(Sys.free_memory() / 2^30, digits=1)) GB\n")
 
+    ## Benchmark OPM flow simulator run
     logs = []
     runtimes = []
     for irun = 1:5
-        info(logger, "MRST run $irun")
-
-        # Launch MRST
+        info(logger, "OPM run $irun")
+        # Launch OPM flow simulator, direct log to a pipe
         out = Pipe();
-        cmd1 = `matlab.exe -nodesktop -nosplash -nojvm -minimize -r "run ('example1.m'), quit" -wait -log`
-        run(pipeline(cmd1, stderr=out));
+        cmd1 = `flow $(uppercase(model_name)*".DATA")`;
+        run(pipeline(cmd1, stdout=out));
         close(out.in);
 
-        # Read runtime from log
+        # Read elapsed time from log
         log = String(read(out));
-        secs = match(r"\d+", match(r"control steps.*Seconds", log).match).match
-        millisecs = match(r"\d+", match(r"\d* Milliseconds \*\*\*", log).match).match
-        elapsed_time = parse(Float64, secs) + parse(Float64, millisecs) / 1000.
+        ret = match(r"Total time.*", log);
+        elapsed_time = parse(Float64, match(r"\d*\.\d*", ret.match).match);
         push!(runtimes, elapsed_time)
         push!(logs, log)
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
     end
 
-    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds\n")
 
     # Write run logs to log file
     for (irun, log) in enumerate(logs)
@@ -59,15 +60,45 @@ function run_benchmark_mrst(model_name, dir)
 
     writedlm(joinpath(dir, "average_runtime.txt"), runtimes)
 
+    # Read OPM results
+    file = joinpath(dir, "EXAMPLE1")
+
+py"""
+from ecl.summary import EclSum
+summary = EclSum($file)
+# 'WOPR:P1', 'WWIR:I1', 'WWPR:P1', 'YEARS'
+data = {}
+for key in summary.keys():
+    data[key] = summary.numpy_vector(key)
+"""
+
+    data = py"data"
+
+    fid = h5open("results.h5", "w")
+    for key in keys(data)
+        write(fid, key, data[key])
+    end
+    close(fid)
+
     results_dir = joinpath(dir, "results")
     if !(isdir(results_dir))
         mkdir(results_dir)
     end
 
-    files = ("qo.txt", "qw.txt", "t.txt", "average_runtime.txt")
+    files = ("results.h5", "average_runtime.txt")
     for file in files
         mv(joinpath(dir,file), joinpath(results_dir, file); force=true)
     end
 
+    ## Remove some files
+    files = readdir()
+
+    for file in files
+        if endswith(file, ".DBG") ||endswith(file, ".PRT") ||endswith(file, ".EGRID") || contains(file, "EXAMPLE1.S")
+            rm(file)
+        end
+    end
 
 end
+
+
