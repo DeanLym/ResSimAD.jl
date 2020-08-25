@@ -23,10 +23,10 @@ We thank the Stanford Energy Resources Engineering department and the Stanford S
 
 ## Example1
 
-The `example1` model is a 2D deal-oil model (30x15 grid) with one injector and one producer.
+The [`ResSimAD.Models.example1`](@ref) model is a 2D deal-oil model (30x15 grid) with one injector and one producer.
 This simple model is a good candidate for testing the overhead, especially those introduced by AD (except for `Eclipse`, all other simulators use AD).
 
-### Simluation results comparison
+### Simulation results comparison
 
 Simulation results for `example1` from all simulators are stored in `ResSimAD.jl/benchmark/example1`. The following code reads and plots these stored simulation results.
 
@@ -86,7 +86,7 @@ ResSimAD.jl | GMRES + ILU | 70 | 186
 Eclipse | ORTHOMIN + NF  | 77| 178
 MRST | Matlab Backslash | 70 | 176
 ADGPRS | GMRES + CPR0 | 72 | 197
-OPM | BiCG-stab + ILU0 | 68 | 224
+OPM | BiCG-stab + ILU0 | 68 | 221
 
 ```@example benchmark
 # Plot average run time
@@ -101,5 +101,61 @@ for key in sort!(["Eclipse", "ResSimAD", "ADGPRS", "OPM"])
 end
 
 plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)
+```
 
+## Example 2
+The [`ResSimAD.Models.example2`](@ref) model is a 2D deal-oil model (60x60 grid) with two injectors and two producers. The log-permeability field
+represents a bimodal channelized system. This is a typical research simluation model.
+
+### Simulation results comparison
+
+Simulation results for `example2` from all simulators are stored in `ResSimAD.jl/benchmark/example2`. The following code reads and plots these stored simulation results.
+
+```@example benchmark
+# Load results
+include(joinpath(pkgdir(ResSimAD), "benchmark", "example2", "load_results.jl"))
+
+plts = []
+to_plot = ["P1 oil rate", "P1 water rate",
+            "P2 oil rate", "P2 water rate",
+            "I1 water inj. rate", "I2 water inj. rate"]
+for key in to_plot
+    p = plot(xlabel="Day", ylabel=key * " (stb/day)", size=(420, 320),
+             legend=:right, title=key)
+    for case in sort(collect(keys(results)))
+        plot!(p, results[case]["Day"][7:3:end], abs.(results[case][key][7:3:end]), label=case,
+                line=(linetypes[case], 3.0), marker=markers[case])
+    end
+    push!(plts, p)
+end
+
+plot(plts..., layout=(3,2), size=(640,820), left_margin=20px, bottom_margin=10px)
+```
+
+### Performance comparison
+
+Performance from all simulators for `example2` are summarized below.
+
+Simulator    | Linear Solver | Time steps | Newton Iterations
+:---:   | :---: | :---: | :---:
+ResSimAD.jl | GMRES + ILU | 41 | 119
+Eclipse | ORTHOMIN + NF  | 46| 107
+MRST | Matlab Backslash | 41 | 123
+ADGPRS | GMRES + CPR0 | 41 | 112
+OPM | BiCG-stab + ILU0 | 45 | 210 (42 failed)
+
+
+```@example benchmark
+# Plot average run time
+p1 = plot(ylabel="Average run time (seconds)", legend=false);
+for key in sort!(collect(keys(runtimes)))
+    bar!(p1, [key], [mean(runtimes[key])], color=:gray)
+end
+
+p2 = plot(ylabel="Average run time (seconds)", legend=false);
+for key in sort!(["Eclipse", "ResSimAD", "ADGPRS", "OPM"])
+    bar!(p2, [key], [mean(runtimes[key])], color=:gray)
+end
+
+plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)
 ```

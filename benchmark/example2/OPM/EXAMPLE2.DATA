@@ -21,18 +21,25 @@ WELLDIMS  -- max numb of WELLS/CONN per WELL/GROUPS/WELLperGROUP
   10    20    1    10/
 START     -- starting time for simulation run
     1 'JAN' 2009  /
-NSTACK    -- usually 10
-    50 /
+
+UNIFOUT
+
 
 GRID      == geometry of our model =====================================
 
-EQUALS    -- set top depth, block sizes and rock properties
-          -- valid for a given range of blocks: I1 I2   J1 J2   K1 K2
-      'DX'     200   /                        -- default box => all blocks
-      'DY'     200   /
-      'PORO'   0.2 /
-      'DZ'     60  / -- thickness of the layers
-/
+
+DX
+ 3600*200 /
+
+DY
+ 3600*200 /
+
+DZ
+ 3600*60 /
+
+PORO
+ 3600*0.2 /
+
 
 INCLUDE
 '../data/PERMX_BIMODAL.DAT'
@@ -131,10 +138,6 @@ PRESSURE
 SWAT
 3600*0.1 /
 
-RPTSOL
-'NOTHING' /
-
-
 SUMMARY    == output written to summary *.RSM file ====================
 
 WOPR       -- 'W'ell 'O'il 'P'roduction 'R'ate
@@ -154,8 +157,6 @@ I2
 
 SCHEDULE   == operations to be simulated ==============================
 
-DRSDT     -- Free gas is not allowed to re-dissolve within oil
-  0 /
 
 RPTRST    -- request restart file
 'NOTHING'
@@ -196,7 +197,7 @@ WCONINJE   -- INJECTION WELL CONTROLS
 
 -- timesteps can be refined by entering multiple TSTEP keywords
 TSTEP      -- and run it for 5 yrs
-   1825.0
+2.0 48.0 35*50 25
 /
 
 

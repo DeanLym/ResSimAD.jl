@@ -61,7 +61,7 @@ function run_benchmark_opm(model_name, dir)
     writedlm(joinpath(dir, "average_runtime.txt"), runtimes)
 
     # Read OPM results
-    file = joinpath(dir, "EXAMPLE1")
+    file = joinpath(dir, string(uppercase(model_name)))
 
 py"""
 from ecl.summary import EclSum

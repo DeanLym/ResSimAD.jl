@@ -94,7 +94,9 @@ rename!(df, header)
 
 data_types = Dict([
     ("P1", [("oil rate", "OPR"), ("water rate", "WPR",)]),
-    ("I1", [("water inj. rate", "WIR")])
+    ("P2", [("oil rate", "OPR"), ("water rate", "WPR",)]),
+    ("I1", [("water inj. rate", "WIR")]),
+    ("I2", [("water inj. rate", "WIR")])
 ])
 
 results["ADGPRS"]["Day"] = df[!, "Day"]
@@ -117,7 +119,9 @@ results["OPM"]["Day"] = read(fid, "YEARS") * 365.
 
 data_types = Dict([
     ("P1", [("oil rate", "WOPR"), ("water rate", "WWPR",)]),
-    ("I1", [("water inj. rate", "WWIR")])
+    ("P2", [("oil rate", "WOPR"), ("water rate", "WWPR",)]),
+    ("I1", [("water inj. rate", "WWIR")]),
+    ("I2", [("water inj. rate", "WWIR")])
 ])
 
 for (iw, wn) in enumerate(wnames)

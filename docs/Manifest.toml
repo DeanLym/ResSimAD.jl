@@ -600,7 +600,7 @@ version = "1.0.1"
 
 [[ResSimAD]]
 deps = ["AlgebraicMultigrid", "CSV", "Calculus", "DataFrames", "DelimitedFiles", "Documenter", "Formatting", "HDF5", "IncompleteLU", "Interpolations", "IterativeSolvers", "LinearAlgebra", "Memento", "SparseArrays", "SpecialFunctions", "StaticArrays", "Statistics"]
-path = "C:\\Users\\yiminliu\\Documents\\ResSimAD.jl"
+path = "/home/yiminliu/.julia/dev/ResSimAD.jl"
 uuid = "0f5291bf-5850-40d8-bc7e-2ce68032ef0b"
 version = "0.1.0"
 

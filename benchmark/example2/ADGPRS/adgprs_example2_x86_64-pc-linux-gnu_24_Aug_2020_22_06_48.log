@@ -1,0 +1,584 @@
+[info]: 2020-08-24T22:06:48.901
+[info]: Sys.MACHINE: x86_64-pc-linux-gnu
+[info]: CPU model: Intel(R) Core(TM) i9-9920X CPU @ 3.50GHz
+[info]: Number of CPU cores: 24
+[info]: Total memory 50.0 GB
+[info]: Free memory 43.4 GB
+
+[info]: ADGPRS run 1
+[info]: Elapsed time for run 1: 2.731 seconds
+
+[info]: ADGPRS run 2
+[info]: Elapsed time for run 2: 2.715 seconds
+
+[info]: ADGPRS run 3
+[info]: Elapsed time for run 3: 2.684 seconds
+
+[info]: ADGPRS run 4
+[info]: Elapsed time for run 4: 2.688 seconds
+
+[info]: ADGPRS run 5
+[info]: Elapsed time for run 5: 2.69 seconds
+
+[info]: Average run time for the 5 simulations: 2.701 seconds
+
+[info]: 
+Run 1 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE2.DATA file.
+Start time is 2020-08-24.22:06:52, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+Include filename = ../data/PERMX_BIMODAL.DAT
+Include filename = ../data/PERMY_BIMODAL.DAT
+Include filename = ../data/PERMZ_BIMODAL.DAT
+File open for log EXAMPLE2.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  1
+Number of Cells: 3600
+Number of Active Cells: 3600
+Number of Connections: 7080
+Number of Active Connections: 7080
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     2.000, DT =   2.000, NI =   3, LI =    18, CFL = 0.348
+%% T =     6.000, DT =   4.000, NI =   3, LI =    20, CFL = 0.611
+%% T =    14.000, DT =   8.000, NI =   3, LI =    21, CFL = 1.250
+%% T =    30.000, DT =  16.000, NI =   3, LI =    22, CFL = 2.314
+%% T =    62.000, DT =  32.000, NI =   3, LI =    24, CFL = 4.312
+%% T =   112.000, DT =  50.000, NI =   3, LI =    25, CFL = 6.403
+%% T =   162.000, DT =  50.000, NI =   3, LI =    24, CFL = 6.212
+%% T =   212.000, DT =  50.000, NI =   3, LI =    23, CFL = 6.088
+%% T =   262.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.993
+%% T =   312.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.918
+%% T =   362.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.848
+%% T =   412.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.790
+%% T =   462.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.760
+%% T =   512.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.751
+%% T =   562.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.741
+%% T =   612.000, DT =  50.000, NI =   4, LI =    30, CFL = 5.717
+%% T =   662.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.675
+%% T =   712.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.632
+%% T =   762.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.594
+%% T =   812.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.572
+%% T =   862.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.569
+%% T =   912.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.578
+%% T =   962.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.589
+%% T =  1012.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.595
+%% T =  1062.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.593
+%% T =  1112.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.560
+%% T =  1162.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.485
+%% T =  1212.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.468
+%% T =  1262.000, DT =  50.000, NI =   2, LI =    16, CFL = 5.466
+%% T =  1312.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.471
+%% T =  1362.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.499
+%% T =  1412.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.531
+%% T =  1462.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.564
+%% T =  1512.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.597
+%% T =  1562.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.631
+%% T =  1612.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.663
+%% T =  1662.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.732
+%% T =  1712.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.854
+%% T =  1762.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.965
+%% T =  1812.000, DT =  50.000, NI =   2, LI =    15, CFL = 6.066
+%% T =  1825.000, DT =  13.000, NI =   1, LI =     7, CFL = 1.584
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      41
+Total Newton iterations        :     112
+Total linear solver iterations :     843
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =     5.136
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:       2.7307 seconds
+----------------------------------------------
+  Initialization       :     0.0187 [  1%]
+  CFL calc/TS init/IO  :     0.0540 [  2%]
+  Discretization       :     0.6881 [ 25%]
+  Implicit levels      :     0.0016 [  0%]
+  Properties           :     0.3805 [ 14%]
+  Newton check/update  :     0.1340 [  5%]
+  Linear factorization :     0.0639 [  2%]
+  Linear solution      :     1.3897 [ 51%]
+   CPR prec. setup     :     0.1044 [  4%]
+   CPR prec. solve     :     1.0877 [ 40%]
+    AMG prec. setup    :     0.0037 [  0%]
+    AMG first solve    :     0.5230 [ 19%]
+    AMG other solve    :     0.2776 [ 10%]
+    BILU prec. setup   :     0.0530 [  2%]
+    BILU prec. solve   :     0.1382 [  5%]
+----------------------------------------------
+ Average implicit cells     =   3600.0 [100%]
+ Maximum implicit cells     =     3600 [100%]
+ Average implicit variables =   7200.0 [100%]
+ Maximum implicit variables =     7200 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 2.7, 41(0), 112(0), 843(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-24.22:06:55
+
+[info]: 
+Run 2 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE2.DATA file.
+Start time is 2020-08-24.22:06:55, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+Include filename = ../data/PERMX_BIMODAL.DAT
+Include filename = ../data/PERMY_BIMODAL.DAT
+Include filename = ../data/PERMZ_BIMODAL.DAT
+File open for log EXAMPLE2.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  1
+Number of Cells: 3600
+Number of Active Cells: 3600
+Number of Connections: 7080
+Number of Active Connections: 7080
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     2.000, DT =   2.000, NI =   3, LI =    18, CFL = 0.348
+%% T =     6.000, DT =   4.000, NI =   3, LI =    20, CFL = 0.611
+%% T =    14.000, DT =   8.000, NI =   3, LI =    21, CFL = 1.250
+%% T =    30.000, DT =  16.000, NI =   3, LI =    22, CFL = 2.314
+%% T =    62.000, DT =  32.000, NI =   3, LI =    24, CFL = 4.312
+%% T =   112.000, DT =  50.000, NI =   3, LI =    25, CFL = 6.403
+%% T =   162.000, DT =  50.000, NI =   3, LI =    24, CFL = 6.212
+%% T =   212.000, DT =  50.000, NI =   3, LI =    23, CFL = 6.088
+%% T =   262.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.993
+%% T =   312.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.918
+%% T =   362.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.848
+%% T =   412.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.790
+%% T =   462.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.760
+%% T =   512.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.751
+%% T =   562.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.741
+%% T =   612.000, DT =  50.000, NI =   4, LI =    30, CFL = 5.717
+%% T =   662.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.675
+%% T =   712.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.632
+%% T =   762.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.594
+%% T =   812.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.572
+%% T =   862.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.569
+%% T =   912.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.578
+%% T =   962.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.589
+%% T =  1012.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.595
+%% T =  1062.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.593
+%% T =  1112.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.560
+%% T =  1162.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.485
+%% T =  1212.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.468
+%% T =  1262.000, DT =  50.000, NI =   2, LI =    16, CFL = 5.466
+%% T =  1312.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.471
+%% T =  1362.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.499
+%% T =  1412.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.531
+%% T =  1462.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.564
+%% T =  1512.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.597
+%% T =  1562.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.631
+%% T =  1612.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.663
+%% T =  1662.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.732
+%% T =  1712.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.854
+%% T =  1762.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.965
+%% T =  1812.000, DT =  50.000, NI =   2, LI =    15, CFL = 6.066
+%% T =  1825.000, DT =  13.000, NI =   1, LI =     7, CFL = 1.584
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      41
+Total Newton iterations        :     112
+Total linear solver iterations :     843
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =     5.136
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:       2.7147 seconds
+----------------------------------------------
+  Initialization       :     0.0186 [  1%]
+  CFL calc/TS init/IO  :     0.0531 [  2%]
+  Discretization       :     0.6752 [ 25%]
+  Implicit levels      :     0.0015 [  0%]
+  Properties           :     0.3826 [ 14%]
+  Newton check/update  :     0.1288 [  5%]
+  Linear factorization :     0.0633 [  2%]
+  Linear solution      :     1.3912 [ 51%]
+   CPR prec. setup     :     0.1034 [  4%]
+   CPR prec. solve     :     1.0903 [ 40%]
+    AMG prec. setup    :     0.0033 [  0%]
+    AMG first solve    :     0.5255 [ 19%]
+    AMG other solve    :     0.2793 [ 10%]
+    BILU prec. setup   :     0.0527 [  2%]
+    BILU prec. solve   :     0.1377 [  5%]
+----------------------------------------------
+ Average implicit cells     =   3600.0 [100%]
+ Maximum implicit cells     =     3600 [100%]
+ Average implicit variables =   7200.0 [100%]
+ Maximum implicit variables =     7200 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 2.7, 41(0), 112(0), 843(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-24.22:06:58
+
+[info]: 
+Run 3 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE2.DATA file.
+Start time is 2020-08-24.22:06:58, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+Include filename = ../data/PERMX_BIMODAL.DAT
+Include filename = ../data/PERMY_BIMODAL.DAT
+Include filename = ../data/PERMZ_BIMODAL.DAT
+File open for log EXAMPLE2.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  1
+Number of Cells: 3600
+Number of Active Cells: 3600
+Number of Connections: 7080
+Number of Active Connections: 7080
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     2.000, DT =   2.000, NI =   3, LI =    18, CFL = 0.348
+%% T =     6.000, DT =   4.000, NI =   3, LI =    20, CFL = 0.611
+%% T =    14.000, DT =   8.000, NI =   3, LI =    21, CFL = 1.250
+%% T =    30.000, DT =  16.000, NI =   3, LI =    22, CFL = 2.314
+%% T =    62.000, DT =  32.000, NI =   3, LI =    24, CFL = 4.312
+%% T =   112.000, DT =  50.000, NI =   3, LI =    25, CFL = 6.403
+%% T =   162.000, DT =  50.000, NI =   3, LI =    24, CFL = 6.212
+%% T =   212.000, DT =  50.000, NI =   3, LI =    23, CFL = 6.088
+%% T =   262.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.993
+%% T =   312.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.918
+%% T =   362.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.848
+%% T =   412.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.790
+%% T =   462.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.760
+%% T =   512.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.751
+%% T =   562.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.741
+%% T =   612.000, DT =  50.000, NI =   4, LI =    30, CFL = 5.717
+%% T =   662.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.675
+%% T =   712.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.632
+%% T =   762.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.594
+%% T =   812.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.572
+%% T =   862.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.569
+%% T =   912.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.578
+%% T =   962.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.589
+%% T =  1012.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.595
+%% T =  1062.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.593
+%% T =  1112.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.560
+%% T =  1162.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.485
+%% T =  1212.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.468
+%% T =  1262.000, DT =  50.000, NI =   2, LI =    16, CFL = 5.466
+%% T =  1312.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.471
+%% T =  1362.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.499
+%% T =  1412.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.531
+%% T =  1462.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.564
+%% T =  1512.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.597
+%% T =  1562.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.631
+%% T =  1612.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.663
+%% T =  1662.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.732
+%% T =  1712.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.854
+%% T =  1762.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.965
+%% T =  1812.000, DT =  50.000, NI =   2, LI =    15, CFL = 6.066
+%% T =  1825.000, DT =  13.000, NI =   1, LI =     7, CFL = 1.584
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      41
+Total Newton iterations        :     112
+Total linear solver iterations :     843
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =     5.136
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:       2.6837 seconds
+----------------------------------------------
+  Initialization       :     0.0200 [  1%]
+  CFL calc/TS init/IO  :     0.0529 [  2%]
+  Discretization       :     0.6653 [ 25%]
+  Implicit levels      :     0.0016 [  0%]
+  Properties           :     0.3767 [ 14%]
+  Newton check/update  :     0.1315 [  5%]
+  Linear factorization :     0.0636 [  2%]
+  Linear solution      :     1.3719 [ 51%]
+   CPR prec. setup     :     0.1025 [  4%]
+   CPR prec. solve     :     1.0748 [ 40%]
+    AMG prec. setup    :     0.0034 [  0%]
+    AMG first solve    :     0.5149 [ 19%]
+    AMG other solve    :     0.2758 [ 10%]
+    BILU prec. setup   :     0.0522 [  2%]
+    BILU prec. solve   :     0.1374 [  5%]
+----------------------------------------------
+ Average implicit cells     =   3600.0 [100%]
+ Maximum implicit cells     =     3600 [100%]
+ Average implicit variables =   7200.0 [100%]
+ Maximum implicit variables =     7200 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 2.7, 41(0), 112(0), 843(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-24.22:07:01
+
+[info]: 
+Run 4 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE2.DATA file.
+Start time is 2020-08-24.22:07:01, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+Include filename = ../data/PERMX_BIMODAL.DAT
+Include filename = ../data/PERMY_BIMODAL.DAT
+Include filename = ../data/PERMZ_BIMODAL.DAT
+File open for log EXAMPLE2.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  1
+Number of Cells: 3600
+Number of Active Cells: 3600
+Number of Connections: 7080
+Number of Active Connections: 7080
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     2.000, DT =   2.000, NI =   3, LI =    18, CFL = 0.348
+%% T =     6.000, DT =   4.000, NI =   3, LI =    20, CFL = 0.611
+%% T =    14.000, DT =   8.000, NI =   3, LI =    21, CFL = 1.250
+%% T =    30.000, DT =  16.000, NI =   3, LI =    22, CFL = 2.314
+%% T =    62.000, DT =  32.000, NI =   3, LI =    24, CFL = 4.312
+%% T =   112.000, DT =  50.000, NI =   3, LI =    25, CFL = 6.403
+%% T =   162.000, DT =  50.000, NI =   3, LI =    24, CFL = 6.212
+%% T =   212.000, DT =  50.000, NI =   3, LI =    23, CFL = 6.088
+%% T =   262.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.993
+%% T =   312.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.918
+%% T =   362.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.848
+%% T =   412.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.790
+%% T =   462.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.760
+%% T =   512.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.751
+%% T =   562.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.741
+%% T =   612.000, DT =  50.000, NI =   4, LI =    30, CFL = 5.717
+%% T =   662.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.675
+%% T =   712.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.632
+%% T =   762.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.594
+%% T =   812.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.572
+%% T =   862.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.569
+%% T =   912.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.578
+%% T =   962.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.589
+%% T =  1012.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.595
+%% T =  1062.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.593
+%% T =  1112.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.560
+%% T =  1162.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.485
+%% T =  1212.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.468
+%% T =  1262.000, DT =  50.000, NI =   2, LI =    16, CFL = 5.466
+%% T =  1312.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.471
+%% T =  1362.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.499
+%% T =  1412.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.531
+%% T =  1462.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.564
+%% T =  1512.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.597
+%% T =  1562.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.631
+%% T =  1612.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.663
+%% T =  1662.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.732
+%% T =  1712.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.854
+%% T =  1762.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.965
+%% T =  1812.000, DT =  50.000, NI =   2, LI =    15, CFL = 6.066
+%% T =  1825.000, DT =  13.000, NI =   1, LI =     7, CFL = 1.584
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      41
+Total Newton iterations        :     112
+Total linear solver iterations :     843
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =     5.136
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:       2.6875 seconds
+----------------------------------------------
+  Initialization       :     0.0189 [  1%]
+  CFL calc/TS init/IO  :     0.0525 [  2%]
+  Discretization       :     0.6642 [ 25%]
+  Implicit levels      :     0.0015 [  0%]
+  Properties           :     0.3768 [ 14%]
+  Newton check/update  :     0.1274 [  5%]
+  Linear factorization :     0.0632 [  2%]
+  Linear solution      :     1.3827 [ 51%]
+   CPR prec. setup     :     0.1015 [  4%]
+   CPR prec. solve     :     1.0845 [ 40%]
+    AMG prec. setup    :     0.0034 [  0%]
+    AMG first solve    :     0.5175 [ 19%]
+    AMG other solve    :     0.2771 [ 10%]
+    BILU prec. setup   :     0.0519 [  2%]
+    BILU prec. solve   :     0.1427 [  5%]
+----------------------------------------------
+ Average implicit cells     =   3600.0 [100%]
+ Maximum implicit cells     =     3600 [100%]
+ Average implicit variables =   7200.0 [100%]
+ Maximum implicit variables =     7200 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 2.7, 41(0), 112(0), 843(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-24.22:07:03
+
+[info]: 
+Run 5 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE2.DATA file.
+Start time is 2020-08-24.22:07:03, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+Include filename = ../data/PERMX_BIMODAL.DAT
+Include filename = ../data/PERMY_BIMODAL.DAT
+Include filename = ../data/PERMZ_BIMODAL.DAT
+File open for log EXAMPLE2.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  1
+Number of Cells: 3600
+Number of Active Cells: 3600
+Number of Connections: 7080
+Number of Active Connections: 7080
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     2.000, DT =   2.000, NI =   3, LI =    18, CFL = 0.348
+%% T =     6.000, DT =   4.000, NI =   3, LI =    20, CFL = 0.611
+%% T =    14.000, DT =   8.000, NI =   3, LI =    21, CFL = 1.250
+%% T =    30.000, DT =  16.000, NI =   3, LI =    22, CFL = 2.314
+%% T =    62.000, DT =  32.000, NI =   3, LI =    24, CFL = 4.312
+%% T =   112.000, DT =  50.000, NI =   3, LI =    25, CFL = 6.403
+%% T =   162.000, DT =  50.000, NI =   3, LI =    24, CFL = 6.212
+%% T =   212.000, DT =  50.000, NI =   3, LI =    23, CFL = 6.088
+%% T =   262.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.993
+%% T =   312.000, DT =  50.000, NI =   4, LI =    29, CFL = 5.918
+%% T =   362.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.848
+%% T =   412.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.790
+%% T =   462.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.760
+%% T =   512.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.751
+%% T =   562.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.741
+%% T =   612.000, DT =  50.000, NI =   4, LI =    30, CFL = 5.717
+%% T =   662.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.675
+%% T =   712.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.632
+%% T =   762.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.594
+%% T =   812.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.572
+%% T =   862.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.569
+%% T =   912.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.578
+%% T =   962.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.589
+%% T =  1012.000, DT =  50.000, NI =   3, LI =    23, CFL = 5.595
+%% T =  1062.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.593
+%% T =  1112.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.560
+%% T =  1162.000, DT =  50.000, NI =   3, LI =    24, CFL = 5.485
+%% T =  1212.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.468
+%% T =  1262.000, DT =  50.000, NI =   2, LI =    16, CFL = 5.466
+%% T =  1312.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.471
+%% T =  1362.000, DT =  50.000, NI =   3, LI =    22, CFL = 5.499
+%% T =  1412.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.531
+%% T =  1462.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.564
+%% T =  1512.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.597
+%% T =  1562.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.631
+%% T =  1612.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.663
+%% T =  1662.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.732
+%% T =  1712.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.854
+%% T =  1762.000, DT =  50.000, NI =   2, LI =    15, CFL = 5.965
+%% T =  1812.000, DT =  50.000, NI =   2, LI =    15, CFL = 6.066
+%% T =  1825.000, DT =  13.000, NI =   1, LI =     7, CFL = 1.584
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      41
+Total Newton iterations        :     112
+Total linear solver iterations :     843
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =     5.136
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:       2.6900 seconds
+----------------------------------------------
+  Initialization       :     0.0181 [  1%]
+  CFL calc/TS init/IO  :     0.0521 [  2%]
+  Discretization       :     0.6653 [ 25%]
+  Implicit levels      :     0.0016 [  0%]
+  Properties           :     0.3773 [ 14%]
+  Newton check/update  :     0.1282 [  5%]
+  Linear factorization :     0.0632 [  2%]
+  Linear solution      :     1.3840 [ 51%]
+   CPR prec. setup     :     0.1022 [  4%]
+   CPR prec. solve     :     1.0835 [ 40%]
+    AMG prec. setup    :     0.0034 [  0%]
+    AMG first solve    :     0.5213 [ 19%]
+    AMG other solve    :     0.2771 [ 10%]
+    BILU prec. setup   :     0.0525 [  2%]
+    BILU prec. solve   :     0.1377 [  5%]
+----------------------------------------------
+ Average implicit cells     =   3600.0 [100%]
+ Maximum implicit cells     =     3600 [100%]
+ Average implicit variables =   7200.0 [100%]
+ Maximum implicit variables =     7200 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 2.7, 41(0), 112(0), 843(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-24.22:07:06
+

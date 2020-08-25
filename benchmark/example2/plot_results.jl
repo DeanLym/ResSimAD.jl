@@ -1,6 +1,8 @@
 using Plots
 using Plots.PlotMeasures
 
+ENV["GKSwstype"] = "100" #hide
+
 include(joinpath(@__DIR__, "load_results.jl"))
 
 ## Plot results
@@ -28,15 +30,14 @@ to_plot = ["P1 oil rate", "P1 water rate",
 for key in to_plot
     p = plot(xlabel="Day", ylabel=key * " (stb/day)", size=(420, 320),
             legend=:best, title=key)
-    # for case in sort(collect(keys(results)))
-    for case in ["ResSimAD", "Eclipse", "MRST"]
+    for case in sort(collect(keys(results)))
         plot!(p, results[case]["Day"][3:2:end], abs.(results[case][key][3:2:end]), label=case,
                 line=(linetypes[case], 3.0), marker=markers[case])
     end
     push!(plts, p)
 end
 
-plot(plts..., layout=(3,2), size=(640,820), left_margin=20px)
+plot(plts..., layout=(3,2), size=(640,820), left_margin=20px, bottom_margin=10px)
 
 
 p1 = plot(ylabel="Average run time (seconds)", legend=false);
