@@ -1,0 +1,1164 @@
+[info]: 2020-08-25T13:35:26.523
+[info]: Sys.MACHINE: x86_64-pc-linux-gnu
+[info]: CPU model: Intel(R) Core(TM) i9-9920X CPU @ 3.50GHz
+[info]: Number of CPU cores: 24
+[info]: Total memory 50.0 GB
+[info]: Free memory 42.9 GB
+
+[info]: OPM run 1
+[info]: Elapsed time for run 1: 153.762 seconds
+
+[info]: OPM run 2
+[info]: Elapsed time for run 2: 153.886 seconds
+
+[info]: OPM run 3
+[info]: Elapsed time for run 3: 154.478 seconds
+
+[info]: Average run time for the 3 simulations: 154.042 seconds
+
+[info]: 
+Run 1 log:
+[info]: **********************************************************************
+*                                                                    *
+*                        This is flow 2020.04                        *
+*                                                                    *
+* Flow is a simulator for fully implicit three-phase black-oil flow, *
+*             including solvent and polymer capabilities.            *
+*          For more information, see https://opm-project.org         *
+*                                                                    *
+**********************************************************************
+
+Using 1 MPI processes with 2 OMP threads on each 
+
+Reading deck file 'EXAMPLE4.DATA'
+    0 Reading RUNSPEC  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 1
+    1 Reading TITLE    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 3
+    2 Reading DIMENS   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 6
+    3 Reading OIL      in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 10
+    4 Reading WATER    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 11
+    5 Reading FIELD    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 12
+    6 Reading START    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 13
+    7 Reading EQLDIMS  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 16
+    8 Reading TABDIMS  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 18
+    9 Reading WELLDIMS in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 20
+   10 Reading START    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 22
+   11 Reading UNIFOUT  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 25
+   12 Reading GRID     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 27
+   13 Reading DX       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 30
+   14 Reading DY       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 34
+   15 Reading DZ       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 38
+   16 Reading PORO     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 42
+   17 Reading PERMX    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 46
+   18 Reading PERMY    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 50
+   19 Reading PERMZ    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 54
+   20 Reading TOPS     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 58
+   21 Reading PROPS    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 61
+   22 Reading PVTW     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 63
+   23 Reading PVDO     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 68
+   24 Reading SWOF     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 113
+   25 Reading ROCK     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 125
+   26 Reading DENSITY  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 129
+   27 Reading SOLUTION in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 133
+   28 Reading EQUIL    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 134
+   29 Reading RPTSOL   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 138
+   30 Reading SUMMARY  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 142
+   31 Reading WOPR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 144
+   32 Reading WWPR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 149
+   33 Reading WWIR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 154
+   34 Reading SCHEDULE in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 159
+   35 Reading DRSDT    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 161
+   36 Reading RPTRST   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 164
+   37 Reading TUNING   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 169
+   38 Reading WELSPECS in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 174
+   39 Reading COMPDAT  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 181
+   40 Reading WCONPROD in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 188
+   41 Reading WCONINJE in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 196
+   42 Reading TSTEP    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 202
+[34;1m
+Warning: Keyword 'RPTSOL' is not supported by flow.
+In file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 138
+[0m
+Only 2 fluid phases are enabled
+[34;1m
+Warning: The mnemonic: NOTHING is not recognized.[0m
+
+===============Saturation Functions Diagnostics===============
+
+System:  Oil-Water system.
+Relative permeability input format: Saturation Family I.
+Number of saturation regions: 1
+
+
+
+================ Starting main simulation loop ===============
+
+
+Report step  0/55 at day 0/800, date = 01-Jan-2009
+
+Time step 0, stepsize 0.1 days, at day 0/0.1, date = 01-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 1.098 sec), linear its =  34 ( 0.727 sec)
+
+Report step  1/55 at day 0.1/800, date = 01-Jan-2009
+
+Time step 0, stepsize 0.3 days, at day 0.1/15, date = 01-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.797 sec), linear its =  62 ( 1.128 sec)
+
+Time step 1, stepsize 0.9 days, at day 0.4/15, date = 01-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.792 sec), linear its =  80 ( 1.413 sec)
+
+Time step 2, stepsize 2.7 days, at day 1.3/15, date = 02-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 0.945 sec), linear its = 114 ( 1.958 sec)
+
+Time step 3, stepsize 5.5 days, at day 4/15, date = 05-Jan-2009
+Time step summary: newton its =  3, linearizations =  4 ( 0.630 sec), linear its =  56 ( 0.988 sec)
+
+Time step 4, stepsize 5.5 days, at day 9.5/15, date = 10-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.788 sec), linear its = 130 ( 2.186 sec)
+
+Report step  2/55 at day 15/800, date = 16-Jan-2009
+
+Time step 0, stepsize 15 days, at day 15/30, date = 16-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 0.941 sec), linear its = 123 ( 2.121 sec)
+
+Report step  3/55 at day 30/800, date = 31-Jan-2009
+
+Time step 0, stepsize 15 days, at day 30/45, date = 31-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 107 ( 1.826 sec)
+
+Report step  4/55 at day 45/800, date = 15-Feb-2009
+
+Time step 0, stepsize 15 days, at day 45/60, date = 15-Feb-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.778 sec), linear its = 110 ( 1.870 sec)
+
+Report step  5/55 at day 60/800, date = 02-Mar-2009
+
+Time step 0, stepsize 15 days, at day 60/75, date = 02-Mar-2009
+Time step summary: newton its =  3, linearizations =  4 ( 0.625 sec), linear its =  65 ( 1.124 sec)
+
+Report step  6/55 at day 75/800, date = 17-Mar-2009
+
+Time step 0, stepsize 15 days, at day 75/90, date = 17-Mar-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.776 sec), linear its = 103 ( 1.747 sec)
+
+Report step  7/55 at day 90/800, date = 01-Apr-2009
+
+Time step 0, stepsize 15 days, at day 90/105, date = 01-Apr-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.779 sec), linear its = 107 ( 1.833 sec)
+
+Report step  8/55 at day 105/800, date = 16-Apr-2009
+
+Time step 0, stepsize 15 days, at day 105/120, date = 16-Apr-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.789 sec), linear its =  84 ( 1.454 sec)
+
+Report step  9/55 at day 120/800, date = 01-May-2009
+
+Time step 0, stepsize 15 days, at day 120/135, date = 01-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.777 sec), linear its =  91 ( 1.568 sec)
+
+Report step 10/55 at day 135/800, date = 16-May-2009
+
+Time step 0, stepsize 15 days, at day 135/150, date = 16-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its =  84 ( 1.490 sec)
+
+Report step 11/55 at day 150/800, date = 31-May-2009
+
+Time step 0, stepsize 15 days, at day 150/165, date = 31-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its =  93 ( 1.616 sec)
+
+Report step 12/55 at day 165/800, date = 15-Jun-2009
+
+Time step 0, stepsize 15 days, at day 165/180, date = 15-Jun-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.799 sec), linear its =  90 ( 1.561 sec)
+
+Report step 13/55 at day 180/800, date = 30-Jun-2009
+
+Time step 0, stepsize 15 days, at day 180/195, date = 30-Jun-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its =  95 ( 1.666 sec)
+
+Report step 14/55 at day 195/800, date = 15-Jul-2009
+
+Time step 0, stepsize 15 days, at day 195/210, date = 15-Jul-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its =  93 ( 1.609 sec)
+
+Report step 15/55 at day 210/800, date = 30-Jul-2009
+
+Time step 0, stepsize 15 days, at day 210/225, date = 30-Jul-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.798 sec), linear its =  97 ( 1.695 sec)
+
+Report step 16/55 at day 225/800, date = 14-Aug-2009
+
+Time step 0, stepsize 15 days, at day 225/240, date = 14-Aug-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.801 sec), linear its =  97 ( 1.697 sec)
+
+Report step 17/55 at day 240/800, date = 29-Aug-2009
+
+Time step 0, stepsize 15 days, at day 240/255, date = 29-Aug-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.798 sec), linear its =  95 ( 1.633 sec)
+
+Report step 18/55 at day 255/800, date = 13-Sep-2009
+
+Time step 0, stepsize 15 days, at day 255/270, date = 13-Sep-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.803 sec), linear its =  99 ( 1.701 sec)
+
+Report step 19/55 at day 270/800, date = 28-Sep-2009
+
+Time step 0, stepsize 15 days, at day 270/285, date = 28-Sep-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.775 sec), linear its =  93 ( 1.580 sec)
+
+Report step 20/55 at day 285/800, date = 13-Oct-2009
+
+Time step 0, stepsize 15 days, at day 285/300, date = 13-Oct-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.778 sec), linear its =  94 ( 1.596 sec)
+
+Report step 21/55 at day 300/800, date = 28-Oct-2009
+
+Time step 0, stepsize 15 days, at day 300/315, date = 28-Oct-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.789 sec), linear its =  93 ( 1.599 sec)
+
+Report step 22/55 at day 315/800, date = 12-Nov-2009
+
+Time step 0, stepsize 15 days, at day 315/330, date = 12-Nov-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.781 sec), linear its =  89 ( 1.539 sec)
+
+Report step 23/55 at day 330/800, date = 27-Nov-2009
+
+Time step 0, stepsize 15 days, at day 330/345, date = 27-Nov-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.783 sec), linear its =  93 ( 1.588 sec)
+
+Report step 24/55 at day 345/800, date = 12-Dec-2009
+
+Time step 0, stepsize 15 days, at day 345/360, date = 12-Dec-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its =  89 ( 1.520 sec)
+
+Report step 25/55 at day 360/800, date = 27-Dec-2009
+
+Time step 0, stepsize 15 days, at day 360/375, date = 27-Dec-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.782 sec), linear its =  78 ( 1.363 sec)
+
+Report step 26/55 at day 375/800, date = 11-Jan-2010
+
+Time step 0, stepsize 15 days, at day 375/390, date = 11-Jan-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its =  80 ( 1.380 sec)
+
+Report step 27/55 at day 390/800, date = 26-Jan-2010
+
+Time step 0, stepsize 15 days, at day 390/405, date = 26-Jan-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.784 sec), linear its =  87 ( 1.519 sec)
+
+Report step 28/55 at day 405/800, date = 10-Feb-2010
+
+Time step 0, stepsize 15 days, at day 405/420, date = 10-Feb-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.778 sec), linear its =  90 ( 1.557 sec)
+
+Report step 29/55 at day 420/800, date = 25-Feb-2010
+
+Time step 0, stepsize 15 days, at day 420/435, date = 25-Feb-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.777 sec), linear its =  98 ( 1.654 sec)
+
+Report step 30/55 at day 435/800, date = 12-Mar-2010
+
+Time step 0, stepsize 15 days, at day 435/450, date = 12-Mar-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.779 sec), linear its =  86 ( 1.481 sec)
+
+Report step 31/55 at day 450/800, date = 27-Mar-2010
+
+Time step 0, stepsize 15 days, at day 450/465, date = 27-Mar-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its =  91 ( 1.558 sec)
+
+Report step 32/55 at day 465/800, date = 11-Apr-2010
+
+Time step 0, stepsize 15 days, at day 465/480, date = 11-Apr-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.783 sec), linear its = 115 ( 1.921 sec)
+
+Report step 33/55 at day 480/800, date = 26-Apr-2010
+
+Time step 0, stepsize 15 days, at day 480/495, date = 26-Apr-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its = 112 ( 1.901 sec)
+
+Report step 34/55 at day 495/800, date = 11-May-2010
+
+Time step 0, stepsize 15 days, at day 495/510, date = 11-May-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.644 sec), linear its =  80 ( 1.368 sec)
+
+Report step 35/55 at day 510/800, date = 26-May-2010
+
+Time step 0, stepsize 15 days, at day 510/525, date = 26-May-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.809 sec), linear its = 131 ( 2.219 sec)
+
+Report step 36/55 at day 525/800, date = 10-Jun-2010
+
+Time step 0, stepsize 15 days, at day 525/540, date = 10-Jun-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.650 sec), linear its =  78 ( 1.342 sec)
+
+Report step 37/55 at day 540/800, date = 25-Jun-2010
+
+Time step 0, stepsize 15 days, at day 540/555, date = 25-Jun-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.805 sec), linear its = 132 ( 2.234 sec)
+
+Report step 38/55 at day 555/800, date = 10-Jul-2010
+
+Time step 0, stepsize 15 days, at day 555/570, date = 10-Jul-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its = 142 ( 2.372 sec)
+
+Report step 39/55 at day 570/800, date = 25-Jul-2010
+
+Time step 0, stepsize 15 days, at day 570/585, date = 25-Jul-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.633 sec), linear its =  76 ( 1.296 sec)
+
+Report step 40/55 at day 585/800, date = 09-Aug-2010
+
+Time step 0, stepsize 15 days, at day 585/600, date = 09-Aug-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.628 sec), linear its =  64 ( 1.114 sec)
+
+Report step 41/55 at day 600/800, date = 24-Aug-2010
+
+Time step 0, stepsize 15 days, at day 600/615, date = 24-Aug-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.784 sec), linear its = 137 ( 2.272 sec)
+
+Report step 42/55 at day 615/800, date = 08-Sep-2010
+
+Time step 0, stepsize 15 days, at day 615/630, date = 08-Sep-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 126 ( 2.076 sec)
+
+Report step 43/55 at day 630/800, date = 23-Sep-2010
+
+Time step 0, stepsize 15 days, at day 630/645, date = 23-Sep-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 155 ( 2.549 sec)
+
+Report step 44/55 at day 645/800, date = 08-Oct-2010
+
+Time step 0, stepsize 15 days, at day 645/660, date = 08-Oct-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.797 sec), linear its = 155 ( 2.533 sec)
+
+Report step 45/55 at day 660/800, date = 23-Oct-2010
+
+Time step 0, stepsize 15 days, at day 660/675, date = 23-Oct-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.788 sec), linear its = 148 ( 2.430 sec)
+
+Report step 46/55 at day 675/800, date = 07-Nov-2010
+
+Time step 0, stepsize 15 days, at day 675/690, date = 07-Nov-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.789 sec), linear its = 142 ( 2.342 sec)
+
+Report step 47/55 at day 690/800, date = 22-Nov-2010
+
+Time step 0, stepsize 15 days, at day 690/705, date = 22-Nov-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 160 ( 2.603 sec)
+
+Report step 48/55 at day 705/800, date = 07-Dec-2010
+
+Time step 0, stepsize 15 days, at day 705/720, date = 07-Dec-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.789 sec), linear its = 125 ( 2.078 sec)
+
+Report step 49/55 at day 720/800, date = 22-Dec-2010
+
+Time step 0, stepsize 15 days, at day 720/735, date = 22-Dec-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.788 sec), linear its = 121 ( 2.026 sec)
+
+Report step 50/55 at day 735/800, date = 06-Jan-2011
+
+Time step 0, stepsize 15 days, at day 735/750, date = 06-Jan-2011
+Time step summary: newton its =  3, linearizations =  4 ( 0.629 sec), linear its =  72 ( 1.220 sec)
+
+Report step 51/55 at day 750/800, date = 21-Jan-2011
+
+Time step 0, stepsize 15 days, at day 750/765, date = 21-Jan-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.788 sec), linear its = 141 ( 2.332 sec)
+
+Report step 52/55 at day 765/800, date = 05-Feb-2011
+
+Time step 0, stepsize 15 days, at day 765/780, date = 05-Feb-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.809 sec), linear its = 128 ( 2.114 sec)
+
+Report step 53/55 at day 780/800, date = 20-Feb-2011
+
+Time step 0, stepsize 15 days, at day 780/795, date = 20-Feb-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.819 sec), linear its = 130 ( 2.235 sec)
+
+Report step 54/55 at day 795/800, date = 07-Mar-2011
+
+Time step 0, stepsize 5 days, at day 795/800, date = 07-Mar-2011
+Time step summary: newton its =  3, linearizations =  4 ( 0.653 sec), linear its =  95 ( 1.626 sec)
+
+
+================    End of simulation     ===============
+
+Number of MPI processes:      1
+Threads per MPI process:      2
+Total time (seconds):         153.762
+Solver time (seconds):        153.734
+ Assembly time (seconds):     45.9316 (Failed: 0; 0%)
+ Linear solve time (seconds): 102.744 (Failed: 0; 0%)
+ Linear solve setup time (seconds): 1.74435 (Failed: 0; 0%)
+ Update time (seconds):       1.93842 (Failed: 0; 0%)
+ Output write time (seconds): 0.471409
+Overall Well Iterations:      0 (Failed: 0; -nan%)
+Overall Linearizations:       290 (Failed: 0; 0%)
+Overall Newton Iterations:    231 (Failed: 0; 0%)
+Overall Linear Iterations:    6035 (Failed: 0; 0%)
+
+
+[info]: 
+Run 2 log:
+[info]: **********************************************************************
+*                                                                    *
+*                        This is flow 2020.04                        *
+*                                                                    *
+* Flow is a simulator for fully implicit three-phase black-oil flow, *
+*             including solvent and polymer capabilities.            *
+*          For more information, see https://opm-project.org         *
+*                                                                    *
+**********************************************************************
+
+Using 1 MPI processes with 2 OMP threads on each 
+
+Reading deck file 'EXAMPLE4.DATA'
+    0 Reading RUNSPEC  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 1
+    1 Reading TITLE    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 3
+    2 Reading DIMENS   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 6
+    3 Reading OIL      in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 10
+    4 Reading WATER    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 11
+    5 Reading FIELD    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 12
+    6 Reading START    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 13
+    7 Reading EQLDIMS  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 16
+    8 Reading TABDIMS  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 18
+    9 Reading WELLDIMS in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 20
+   10 Reading START    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 22
+   11 Reading UNIFOUT  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 25
+   12 Reading GRID     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 27
+   13 Reading DX       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 30
+   14 Reading DY       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 34
+   15 Reading DZ       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 38
+   16 Reading PORO     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 42
+   17 Reading PERMX    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 46
+   18 Reading PERMY    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 50
+   19 Reading PERMZ    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 54
+   20 Reading TOPS     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 58
+   21 Reading PROPS    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 61
+   22 Reading PVTW     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 63
+   23 Reading PVDO     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 68
+   24 Reading SWOF     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 113
+   25 Reading ROCK     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 125
+   26 Reading DENSITY  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 129
+   27 Reading SOLUTION in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 133
+   28 Reading EQUIL    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 134
+   29 Reading RPTSOL   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 138
+   30 Reading SUMMARY  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 142
+   31 Reading WOPR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 144
+   32 Reading WWPR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 149
+   33 Reading WWIR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 154
+   34 Reading SCHEDULE in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 159
+   35 Reading DRSDT    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 161
+   36 Reading RPTRST   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 164
+   37 Reading TUNING   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 169
+   38 Reading WELSPECS in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 174
+   39 Reading COMPDAT  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 181
+   40 Reading WCONPROD in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 188
+   41 Reading WCONINJE in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 196
+   42 Reading TSTEP    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 202
+[34;1m
+Warning: Keyword 'RPTSOL' is not supported by flow.
+In file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 138
+[0m
+Only 2 fluid phases are enabled
+[34;1m
+Warning: The mnemonic: NOTHING is not recognized.[0m
+
+===============Saturation Functions Diagnostics===============
+
+System:  Oil-Water system.
+Relative permeability input format: Saturation Family I.
+Number of saturation regions: 1
+
+
+
+================ Starting main simulation loop ===============
+
+
+Report step  0/55 at day 0/800, date = 01-Jan-2009
+
+Time step 0, stepsize 0.1 days, at day 0/0.1, date = 01-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 1.086 sec), linear its =  34 ( 0.732 sec)
+
+Report step  1/55 at day 0.1/800, date = 01-Jan-2009
+
+Time step 0, stepsize 0.3 days, at day 0.1/15, date = 01-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.797 sec), linear its =  62 ( 1.117 sec)
+
+Time step 1, stepsize 0.9 days, at day 0.4/15, date = 01-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its =  80 ( 1.419 sec)
+
+Time step 2, stepsize 2.7 days, at day 1.3/15, date = 02-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 0.923 sec), linear its = 114 ( 1.936 sec)
+
+Time step 3, stepsize 5.5 days, at day 4/15, date = 05-Jan-2009
+Time step summary: newton its =  3, linearizations =  4 ( 0.639 sec), linear its =  56 ( 0.984 sec)
+
+Time step 4, stepsize 5.5 days, at day 9.5/15, date = 10-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.766 sec), linear its = 130 ( 2.165 sec)
+
+Report step  2/55 at day 15/800, date = 16-Jan-2009
+
+Time step 0, stepsize 15 days, at day 15/30, date = 16-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 0.912 sec), linear its = 123 ( 2.091 sec)
+
+Report step  3/55 at day 30/800, date = 31-Jan-2009
+
+Time step 0, stepsize 15 days, at day 30/45, date = 31-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.760 sec), linear its = 107 ( 1.798 sec)
+
+Report step  4/55 at day 45/800, date = 15-Feb-2009
+
+Time step 0, stepsize 15 days, at day 45/60, date = 15-Feb-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.778 sec), linear its = 110 ( 1.882 sec)
+
+Report step  5/55 at day 60/800, date = 02-Mar-2009
+
+Time step 0, stepsize 15 days, at day 60/75, date = 02-Mar-2009
+Time step summary: newton its =  3, linearizations =  4 ( 0.620 sec), linear its =  65 ( 1.115 sec)
+
+Report step  6/55 at day 75/800, date = 17-Mar-2009
+
+Time step 0, stepsize 15 days, at day 75/90, date = 17-Mar-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its = 103 ( 1.758 sec)
+
+Report step  7/55 at day 90/800, date = 01-Apr-2009
+
+Time step 0, stepsize 15 days, at day 90/105, date = 01-Apr-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its = 107 ( 1.823 sec)
+
+Report step  8/55 at day 105/800, date = 16-Apr-2009
+
+Time step 0, stepsize 15 days, at day 105/120, date = 16-Apr-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its =  84 ( 1.464 sec)
+
+Report step  9/55 at day 120/800, date = 01-May-2009
+
+Time step 0, stepsize 15 days, at day 120/135, date = 01-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its =  91 ( 1.573 sec)
+
+Report step 10/55 at day 135/800, date = 16-May-2009
+
+Time step 0, stepsize 15 days, at day 135/150, date = 16-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its =  84 ( 1.473 sec)
+
+Report step 11/55 at day 150/800, date = 31-May-2009
+
+Time step 0, stepsize 15 days, at day 150/165, date = 31-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its =  93 ( 1.601 sec)
+
+Report step 12/55 at day 165/800, date = 15-Jun-2009
+
+Time step 0, stepsize 15 days, at day 165/180, date = 15-Jun-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.773 sec), linear its =  90 ( 1.548 sec)
+
+Report step 13/55 at day 180/800, date = 30-Jun-2009
+
+Time step 0, stepsize 15 days, at day 180/195, date = 30-Jun-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.777 sec), linear its =  95 ( 1.643 sec)
+
+Report step 14/55 at day 195/800, date = 15-Jul-2009
+
+Time step 0, stepsize 15 days, at day 195/210, date = 15-Jul-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.779 sec), linear its =  93 ( 1.576 sec)
+
+Report step 15/55 at day 210/800, date = 30-Jul-2009
+
+Time step 0, stepsize 15 days, at day 210/225, date = 30-Jul-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.771 sec), linear its =  97 ( 1.655 sec)
+
+Report step 16/55 at day 225/800, date = 14-Aug-2009
+
+Time step 0, stepsize 15 days, at day 225/240, date = 14-Aug-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its =  97 ( 1.656 sec)
+
+Report step 17/55 at day 240/800, date = 29-Aug-2009
+
+Time step 0, stepsize 15 days, at day 240/255, date = 29-Aug-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.771 sec), linear its =  95 ( 1.617 sec)
+
+Report step 18/55 at day 255/800, date = 13-Sep-2009
+
+Time step 0, stepsize 15 days, at day 255/270, date = 13-Sep-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.766 sec), linear its =  99 ( 1.670 sec)
+
+Report step 19/55 at day 270/800, date = 28-Sep-2009
+
+Time step 0, stepsize 15 days, at day 270/285, date = 28-Sep-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.769 sec), linear its =  93 ( 1.592 sec)
+
+Report step 20/55 at day 285/800, date = 13-Oct-2009
+
+Time step 0, stepsize 15 days, at day 285/300, date = 13-Oct-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its =  94 ( 1.591 sec)
+
+Report step 21/55 at day 300/800, date = 28-Oct-2009
+
+Time step 0, stepsize 15 days, at day 300/315, date = 28-Oct-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.770 sec), linear its =  93 ( 1.598 sec)
+
+Report step 22/55 at day 315/800, date = 12-Nov-2009
+
+Time step 0, stepsize 15 days, at day 315/330, date = 12-Nov-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.773 sec), linear its =  89 ( 1.528 sec)
+
+Report step 23/55 at day 330/800, date = 27-Nov-2009
+
+Time step 0, stepsize 15 days, at day 330/345, date = 27-Nov-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.780 sec), linear its =  93 ( 1.577 sec)
+
+Report step 24/55 at day 345/800, date = 12-Dec-2009
+
+Time step 0, stepsize 15 days, at day 345/360, date = 12-Dec-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.766 sec), linear its =  89 ( 1.514 sec)
+
+Report step 25/55 at day 360/800, date = 27-Dec-2009
+
+Time step 0, stepsize 15 days, at day 360/375, date = 27-Dec-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.794 sec), linear its =  78 ( 1.374 sec)
+
+Report step 26/55 at day 375/800, date = 11-Jan-2010
+
+Time step 0, stepsize 15 days, at day 375/390, date = 11-Jan-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.777 sec), linear its =  80 ( 1.376 sec)
+
+Report step 27/55 at day 390/800, date = 26-Jan-2010
+
+Time step 0, stepsize 15 days, at day 390/405, date = 26-Jan-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.769 sec), linear its =  87 ( 1.503 sec)
+
+Report step 28/55 at day 405/800, date = 10-Feb-2010
+
+Time step 0, stepsize 15 days, at day 405/420, date = 10-Feb-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.775 sec), linear its =  90 ( 1.552 sec)
+
+Report step 29/55 at day 420/800, date = 25-Feb-2010
+
+Time step 0, stepsize 15 days, at day 420/435, date = 25-Feb-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.780 sec), linear its =  98 ( 1.705 sec)
+
+Report step 30/55 at day 435/800, date = 12-Mar-2010
+
+Time step 0, stepsize 15 days, at day 435/450, date = 12-Mar-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.788 sec), linear its =  86 ( 1.476 sec)
+
+Report step 31/55 at day 450/800, date = 27-Mar-2010
+
+Time step 0, stepsize 15 days, at day 450/465, date = 27-Mar-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.775 sec), linear its =  91 ( 1.550 sec)
+
+Report step 32/55 at day 465/800, date = 11-Apr-2010
+
+Time step 0, stepsize 15 days, at day 465/480, date = 11-Apr-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.782 sec), linear its = 115 ( 1.920 sec)
+
+Report step 33/55 at day 480/800, date = 26-Apr-2010
+
+Time step 0, stepsize 15 days, at day 480/495, date = 26-Apr-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its = 112 ( 1.891 sec)
+
+Report step 34/55 at day 495/800, date = 11-May-2010
+
+Time step 0, stepsize 15 days, at day 495/510, date = 11-May-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.622 sec), linear its =  80 ( 1.344 sec)
+
+Report step 35/55 at day 510/800, date = 26-May-2010
+
+Time step 0, stepsize 15 days, at day 510/525, date = 26-May-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its = 131 ( 2.164 sec)
+
+Report step 36/55 at day 525/800, date = 10-Jun-2010
+
+Time step 0, stepsize 15 days, at day 525/540, date = 10-Jun-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.621 sec), linear its =  78 ( 1.331 sec)
+
+Report step 37/55 at day 540/800, date = 25-Jun-2010
+
+Time step 0, stepsize 15 days, at day 540/555, date = 25-Jun-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.775 sec), linear its = 132 ( 2.182 sec)
+
+Report step 38/55 at day 555/800, date = 10-Jul-2010
+
+Time step 0, stepsize 15 days, at day 555/570, date = 10-Jul-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its = 142 ( 2.338 sec)
+
+Report step 39/55 at day 570/800, date = 25-Jul-2010
+
+Time step 0, stepsize 15 days, at day 570/585, date = 25-Jul-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.628 sec), linear its =  76 ( 1.282 sec)
+
+Report step 40/55 at day 585/800, date = 09-Aug-2010
+
+Time step 0, stepsize 15 days, at day 585/600, date = 09-Aug-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.627 sec), linear its =  64 ( 1.116 sec)
+
+Report step 41/55 at day 600/800, date = 24-Aug-2010
+
+Time step 0, stepsize 15 days, at day 600/615, date = 24-Aug-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 137 ( 2.326 sec)
+
+Report step 42/55 at day 615/800, date = 08-Sep-2010
+
+Time step 0, stepsize 15 days, at day 615/630, date = 08-Sep-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.812 sec), linear its = 126 ( 2.107 sec)
+
+Report step 43/55 at day 630/800, date = 23-Sep-2010
+
+Time step 0, stepsize 15 days, at day 630/645, date = 23-Sep-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.792 sec), linear its = 155 ( 2.588 sec)
+
+Report step 44/55 at day 645/800, date = 08-Oct-2010
+
+Time step 0, stepsize 15 days, at day 645/660, date = 08-Oct-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.901 sec), linear its = 155 ( 2.953 sec)
+
+Report step 45/55 at day 660/800, date = 23-Oct-2010
+
+Time step 0, stepsize 15 days, at day 660/675, date = 23-Oct-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.842 sec), linear its = 148 ( 2.527 sec)
+
+Report step 46/55 at day 675/800, date = 07-Nov-2010
+
+Time step 0, stepsize 15 days, at day 675/690, date = 07-Nov-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.820 sec), linear its = 142 ( 2.413 sec)
+
+Report step 47/55 at day 690/800, date = 22-Nov-2010
+
+Time step 0, stepsize 15 days, at day 690/705, date = 22-Nov-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.798 sec), linear its = 160 ( 2.662 sec)
+
+Report step 48/55 at day 705/800, date = 07-Dec-2010
+
+Time step 0, stepsize 15 days, at day 705/720, date = 07-Dec-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.800 sec), linear its = 125 ( 2.106 sec)
+
+Report step 49/55 at day 720/800, date = 22-Dec-2010
+
+Time step 0, stepsize 15 days, at day 720/735, date = 22-Dec-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.806 sec), linear its = 121 ( 2.064 sec)
+
+Report step 50/55 at day 735/800, date = 06-Jan-2011
+
+Time step 0, stepsize 15 days, at day 735/750, date = 06-Jan-2011
+Time step summary: newton its =  3, linearizations =  4 ( 0.638 sec), linear its =  72 ( 1.242 sec)
+
+Report step 51/55 at day 750/800, date = 21-Jan-2011
+
+Time step 0, stepsize 15 days, at day 750/765, date = 21-Jan-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its = 141 ( 2.365 sec)
+
+Report step 52/55 at day 765/800, date = 05-Feb-2011
+
+Time step 0, stepsize 15 days, at day 765/780, date = 05-Feb-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its = 128 ( 2.158 sec)
+
+Report step 53/55 at day 780/800, date = 20-Feb-2011
+
+Time step 0, stepsize 15 days, at day 780/795, date = 20-Feb-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.805 sec), linear its = 130 ( 2.220 sec)
+
+Report step 54/55 at day 795/800, date = 07-Mar-2011
+
+Time step 0, stepsize 5 days, at day 795/800, date = 07-Mar-2011
+Time step summary: newton its =  3, linearizations =  4 ( 0.634 sec), linear its =  95 ( 1.597 sec)
+
+
+================    End of simulation     ===============
+
+Number of MPI processes:      1
+Threads per MPI process:      2
+Total time (seconds):         153.886
+Solver time (seconds):        153.858
+ Assembly time (seconds):     45.6779 (Failed: 0; 0%)
+ Linear solve time (seconds): 103.124 (Failed: 0; 0%)
+ Linear solve setup time (seconds): 1.74659 (Failed: 0; 0%)
+ Update time (seconds):       1.93503 (Failed: 0; 0%)
+ Output write time (seconds): 0.470439
+Overall Well Iterations:      0 (Failed: 0; -nan%)
+Overall Linearizations:       290 (Failed: 0; 0%)
+Overall Newton Iterations:    231 (Failed: 0; 0%)
+Overall Linear Iterations:    6035 (Failed: 0; 0%)
+
+
+[info]: 
+Run 3 log:
+[info]: **********************************************************************
+*                                                                    *
+*                        This is flow 2020.04                        *
+*                                                                    *
+* Flow is a simulator for fully implicit three-phase black-oil flow, *
+*             including solvent and polymer capabilities.            *
+*          For more information, see https://opm-project.org         *
+*                                                                    *
+**********************************************************************
+
+Using 1 MPI processes with 2 OMP threads on each 
+
+Reading deck file 'EXAMPLE4.DATA'
+    0 Reading RUNSPEC  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 1
+    1 Reading TITLE    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 3
+    2 Reading DIMENS   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 6
+    3 Reading OIL      in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 10
+    4 Reading WATER    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 11
+    5 Reading FIELD    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 12
+    6 Reading START    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 13
+    7 Reading EQLDIMS  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 16
+    8 Reading TABDIMS  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 18
+    9 Reading WELLDIMS in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 20
+   10 Reading START    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 22
+   11 Reading UNIFOUT  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 25
+   12 Reading GRID     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 27
+   13 Reading DX       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 30
+   14 Reading DY       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 34
+   15 Reading DZ       in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 38
+   16 Reading PORO     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 42
+   17 Reading PERMX    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 46
+   18 Reading PERMY    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 50
+   19 Reading PERMZ    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 54
+   20 Reading TOPS     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 58
+   21 Reading PROPS    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 61
+   22 Reading PVTW     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 63
+   23 Reading PVDO     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 68
+   24 Reading SWOF     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 113
+   25 Reading ROCK     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 125
+   26 Reading DENSITY  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 129
+   27 Reading SOLUTION in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 133
+   28 Reading EQUIL    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 134
+   29 Reading RPTSOL   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 138
+   30 Reading SUMMARY  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 142
+   31 Reading WOPR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 144
+   32 Reading WWPR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 149
+   33 Reading WWIR     in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 154
+   34 Reading SCHEDULE in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 159
+   35 Reading DRSDT    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 161
+   36 Reading RPTRST   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 164
+   37 Reading TUNING   in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 169
+   38 Reading WELSPECS in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 174
+   39 Reading COMPDAT  in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 181
+   40 Reading WCONPROD in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 188
+   41 Reading WCONINJE in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 196
+   42 Reading TSTEP    in file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 202
+[34;1m
+Warning: Keyword 'RPTSOL' is not supported by flow.
+In file /home/yiminliu/.julia/dev/ResSimAD.jl/benchmark/example4/OPM/EXAMPLE4.DATA, line 138
+[0m
+Only 2 fluid phases are enabled
+[34;1m
+Warning: The mnemonic: NOTHING is not recognized.[0m
+
+===============Saturation Functions Diagnostics===============
+
+System:  Oil-Water system.
+Relative permeability input format: Saturation Family I.
+Number of saturation regions: 1
+
+
+
+================ Starting main simulation loop ===============
+
+
+Report step  0/55 at day 0/800, date = 01-Jan-2009
+
+Time step 0, stepsize 0.1 days, at day 0/0.1, date = 01-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 1.072 sec), linear its =  34 ( 0.719 sec)
+
+Report step  1/55 at day 0.1/800, date = 01-Jan-2009
+
+Time step 0, stepsize 0.3 days, at day 0.1/15, date = 01-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.772 sec), linear its =  62 ( 1.109 sec)
+
+Time step 1, stepsize 0.9 days, at day 0.4/15, date = 01-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its =  80 ( 1.405 sec)
+
+Time step 2, stepsize 2.7 days, at day 1.3/15, date = 02-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 0.940 sec), linear its = 114 ( 1.986 sec)
+
+Time step 3, stepsize 5.5 days, at day 4/15, date = 05-Jan-2009
+Time step summary: newton its =  3, linearizations =  4 ( 0.642 sec), linear its =  56 ( 0.988 sec)
+
+Time step 4, stepsize 5.5 days, at day 9.5/15, date = 10-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.771 sec), linear its = 130 ( 2.201 sec)
+
+Report step  2/55 at day 15/800, date = 16-Jan-2009
+
+Time step 0, stepsize 15 days, at day 15/30, date = 16-Jan-2009
+Time step summary: newton its =  5, linearizations =  6 ( 0.916 sec), linear its = 123 ( 2.119 sec)
+
+Report step  3/55 at day 30/800, date = 31-Jan-2009
+
+Time step 0, stepsize 15 days, at day 30/45, date = 31-Jan-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.765 sec), linear its = 107 ( 1.815 sec)
+
+Report step  4/55 at day 45/800, date = 15-Feb-2009
+
+Time step 0, stepsize 15 days, at day 45/60, date = 15-Feb-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.768 sec), linear its = 110 ( 1.878 sec)
+
+Report step  5/55 at day 60/800, date = 02-Mar-2009
+
+Time step 0, stepsize 15 days, at day 60/75, date = 02-Mar-2009
+Time step summary: newton its =  3, linearizations =  4 ( 0.616 sec), linear its =  65 ( 1.121 sec)
+
+Report step  6/55 at day 75/800, date = 17-Mar-2009
+
+Time step 0, stepsize 15 days, at day 75/90, date = 17-Mar-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.774 sec), linear its = 103 ( 1.784 sec)
+
+Report step  7/55 at day 90/800, date = 01-Apr-2009
+
+Time step 0, stepsize 15 days, at day 90/105, date = 01-Apr-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.764 sec), linear its = 107 ( 1.818 sec)
+
+Report step  8/55 at day 105/800, date = 16-Apr-2009
+
+Time step 0, stepsize 15 days, at day 105/120, date = 16-Apr-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.767 sec), linear its =  84 ( 1.456 sec)
+
+Report step  9/55 at day 120/800, date = 01-May-2009
+
+Time step 0, stepsize 15 days, at day 120/135, date = 01-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.770 sec), linear its =  91 ( 1.574 sec)
+
+Report step 10/55 at day 135/800, date = 16-May-2009
+
+Time step 0, stepsize 15 days, at day 135/150, date = 16-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.768 sec), linear its =  84 ( 1.484 sec)
+
+Report step 11/55 at day 150/800, date = 31-May-2009
+
+Time step 0, stepsize 15 days, at day 150/165, date = 31-May-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.773 sec), linear its =  93 ( 1.611 sec)
+
+Report step 12/55 at day 165/800, date = 15-Jun-2009
+
+Time step 0, stepsize 15 days, at day 165/180, date = 15-Jun-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.773 sec), linear its =  90 ( 1.550 sec)
+
+Report step 13/55 at day 180/800, date = 30-Jun-2009
+
+Time step 0, stepsize 15 days, at day 180/195, date = 30-Jun-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.775 sec), linear its =  95 ( 1.657 sec)
+
+Report step 14/55 at day 195/800, date = 15-Jul-2009
+
+Time step 0, stepsize 15 days, at day 195/210, date = 15-Jul-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.788 sec), linear its =  93 ( 1.627 sec)
+
+Report step 15/55 at day 210/800, date = 30-Jul-2009
+
+Time step 0, stepsize 15 days, at day 210/225, date = 30-Jul-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.780 sec), linear its =  97 ( 1.679 sec)
+
+Report step 16/55 at day 225/800, date = 14-Aug-2009
+
+Time step 0, stepsize 15 days, at day 225/240, date = 14-Aug-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.779 sec), linear its =  97 ( 1.680 sec)
+
+Report step 17/55 at day 240/800, date = 29-Aug-2009
+
+Time step 0, stepsize 15 days, at day 240/255, date = 29-Aug-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.782 sec), linear its =  95 ( 1.651 sec)
+
+Report step 18/55 at day 255/800, date = 13-Sep-2009
+
+Time step 0, stepsize 15 days, at day 255/270, date = 13-Sep-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.780 sec), linear its =  99 ( 1.707 sec)
+
+Report step 19/55 at day 270/800, date = 28-Sep-2009
+
+Time step 0, stepsize 15 days, at day 270/285, date = 28-Sep-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.778 sec), linear its =  93 ( 1.604 sec)
+
+Report step 20/55 at day 285/800, date = 13-Oct-2009
+
+Time step 0, stepsize 15 days, at day 285/300, date = 13-Oct-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.779 sec), linear its =  94 ( 1.624 sec)
+
+Report step 21/55 at day 300/800, date = 28-Oct-2009
+
+Time step 0, stepsize 15 days, at day 300/315, date = 28-Oct-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.773 sec), linear its =  93 ( 1.632 sec)
+
+Report step 22/55 at day 315/800, date = 12-Nov-2009
+
+Time step 0, stepsize 15 days, at day 315/330, date = 12-Nov-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.779 sec), linear its =  89 ( 1.557 sec)
+
+Report step 23/55 at day 330/800, date = 27-Nov-2009
+
+Time step 0, stepsize 15 days, at day 330/345, date = 27-Nov-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its =  93 ( 1.606 sec)
+
+Report step 24/55 at day 345/800, date = 12-Dec-2009
+
+Time step 0, stepsize 15 days, at day 345/360, date = 12-Dec-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.781 sec), linear its =  89 ( 1.545 sec)
+
+Report step 25/55 at day 360/800, date = 27-Dec-2009
+
+Time step 0, stepsize 15 days, at day 360/375, date = 27-Dec-2009
+Time step summary: newton its =  4, linearizations =  5 ( 0.791 sec), linear its =  78 ( 1.375 sec)
+
+Report step 26/55 at day 375/800, date = 11-Jan-2010
+
+Time step 0, stepsize 15 days, at day 375/390, date = 11-Jan-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.789 sec), linear its =  80 ( 1.404 sec)
+
+Report step 27/55 at day 390/800, date = 26-Jan-2010
+
+Time step 0, stepsize 15 days, at day 390/405, date = 26-Jan-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its =  87 ( 1.538 sec)
+
+Report step 28/55 at day 405/800, date = 10-Feb-2010
+
+Time step 0, stepsize 15 days, at day 405/420, date = 10-Feb-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.792 sec), linear its =  90 ( 1.578 sec)
+
+Report step 29/55 at day 420/800, date = 25-Feb-2010
+
+Time step 0, stepsize 15 days, at day 420/435, date = 25-Feb-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.793 sec), linear its =  98 ( 1.694 sec)
+
+Report step 30/55 at day 435/800, date = 12-Mar-2010
+
+Time step 0, stepsize 15 days, at day 435/450, date = 12-Mar-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its =  86 ( 1.513 sec)
+
+Report step 31/55 at day 450/800, date = 27-Mar-2010
+
+Time step 0, stepsize 15 days, at day 450/465, date = 27-Mar-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.791 sec), linear its =  91 ( 1.581 sec)
+
+Report step 32/55 at day 465/800, date = 11-Apr-2010
+
+Time step 0, stepsize 15 days, at day 465/480, date = 11-Apr-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.792 sec), linear its = 115 ( 1.960 sec)
+
+Report step 33/55 at day 480/800, date = 26-Apr-2010
+
+Time step 0, stepsize 15 days, at day 480/495, date = 26-Apr-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.787 sec), linear its = 112 ( 1.943 sec)
+
+Report step 34/55 at day 495/800, date = 11-May-2010
+
+Time step 0, stepsize 15 days, at day 495/510, date = 11-May-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.637 sec), linear its =  80 ( 1.357 sec)
+
+Report step 35/55 at day 510/800, date = 26-May-2010
+
+Time step 0, stepsize 15 days, at day 510/525, date = 26-May-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.783 sec), linear its = 131 ( 2.208 sec)
+
+Report step 36/55 at day 525/800, date = 10-Jun-2010
+
+Time step 0, stepsize 15 days, at day 525/540, date = 10-Jun-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.631 sec), linear its =  78 ( 1.345 sec)
+
+Report step 37/55 at day 540/800, date = 25-Jun-2010
+
+Time step 0, stepsize 15 days, at day 540/555, date = 25-Jun-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.785 sec), linear its = 132 ( 2.240 sec)
+
+Report step 38/55 at day 555/800, date = 10-Jul-2010
+
+Time step 0, stepsize 15 days, at day 555/570, date = 10-Jul-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its = 142 ( 2.407 sec)
+
+Report step 39/55 at day 570/800, date = 25-Jul-2010
+
+Time step 0, stepsize 15 days, at day 570/585, date = 25-Jul-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.631 sec), linear its =  76 ( 1.301 sec)
+
+Report step 40/55 at day 585/800, date = 09-Aug-2010
+
+Time step 0, stepsize 15 days, at day 585/600, date = 09-Aug-2010
+Time step summary: newton its =  3, linearizations =  4 ( 0.632 sec), linear its =  64 ( 1.144 sec)
+
+Report step 41/55 at day 600/800, date = 24-Aug-2010
+
+Time step 0, stepsize 15 days, at day 600/615, date = 24-Aug-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 137 ( 2.313 sec)
+
+Report step 42/55 at day 615/800, date = 08-Sep-2010
+
+Time step 0, stepsize 15 days, at day 615/630, date = 08-Sep-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.796 sec), linear its = 126 ( 2.150 sec)
+
+Report step 43/55 at day 630/800, date = 23-Sep-2010
+
+Time step 0, stepsize 15 days, at day 630/645, date = 23-Sep-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 155 ( 2.591 sec)
+
+Report step 44/55 at day 645/800, date = 08-Oct-2010
+
+Time step 0, stepsize 15 days, at day 645/660, date = 08-Oct-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.794 sec), linear its = 155 ( 2.604 sec)
+
+Report step 45/55 at day 660/800, date = 23-Oct-2010
+
+Time step 0, stepsize 15 days, at day 660/675, date = 23-Oct-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.798 sec), linear its = 148 ( 2.486 sec)
+
+Report step 46/55 at day 675/800, date = 07-Nov-2010
+
+Time step 0, stepsize 15 days, at day 675/690, date = 07-Nov-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.795 sec), linear its = 142 ( 2.395 sec)
+
+Report step 47/55 at day 690/800, date = 22-Nov-2010
+
+Time step 0, stepsize 15 days, at day 690/705, date = 22-Nov-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.799 sec), linear its = 160 ( 2.670 sec)
+
+Report step 48/55 at day 705/800, date = 07-Dec-2010
+
+Time step 0, stepsize 15 days, at day 705/720, date = 07-Dec-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.802 sec), linear its = 125 ( 2.140 sec)
+
+Report step 49/55 at day 720/800, date = 22-Dec-2010
+
+Time step 0, stepsize 15 days, at day 720/735, date = 22-Dec-2010
+Time step summary: newton its =  4, linearizations =  5 ( 0.795 sec), linear its = 121 ( 2.061 sec)
+
+Report step 50/55 at day 735/800, date = 06-Jan-2011
+
+Time step 0, stepsize 15 days, at day 735/750, date = 06-Jan-2011
+Time step summary: newton its =  3, linearizations =  4 ( 0.632 sec), linear its =  72 ( 1.264 sec)
+
+Report step 51/55 at day 750/800, date = 21-Jan-2011
+
+Time step 0, stepsize 15 days, at day 750/765, date = 21-Jan-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.790 sec), linear its = 141 ( 2.399 sec)
+
+Report step 52/55 at day 765/800, date = 05-Feb-2011
+
+Time step 0, stepsize 15 days, at day 765/780, date = 05-Feb-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.789 sec), linear its = 128 ( 2.175 sec)
+
+Report step 53/55 at day 780/800, date = 20-Feb-2011
+
+Time step 0, stepsize 15 days, at day 780/795, date = 20-Feb-2011
+Time step summary: newton its =  4, linearizations =  5 ( 0.786 sec), linear its = 130 ( 2.199 sec)
+
+Report step 54/55 at day 795/800, date = 07-Mar-2011
+
+Time step 0, stepsize 5 days, at day 795/800, date = 07-Mar-2011
+Time step summary: newton its =  3, linearizations =  4 ( 0.637 sec), linear its =  95 ( 1.618 sec)
+
+
+================    End of simulation     ===============
+
+Number of MPI processes:      1
+Threads per MPI process:      2
+Total time (seconds):         154.478
+Solver time (seconds):        154.451
+ Assembly time (seconds):     45.564 (Failed: 0; 0%)
+ Linear solve time (seconds): 103.84 (Failed: 0; 0%)
+ Linear solve setup time (seconds): 1.7643 (Failed: 0; 0%)
+ Update time (seconds):       1.93759 (Failed: 0; 0%)
+ Output write time (seconds): 0.456539
+Overall Well Iterations:      0 (Failed: 0; -nan%)
+Overall Linearizations:       290 (Failed: 0; 0%)
+Overall Newton Iterations:    231 (Failed: 0; 0%)
+Overall Linear Iterations:    6035 (Failed: 0; 0%)
+
+

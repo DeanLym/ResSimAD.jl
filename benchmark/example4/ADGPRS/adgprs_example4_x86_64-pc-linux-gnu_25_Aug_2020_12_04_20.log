@@ -1,0 +1,411 @@
+[info]: 2020-08-25T12:04:20.457
+[info]: Sys.MACHINE: x86_64-pc-linux-gnu
+[info]: CPU model: Intel(R) Core(TM) i9-9920X CPU @ 3.50GHz
+[info]: Number of CPU cores: 24
+[info]: Total memory 50.0 GB
+[info]: Free memory 43.1 GB
+
+[info]: ADGPRS run 1
+[info]: Elapsed time for run 1: 519.541 seconds
+
+[info]: ADGPRS run 2
+[info]: Elapsed time for run 2: 523.27 seconds
+
+[info]: ADGPRS run 3
+[info]: Elapsed time for run 3: 522.649 seconds
+
+[info]: Average run time for the 3 simulations: 521.82 seconds
+
+[info]: 
+Run 1 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE4.DATA file.
+Start time is 2020-08-25.12:04:24, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+File open for log EXAMPLE4.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  40
+Number of Cells: 144000
+Number of Active Cells: 144000
+Number of Connections: 423600
+Number of Active Connections: 423600
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     0.010, DT =   0.010, NI =   2, LI =    10, CFL = 0.210
+%% T =     0.030, DT =   0.020, NI =   2, LI =    11, CFL = 0.418
+%% T =     0.070, DT =   0.040, NI =   2, LI =    13, CFL = 0.831
+%% T =     0.150, DT =   0.080, NI =   2, LI =    16, CFL = 1.652
+%% T =     0.310, DT =   0.160, NI =   3, LI =    29, CFL = 3.286
+%% T =     0.630, DT =   0.320, NI =   3, LI =    26, CFL = 7.280
+%% T =     1.270, DT =   0.640, NI =   3, LI =    29, CFL = 15.959
+%% T =     2.550, DT =   1.280, NI =   3, LI =    34, CFL = 33.398
+%% T =     5.110, DT =   2.560, NI =   4, LI =    42, CFL = 67.688
+%% T =    10.230, DT =   5.120, NI =   4, LI =    44, CFL = 134.111
+%% T =    20.470, DT =  10.240, NI =   4, LI =    46, CFL = 262.714
+%% T =    35.470, DT =  15.000, NI =   4, LI =    50, CFL = 378.508
+%% T =    50.470, DT =  15.000, NI =   4, LI =    53, CFL = 375.486
+%% T =    65.470, DT =  15.000, NI =   4, LI =    49, CFL = 374.088
+%% T =    80.470, DT =  15.000, NI =   4, LI =    48, CFL = 373.470
+%% T =    95.470, DT =  15.000, NI =   4, LI =    51, CFL = 373.212
+%% T =   110.470, DT =  15.000, NI =   4, LI =    47, CFL = 373.113
+%% T =   125.470, DT =  15.000, NI =   4, LI =    47, CFL = 373.083
+%% T =   140.470, DT =  15.000, NI =   4, LI =    49, CFL = 373.081
+%% T =   155.470, DT =  15.000, NI =   4, LI =    49, CFL = 373.083
+%% T =   170.470, DT =  15.000, NI =   4, LI =    51, CFL = 373.082
+%% T =   185.470, DT =  15.000, NI =   4, LI =    46, CFL = 373.076
+%% T =   200.470, DT =  15.000, NI =   4, LI =    42, CFL = 373.061
+%% T =   215.470, DT =  15.000, NI =   4, LI =    45, CFL = 373.038
+%% T =   230.470, DT =  15.000, NI =   4, LI =    44, CFL = 373.010
+%% T =   245.470, DT =  15.000, NI =   4, LI =    42, CFL = 372.975
+%% T =   260.470, DT =  15.000, NI =   4, LI =    51, CFL = 372.934
+%% T =   275.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.888
+%% T =   290.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.837
+%% T =   305.470, DT =  15.000, NI =   4, LI =    48, CFL = 372.781
+%% T =   320.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.720
+%% T =   335.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.654
+%% T =   350.470, DT =  15.000, NI =   4, LI =    42, CFL = 372.584
+%% T =   365.470, DT =  15.000, NI =   4, LI =    52, CFL = 372.510
+%% T =   380.470, DT =  15.000, NI =   4, LI =    44, CFL = 372.430
+%% T =   395.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.345
+%% T =   410.470, DT =  15.000, NI =   4, LI =    49, CFL = 372.251
+%% T =   425.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.140
+%% T =   440.470, DT =  15.000, NI =   4, LI =    50, CFL = 371.988
+%% T =   455.470, DT =  15.000, NI =   4, LI =    55, CFL = 371.741
+%% T =   470.470, DT =  15.000, NI =   3, LI =    39, CFL = 371.317
+%% T =   485.470, DT =  15.000, NI =   4, LI =    53, CFL = 370.616
+%% T =   500.470, DT =  15.000, NI =   4, LI =    57, CFL = 369.630
+%% T =   515.470, DT =  15.000, NI =   4, LI =    53, CFL = 368.295
+%% T =   530.470, DT =  15.000, NI =   4, LI =    54, CFL = 366.452
+%% T =   545.470, DT =  15.000, NI =   4, LI =    56, CFL = 364.124
+%% T =   560.470, DT =  15.000, NI =   4, LI =    54, CFL = 361.462
+%% T =   575.470, DT =  15.000, NI =   4, LI =    56, CFL = 358.610
+%% T =   590.470, DT =  15.000, NI =   4, LI =    62, CFL = 355.710
+%% T =   605.470, DT =  15.000, NI =   4, LI =    61, CFL = 352.837
+%% T =   620.470, DT =  15.000, NI =   4, LI =    64, CFL = 349.992
+%% T =   635.470, DT =  15.000, NI =   4, LI =    58, CFL = 347.175
+%% T =   650.470, DT =  15.000, NI =   4, LI =    54, CFL = 344.303
+%% T =   665.470, DT =  15.000, NI =   4, LI =    62, CFL = 341.337
+%% T =   680.470, DT =  15.000, NI =   4, LI =    60, CFL = 338.300
+%% T =   695.470, DT =  15.000, NI =   4, LI =    59, CFL = 335.199
+%% T =   710.470, DT =  15.000, NI =   4, LI =    61, CFL = 332.058
+%% T =   725.470, DT =  15.000, NI =   4, LI =    61, CFL = 329.284
+%% T =   740.470, DT =  15.000, NI =   4, LI =    56, CFL = 327.063
+%% T =   755.470, DT =  15.000, NI =   4, LI =    60, CFL = 325.009
+%% T =   770.470, DT =  15.000, NI =   4, LI =    60, CFL = 322.969
+%% T =   785.470, DT =  15.000, NI =   4, LI =    61, CFL = 320.890
+%% T =   800.000, DT =  14.530, NI =   4, LI =    62, CFL = 308.884
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      63
+Total Newton iterations        :     239
+Total linear solver iterations :    3015
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =   306.496
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:     519.5413 seconds
+----------------------------------------------
+  Initialization       :     0.8793 [  0%]
+  CFL calc/TS init/IO  :     7.0743 [  1%]
+  Discretization       :   114.1854 [ 22%]
+  Implicit levels      :     0.0757 [  0%]
+  Properties           :    31.7602 [  6%]
+  Newton check/update  :    13.2396 [  3%]
+  Linear factorization :    10.1109 [  2%]
+  Linear solution      :   342.2149 [ 66%]
+   CPR prec. setup     :    12.0782 [  2%]
+   CPR prec. solve     :   292.2377 [ 56%]
+    AMG prec. setup    :     0.7706 [  0%]
+    AMG first solve    :   152.4601 [ 29%]
+    AMG other solve    :    81.8378 [ 16%]
+    BILU prec. setup   :     5.5414 [  1%]
+    BILU prec. solve   :    31.1495 [  6%]
+----------------------------------------------
+ Average implicit cells     = 144000.0 [100%]
+ Maximum implicit cells     =   144000 [100%]
+ Average implicit variables = 288000.0 [100%]
+ Maximum implicit variables =   288000 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 519.5, 63(0), 239(0), 3015(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-25.12:13:04
+
+[info]: 
+Run 2 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE4.DATA file.
+Start time is 2020-08-25.12:13:04, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+File open for log EXAMPLE4.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  40
+Number of Cells: 144000
+Number of Active Cells: 144000
+Number of Connections: 423600
+Number of Active Connections: 423600
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     0.010, DT =   0.010, NI =   2, LI =    10, CFL = 0.210
+%% T =     0.030, DT =   0.020, NI =   2, LI =    11, CFL = 0.418
+%% T =     0.070, DT =   0.040, NI =   2, LI =    13, CFL = 0.831
+%% T =     0.150, DT =   0.080, NI =   2, LI =    16, CFL = 1.652
+%% T =     0.310, DT =   0.160, NI =   3, LI =    29, CFL = 3.286
+%% T =     0.630, DT =   0.320, NI =   3, LI =    26, CFL = 7.280
+%% T =     1.270, DT =   0.640, NI =   3, LI =    29, CFL = 15.959
+%% T =     2.550, DT =   1.280, NI =   3, LI =    34, CFL = 33.398
+%% T =     5.110, DT =   2.560, NI =   4, LI =    42, CFL = 67.688
+%% T =    10.230, DT =   5.120, NI =   4, LI =    44, CFL = 134.111
+%% T =    20.470, DT =  10.240, NI =   4, LI =    46, CFL = 262.714
+%% T =    35.470, DT =  15.000, NI =   4, LI =    50, CFL = 378.508
+%% T =    50.470, DT =  15.000, NI =   4, LI =    53, CFL = 375.486
+%% T =    65.470, DT =  15.000, NI =   4, LI =    49, CFL = 374.088
+%% T =    80.470, DT =  15.000, NI =   4, LI =    48, CFL = 373.470
+%% T =    95.470, DT =  15.000, NI =   4, LI =    51, CFL = 373.212
+%% T =   110.470, DT =  15.000, NI =   4, LI =    47, CFL = 373.113
+%% T =   125.470, DT =  15.000, NI =   4, LI =    47, CFL = 373.083
+%% T =   140.470, DT =  15.000, NI =   4, LI =    49, CFL = 373.081
+%% T =   155.470, DT =  15.000, NI =   4, LI =    49, CFL = 373.083
+%% T =   170.470, DT =  15.000, NI =   4, LI =    51, CFL = 373.082
+%% T =   185.470, DT =  15.000, NI =   4, LI =    46, CFL = 373.076
+%% T =   200.470, DT =  15.000, NI =   4, LI =    42, CFL = 373.061
+%% T =   215.470, DT =  15.000, NI =   4, LI =    45, CFL = 373.038
+%% T =   230.470, DT =  15.000, NI =   4, LI =    44, CFL = 373.010
+%% T =   245.470, DT =  15.000, NI =   4, LI =    42, CFL = 372.975
+%% T =   260.470, DT =  15.000, NI =   4, LI =    51, CFL = 372.934
+%% T =   275.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.888
+%% T =   290.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.837
+%% T =   305.470, DT =  15.000, NI =   4, LI =    48, CFL = 372.781
+%% T =   320.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.720
+%% T =   335.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.654
+%% T =   350.470, DT =  15.000, NI =   4, LI =    42, CFL = 372.584
+%% T =   365.470, DT =  15.000, NI =   4, LI =    52, CFL = 372.510
+%% T =   380.470, DT =  15.000, NI =   4, LI =    44, CFL = 372.430
+%% T =   395.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.345
+%% T =   410.470, DT =  15.000, NI =   4, LI =    49, CFL = 372.251
+%% T =   425.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.140
+%% T =   440.470, DT =  15.000, NI =   4, LI =    50, CFL = 371.988
+%% T =   455.470, DT =  15.000, NI =   4, LI =    55, CFL = 371.741
+%% T =   470.470, DT =  15.000, NI =   3, LI =    39, CFL = 371.317
+%% T =   485.470, DT =  15.000, NI =   4, LI =    53, CFL = 370.616
+%% T =   500.470, DT =  15.000, NI =   4, LI =    57, CFL = 369.630
+%% T =   515.470, DT =  15.000, NI =   4, LI =    53, CFL = 368.295
+%% T =   530.470, DT =  15.000, NI =   4, LI =    54, CFL = 366.452
+%% T =   545.470, DT =  15.000, NI =   4, LI =    56, CFL = 364.124
+%% T =   560.470, DT =  15.000, NI =   4, LI =    54, CFL = 361.462
+%% T =   575.470, DT =  15.000, NI =   4, LI =    56, CFL = 358.610
+%% T =   590.470, DT =  15.000, NI =   4, LI =    62, CFL = 355.710
+%% T =   605.470, DT =  15.000, NI =   4, LI =    61, CFL = 352.837
+%% T =   620.470, DT =  15.000, NI =   4, LI =    64, CFL = 349.992
+%% T =   635.470, DT =  15.000, NI =   4, LI =    58, CFL = 347.175
+%% T =   650.470, DT =  15.000, NI =   4, LI =    54, CFL = 344.303
+%% T =   665.470, DT =  15.000, NI =   4, LI =    62, CFL = 341.337
+%% T =   680.470, DT =  15.000, NI =   4, LI =    60, CFL = 338.300
+%% T =   695.470, DT =  15.000, NI =   4, LI =    59, CFL = 335.199
+%% T =   710.470, DT =  15.000, NI =   4, LI =    61, CFL = 332.058
+%% T =   725.470, DT =  15.000, NI =   4, LI =    61, CFL = 329.284
+%% T =   740.470, DT =  15.000, NI =   4, LI =    56, CFL = 327.063
+%% T =   755.470, DT =  15.000, NI =   4, LI =    60, CFL = 325.009
+%% T =   770.470, DT =  15.000, NI =   4, LI =    60, CFL = 322.969
+%% T =   785.470, DT =  15.000, NI =   4, LI =    61, CFL = 320.890
+%% T =   800.000, DT =  14.530, NI =   4, LI =    62, CFL = 308.884
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      63
+Total Newton iterations        :     239
+Total linear solver iterations :    3015
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =   306.496
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:     523.2699 seconds
+----------------------------------------------
+  Initialization       :     0.8785 [  0%]
+  CFL calc/TS init/IO  :     7.0888 [  1%]
+  Discretization       :   115.1601 [ 22%]
+  Implicit levels      :     0.0764 [  0%]
+  Properties           :    31.8557 [  6%]
+  Newton check/update  :    13.1626 [  3%]
+  Linear factorization :    10.1325 [  2%]
+  Linear solution      :   344.9143 [ 66%]
+   CPR prec. setup     :    12.2040 [  2%]
+   CPR prec. solve     :   294.5037 [ 56%]
+    AMG prec. setup    :     0.7621 [  0%]
+    AMG first solve    :   153.9640 [ 29%]
+    AMG other solve    :    82.2072 [ 16%]
+    BILU prec. setup   :     5.6712 [  1%]
+    BILU prec. solve   :    31.2088 [  6%]
+----------------------------------------------
+ Average implicit cells     = 144000.0 [100%]
+ Maximum implicit cells     =   144000 [100%]
+ Average implicit variables = 288000.0 [100%]
+ Maximum implicit variables =   288000 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 523.3, 63(0), 239(0), 3015(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-25.12:21:47
+
+[info]: 
+Run 3 log:
+[info]: OpenMP enabled, number of threads = 1
+Start simulation with EXAMPLE4.DATA file.
+Start time is 2020-08-25.12:21:48, running on Yimin-PC.
+FORMULATION:	NATURAL
+FLASH:		DEADOIL
+Number of phases = 2	Number of components = 2
+File open for log EXAMPLE4.log.txt
+nc = 2
+np = 2
+
+Grid Dimension: 60  60  40
+Number of Cells: 144000
+Number of Active Cells: 144000
+Number of Connections: 423600
+Number of Active Connections: 423600
+
+NaturalVariableFormulation is selected!
+Block Linear System is selected!
+%% T =     0.010, DT =   0.010, NI =   2, LI =    10, CFL = 0.210
+%% T =     0.030, DT =   0.020, NI =   2, LI =    11, CFL = 0.418
+%% T =     0.070, DT =   0.040, NI =   2, LI =    13, CFL = 0.831
+%% T =     0.150, DT =   0.080, NI =   2, LI =    16, CFL = 1.652
+%% T =     0.310, DT =   0.160, NI =   3, LI =    29, CFL = 3.286
+%% T =     0.630, DT =   0.320, NI =   3, LI =    26, CFL = 7.280
+%% T =     1.270, DT =   0.640, NI =   3, LI =    29, CFL = 15.959
+%% T =     2.550, DT =   1.280, NI =   3, LI =    34, CFL = 33.398
+%% T =     5.110, DT =   2.560, NI =   4, LI =    42, CFL = 67.688
+%% T =    10.230, DT =   5.120, NI =   4, LI =    44, CFL = 134.111
+%% T =    20.470, DT =  10.240, NI =   4, LI =    46, CFL = 262.714
+%% T =    35.470, DT =  15.000, NI =   4, LI =    50, CFL = 378.508
+%% T =    50.470, DT =  15.000, NI =   4, LI =    53, CFL = 375.486
+%% T =    65.470, DT =  15.000, NI =   4, LI =    49, CFL = 374.088
+%% T =    80.470, DT =  15.000, NI =   4, LI =    48, CFL = 373.470
+%% T =    95.470, DT =  15.000, NI =   4, LI =    51, CFL = 373.212
+%% T =   110.470, DT =  15.000, NI =   4, LI =    47, CFL = 373.113
+%% T =   125.470, DT =  15.000, NI =   4, LI =    47, CFL = 373.083
+%% T =   140.470, DT =  15.000, NI =   4, LI =    49, CFL = 373.081
+%% T =   155.470, DT =  15.000, NI =   4, LI =    49, CFL = 373.083
+%% T =   170.470, DT =  15.000, NI =   4, LI =    51, CFL = 373.082
+%% T =   185.470, DT =  15.000, NI =   4, LI =    46, CFL = 373.076
+%% T =   200.470, DT =  15.000, NI =   4, LI =    42, CFL = 373.061
+%% T =   215.470, DT =  15.000, NI =   4, LI =    45, CFL = 373.038
+%% T =   230.470, DT =  15.000, NI =   4, LI =    44, CFL = 373.010
+%% T =   245.470, DT =  15.000, NI =   4, LI =    42, CFL = 372.975
+%% T =   260.470, DT =  15.000, NI =   4, LI =    51, CFL = 372.934
+%% T =   275.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.888
+%% T =   290.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.837
+%% T =   305.470, DT =  15.000, NI =   4, LI =    48, CFL = 372.781
+%% T =   320.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.720
+%% T =   335.470, DT =  15.000, NI =   4, LI =    46, CFL = 372.654
+%% T =   350.470, DT =  15.000, NI =   4, LI =    42, CFL = 372.584
+%% T =   365.470, DT =  15.000, NI =   4, LI =    52, CFL = 372.510
+%% T =   380.470, DT =  15.000, NI =   4, LI =    44, CFL = 372.430
+%% T =   395.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.345
+%% T =   410.470, DT =  15.000, NI =   4, LI =    49, CFL = 372.251
+%% T =   425.470, DT =  15.000, NI =   4, LI =    50, CFL = 372.140
+%% T =   440.470, DT =  15.000, NI =   4, LI =    50, CFL = 371.988
+%% T =   455.470, DT =  15.000, NI =   4, LI =    55, CFL = 371.741
+%% T =   470.470, DT =  15.000, NI =   3, LI =    39, CFL = 371.317
+%% T =   485.470, DT =  15.000, NI =   4, LI =    53, CFL = 370.616
+%% T =   500.470, DT =  15.000, NI =   4, LI =    57, CFL = 369.630
+%% T =   515.470, DT =  15.000, NI =   4, LI =    53, CFL = 368.295
+%% T =   530.470, DT =  15.000, NI =   4, LI =    54, CFL = 366.452
+%% T =   545.470, DT =  15.000, NI =   4, LI =    56, CFL = 364.124
+%% T =   560.470, DT =  15.000, NI =   4, LI =    54, CFL = 361.462
+%% T =   575.470, DT =  15.000, NI =   4, LI =    56, CFL = 358.610
+%% T =   590.470, DT =  15.000, NI =   4, LI =    62, CFL = 355.710
+%% T =   605.470, DT =  15.000, NI =   4, LI =    61, CFL = 352.837
+%% T =   620.470, DT =  15.000, NI =   4, LI =    64, CFL = 349.992
+%% T =   635.470, DT =  15.000, NI =   4, LI =    58, CFL = 347.175
+%% T =   650.470, DT =  15.000, NI =   4, LI =    54, CFL = 344.303
+%% T =   665.470, DT =  15.000, NI =   4, LI =    62, CFL = 341.337
+%% T =   680.470, DT =  15.000, NI =   4, LI =    60, CFL = 338.300
+%% T =   695.470, DT =  15.000, NI =   4, LI =    59, CFL = 335.199
+%% T =   710.470, DT =  15.000, NI =   4, LI =    61, CFL = 332.058
+%% T =   725.470, DT =  15.000, NI =   4, LI =    61, CFL = 329.284
+%% T =   740.470, DT =  15.000, NI =   4, LI =    56, CFL = 327.063
+%% T =   755.470, DT =  15.000, NI =   4, LI =    60, CFL = 325.009
+%% T =   770.470, DT =  15.000, NI =   4, LI =    60, CFL = 322.969
+%% T =   785.470, DT =  15.000, NI =   4, LI =    61, CFL = 320.890
+%% T =   800.000, DT =  14.530, NI =   4, LI =    62, CFL = 308.884
+
+-----------------------------------------
+               Statistics
+-----------------------------------------
+Number of timesteps performed  :      63
+Total Newton iterations        :     239
+Total linear solver iterations :    3015
+Number of timesteps wasted     :       0
+Wasted Newton iterations       :       0
+Wasted linear solver iterations:       0
+-----------------------------------------
+Interpolations made =       0
+Interpolation data points added =       0 (0.0%% of space)
+Interpolation data points total =       0
+-----------------------------------------
+MaxCFL averaged by timesteps =   306.496
+-----------------------------------------
+
+----------------------------------------------
+ Total simulation time:     522.6490 seconds
+----------------------------------------------
+  Initialization       :     0.8867 [  0%]
+  CFL calc/TS init/IO  :     7.0740 [  1%]
+  Discretization       :   114.7858 [ 22%]
+  Implicit levels      :     0.0766 [  0%]
+  Properties           :    31.7037 [  6%]
+  Newton check/update  :    13.2212 [  3%]
+  Linear factorization :    10.1806 [  2%]
+  Linear solution      :   344.7194 [ 66%]
+   CPR prec. setup     :    12.0959 [  2%]
+   CPR prec. solve     :   294.2832 [ 56%]
+    AMG prec. setup    :     0.7638 [  0%]
+    AMG first solve    :   153.8726 [ 29%]
+    AMG other solve    :    82.2016 [ 16%]
+    BILU prec. setup   :     5.5734 [  1%]
+    BILU prec. solve   :    31.1793 [  6%]
+----------------------------------------------
+ Average implicit cells     = 144000.0 [100%]
+ Maximum implicit cells     =   144000 [100%]
+ Average implicit variables = 288000.0 [100%]
+ Maximum implicit variables =   288000 [100%]
+----------------------------------------------
+
+Total equilibrium [0.7 * SSI + Newton] iterations: 0.0
+Totals: 522.6, 63(0), 239(0), 3015(0), 0.0, 0, 0
+
+Finished simulation at 2020-08-25.12:30:30
+

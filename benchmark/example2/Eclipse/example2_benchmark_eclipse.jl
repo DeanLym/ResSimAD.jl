@@ -1,6 +1,6 @@
 using ResSimAD
 """
-Simulate example1 with Eclipse
+Simulate example2 with Eclipse
 """
 
 include(joinpath(pkgdir(ResSimAD), "benchmark", "benchmark_eclipse.jl"))

@@ -63,25 +63,25 @@ close(fid)
 runtimes["Eclipse"] = readdlm(joinpath(dir, "Eclipse", "results", "average_runtime.txt"))
 
 # load MRST results
-results["MRST"] = Dict()
+# results["MRST"] = Dict()
 
-data_types = Dict([
-    ("P1", [("oil rate", "qo.txt", 3), ("water rate", "qw.txt", 3)]),
-    ("P2", [("oil rate", "qo.txt", 4), ("water rate", "qw.txt", 4)]),
-    ("I1", [("water inj. rate", "qw.txt", 1)]),
-    ("I2", [("water inj. rate", "qw.txt", 2)]),
-])
+# data_types = Dict([
+#     ("P1", [("oil rate", "qo.txt", 3), ("water rate", "qw.txt", 3)]),
+#     ("P2", [("oil rate", "qo.txt", 4), ("water rate", "qw.txt", 4)]),
+#     ("I1", [("water inj. rate", "qw.txt", 1)]),
+#     ("I2", [("water inj. rate", "qw.txt", 2)]),
+# ])
 
-results["MRST"]["Day"] = readdlm(joinpath(dir, "MRST", "results", "t.txt"), ',')
+# results["MRST"]["Day"] = readdlm(joinpath(dir, "MRST", "results", "t.txt"), ',')
 
-for (iw, wn) in enumerate(wnames)
-    for (key, file, ind) in data_types[wn]
-        data = readdlm(joinpath(dir, "MRST", "results", file), ',')[:, ind]
-        results["MRST"][wn * " " * key] = data
-    end
-end
+# for (iw, wn) in enumerate(wnames)
+#     for (key, file, ind) in data_types[wn]
+#         data = readdlm(joinpath(dir, "MRST", "results", file), ',')[:, ind]
+#         results["MRST"][wn * " " * key] = data
+#     end
+# end
 
-runtimes["MRST"] = readdlm(joinpath(dir, "MRST", "results", "average_runtime.txt"))
+# runtimes["MRST"] = readdlm(joinpath(dir, "MRST", "results", "average_runtime.txt"))
 
 # load ADGPRS resuls
 results["ADGPRS"] = Dict()

@@ -159,3 +159,56 @@ end
 
 plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)
 ```
+
+
+## Example 4
+The [`ResSimAD.Models.example4`](@ref) model is a 3D deal-oil model (60x60x40 grid) with two injectors and two producers. 
+
+### Simulation results comparison
+
+Simulation results for `example4` from all simulators are stored in `ResSimAD.jl/benchmark/example4`. The following code reads and plots these stored simulation results.
+
+```@example benchmark
+# Load results
+include(joinpath(pkgdir(ResSimAD), "benchmark", "example4", "load_results.jl"))
+
+plts = []
+to_plot = ["P1 oil rate", "P1 water rate",
+            "P2 oil rate", "P2 water rate",
+            "I1 water inj. rate", "I2 water inj. rate"]
+
+for key in to_plot
+    p = plot(xlabel="Day", ylabel=key * " (stb/day)", size=(420, 320),
+            legend=:left, title=key)
+    for case in sort(collect(keys(results)))
+    # for case in ["Eclipse", "ResSimAD", "ADGPRS", "OPM"]
+        plot!(p, results[case]["Day"][3:2:end], abs.(results[case][key][3:2:end]), label=case,
+                line=(linetypes[case], 3.0), marker=markers[case])
+    end
+    push!(plts, p)
+end
+
+plot(plts..., layout=(3,2), size=(640,820), left_margin=20px, bottom_margin=10px)
+```
+
+### Performance comparison
+
+Each simulator was ran for 3 times. Performance from all simulators for `example2` are summarized below.
+
+Simulator    | Linear Solver | Time steps | Newton Iterations
+:---:   | :---: | :---: | :---:
+ResSimAD.jl | GMRES + CPR | 65 | 252
+Eclipse | ORTHOMIN + NF  | 86| 217
+ADGPRS | GMRES + CPR0 | 63 | 239
+OPM | BiCG-stab + ILU0 | 59 | 231
+
+
+```@example benchmark
+# Plot average run time
+p1 = plot(ylabel="Average run time (minutes)", legend=false);
+for key in sort!(collect(keys(runtimes)))
+    bar!(p1, [key], [mean(runtimes[key]) / 60.], color=:gray)
+end
+
+plot(p1, size=(360, 280), bottom_margin = 10px)
+```

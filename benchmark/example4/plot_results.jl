@@ -30,8 +30,8 @@ to_plot = ["P1 oil rate", "P1 water rate",
 for key in to_plot
     p = plot(xlabel="Day", ylabel=key * " (stb/day)", size=(420, 320),
             legend=:left, title=key)
-    # for case in sort(collect(keys(results)))
-    for case in ["Eclipse", "ResSimAD"]
+    for case in sort(collect(keys(results)))
+    # for case in ["Eclipse", "ResSimAD", "ADGPRS", "OPM"]
         plot!(p, results[case]["Day"][3:2:end], abs.(results[case][key][3:2:end]), label=case,
                 line=(linetypes[case], 3.0), marker=markers[case])
     end
@@ -41,14 +41,10 @@ end
 plot(plts..., layout=(3,2), size=(640,820), left_margin=20px, bottom_margin=10px)
 
 
-p1 = plot(ylabel="Average run time (seconds)", legend=false);
+# Plot average run time
+p1 = plot(ylabel="Average run time (minutes)", legend=false);
 for key in sort!(collect(keys(runtimes)))
-    bar!(p1, [key], [mean(runtimes[key])], color=:gray)
+    bar!(p1, [key], [mean(runtimes[key]) / 60.], color=:gray)
 end
 
-p2 = plot(ylabel="Average run time (seconds)", legend=false);
-for key in sort!(["Eclipse", "ResSimAD", "ADGPRS", "OPM"])
-    bar!(p2, [key], [mean(runtimes[key])], color=:gray)
-end
-
-plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)
+plot(p1, size=(360, 280), bottom_margin = 10px)
