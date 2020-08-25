@@ -1,0 +1,890 @@
+[info]: 2020-08-25T00:39:46.763
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 6.2 GB
+
+[info]: Eclipse run 1
+[info]: Elapsed time for run 1: 148.0 seconds
+
+[info]: Eclipse run 2
+[info]: Elapsed time for run 2: 145.48 seconds
+
+[info]: Eclipse run 3
+[info]: Elapsed time for run 3: 141.06 seconds
+
+[info]: Average run time for the 3 simulations: 144.847 seconds
+
+[info]: Number of newton iterations: 217 
+
+[info]: 
+Run 1 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                61082 KBYTES                                               
+    15 READING EQUALS  
+    16 READING PERMX   
+    17 READING PERMY   
+    18 READING PERMZ   
+    19 READING TOPS    
+
+ @--WARNING  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @                 140400 VALUES NOT DEFINED IN BOX (  1- 60,  1- 60,  1- 40)
+ @           OF KEYWORD TOPS                                                 
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           UNSPECIFIED TOPS VALUES OBTAINED BY ADDING DZ                   
+ @           TO TOPS VALUE FOR LAYER ABOVE                                   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 144000                                
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @               144599 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING EQUIL   
+    28 READING RPTSOL  
+    29 READING SUMMARY 
+    30 READING WOPR    
+    31 READING WWPR    
+    32 READING WWIR    
+    33 READING SCHEDULE
+    34 READING DRSDT   
+    35 READING RPTRST  
+    36 READING TUNING  
+    37 READING WELSPECS
+    38 READING COMPDAT 
+    39 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    40 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING TSTEP   
+ STEP    1 TIME=     14.40  MINS (   +14.4  MINS INIT  2 ITS) (1-JAN-2009)       
+  PAV=  6145.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      2.64 HOURS (    +2.4 HOURS MINS  3 ITS) (1-JAN-2009)       
+  PAV=  6144.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.04 HOURS (    +2.4 HOURS MINS  2 ITS) (1-JAN-2009)       
+  PAV=  6143.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      7.44 HOURS (    +2.4 HOURS MINS  2 ITS) (1-JAN-2009)       
+  PAV=  6142.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     10.72 HOURS (    +3.3 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6142.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     15.47 HOURS (    +4.8 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6141.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     22.36 HOURS (    +6.9 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6141.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=      1.32  DAYS (    +9.4 HOURS TRNC  2 ITS) (2-JAN-2009)       
+  PAV=  6142.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=      1.86  DAYS (   +12.8 HOURS TRNC  2 ITS) (2-JAN-2009)       
+  PAV=  6143.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=      2.57  DAYS (   +17.1 HOURS TRNC  2 ITS) (3-JAN-2009)       
+  PAV=  6145.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=      3.56  DAYS (   +23.8 HOURS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  6147.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=      4.85  DAYS (    +1.3  DAYS TRNC  2 ITS) (5-JAN-2009)       
+  PAV=  6151.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=      6.61  DAYS (    +1.8  DAYS TRNC  2 ITS) (7-JAN-2009)       
+  PAV=  6155.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=      8.93  DAYS (    +2.3  DAYS TRNC  2 ITS) (9-JAN-2009)       
+  PAV=  6160.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=     11.90  DAYS (    +3.0  DAYS TRNC  2 ITS) (12-JAN-2009)      
+  PAV=  6165.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=     15.76  DAYS (    +3.9  DAYS TRNC  2 ITS) (16-JAN-2009)      
+  PAV=  6170.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=     20.59  DAYS (    +4.8  DAYS TRNC  3 ITS) (21-JAN-2009)      
+  PAV=  6175.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=     26.32  DAYS (    +5.7  DAYS TRNC  3 ITS) (27-JAN-2009)      
+  PAV=  6179.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=     33.06  DAYS (    +6.7  DAYS TRNC  3 ITS) (3-FEB-2009)       
+  PAV=  6182.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=     40.70  DAYS (    +7.6  DAYS TRNC  3 ITS) (10-FEB-2009)      
+  PAV=  6185.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=     49.26  DAYS (    +8.6  DAYS TRNC  3 ITS) (19-FEB-2009)      
+  PAV=  6186.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=     58.78  DAYS (    +9.5  DAYS TRNC  3 ITS) (28-FEB-2009)      
+  PAV=  6187.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=     69.45  DAYS (   +10.7  DAYS TRNC  3 ITS) (11-MAR-2009)      
+  PAV=  6188.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=     80.30  DAYS (   +10.8  DAYS TRNC  3 ITS) (22-MAR-2009)      
+  PAV=  6188.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=     91.01  DAYS (   +10.7  DAYS TRNC  3 ITS) (2-APR-2009)       
+  PAV=  6188.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    101.52  DAYS (   +10.5  DAYS TRNC  3 ITS) (12-APR-2009)      
+  PAV=  6188.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    111.83  DAYS (   +10.3  DAYS TRNC  3 ITS) (22-APR-2009)      
+  PAV=  6188.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    121.99  DAYS (   +10.2  DAYS TRNC  3 ITS) (2-MAY-2009)       
+  PAV=  6187.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=    132.01  DAYS (   +10.0  DAYS TRNC  2 ITS) (13-MAY-2009)      
+  PAV=  6187.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=    142.09  DAYS (   +10.1  DAYS TRNC  3 ITS) (23-MAY-2009)      
+  PAV=  6187.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=    151.91  DAYS (    +9.8  DAYS TRNC  2 ITS) (1-JUN-2009)       
+  PAV=  6187.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=    161.91  DAYS (   +10.0  DAYS TRNC  2 ITS) (11-JUN-2009)      
+  PAV=  6187.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=    171.82  DAYS (    +9.9  DAYS TRNC  2 ITS) (21-JUN-2009)      
+  PAV=  6186.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=    181.84  DAYS (   +10.0  DAYS TRNC  3 ITS) (1-JLY-2009)       
+  PAV=  6186.6  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=    192.07  DAYS (   +10.2  DAYS TRNC  3 ITS) (12-JLY-2009)      
+  PAV=  6186.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=    202.75  DAYS (   +10.7  DAYS TRNC  2 ITS) (22-JLY-2009)      
+  PAV=  6186.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=    213.68  DAYS (   +10.9  DAYS TRNC  2 ITS) (2-AUG-2009)       
+  PAV=  6185.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=    224.68  DAYS (   +11.0  DAYS TRNC  3 ITS) (13-AUG-2009)      
+  PAV=  6185.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=    235.80  DAYS (   +11.1  DAYS TRNC  3 ITS) (24-AUG-2009)      
+  PAV=  6185.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=    247.39  DAYS (   +11.6  DAYS TRNC  2 ITS) (5-SEP-2009)       
+  PAV=  6184.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=    258.81  DAYS (   +11.4  DAYS TRNC  3 ITS) (16-SEP-2009)      
+  PAV=  6184.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=    270.16  DAYS (   +11.3  DAYS TRNC  2 ITS) (28-SEP-2009)      
+  PAV=  6184.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=    281.16  DAYS (   +11.0  DAYS TRNC  2 ITS) (9-OCT-2009)       
+  PAV=  6183.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=    292.35  DAYS (   +11.2  DAYS TRNC  3 ITS) (20-OCT-2009)      
+  PAV=  6183.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=    303.37  DAYS (   +11.0  DAYS TRNC  2 ITS) (31-OCT-2009)      
+  PAV=  6182.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=    314.40  DAYS (   +11.0  DAYS TRNC  2 ITS) (11-NOV-2009)      
+  PAV=  6182.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   47 TIME=    325.22  DAYS (   +10.8  DAYS TRNC  2 ITS) (22-NOV-2009)      
+  PAV=  6182.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   48 TIME=    336.24  DAYS (   +11.0  DAYS TRNC  2 ITS) (3-DEC-2009)       
+  PAV=  6181.8  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   49 TIME=    346.74  DAYS (   +10.5  DAYS TRNC  2 ITS) (13-DEC-2009)      
+  PAV=  6181.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   50 TIME=    357.71  DAYS (   +11.0  DAYS TRNC  2 ITS) (24-DEC-2009)      
+  PAV=  6181.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   51 TIME=    368.95  DAYS (   +11.2  DAYS TRNC  2 ITS) (4-JAN-2010)       
+  PAV=  6180.6  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   52 TIME=    380.25  DAYS (   +11.3  DAYS TRNC  2 ITS) (16-JAN-2010)      
+  PAV=  6180.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   53 TIME=    391.25  DAYS (   +11.0  DAYS TRNC  2 ITS) (27-JAN-2010)      
+  PAV=  6179.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   54 TIME=    401.96  DAYS (   +10.7  DAYS TRNC  2 ITS) (6-FEB-2010)       
+  PAV=  6179.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   55 TIME=    412.99  DAYS (   +11.0  DAYS TRNC  2 ITS) (17-FEB-2010)      
+  PAV=  6179.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   56 TIME=    423.85  DAYS (   +10.9  DAYS TRNC  3 ITS) (28-FEB-2010)      
+  PAV=  6178.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   57 TIME=    434.59  DAYS (   +10.7  DAYS TRNC  2 ITS) (11-MAR-2010)      
+  PAV=  6178.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   58 TIME=    445.40  DAYS (   +10.8  DAYS TRNC  2 ITS) (22-MAR-2010)      
+  PAV=  6177.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   59 TIME=    456.54  DAYS (   +11.1  DAYS TRNC  2 ITS) (2-APR-2010)       
+  PAV=  6177.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   60 TIME=    467.83  DAYS (   +11.3  DAYS TRNC  2 ITS) (13-APR-2010)      
+  PAV=  6177.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   61 TIME=    479.34  DAYS (   +11.5  DAYS TRNC  2 ITS) (25-APR-2010)      
+  PAV=  6177.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   62 TIME=    490.97  DAYS (   +11.6  DAYS TRNC  3 ITS) (6-MAY-2010)       
+  PAV=  6177.2  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   63 TIME=    502.56  DAYS (   +11.6  DAYS TRNC  2 ITS) (18-MAY-2010)      
+  PAV=  6177.4  PSIA   WCT=0.002 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   64 TIME=    514.45  DAYS (   +11.9  DAYS TRNC  3 ITS) (30-MAY-2010)      
+  PAV=  6177.7  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   65 TIME=    526.28  DAYS (   +11.8  DAYS TRNC  3 ITS) (11-JUN-2010)      
+  PAV=  6178.4  PSIA   WCT=0.004 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   66 TIME=    538.37  DAYS (   +12.1  DAYS TRNC  3 ITS) (23-JUN-2010)      
+  PAV=  6179.5  PSIA   WCT=0.005 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   67 TIME=    550.69  DAYS (   +12.3  DAYS TRNC  3 ITS) (5-JLY-2010)       
+  PAV=  6180.8  PSIA   WCT=0.007 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   68 TIME=    562.99  DAYS (   +12.3  DAYS TRNC  3 ITS) (17-JLY-2010)      
+  PAV=  6182.3  PSIA   WCT=0.009 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   69 TIME=    575.45  DAYS (   +12.5  DAYS TRNC  3 ITS) (30-JLY-2010)      
+  PAV=  6184.0  PSIA   WCT=0.011 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   70 TIME=    587.97  DAYS (   +12.5  DAYS TRNC  3 ITS) (11-AUG-2010)      
+  PAV=  6185.7  PSIA   WCT=0.013 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   71 TIME=    600.61  DAYS (   +12.6  DAYS TRNC  3 ITS) (24-AUG-2010)      
+  PAV=  6187.4  PSIA   WCT=0.015 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   72 TIME=    613.38  DAYS (   +12.8  DAYS TRNC  3 ITS) (6-SEP-2010)       
+  PAV=  6189.1  PSIA   WCT=0.018 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   73 TIME=    626.32  DAYS (   +12.9  DAYS TRNC  3 ITS) (19-SEP-2010)      
+  PAV=  6190.7  PSIA   WCT=0.020 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   74 TIME=    639.39  DAYS (   +13.1  DAYS TRNC  3 ITS) (2-OCT-2010)       
+  PAV=  6192.4  PSIA   WCT=0.022 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   75 TIME=    652.58  DAYS (   +13.2  DAYS TRNC  3 ITS) (15-OCT-2010)      
+  PAV=  6194.2  PSIA   WCT=0.025 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   76 TIME=    665.95  DAYS (   +13.4  DAYS TRNC  3 ITS) (28-OCT-2010)      
+  PAV=  6196.1  PSIA   WCT=0.028 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   77 TIME=    679.42  DAYS (   +13.5  DAYS TRNC  3 ITS) (11-NOV-2010)      
+  PAV=  6198.0  PSIA   WCT=0.031 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   78 TIME=    693.06  DAYS (   +13.6  DAYS TRNC  3 ITS) (25-NOV-2010)      
+  PAV=  6200.0  PSIA   WCT=0.034 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   79 TIME=    706.89  DAYS (   +13.8  DAYS TRNC  3 ITS) (8-DEC-2010)       
+  PAV=  6202.1  PSIA   WCT=0.037 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   80 TIME=    720.82  DAYS (   +13.9  DAYS TRNC  3 ITS) (22-DEC-2010)      
+  PAV=  6204.1  PSIA   WCT=0.041 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   81 TIME=    734.88  DAYS (   +14.1  DAYS TRNC  3 ITS) (5-JAN-2011)       
+  PAV=  6205.6  PSIA   WCT=0.045 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   82 TIME=    749.01  DAYS (   +14.1  DAYS TRNC  3 ITS) (20-JAN-2011)      
+  PAV=  6206.9  PSIA   WCT=0.049 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   83 TIME=    763.15  DAYS (   +14.1  DAYS TRNC  3 ITS) (3-FEB-2011)       
+  PAV=  6208.1  PSIA   WCT=0.054 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   84 TIME=    777.41  DAYS (   +14.3  DAYS TRNC  3 ITS) (17-FEB-2011)      
+  PAV=  6209.3  PSIA   WCT=0.059 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   85 TIME=    788.70  DAYS (   +11.3  DAYS HALF  3 ITS) (28-FEB-2011)      
+  PAV=  6210.4  PSIA   WCT=0.063 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   86 TIME=    800.00  DAYS (   +11.3  DAYS REPT  3 ITS) (12-MAR-2011)      
+  PAV=  6211.4  PSIA   WCT=0.068 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    42 READING END     
+          554 Mbytes of storage required                         
+   3.9411     KB/active cell                                     
+          278 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               1
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu     148.00 elapsed     148.00
+ Total number of time steps forced to be accepted          0
+
+[info]: 
+Run 2 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                61082 KBYTES                                               
+    15 READING EQUALS  
+    16 READING PERMX   
+    17 READING PERMY   
+    18 READING PERMZ   
+    19 READING TOPS    
+
+ @--WARNING  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @                 140400 VALUES NOT DEFINED IN BOX (  1- 60,  1- 60,  1- 40)
+ @           OF KEYWORD TOPS                                                 
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           UNSPECIFIED TOPS VALUES OBTAINED BY ADDING DZ                   
+ @           TO TOPS VALUE FOR LAYER ABOVE                                   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 144000                                
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @               144599 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING EQUIL   
+    28 READING RPTSOL  
+    29 READING SUMMARY 
+    30 READING WOPR    
+    31 READING WWPR    
+    32 READING WWIR    
+    33 READING SCHEDULE
+    34 READING DRSDT   
+    35 READING RPTRST  
+    36 READING TUNING  
+    37 READING WELSPECS
+    38 READING COMPDAT 
+    39 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    40 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING TSTEP   
+ STEP    1 TIME=     14.40  MINS (   +14.4  MINS INIT  2 ITS) (1-JAN-2009)       
+  PAV=  6145.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      2.64 HOURS (    +2.4 HOURS MINS  3 ITS) (1-JAN-2009)       
+  PAV=  6144.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.04 HOURS (    +2.4 HOURS MINS  2 ITS) (1-JAN-2009)       
+  PAV=  6143.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      7.44 HOURS (    +2.4 HOURS MINS  2 ITS) (1-JAN-2009)       
+  PAV=  6142.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     10.72 HOURS (    +3.3 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6142.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     15.47 HOURS (    +4.8 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6141.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     22.36 HOURS (    +6.9 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6141.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=      1.32  DAYS (    +9.4 HOURS TRNC  2 ITS) (2-JAN-2009)       
+  PAV=  6142.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=      1.86  DAYS (   +12.8 HOURS TRNC  2 ITS) (2-JAN-2009)       
+  PAV=  6143.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=      2.57  DAYS (   +17.1 HOURS TRNC  2 ITS) (3-JAN-2009)       
+  PAV=  6145.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=      3.56  DAYS (   +23.8 HOURS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  6147.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=      4.85  DAYS (    +1.3  DAYS TRNC  2 ITS) (5-JAN-2009)       
+  PAV=  6151.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=      6.61  DAYS (    +1.8  DAYS TRNC  2 ITS) (7-JAN-2009)       
+  PAV=  6155.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=      8.93  DAYS (    +2.3  DAYS TRNC  2 ITS) (9-JAN-2009)       
+  PAV=  6160.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=     11.90  DAYS (    +3.0  DAYS TRNC  2 ITS) (12-JAN-2009)      
+  PAV=  6165.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=     15.76  DAYS (    +3.9  DAYS TRNC  2 ITS) (16-JAN-2009)      
+  PAV=  6170.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=     20.59  DAYS (    +4.8  DAYS TRNC  3 ITS) (21-JAN-2009)      
+  PAV=  6175.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=     26.32  DAYS (    +5.7  DAYS TRNC  3 ITS) (27-JAN-2009)      
+  PAV=  6179.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=     33.06  DAYS (    +6.7  DAYS TRNC  3 ITS) (3-FEB-2009)       
+  PAV=  6182.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=     40.70  DAYS (    +7.6  DAYS TRNC  3 ITS) (10-FEB-2009)      
+  PAV=  6185.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=     49.26  DAYS (    +8.6  DAYS TRNC  3 ITS) (19-FEB-2009)      
+  PAV=  6186.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=     58.78  DAYS (    +9.5  DAYS TRNC  3 ITS) (28-FEB-2009)      
+  PAV=  6187.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=     69.45  DAYS (   +10.7  DAYS TRNC  3 ITS) (11-MAR-2009)      
+  PAV=  6188.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=     80.30  DAYS (   +10.8  DAYS TRNC  3 ITS) (22-MAR-2009)      
+  PAV=  6188.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=     91.01  DAYS (   +10.7  DAYS TRNC  3 ITS) (2-APR-2009)       
+  PAV=  6188.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    101.52  DAYS (   +10.5  DAYS TRNC  3 ITS) (12-APR-2009)      
+  PAV=  6188.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    111.83  DAYS (   +10.3  DAYS TRNC  3 ITS) (22-APR-2009)      
+  PAV=  6188.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    121.99  DAYS (   +10.2  DAYS TRNC  3 ITS) (2-MAY-2009)       
+  PAV=  6187.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=    132.01  DAYS (   +10.0  DAYS TRNC  2 ITS) (13-MAY-2009)      
+  PAV=  6187.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=    142.09  DAYS (   +10.1  DAYS TRNC  3 ITS) (23-MAY-2009)      
+  PAV=  6187.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=    151.91  DAYS (    +9.8  DAYS TRNC  2 ITS) (1-JUN-2009)       
+  PAV=  6187.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=    161.91  DAYS (   +10.0  DAYS TRNC  2 ITS) (11-JUN-2009)      
+  PAV=  6187.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=    171.82  DAYS (    +9.9  DAYS TRNC  2 ITS) (21-JUN-2009)      
+  PAV=  6186.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=    181.84  DAYS (   +10.0  DAYS TRNC  3 ITS) (1-JLY-2009)       
+  PAV=  6186.6  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=    192.07  DAYS (   +10.2  DAYS TRNC  3 ITS) (12-JLY-2009)      
+  PAV=  6186.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=    202.75  DAYS (   +10.7  DAYS TRNC  2 ITS) (22-JLY-2009)      
+  PAV=  6186.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=    213.68  DAYS (   +10.9  DAYS TRNC  2 ITS) (2-AUG-2009)       
+  PAV=  6185.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=    224.68  DAYS (   +11.0  DAYS TRNC  3 ITS) (13-AUG-2009)      
+  PAV=  6185.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=    235.80  DAYS (   +11.1  DAYS TRNC  3 ITS) (24-AUG-2009)      
+  PAV=  6185.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=    247.39  DAYS (   +11.6  DAYS TRNC  2 ITS) (5-SEP-2009)       
+  PAV=  6184.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=    258.81  DAYS (   +11.4  DAYS TRNC  3 ITS) (16-SEP-2009)      
+  PAV=  6184.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=    270.16  DAYS (   +11.3  DAYS TRNC  2 ITS) (28-SEP-2009)      
+  PAV=  6184.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=    281.16  DAYS (   +11.0  DAYS TRNC  2 ITS) (9-OCT-2009)       
+  PAV=  6183.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=    292.35  DAYS (   +11.2  DAYS TRNC  3 ITS) (20-OCT-2009)      
+  PAV=  6183.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=    303.37  DAYS (   +11.0  DAYS TRNC  2 ITS) (31-OCT-2009)      
+  PAV=  6182.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=    314.40  DAYS (   +11.0  DAYS TRNC  2 ITS) (11-NOV-2009)      
+  PAV=  6182.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   47 TIME=    325.22  DAYS (   +10.8  DAYS TRNC  2 ITS) (22-NOV-2009)      
+  PAV=  6182.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   48 TIME=    336.24  DAYS (   +11.0  DAYS TRNC  2 ITS) (3-DEC-2009)       
+  PAV=  6181.8  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   49 TIME=    346.74  DAYS (   +10.5  DAYS TRNC  2 ITS) (13-DEC-2009)      
+  PAV=  6181.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   50 TIME=    357.71  DAYS (   +11.0  DAYS TRNC  2 ITS) (24-DEC-2009)      
+  PAV=  6181.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   51 TIME=    368.95  DAYS (   +11.2  DAYS TRNC  2 ITS) (4-JAN-2010)       
+  PAV=  6180.6  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   52 TIME=    380.25  DAYS (   +11.3  DAYS TRNC  2 ITS) (16-JAN-2010)      
+  PAV=  6180.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   53 TIME=    391.25  DAYS (   +11.0  DAYS TRNC  2 ITS) (27-JAN-2010)      
+  PAV=  6179.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   54 TIME=    401.96  DAYS (   +10.7  DAYS TRNC  2 ITS) (6-FEB-2010)       
+  PAV=  6179.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   55 TIME=    412.99  DAYS (   +11.0  DAYS TRNC  2 ITS) (17-FEB-2010)      
+  PAV=  6179.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   56 TIME=    423.85  DAYS (   +10.9  DAYS TRNC  3 ITS) (28-FEB-2010)      
+  PAV=  6178.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   57 TIME=    434.59  DAYS (   +10.7  DAYS TRNC  2 ITS) (11-MAR-2010)      
+  PAV=  6178.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   58 TIME=    445.40  DAYS (   +10.8  DAYS TRNC  2 ITS) (22-MAR-2010)      
+  PAV=  6177.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   59 TIME=    456.54  DAYS (   +11.1  DAYS TRNC  2 ITS) (2-APR-2010)       
+  PAV=  6177.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   60 TIME=    467.83  DAYS (   +11.3  DAYS TRNC  2 ITS) (13-APR-2010)      
+  PAV=  6177.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   61 TIME=    479.34  DAYS (   +11.5  DAYS TRNC  2 ITS) (25-APR-2010)      
+  PAV=  6177.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   62 TIME=    490.97  DAYS (   +11.6  DAYS TRNC  3 ITS) (6-MAY-2010)       
+  PAV=  6177.2  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   63 TIME=    502.56  DAYS (   +11.6  DAYS TRNC  2 ITS) (18-MAY-2010)      
+  PAV=  6177.4  PSIA   WCT=0.002 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   64 TIME=    514.45  DAYS (   +11.9  DAYS TRNC  3 ITS) (30-MAY-2010)      
+  PAV=  6177.7  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   65 TIME=    526.28  DAYS (   +11.8  DAYS TRNC  3 ITS) (11-JUN-2010)      
+  PAV=  6178.4  PSIA   WCT=0.004 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   66 TIME=    538.37  DAYS (   +12.1  DAYS TRNC  3 ITS) (23-JUN-2010)      
+  PAV=  6179.5  PSIA   WCT=0.005 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   67 TIME=    550.69  DAYS (   +12.3  DAYS TRNC  3 ITS) (5-JLY-2010)       
+  PAV=  6180.8  PSIA   WCT=0.007 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   68 TIME=    562.99  DAYS (   +12.3  DAYS TRNC  3 ITS) (17-JLY-2010)      
+  PAV=  6182.3  PSIA   WCT=0.009 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   69 TIME=    575.45  DAYS (   +12.5  DAYS TRNC  3 ITS) (30-JLY-2010)      
+  PAV=  6184.0  PSIA   WCT=0.011 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   70 TIME=    587.97  DAYS (   +12.5  DAYS TRNC  3 ITS) (11-AUG-2010)      
+  PAV=  6185.7  PSIA   WCT=0.013 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   71 TIME=    600.61  DAYS (   +12.6  DAYS TRNC  3 ITS) (24-AUG-2010)      
+  PAV=  6187.4  PSIA   WCT=0.015 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   72 TIME=    613.38  DAYS (   +12.8  DAYS TRNC  3 ITS) (6-SEP-2010)       
+  PAV=  6189.1  PSIA   WCT=0.018 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   73 TIME=    626.32  DAYS (   +12.9  DAYS TRNC  3 ITS) (19-SEP-2010)      
+  PAV=  6190.7  PSIA   WCT=0.020 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   74 TIME=    639.39  DAYS (   +13.1  DAYS TRNC  3 ITS) (2-OCT-2010)       
+  PAV=  6192.4  PSIA   WCT=0.022 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   75 TIME=    652.58  DAYS (   +13.2  DAYS TRNC  3 ITS) (15-OCT-2010)      
+  PAV=  6194.2  PSIA   WCT=0.025 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   76 TIME=    665.95  DAYS (   +13.4  DAYS TRNC  3 ITS) (28-OCT-2010)      
+  PAV=  6196.1  PSIA   WCT=0.028 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   77 TIME=    679.42  DAYS (   +13.5  DAYS TRNC  3 ITS) (11-NOV-2010)      
+  PAV=  6198.0  PSIA   WCT=0.031 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   78 TIME=    693.06  DAYS (   +13.6  DAYS TRNC  3 ITS) (25-NOV-2010)      
+  PAV=  6200.0  PSIA   WCT=0.034 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   79 TIME=    706.89  DAYS (   +13.8  DAYS TRNC  3 ITS) (8-DEC-2010)       
+  PAV=  6202.1  PSIA   WCT=0.037 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   80 TIME=    720.82  DAYS (   +13.9  DAYS TRNC  3 ITS) (22-DEC-2010)      
+  PAV=  6204.1  PSIA   WCT=0.041 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   81 TIME=    734.88  DAYS (   +14.1  DAYS TRNC  3 ITS) (5-JAN-2011)       
+  PAV=  6205.6  PSIA   WCT=0.045 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   82 TIME=    749.01  DAYS (   +14.1  DAYS TRNC  3 ITS) (20-JAN-2011)      
+  PAV=  6206.9  PSIA   WCT=0.049 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   83 TIME=    763.15  DAYS (   +14.1  DAYS TRNC  3 ITS) (3-FEB-2011)       
+  PAV=  6208.1  PSIA   WCT=0.054 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   84 TIME=    777.41  DAYS (   +14.3  DAYS TRNC  3 ITS) (17-FEB-2011)      
+  PAV=  6209.3  PSIA   WCT=0.059 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   85 TIME=    788.70  DAYS (   +11.3  DAYS HALF  3 ITS) (28-FEB-2011)      
+  PAV=  6210.4  PSIA   WCT=0.063 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   86 TIME=    800.00  DAYS (   +11.3  DAYS REPT  3 ITS) (12-MAR-2011)      
+  PAV=  6211.4  PSIA   WCT=0.068 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    42 READING END     
+          554 Mbytes of storage required                         
+   3.9411     KB/active cell                                     
+          278 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               1
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu     145.48 elapsed     145.48
+ Total number of time steps forced to be accepted          0
+
+[info]: 
+Run 3 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                61082 KBYTES                                               
+    15 READING EQUALS  
+    16 READING PERMX   
+    17 READING PERMY   
+    18 READING PERMZ   
+    19 READING TOPS    
+
+ @--WARNING  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @                 140400 VALUES NOT DEFINED IN BOX (  1- 60,  1- 60,  1- 40)
+ @           OF KEYWORD TOPS                                                 
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           UNSPECIFIED TOPS VALUES OBTAINED BY ADDING DZ                   
+ @           TO TOPS VALUE FOR LAYER ABOVE                                   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 144000                                
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @               144599 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING EQUIL   
+    28 READING RPTSOL  
+    29 READING SUMMARY 
+    30 READING WOPR    
+    31 READING WWPR    
+    32 READING WWIR    
+    33 READING SCHEDULE
+    34 READING DRSDT   
+    35 READING RPTRST  
+    36 READING TUNING  
+    37 READING WELSPECS
+    38 READING COMPDAT 
+    39 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    40 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING TSTEP   
+ STEP    1 TIME=     14.40  MINS (   +14.4  MINS INIT  2 ITS) (1-JAN-2009)       
+  PAV=  6145.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      2.64 HOURS (    +2.4 HOURS MINS  3 ITS) (1-JAN-2009)       
+  PAV=  6144.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.04 HOURS (    +2.4 HOURS MINS  2 ITS) (1-JAN-2009)       
+  PAV=  6143.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      7.44 HOURS (    +2.4 HOURS MINS  2 ITS) (1-JAN-2009)       
+  PAV=  6142.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     10.72 HOURS (    +3.3 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6142.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     15.47 HOURS (    +4.8 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6141.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     22.36 HOURS (    +6.9 HOURS TRNC  2 ITS) (1-JAN-2009)       
+  PAV=  6141.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=      1.32  DAYS (    +9.4 HOURS TRNC  2 ITS) (2-JAN-2009)       
+  PAV=  6142.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=      1.86  DAYS (   +12.8 HOURS TRNC  2 ITS) (2-JAN-2009)       
+  PAV=  6143.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=      2.57  DAYS (   +17.1 HOURS TRNC  2 ITS) (3-JAN-2009)       
+  PAV=  6145.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=      3.56  DAYS (   +23.8 HOURS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  6147.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=      4.85  DAYS (    +1.3  DAYS TRNC  2 ITS) (5-JAN-2009)       
+  PAV=  6151.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=      6.61  DAYS (    +1.8  DAYS TRNC  2 ITS) (7-JAN-2009)       
+  PAV=  6155.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=      8.93  DAYS (    +2.3  DAYS TRNC  2 ITS) (9-JAN-2009)       
+  PAV=  6160.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=     11.90  DAYS (    +3.0  DAYS TRNC  2 ITS) (12-JAN-2009)      
+  PAV=  6165.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=     15.76  DAYS (    +3.9  DAYS TRNC  2 ITS) (16-JAN-2009)      
+  PAV=  6170.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=     20.59  DAYS (    +4.8  DAYS TRNC  3 ITS) (21-JAN-2009)      
+  PAV=  6175.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=     26.32  DAYS (    +5.7  DAYS TRNC  3 ITS) (27-JAN-2009)      
+  PAV=  6179.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=     33.06  DAYS (    +6.7  DAYS TRNC  3 ITS) (3-FEB-2009)       
+  PAV=  6182.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=     40.70  DAYS (    +7.6  DAYS TRNC  3 ITS) (10-FEB-2009)      
+  PAV=  6185.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=     49.26  DAYS (    +8.6  DAYS TRNC  3 ITS) (19-FEB-2009)      
+  PAV=  6186.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=     58.78  DAYS (    +9.5  DAYS TRNC  3 ITS) (28-FEB-2009)      
+  PAV=  6187.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=     69.45  DAYS (   +10.7  DAYS TRNC  3 ITS) (11-MAR-2009)      
+  PAV=  6188.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=     80.30  DAYS (   +10.8  DAYS TRNC  3 ITS) (22-MAR-2009)      
+  PAV=  6188.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=     91.01  DAYS (   +10.7  DAYS TRNC  3 ITS) (2-APR-2009)       
+  PAV=  6188.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    101.52  DAYS (   +10.5  DAYS TRNC  3 ITS) (12-APR-2009)      
+  PAV=  6188.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    111.83  DAYS (   +10.3  DAYS TRNC  3 ITS) (22-APR-2009)      
+  PAV=  6188.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    121.99  DAYS (   +10.2  DAYS TRNC  3 ITS) (2-MAY-2009)       
+  PAV=  6187.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=    132.01  DAYS (   +10.0  DAYS TRNC  2 ITS) (13-MAY-2009)      
+  PAV=  6187.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=    142.09  DAYS (   +10.1  DAYS TRNC  3 ITS) (23-MAY-2009)      
+  PAV=  6187.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=    151.91  DAYS (    +9.8  DAYS TRNC  2 ITS) (1-JUN-2009)       
+  PAV=  6187.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=    161.91  DAYS (   +10.0  DAYS TRNC  2 ITS) (11-JUN-2009)      
+  PAV=  6187.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=    171.82  DAYS (    +9.9  DAYS TRNC  2 ITS) (21-JUN-2009)      
+  PAV=  6186.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=    181.84  DAYS (   +10.0  DAYS TRNC  3 ITS) (1-JLY-2009)       
+  PAV=  6186.6  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=    192.07  DAYS (   +10.2  DAYS TRNC  3 ITS) (12-JLY-2009)      
+  PAV=  6186.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=    202.75  DAYS (   +10.7  DAYS TRNC  2 ITS) (22-JLY-2009)      
+  PAV=  6186.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=    213.68  DAYS (   +10.9  DAYS TRNC  2 ITS) (2-AUG-2009)       
+  PAV=  6185.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=    224.68  DAYS (   +11.0  DAYS TRNC  3 ITS) (13-AUG-2009)      
+  PAV=  6185.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=    235.80  DAYS (   +11.1  DAYS TRNC  3 ITS) (24-AUG-2009)      
+  PAV=  6185.1  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=    247.39  DAYS (   +11.6  DAYS TRNC  2 ITS) (5-SEP-2009)       
+  PAV=  6184.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=    258.81  DAYS (   +11.4  DAYS TRNC  3 ITS) (16-SEP-2009)      
+  PAV=  6184.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=    270.16  DAYS (   +11.3  DAYS TRNC  2 ITS) (28-SEP-2009)      
+  PAV=  6184.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=    281.16  DAYS (   +11.0  DAYS TRNC  2 ITS) (9-OCT-2009)       
+  PAV=  6183.7  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=    292.35  DAYS (   +11.2  DAYS TRNC  3 ITS) (20-OCT-2009)      
+  PAV=  6183.3  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=    303.37  DAYS (   +11.0  DAYS TRNC  2 ITS) (31-OCT-2009)      
+  PAV=  6182.9  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=    314.40  DAYS (   +11.0  DAYS TRNC  2 ITS) (11-NOV-2009)      
+  PAV=  6182.5  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   47 TIME=    325.22  DAYS (   +10.8  DAYS TRNC  2 ITS) (22-NOV-2009)      
+  PAV=  6182.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   48 TIME=    336.24  DAYS (   +11.0  DAYS TRNC  2 ITS) (3-DEC-2009)       
+  PAV=  6181.8  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   49 TIME=    346.74  DAYS (   +10.5  DAYS TRNC  2 ITS) (13-DEC-2009)      
+  PAV=  6181.4  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   50 TIME=    357.71  DAYS (   +11.0  DAYS TRNC  2 ITS) (24-DEC-2009)      
+  PAV=  6181.0  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   51 TIME=    368.95  DAYS (   +11.2  DAYS TRNC  2 ITS) (4-JAN-2010)       
+  PAV=  6180.6  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   52 TIME=    380.25  DAYS (   +11.3  DAYS TRNC  2 ITS) (16-JAN-2010)      
+  PAV=  6180.2  PSIA   WCT= 0.00 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   53 TIME=    391.25  DAYS (   +11.0  DAYS TRNC  2 ITS) (27-JAN-2010)      
+  PAV=  6179.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   54 TIME=    401.96  DAYS (   +10.7  DAYS TRNC  2 ITS) (6-FEB-2010)       
+  PAV=  6179.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   55 TIME=    412.99  DAYS (   +11.0  DAYS TRNC  2 ITS) (17-FEB-2010)      
+  PAV=  6179.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   56 TIME=    423.85  DAYS (   +10.9  DAYS TRNC  3 ITS) (28-FEB-2010)      
+  PAV=  6178.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   57 TIME=    434.59  DAYS (   +10.7  DAYS TRNC  2 ITS) (11-MAR-2010)      
+  PAV=  6178.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   58 TIME=    445.40  DAYS (   +10.8  DAYS TRNC  2 ITS) (22-MAR-2010)      
+  PAV=  6177.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   59 TIME=    456.54  DAYS (   +11.1  DAYS TRNC  2 ITS) (2-APR-2010)       
+  PAV=  6177.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   60 TIME=    467.83  DAYS (   +11.3  DAYS TRNC  2 ITS) (13-APR-2010)      
+  PAV=  6177.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   61 TIME=    479.34  DAYS (   +11.5  DAYS TRNC  2 ITS) (25-APR-2010)      
+  PAV=  6177.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   62 TIME=    490.97  DAYS (   +11.6  DAYS TRNC  3 ITS) (6-MAY-2010)       
+  PAV=  6177.2  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   63 TIME=    502.56  DAYS (   +11.6  DAYS TRNC  2 ITS) (18-MAY-2010)      
+  PAV=  6177.4  PSIA   WCT=0.002 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   64 TIME=    514.45  DAYS (   +11.9  DAYS TRNC  3 ITS) (30-MAY-2010)      
+  PAV=  6177.7  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   65 TIME=    526.28  DAYS (   +11.8  DAYS TRNC  3 ITS) (11-JUN-2010)      
+  PAV=  6178.4  PSIA   WCT=0.004 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   66 TIME=    538.37  DAYS (   +12.1  DAYS TRNC  3 ITS) (23-JUN-2010)      
+  PAV=  6179.5  PSIA   WCT=0.005 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   67 TIME=    550.69  DAYS (   +12.3  DAYS TRNC  3 ITS) (5-JLY-2010)       
+  PAV=  6180.8  PSIA   WCT=0.007 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   68 TIME=    562.99  DAYS (   +12.3  DAYS TRNC  3 ITS) (17-JLY-2010)      
+  PAV=  6182.3  PSIA   WCT=0.009 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   69 TIME=    575.45  DAYS (   +12.5  DAYS TRNC  3 ITS) (30-JLY-2010)      
+  PAV=  6184.0  PSIA   WCT=0.011 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   70 TIME=    587.97  DAYS (   +12.5  DAYS TRNC  3 ITS) (11-AUG-2010)      
+  PAV=  6185.7  PSIA   WCT=0.013 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   71 TIME=    600.61  DAYS (   +12.6  DAYS TRNC  3 ITS) (24-AUG-2010)      
+  PAV=  6187.4  PSIA   WCT=0.015 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   72 TIME=    613.38  DAYS (   +12.8  DAYS TRNC  3 ITS) (6-SEP-2010)       
+  PAV=  6189.1  PSIA   WCT=0.018 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   73 TIME=    626.32  DAYS (   +12.9  DAYS TRNC  3 ITS) (19-SEP-2010)      
+  PAV=  6190.7  PSIA   WCT=0.020 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   74 TIME=    639.39  DAYS (   +13.1  DAYS TRNC  3 ITS) (2-OCT-2010)       
+  PAV=  6192.4  PSIA   WCT=0.022 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   75 TIME=    652.58  DAYS (   +13.2  DAYS TRNC  3 ITS) (15-OCT-2010)      
+  PAV=  6194.2  PSIA   WCT=0.025 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   76 TIME=    665.95  DAYS (   +13.4  DAYS TRNC  3 ITS) (28-OCT-2010)      
+  PAV=  6196.1  PSIA   WCT=0.028 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   77 TIME=    679.42  DAYS (   +13.5  DAYS TRNC  3 ITS) (11-NOV-2010)      
+  PAV=  6198.0  PSIA   WCT=0.031 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   78 TIME=    693.06  DAYS (   +13.6  DAYS TRNC  3 ITS) (25-NOV-2010)      
+  PAV=  6200.0  PSIA   WCT=0.034 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   79 TIME=    706.89  DAYS (   +13.8  DAYS TRNC  3 ITS) (8-DEC-2010)       
+  PAV=  6202.1  PSIA   WCT=0.037 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   80 TIME=    720.82  DAYS (   +13.9  DAYS TRNC  3 ITS) (22-DEC-2010)      
+  PAV=  6204.1  PSIA   WCT=0.041 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   81 TIME=    734.88  DAYS (   +14.1  DAYS TRNC  3 ITS) (5-JAN-2011)       
+  PAV=  6205.6  PSIA   WCT=0.045 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   82 TIME=    749.01  DAYS (   +14.1  DAYS TRNC  3 ITS) (20-JAN-2011)      
+  PAV=  6206.9  PSIA   WCT=0.049 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   83 TIME=    763.15  DAYS (   +14.1  DAYS TRNC  3 ITS) (3-FEB-2011)       
+  PAV=  6208.1  PSIA   WCT=0.054 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   84 TIME=    777.41  DAYS (   +14.3  DAYS TRNC  3 ITS) (17-FEB-2011)      
+  PAV=  6209.3  PSIA   WCT=0.059 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   85 TIME=    788.70  DAYS (   +11.3  DAYS HALF  3 ITS) (28-FEB-2011)      
+  PAV=  6210.4  PSIA   WCT=0.063 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   86 TIME=    800.00  DAYS (   +11.3  DAYS REPT  3 ITS) (12-MAR-2011)      
+  PAV=  6211.4  PSIA   WCT=0.068 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    42 READING END     
+          554 Mbytes of storage required                         
+   3.9411     KB/active cell                                     
+          278 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               1
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu     141.06 elapsed     141.06
+ Total number of time steps forced to be accepted          0
+

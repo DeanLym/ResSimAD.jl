@@ -55,7 +55,7 @@ function example4()
         well["perforation"] = [well_locs[ind]];
         well["radius"] = 0.5;
         well["mode"] = "bhp";
-        well["target"] = 5000.0;
+        well["target"] = 5400.0;
         push!(options["producers"], well);
     end
 
@@ -68,7 +68,7 @@ function example4()
         well["perforation"] = [well_locs[ind]];
         well["radius"] = 0.5;
         well["mode"] = "bhp";
-        well["target"] = 7000.0;
+        well["target"] = 6600.0;
         push!(options["injectors"], well);
     end
 
@@ -81,7 +81,7 @@ function example4()
 
     # Schedule
     options["dt0"] = 0.01
-    options["dt_max"] = 30.; options["t_end"] = 10 * 182.5;
+    options["dt_max"] = 15.; options["t_end"] = 800.0;
 
     sim = Sim(options)
     return sim, options

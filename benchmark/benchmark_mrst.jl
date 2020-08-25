@@ -4,7 +4,7 @@ using Statistics
 using Dates
 using DelimitedFiles
 
-function run_benchmark_mrst(model_name, dir)
+function run_benchmark_mrst(model_name, dir; nrun=5)
     cd(dir)
     ## Setup logging
     # Get system information
@@ -28,7 +28,7 @@ function run_benchmark_mrst(model_name, dir)
 
     logs = []
     runtimes = []
-    for irun = 1:5
+    for irun = 1:nrun
         info(logger, "MRST run $irun")
 
         # Launch MRST
@@ -47,7 +47,7 @@ function run_benchmark_mrst(model_name, dir)
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
     end
 
-    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+    info(logger, "Average run time for the $nrun simulations: $(round(mean(runtimes), digits=3)) seconds")
 
     # Write run logs to log file
     for (irun, log) in enumerate(logs)

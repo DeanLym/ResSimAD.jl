@@ -6,7 +6,7 @@ using DelimitedFiles
 using PyCall
 using HDF5
 
-function run_benchmark_opm(model_name, dir)
+function run_benchmark_opm(model_name, dir; nrun=5)
     cd(dir)
     ## Setup logging
     # Get system information
@@ -31,7 +31,7 @@ function run_benchmark_opm(model_name, dir)
     ## Benchmark OPM flow simulator run
     logs = []
     runtimes = []
-    for irun = 1:5
+    for irun = 1:nrun
         info(logger, "OPM run $irun")
         # Launch OPM flow simulator, direct log to a pipe
         out = Pipe();
@@ -48,7 +48,7 @@ function run_benchmark_opm(model_name, dir)
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
     end
 
-    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds\n")
+    info(logger, "Average run time for the $nrun simulations: $(round(mean(runtimes), digits=3)) seconds\n")
 
     # Write run logs to log file
     for (irun, log) in enumerate(logs)
@@ -100,5 +100,3 @@ for key in summary.keys():
     end
 
 end
-
-

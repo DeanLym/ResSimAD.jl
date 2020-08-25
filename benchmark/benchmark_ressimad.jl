@@ -4,7 +4,7 @@ using Statistics
 using Dates
 using DelimitedFiles
 
-function run_benchmark_ressimad(model_name, dir)
+function run_benchmark_ressimad(model_name, dir; nrun=5)
     # Suppress ResSimAD log information to console
     logger = getlogger("root")
     setpropagating!(getlogger("ResSimAD"), false)
@@ -12,10 +12,9 @@ function run_benchmark_ressimad(model_name, dir)
     The first run includes compilation time.
     Simulation time for the first run is not logged.
     """
-    sim, options = get_model(model_name)
+    sim, options = get_model("example1")
     runsim(sim)
-    results_dir = joinpath(dir, "results")
-    save_results(sim; dir=results_dir)
+    sim, options = get_model(model_name)
     """
     Log run time from the second run
     """
@@ -39,14 +38,15 @@ function run_benchmark_ressimad(model_name, dir)
     # Add sim model information
     info(logger, string(sim))
 
-    # Run simulation for 5 times and log runtime
+    # Run simulation for `nrun` times and log runtime
     out = IOBuffer();
     fmt, opt = ResSimAD.default_log_format()
     push!(getlogger("ResSimAD"), DefaultHandler(out, fmt, opt))
 
     logs = []
     runtimes = []
-    for irun = 1:5
+    results_dir = joinpath(dir, "results")
+    for irun = 1:nrun
         info(logger, "ResSimAD simulation run $(irun)")
         t0 = time()
 
@@ -56,11 +56,14 @@ function run_benchmark_ressimad(model_name, dir)
         push!(runtimes, time() - t0)
         push!(logs, String(take!(out)))
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
+        if irun == 1
+            save_results(sim; dir=results_dir)
+        end
     end
 
     close(out)
 
-    info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+    info(logger, "Average run time for the $nrun simulations: $(round(mean(runtimes), digits=3)) seconds")
 
     info(logger, "Time steps: $(length(sim.nsolver.num_iter))")
     info(logger, "Newton Iteration: $(sum(sim.nsolver.num_iter))\n")
