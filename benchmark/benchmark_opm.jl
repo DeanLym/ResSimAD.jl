@@ -94,7 +94,7 @@ for key in summary.keys():
     files = readdir()
 
     for file in files
-        if endswith(file, ".DBG") ||endswith(file, ".PRT") ||endswith(file, ".EGRID") || contains(file, "EXAMPLE1.S")
+        if endswith(file, ".DBG") ||endswith(file, ".PRT") ||endswith(file, ".EGRID") || endswith(file, ".SMSPEC")|| endswith(file, ".UNSMRY")
             rm(file)
         end
     end

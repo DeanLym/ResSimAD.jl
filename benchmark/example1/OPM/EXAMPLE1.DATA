@@ -10,6 +10,7 @@ DIMENS    -- dimensions of the model
 OIL       -- two phase black oil
 WATER     -- water is present, but no gas
 FIELD     -- unit specification
+
 START     -- starting date for simulation run
   1 'JAN' 2009 /
 
@@ -21,8 +22,8 @@ WELLDIMS  -- max numb of WELLS/CONN per WELL/GROUPS/WELLperGROUP
     2    20    1    2 /
 START     -- starting time for simulation run
     1 'JAN' 2009  /
-NSTACK    -- usually 10
-    10 /
+
+UNIFOUT
 
 GRID      == geometry of our model =====================================
 
@@ -131,9 +132,6 @@ PRESSURE
 SWAT
 450*0.1 /
 
-RPTSOL
-'NOTHING' /
-
 
 SUMMARY    == output written to summary *.RSM file ====================
 
@@ -156,18 +154,6 @@ WBHP       -- and the bottom hole pressure of 'PROD'
 
 SCHEDULE   == operations to be simulated ==============================
 
-DRSDT     -- Free gas is not allowed to re-dissolve within oil
-  0 /
-
-RPTRST    -- request restart file
-'NOTHING'
-/
-
-
-TUNING  -- min/max timestep (3 sections)
-0.1 30.0  /
-5*  0.1 /
-2* 100 /
 
 WELSPECS   == WELL SPECIFICATION DATA ================================
 --   WELL   GROUP LOCATION  BHP   PI
@@ -203,9 +189,14 @@ WCONINJE   -- INJECTION WELL CONTROLS
     'I1'  'WATER' 'OPEN'   'BHP'   2*   6500  / --see ECL manual for details
 /
 
+TUNING 
+0.1 30.0  /
+/
+/
+
 -- timesteps can be refined by entering multiple TSTEP keywords
 TSTEP      -- and run it for 5 yrs
-31 28 31 30 31 30 31 31 30 31 30 31 
+0.03 30.97 28 31 30 31 30 31 31 30 31 30 31 
 31 28 31 30 31 30 31 31 30 31 30 31 
 31 28 31 30 31 30 31 31 30 31 30 31 
 31 28 31 30 31 30 31 31 30 31 30 31 

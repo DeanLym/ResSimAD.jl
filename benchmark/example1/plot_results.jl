@@ -1,0 +1,49 @@
+using Plots
+using Plots.PlotMeasures
+
+include(joinpath(@__DIR__, "load_results.jl"))
+
+## Plot results
+linetypes = Dict([
+    ("ResSimAD", :path),
+    ("MRST", :scatter),
+    ("Eclipse", :scatter),
+    ("ADGPRS", :scatter),
+    ("OPM", :scatter),
+])
+
+markers = Dict([
+    ("ResSimAD", :hline),
+    ("MRST", :diamond),
+    ("Eclipse", :circle),
+    ("ADGPRS", :hexagon),
+    ("OPM", :star4),
+])
+
+plts = []
+to_plot = ["P1 oil rate", "P1 water rate", "I1 water inj. rate"]
+for key in to_plot
+    p = plot(xlabel="Day", ylabel=key * " (stb/day)", size=(420, 320),
+            legend=:right, title=key)
+    for case in sort(collect(keys(results)))
+        plot!(p, results[case]["Day"][7:3:end], abs.(results[case][key][7:3:end]), label=case,
+                line=(linetypes[case], 3.0), marker=markers[case])
+    end
+    push!(plts, p)
+end
+
+plot(plts..., layout=(3,1), size=(320,820), left_margin=20px)
+
+
+p1 = plot(ylabel="Average run time (seconds)", legend=false);
+for key in sort!(collect(keys(runtimes)))
+    bar!(p1, [key], [mean(runtimes[key])], color=:gray)
+end
+
+p2 = plot(ylabel="Average run time (seconds)", legend=false);
+for key in sort!(["Eclipse", "ResSimAD", "ADGPRS", "OPM"])
+    bar!(p2, [key], [mean(runtimes[key])], color=:gray)
+end
+
+plot(p1, p2, layout=(1,2), size=(720, 280), bottom_margin = 10px)
+

@@ -9,7 +9,6 @@ model_name = "example1"
 
 root_dir = @__DIR__;
 
-log = run_benchmark_opm(model_name, root_dir)
-ret = match(r"Total time.*", log)
+run_benchmark_opm(model_name, root_dir)
 
-ret
+
