@@ -2,7 +2,7 @@
 
 In this section, `ResSimAD.jl` is compared with `Eclipse`, `ADGPRS`, `MRST` and `OPM`.
 
-Input files, scripts, results and output logs for all simulators are available in `ResSimAD.jl/benchmark/`. 
+Input files, scripts, results and output logs for all simulators are available in `ResSimAD.jl/benchmark/`.
 To reproduce the benchmarking results, proper installation, environmental variables setup and valid licenses for `Eclipse`, `ADGPRS`, `MRST` and `OPM` are required.
 
 The version, machine and CPU information for producing the benchmarking results presented here is summarized in the table below.
@@ -15,7 +15,7 @@ MRST | 2020a | Windows 10 (x86_64-w64-mingw32)| Intel(R) Core(TM) i7-4790 CPU @ 
 ADGPRS | 1.9 | Ubuntu-20.04 on WSL2 (x86_64-pc-linux-gnu)| Intel(R) Core(TM) i9-9920X CPU @ 3.50GHz
 OPM | 2020.04 | Ubuntu-20.04 on WSL2 (x86_64-pc-linux-gnu)| Intel(R) Core(TM) i9-9920X CPU @ 3.50GHz
 
-Note that at the time these benchmarking results were generated, we ended up using two different machines, due to practical reasons such as different supported platforms from 
+Note that at the time these benchmarking results were generated, we ended up using two different machines, due to practical reasons such as different supported platforms from
 different simulators, availability of licenses (`Eclipse` and matlab license for `MRST`). Therefore, the performances of the simulators
 are subject to small differences. These differences are in general small and will not affect the conclusions presented in this benchmarking study.
 
@@ -23,7 +23,7 @@ We thank the Stanford Energy Resources Engineering department and the Stanford S
 
 ## Example1
 
-The `example1` model is a 2D deal-oil model (30x15 grid) with one injector and one producer. 
+The `example1` model is a 2D deal-oil model (30x15 grid) with one injector and one producer.
 This simple model is a good candidate for testing the overhead, especially those introduced by AD (except for `Eclipse`, all other simulators use AD).
 
 ### Simluation results comparison
@@ -34,10 +34,8 @@ Simulation results for `example1` from all simulators are stored in `ResSimAD.jl
 using ResSimAD
 using Plots
 using Plots.PlotMeasures
-
 gr(format=:svg) # hide
 ENV["GKSwstype"] = "100" #hide
-
 # Load results
 include(joinpath(pkgdir(ResSimAD), "benchmark", "example1", "load_results.jl"))
 
@@ -75,17 +73,17 @@ plot(plts..., layout=(3,1), size=(320,820), left_margin=20px)
 
 ### Performance comparison
 
-Each simulator was ran for 5 times. The average run times are plotted below. 
-Run times for `ResSimAD.jl` were directly measured. 
-Run times for other simulators were parsed from the output logs. 
+Each simulator was ran for 5 times. The average run times are plotted below.
+Run times for `ResSimAD.jl` were directly measured.
+Run times for other simulators were parsed from the output logs.
 This way, the overhead of launching the simulators was not included, especially for `MRST` where launching Matlab took quite some time.
 For all simulators, the default linear solver was used. File IO for `Eclipse`, `OPM` and `ADGPRS` was minimized as much as possible.
 
 
 Simulator    | Linear Solver | Time steps | Newton Iterations
 :---:   | :---: | :---: | :---:
-ResSimAD.jl | GMRES + ILU | 70 | 168
-Eclipse | ORTHOMIN + NF  | 77| 197
+ResSimAD.jl | GMRES + ILU | 70 | 186
+Eclipse | ORTHOMIN + NF  | 77| 178
 MRST | Matlab Backslash | 70 | 176
 ADGPRS | GMRES + CPR0 | 72 | 197
 OPM | BiCG-stab + ILU0 | 68 | 224

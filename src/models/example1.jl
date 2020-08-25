@@ -50,7 +50,7 @@ function example1()
     # Schedule
     options["dt0"] = 0.1
     options["dt_max"] = 30.; options["t_end"] = 10 * 182.5;
-    options["min_err"] = 1.0e-3
+    options["min_err"] = 1.0e-4
 
     sim = Sim(options)
     return sim, options

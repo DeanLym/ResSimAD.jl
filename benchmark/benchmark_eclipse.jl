@@ -48,6 +48,10 @@ function run_benchmark_eclipse(model_name, dir)
 
     info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds\n")
 
+    # Get number of newton iterations
+    num_iters = [parse(Int, match(r"\d+", x.match).match) for x in eachmatch(r"\d ITS", logs[1])]
+    info(logger, "Number of newton iterations: $(sum(num_iters)) \n")
+
     # Write run logs to log file
     for (irun, log) in enumerate(logs)
         info(logger, "\nRun $irun log:")

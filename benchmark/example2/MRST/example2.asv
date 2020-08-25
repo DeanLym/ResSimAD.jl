@@ -1,7 +1,7 @@
 run C:\Users\yiminliu\mrst-2020a\startup
 mrstModule add ad-core ad-blackoil ad-props mrst-gui deckformat
 %% Read Eclipse input deck
-inputfile = '../Eclipse/EXAMPLE1.DATA';
+inputfile = '../Eclipse/EXAMPLE2.DATA';
 deck = readEclipseDeck(inputfile);
 deck = convertDeckUnits(deck);
 %% Init grid and rock
@@ -14,8 +14,8 @@ fluid = initDeckADIFluid(deck);
 W = processWells(G, rock, deck.SCHEDULE.control(1));
 %% Set schedule
 simTime = 1825*day;
-nstep   = 64;
-refine  = 5;
+nstep   = 40;
+refine  = 3;
 startSteps = repmat((simTime/(nstep + 1))/refine, refine, 1);
 restSteps =  repmat(simTime/(nstep + 1), nstep, 1);
 timesteps = [0.01*day; startSteps; restSteps];

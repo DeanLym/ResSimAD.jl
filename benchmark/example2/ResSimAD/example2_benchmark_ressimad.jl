@@ -1,7 +1,5 @@
 using ResSimAD
 
-ResSimAD.verbose("info")
-
 include(joinpath(pkgdir(ResSimAD), "benchmark", "benchmark_ressimad.jl"))
 
 model_name = "example2"

@@ -1,7 +1,7 @@
 run C:\Users\yiminliu\mrst-2020a\startup
 mrstModule add ad-core ad-blackoil ad-props mrst-gui deckformat
 %% Read Eclipse input deck
-inputfile = '../Eclipse/EXAMPLE1.DATA';
+inputfile = '../Eclipse/EXAMPLE2.DATA';
 deck = readEclipseDeck(inputfile);
 deck = convertDeckUnits(deck);
 %% Init grid and rock
@@ -14,8 +14,8 @@ fluid = initDeckADIFluid(deck);
 W = processWells(G, rock, deck.SCHEDULE.control(1));
 %% Set schedule
 simTime = 1825*day;
-nstep   = 64;
-refine  = 5;
+nstep   = 37;
+refine  = 3;
 startSteps = repmat((simTime/(nstep + 1))/refine, refine, 1);
 restSteps =  repmat(simTime/(nstep + 1), nstep, 1);
 timesteps = [0.01*day; startSteps; restSteps];
@@ -23,8 +23,8 @@ schedule = simpleSchedule(timesteps, 'W', W);
 %% Create mode
 model = TwoPhaseOilWaterModel(G, rock, fluid);
 %% Set initial state
-p0 = 413.6854 * ones(450,1) * barsa;
-sw0 = 0.1 * ones(450,1);
+p0 = 413.6854 * ones(3600,1) * barsa;
+sw0 = 0.1 * ones(3600,1);
 sat = [sw0, 1 - sw0];
 state0 = initResSol(G, p0, sat);
 %% Create solver

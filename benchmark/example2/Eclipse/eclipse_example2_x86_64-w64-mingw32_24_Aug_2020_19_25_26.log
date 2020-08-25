@@ -1,0 +1,1061 @@
+[info]: 2020-08-24T19:25:26.106
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 8.4 GB
+
+[info]: Eclipse run 1
+[info]: Elapsed time for run 1: 0.79 seconds
+
+[info]: Eclipse run 2
+[info]: Elapsed time for run 2: 0.74 seconds
+
+[info]: Eclipse run 3
+[info]: Elapsed time for run 3: 0.72 seconds
+
+[info]: Eclipse run 4
+[info]: Elapsed time for run 4: 0.68 seconds
+
+[info]: Eclipse run 5
+[info]: Elapsed time for run 5: 0.73 seconds
+
+[info]: Average run time for the 5 simulations: 0.732 seconds
+
+[info]: Number of newton iterations: 107 
+
+[info]: 
+Run 1 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                 1844 KBYTES                                               
+    15 READING EQUALS  
+    16 READING INCLUDE ..\PERM_BIMODAL.DAT                                                                                                                 
+    17 READING PERMX   
+               END OF INCLUDE FILE 
+    18 READING COPY    
+    19 READING TOPS    
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 3600                                  
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @                 4148 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING PRESSURE
+    28 READING SWAT    
+    29 READING RPTSOL  
+    30 READING SUMMARY 
+    31 READING WOPR    
+    32 READING WWPR    
+    33 READING WWIR    
+    34 READING SCHEDULE
+    35 READING DRSDT   
+    36 READING RPTRST  
+    37 READING TUNING  
+    38 READING WELSPECS
+    39 READING COMPDAT 
+    40 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    42 READING TSTEP   
+ STEP    1 TIME=      2.00  DAYS (    +2.0  DAYS INIT  3 ITS) (3-JAN-2009)       
+  PAV=  5997.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      3.45  DAYS (    +1.5  DAYS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  5996.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.41  DAYS (    +2.0  DAYS TRNC  2 ITS) (6-JAN-2009)       
+  PAV=  5995.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      8.41  DAYS (    +3.0  DAYS TRNC  3 ITS) (9-JAN-2009)       
+  PAV=  5995.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     12.91  DAYS (    +4.5  DAYS TRNC  2 ITS) (13-JAN-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     20.15  DAYS (    +7.2  DAYS TRNC  2 ITS) (21-JAN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     31.21  DAYS (   +11.1  DAYS TRNC  2 ITS) (1-FEB-2009)       
+  PAV=  5993.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=     46.25  DAYS (   +15.0  DAYS TRNC  2 ITS) (16-FEB-2009)      
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=     67.04  DAYS (   +20.8  DAYS TRNC  2 ITS) (9-MAR-2009)       
+  PAV=  5993.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=     93.90  DAYS (   +26.9  DAYS TRNC  2 ITS) (4-APR-2009)       
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=    127.35  DAYS (   +33.5  DAYS TRNC  3 ITS) (8-MAY-2009)       
+  PAV=  5994.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=    164.66  DAYS (   +37.3  DAYS TRNC  3 ITS) (14-JUN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=    207.24  DAYS (   +42.6  DAYS TRNC  3 ITS) (27-JLY-2009)      
+  PAV=  5994.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=    252.98  DAYS (   +45.7  DAYS TRNC  3 ITS) (10-SEP-2009)      
+  PAV=  5994.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=    302.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (30-OCT-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=    352.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (19-DEC-2009)      
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=    402.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-FEB-2010)       
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=    452.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (29-MAR-2010)      
+  PAV=  5994.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=    502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (18-MAY-2010)      
+  PAV=  5995.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=    552.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-JLY-2010)       
+  PAV=  5995.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=    602.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-AUG-2010)      
+  PAV=  5995.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=    652.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (15-OCT-2010)      
+  PAV=  5996.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=    702.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (4-DEC-2010)       
+  PAV=  5996.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=    752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-JAN-2011)      
+  PAV=  5997.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=    802.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (14-MAR-2011)      
+  PAV=  5997.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    852.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (3-MAY-2011)       
+  PAV=  5998.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    902.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (22-JUN-2011)      
+  PAV=  5998.6  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    952.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (11-AUG-2011)      
+  PAV=  5999.5  PSIA   WCT=0.017 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=   1002.98  DAYS (   +50.0  DAYS MAXS  4 ITS) (30-SEP-2011)      
+  PAV=  6000.2  PSIA   WCT=0.055 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=   1052.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-NOV-2011)      
+  PAV=  6000.8  PSIA   WCT=0.094 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=   1102.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (8-JAN-2012)       
+  PAV=  6001.6  PSIA   WCT=0.133 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=   1152.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (27-FEB-2012)      
+  PAV=  6002.9  PSIA   WCT=0.188 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=   1202.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (17-APR-2012)      
+  PAV=  6003.8  PSIA   WCT=0.256 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=   1252.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (6-JUN-2012)       
+  PAV=  6004.4  PSIA   WCT=0.314 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=   1302.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-JLY-2012)      
+  PAV=  6004.9  PSIA   WCT=0.362 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=   1352.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (14-SEP-2012)      
+  PAV=  6005.1  PSIA   WCT=0.405 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=   1402.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (3-NOV-2012)       
+  PAV=  6005.2  PSIA   WCT=0.442 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=   1452.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-DEC-2012)      
+  PAV=  6005.2  PSIA   WCT=0.472 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=   1502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (11-FEB-2013)      
+  PAV=  6005.2  PSIA   WCT=0.497 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=   1552.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (2-APR-2013)       
+  PAV=  6005.2  PSIA   WCT=0.519 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=   1602.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (22-MAY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.538 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=   1652.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (11-JLY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.554 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=   1702.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (30-AUG-2013)      
+  PAV=  6005.2  PSIA   WCT=0.568 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=   1752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-OCT-2013)      
+  PAV=  6005.2  PSIA   WCT=0.581 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=   1788.99  DAYS (   +36.0  DAYS HALF  1 ITS) (24-NOV-2013)      
+  PAV=  6005.2  PSIA   WCT=0.590 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=   1825.00  DAYS (   +36.0  DAYS REPT  1 ITS) (31-DEC-2013)      
+  PAV=  6005.2  PSIA   WCT=0.598 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    43 READING END     
+            9 Mbytes of storage required                         
+   2.5429     KB/active cell                                     
+           27 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               0
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu       0.79 elapsed       0.79
+ Total number of time steps forced to be accepted          0
+
+[info]: 
+Run 2 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                 1844 KBYTES                                               
+    15 READING EQUALS  
+    16 READING INCLUDE ..\PERM_BIMODAL.DAT                                                                                                                 
+    17 READING PERMX   
+               END OF INCLUDE FILE 
+    18 READING COPY    
+    19 READING TOPS    
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 3600                                  
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @                 4148 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING PRESSURE
+    28 READING SWAT    
+    29 READING RPTSOL  
+    30 READING SUMMARY 
+    31 READING WOPR    
+    32 READING WWPR    
+    33 READING WWIR    
+    34 READING SCHEDULE
+    35 READING DRSDT   
+    36 READING RPTRST  
+    37 READING TUNING  
+    38 READING WELSPECS
+    39 READING COMPDAT 
+    40 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    42 READING TSTEP   
+ STEP    1 TIME=      2.00  DAYS (    +2.0  DAYS INIT  3 ITS) (3-JAN-2009)       
+  PAV=  5997.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      3.45  DAYS (    +1.5  DAYS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  5996.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.41  DAYS (    +2.0  DAYS TRNC  2 ITS) (6-JAN-2009)       
+  PAV=  5995.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      8.41  DAYS (    +3.0  DAYS TRNC  3 ITS) (9-JAN-2009)       
+  PAV=  5995.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     12.91  DAYS (    +4.5  DAYS TRNC  2 ITS) (13-JAN-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     20.15  DAYS (    +7.2  DAYS TRNC  2 ITS) (21-JAN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     31.21  DAYS (   +11.1  DAYS TRNC  2 ITS) (1-FEB-2009)       
+  PAV=  5993.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=     46.25  DAYS (   +15.0  DAYS TRNC  2 ITS) (16-FEB-2009)      
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=     67.04  DAYS (   +20.8  DAYS TRNC  2 ITS) (9-MAR-2009)       
+  PAV=  5993.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=     93.90  DAYS (   +26.9  DAYS TRNC  2 ITS) (4-APR-2009)       
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=    127.35  DAYS (   +33.5  DAYS TRNC  3 ITS) (8-MAY-2009)       
+  PAV=  5994.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=    164.66  DAYS (   +37.3  DAYS TRNC  3 ITS) (14-JUN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=    207.24  DAYS (   +42.6  DAYS TRNC  3 ITS) (27-JLY-2009)      
+  PAV=  5994.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=    252.98  DAYS (   +45.7  DAYS TRNC  3 ITS) (10-SEP-2009)      
+  PAV=  5994.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=    302.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (30-OCT-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=    352.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (19-DEC-2009)      
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=    402.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-FEB-2010)       
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=    452.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (29-MAR-2010)      
+  PAV=  5994.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=    502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (18-MAY-2010)      
+  PAV=  5995.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=    552.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-JLY-2010)       
+  PAV=  5995.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=    602.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-AUG-2010)      
+  PAV=  5995.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=    652.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (15-OCT-2010)      
+  PAV=  5996.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=    702.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (4-DEC-2010)       
+  PAV=  5996.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=    752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-JAN-2011)      
+  PAV=  5997.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=    802.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (14-MAR-2011)      
+  PAV=  5997.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    852.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (3-MAY-2011)       
+  PAV=  5998.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    902.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (22-JUN-2011)      
+  PAV=  5998.6  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    952.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (11-AUG-2011)      
+  PAV=  5999.5  PSIA   WCT=0.017 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=   1002.98  DAYS (   +50.0  DAYS MAXS  4 ITS) (30-SEP-2011)      
+  PAV=  6000.2  PSIA   WCT=0.055 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=   1052.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-NOV-2011)      
+  PAV=  6000.8  PSIA   WCT=0.094 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=   1102.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (8-JAN-2012)       
+  PAV=  6001.6  PSIA   WCT=0.133 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=   1152.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (27-FEB-2012)      
+  PAV=  6002.9  PSIA   WCT=0.188 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=   1202.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (17-APR-2012)      
+  PAV=  6003.8  PSIA   WCT=0.256 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=   1252.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (6-JUN-2012)       
+  PAV=  6004.4  PSIA   WCT=0.314 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=   1302.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-JLY-2012)      
+  PAV=  6004.9  PSIA   WCT=0.362 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=   1352.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (14-SEP-2012)      
+  PAV=  6005.1  PSIA   WCT=0.405 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=   1402.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (3-NOV-2012)       
+  PAV=  6005.2  PSIA   WCT=0.442 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=   1452.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-DEC-2012)      
+  PAV=  6005.2  PSIA   WCT=0.472 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=   1502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (11-FEB-2013)      
+  PAV=  6005.2  PSIA   WCT=0.497 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=   1552.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (2-APR-2013)       
+  PAV=  6005.2  PSIA   WCT=0.519 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=   1602.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (22-MAY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.538 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=   1652.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (11-JLY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.554 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=   1702.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (30-AUG-2013)      
+  PAV=  6005.2  PSIA   WCT=0.568 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=   1752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-OCT-2013)      
+  PAV=  6005.2  PSIA   WCT=0.581 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=   1788.99  DAYS (   +36.0  DAYS HALF  1 ITS) (24-NOV-2013)      
+  PAV=  6005.2  PSIA   WCT=0.590 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=   1825.00  DAYS (   +36.0  DAYS REPT  1 ITS) (31-DEC-2013)      
+  PAV=  6005.2  PSIA   WCT=0.598 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    43 READING END     
+            9 Mbytes of storage required                         
+   2.5429     KB/active cell                                     
+           27 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               0
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu       0.74 elapsed       0.74
+ Total number of time steps forced to be accepted          0
+
+[info]: 
+Run 3 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                 1844 KBYTES                                               
+    15 READING EQUALS  
+    16 READING INCLUDE ..\PERM_BIMODAL.DAT                                                                                                                 
+    17 READING PERMX   
+               END OF INCLUDE FILE 
+    18 READING COPY    
+    19 READING TOPS    
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 3600                                  
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @                 4148 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING PRESSURE
+    28 READING SWAT    
+    29 READING RPTSOL  
+    30 READING SUMMARY 
+    31 READING WOPR    
+    32 READING WWPR    
+    33 READING WWIR    
+    34 READING SCHEDULE
+    35 READING DRSDT   
+    36 READING RPTRST  
+    37 READING TUNING  
+    38 READING WELSPECS
+    39 READING COMPDAT 
+    40 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    42 READING TSTEP   
+ STEP    1 TIME=      2.00  DAYS (    +2.0  DAYS INIT  3 ITS) (3-JAN-2009)       
+  PAV=  5997.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      3.45  DAYS (    +1.5  DAYS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  5996.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.41  DAYS (    +2.0  DAYS TRNC  2 ITS) (6-JAN-2009)       
+  PAV=  5995.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      8.41  DAYS (    +3.0  DAYS TRNC  3 ITS) (9-JAN-2009)       
+  PAV=  5995.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     12.91  DAYS (    +4.5  DAYS TRNC  2 ITS) (13-JAN-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     20.15  DAYS (    +7.2  DAYS TRNC  2 ITS) (21-JAN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     31.21  DAYS (   +11.1  DAYS TRNC  2 ITS) (1-FEB-2009)       
+  PAV=  5993.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=     46.25  DAYS (   +15.0  DAYS TRNC  2 ITS) (16-FEB-2009)      
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=     67.04  DAYS (   +20.8  DAYS TRNC  2 ITS) (9-MAR-2009)       
+  PAV=  5993.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=     93.90  DAYS (   +26.9  DAYS TRNC  2 ITS) (4-APR-2009)       
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=    127.35  DAYS (   +33.5  DAYS TRNC  3 ITS) (8-MAY-2009)       
+  PAV=  5994.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=    164.66  DAYS (   +37.3  DAYS TRNC  3 ITS) (14-JUN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=    207.24  DAYS (   +42.6  DAYS TRNC  3 ITS) (27-JLY-2009)      
+  PAV=  5994.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=    252.98  DAYS (   +45.7  DAYS TRNC  3 ITS) (10-SEP-2009)      
+  PAV=  5994.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=    302.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (30-OCT-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=    352.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (19-DEC-2009)      
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=    402.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-FEB-2010)       
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=    452.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (29-MAR-2010)      
+  PAV=  5994.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=    502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (18-MAY-2010)      
+  PAV=  5995.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=    552.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-JLY-2010)       
+  PAV=  5995.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=    602.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-AUG-2010)      
+  PAV=  5995.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=    652.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (15-OCT-2010)      
+  PAV=  5996.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=    702.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (4-DEC-2010)       
+  PAV=  5996.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=    752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-JAN-2011)      
+  PAV=  5997.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=    802.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (14-MAR-2011)      
+  PAV=  5997.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    852.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (3-MAY-2011)       
+  PAV=  5998.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    902.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (22-JUN-2011)      
+  PAV=  5998.6  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    952.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (11-AUG-2011)      
+  PAV=  5999.5  PSIA   WCT=0.017 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=   1002.98  DAYS (   +50.0  DAYS MAXS  4 ITS) (30-SEP-2011)      
+  PAV=  6000.2  PSIA   WCT=0.055 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=   1052.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-NOV-2011)      
+  PAV=  6000.8  PSIA   WCT=0.094 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=   1102.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (8-JAN-2012)       
+  PAV=  6001.6  PSIA   WCT=0.133 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=   1152.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (27-FEB-2012)      
+  PAV=  6002.9  PSIA   WCT=0.188 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=   1202.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (17-APR-2012)      
+  PAV=  6003.8  PSIA   WCT=0.256 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=   1252.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (6-JUN-2012)       
+  PAV=  6004.4  PSIA   WCT=0.314 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=   1302.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-JLY-2012)      
+  PAV=  6004.9  PSIA   WCT=0.362 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=   1352.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (14-SEP-2012)      
+  PAV=  6005.1  PSIA   WCT=0.405 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=   1402.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (3-NOV-2012)       
+  PAV=  6005.2  PSIA   WCT=0.442 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=   1452.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-DEC-2012)      
+  PAV=  6005.2  PSIA   WCT=0.472 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=   1502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (11-FEB-2013)      
+  PAV=  6005.2  PSIA   WCT=0.497 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=   1552.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (2-APR-2013)       
+  PAV=  6005.2  PSIA   WCT=0.519 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=   1602.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (22-MAY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.538 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=   1652.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (11-JLY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.554 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=   1702.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (30-AUG-2013)      
+  PAV=  6005.2  PSIA   WCT=0.568 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=   1752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-OCT-2013)      
+  PAV=  6005.2  PSIA   WCT=0.581 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=   1788.99  DAYS (   +36.0  DAYS HALF  1 ITS) (24-NOV-2013)      
+  PAV=  6005.2  PSIA   WCT=0.590 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=   1825.00  DAYS (   +36.0  DAYS REPT  1 ITS) (31-DEC-2013)      
+  PAV=  6005.2  PSIA   WCT=0.598 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    43 READING END     
+            9 Mbytes of storage required                         
+   2.5429     KB/active cell                                     
+           27 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               0
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu       0.72 elapsed       0.72
+ Total number of time steps forced to be accepted          0
+
+[info]: 
+Run 4 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                 1844 KBYTES                                               
+    15 READING EQUALS  
+    16 READING INCLUDE ..\PERM_BIMODAL.DAT                                                                                                                 
+    17 READING PERMX   
+               END OF INCLUDE FILE 
+    18 READING COPY    
+    19 READING TOPS    
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 3600                                  
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @                 4148 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING PRESSURE
+    28 READING SWAT    
+    29 READING RPTSOL  
+    30 READING SUMMARY 
+    31 READING WOPR    
+    32 READING WWPR    
+    33 READING WWIR    
+    34 READING SCHEDULE
+    35 READING DRSDT   
+    36 READING RPTRST  
+    37 READING TUNING  
+    38 READING WELSPECS
+    39 READING COMPDAT 
+    40 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    42 READING TSTEP   
+ STEP    1 TIME=      2.00  DAYS (    +2.0  DAYS INIT  3 ITS) (3-JAN-2009)       
+  PAV=  5997.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      3.45  DAYS (    +1.5  DAYS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  5996.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.41  DAYS (    +2.0  DAYS TRNC  2 ITS) (6-JAN-2009)       
+  PAV=  5995.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      8.41  DAYS (    +3.0  DAYS TRNC  3 ITS) (9-JAN-2009)       
+  PAV=  5995.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     12.91  DAYS (    +4.5  DAYS TRNC  2 ITS) (13-JAN-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     20.15  DAYS (    +7.2  DAYS TRNC  2 ITS) (21-JAN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     31.21  DAYS (   +11.1  DAYS TRNC  2 ITS) (1-FEB-2009)       
+  PAV=  5993.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=     46.25  DAYS (   +15.0  DAYS TRNC  2 ITS) (16-FEB-2009)      
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=     67.04  DAYS (   +20.8  DAYS TRNC  2 ITS) (9-MAR-2009)       
+  PAV=  5993.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=     93.90  DAYS (   +26.9  DAYS TRNC  2 ITS) (4-APR-2009)       
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=    127.35  DAYS (   +33.5  DAYS TRNC  3 ITS) (8-MAY-2009)       
+  PAV=  5994.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=    164.66  DAYS (   +37.3  DAYS TRNC  3 ITS) (14-JUN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=    207.24  DAYS (   +42.6  DAYS TRNC  3 ITS) (27-JLY-2009)      
+  PAV=  5994.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=    252.98  DAYS (   +45.7  DAYS TRNC  3 ITS) (10-SEP-2009)      
+  PAV=  5994.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=    302.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (30-OCT-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=    352.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (19-DEC-2009)      
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=    402.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-FEB-2010)       
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=    452.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (29-MAR-2010)      
+  PAV=  5994.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=    502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (18-MAY-2010)      
+  PAV=  5995.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=    552.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-JLY-2010)       
+  PAV=  5995.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=    602.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-AUG-2010)      
+  PAV=  5995.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=    652.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (15-OCT-2010)      
+  PAV=  5996.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=    702.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (4-DEC-2010)       
+  PAV=  5996.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=    752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-JAN-2011)      
+  PAV=  5997.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=    802.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (14-MAR-2011)      
+  PAV=  5997.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    852.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (3-MAY-2011)       
+  PAV=  5998.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    902.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (22-JUN-2011)      
+  PAV=  5998.6  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    952.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (11-AUG-2011)      
+  PAV=  5999.5  PSIA   WCT=0.017 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=   1002.98  DAYS (   +50.0  DAYS MAXS  4 ITS) (30-SEP-2011)      
+  PAV=  6000.2  PSIA   WCT=0.055 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=   1052.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-NOV-2011)      
+  PAV=  6000.8  PSIA   WCT=0.094 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=   1102.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (8-JAN-2012)       
+  PAV=  6001.6  PSIA   WCT=0.133 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=   1152.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (27-FEB-2012)      
+  PAV=  6002.9  PSIA   WCT=0.188 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=   1202.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (17-APR-2012)      
+  PAV=  6003.8  PSIA   WCT=0.256 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=   1252.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (6-JUN-2012)       
+  PAV=  6004.4  PSIA   WCT=0.314 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=   1302.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-JLY-2012)      
+  PAV=  6004.9  PSIA   WCT=0.362 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=   1352.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (14-SEP-2012)      
+  PAV=  6005.1  PSIA   WCT=0.405 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=   1402.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (3-NOV-2012)       
+  PAV=  6005.2  PSIA   WCT=0.442 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=   1452.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-DEC-2012)      
+  PAV=  6005.2  PSIA   WCT=0.472 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=   1502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (11-FEB-2013)      
+  PAV=  6005.2  PSIA   WCT=0.497 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=   1552.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (2-APR-2013)       
+  PAV=  6005.2  PSIA   WCT=0.519 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=   1602.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (22-MAY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.538 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=   1652.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (11-JLY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.554 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=   1702.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (30-AUG-2013)      
+  PAV=  6005.2  PSIA   WCT=0.568 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=   1752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-OCT-2013)      
+  PAV=  6005.2  PSIA   WCT=0.581 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=   1788.99  DAYS (   +36.0  DAYS HALF  1 ITS) (24-NOV-2013)      
+  PAV=  6005.2  PSIA   WCT=0.590 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=   1825.00  DAYS (   +36.0  DAYS REPT  1 ITS) (31-DEC-2013)      
+  PAV=  6005.2  PSIA   WCT=0.598 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    43 READING END     
+            9 Mbytes of storage required                         
+   2.5429     KB/active cell                                     
+           27 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               0
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu       0.68 elapsed       0.68
+ Total number of time steps forced to be accepted          0
+
+[info]: 
+Run 5 log:
+[info]: 
+ Proprietary Notice
+ This application contains the confidential and
+ proprietary trade secrets of Schlumberger and may 
+ not be copied or stored in an information retrieval
+ system, transferred, used, distributed, translated,
+ or retransmitted in any form or by any means, electronic
+ or mechanical, in whole or in part, without the
+ express written permission of the copyright owner.
+
+ ECLIPSE is a mark of Schlumberger. Copyright (c)
+ 1981-2017 Schlumberger. All rights reserved.
+
+     1 READING RUNSPEC 
+     2 READING TITLE   
+     3 READING DIMENS  
+     4 READING OIL     
+     5 READING WATER   
+     6 READING FIELD   
+     7 READING START   
+     8 READING EQLDIMS 
+     9 READING TABDIMS 
+    10 READING WELLDIMS
+    11 READING START   
+    12 READING NSTACK  
+    13 READING GRID    
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           CHECKING FOR LICENSES                                           
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE GRID SECTION IS              
+ @                 1844 KBYTES                                               
+    15 READING EQUALS  
+    16 READING INCLUDE ..\PERM_BIMODAL.DAT                                                                                                                 
+    17 READING PERMX   
+               END OF INCLUDE FILE 
+    18 READING COPY    
+    19 READING TOPS    
+    20 READING PROPS   
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NEITHER OLDTRAN,OLDTRANR NOR NEWTRAN SPECIFIED                  
+ @           BLOCK CENTRE TRANSMISSIBILITIES TO BE CALCULATED                
+ @           USING  OLDTRAN                                                  
+
+ @--COMMENT  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NO NON-NEIGHBOUR CONNECTIONS FOUND                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           NUMBER OF ACTIVE CELLS IS 3600                                  
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           THE MEMORY REQUIRED TO PROCESS THE SOLUTION SECTION IS          
+ @                 4148 KBYTES                                               
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @              62229 CHARACTER VARIABLES USED                               
+    21 READING PVTW    
+    22 READING PVDO    
+    23 READING SWOF    
+    24 READING ROCK    
+    25 READING DENSITY 
+    26 READING SOLUTION
+    27 READING PRESSURE
+    28 READING SWAT    
+    29 READING RPTSOL  
+    30 READING SUMMARY 
+    31 READING WOPR    
+    32 READING WWPR    
+    33 READING WWIR    
+    34 READING SCHEDULE
+    35 READING DRSDT   
+    36 READING RPTRST  
+    37 READING TUNING  
+    38 READING WELSPECS
+    39 READING COMPDAT 
+    40 READING WCONPROD
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL P2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    41 READING WCONINJE
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I1       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+
+ @--MESSAGE  AT TIME        0.0   DAYS    ( 1-JAN-2009):
+ @           OPENING WELL I2       AT TIME      0.00   DAYS                  
+ @           CONTROLLED BY BOTTOM HOLE PRESSURE                              
+    42 READING TSTEP   
+ STEP    1 TIME=      2.00  DAYS (    +2.0  DAYS INIT  3 ITS) (3-JAN-2009)       
+  PAV=  5997.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    2 TIME=      3.45  DAYS (    +1.5  DAYS TRNC  2 ITS) (4-JAN-2009)       
+  PAV=  5996.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    3 TIME=      5.41  DAYS (    +2.0  DAYS TRNC  2 ITS) (6-JAN-2009)       
+  PAV=  5995.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    4 TIME=      8.41  DAYS (    +3.0  DAYS TRNC  3 ITS) (9-JAN-2009)       
+  PAV=  5995.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    5 TIME=     12.91  DAYS (    +4.5  DAYS TRNC  2 ITS) (13-JAN-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    6 TIME=     20.15  DAYS (    +7.2  DAYS TRNC  2 ITS) (21-JAN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    7 TIME=     31.21  DAYS (   +11.1  DAYS TRNC  2 ITS) (1-FEB-2009)       
+  PAV=  5993.9  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    8 TIME=     46.25  DAYS (   +15.0  DAYS TRNC  2 ITS) (16-FEB-2009)      
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP    9 TIME=     67.04  DAYS (   +20.8  DAYS TRNC  2 ITS) (9-MAR-2009)       
+  PAV=  5993.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   10 TIME=     93.90  DAYS (   +26.9  DAYS TRNC  2 ITS) (4-APR-2009)       
+  PAV=  5993.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   11 TIME=    127.35  DAYS (   +33.5  DAYS TRNC  3 ITS) (8-MAY-2009)       
+  PAV=  5994.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   12 TIME=    164.66  DAYS (   +37.3  DAYS TRNC  3 ITS) (14-JUN-2009)      
+  PAV=  5994.2  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   13 TIME=    207.24  DAYS (   +42.6  DAYS TRNC  3 ITS) (27-JLY-2009)      
+  PAV=  5994.4  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   14 TIME=    252.98  DAYS (   +45.7  DAYS TRNC  3 ITS) (10-SEP-2009)      
+  PAV=  5994.5  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   15 TIME=    302.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (30-OCT-2009)      
+  PAV=  5994.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   16 TIME=    352.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (19-DEC-2009)      
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   17 TIME=    402.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-FEB-2010)       
+  PAV=  5994.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   18 TIME=    452.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (29-MAR-2010)      
+  PAV=  5994.8  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   19 TIME=    502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (18-MAY-2010)      
+  PAV=  5995.0  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   20 TIME=    552.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (7-JLY-2010)       
+  PAV=  5995.3  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   21 TIME=    602.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-AUG-2010)      
+  PAV=  5995.7  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   22 TIME=    652.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (15-OCT-2010)      
+  PAV=  5996.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   23 TIME=    702.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (4-DEC-2010)       
+  PAV=  5996.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   24 TIME=    752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-JAN-2011)      
+  PAV=  5997.1  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   25 TIME=    802.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (14-MAR-2011)      
+  PAV=  5997.6  PSIA   WCT=0.000 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   26 TIME=    852.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (3-MAY-2011)       
+  PAV=  5998.1  PSIA   WCT=0.001 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   27 TIME=    902.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (22-JUN-2011)      
+  PAV=  5998.6  PSIA   WCT=0.003 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   28 TIME=    952.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (11-AUG-2011)      
+  PAV=  5999.5  PSIA   WCT=0.017 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   29 TIME=   1002.98  DAYS (   +50.0  DAYS MAXS  4 ITS) (30-SEP-2011)      
+  PAV=  6000.2  PSIA   WCT=0.055 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   30 TIME=   1052.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-NOV-2011)      
+  PAV=  6000.8  PSIA   WCT=0.094 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   31 TIME=   1102.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (8-JAN-2012)       
+  PAV=  6001.6  PSIA   WCT=0.133 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   32 TIME=   1152.98  DAYS (   +50.0  DAYS MAXS  3 ITS) (27-FEB-2012)      
+  PAV=  6002.9  PSIA   WCT=0.188 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   33 TIME=   1202.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (17-APR-2012)      
+  PAV=  6003.8  PSIA   WCT=0.256 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   34 TIME=   1252.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (6-JUN-2012)       
+  PAV=  6004.4  PSIA   WCT=0.314 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   35 TIME=   1302.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (26-JLY-2012)      
+  PAV=  6004.9  PSIA   WCT=0.362 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   36 TIME=   1352.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (14-SEP-2012)      
+  PAV=  6005.1  PSIA   WCT=0.405 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   37 TIME=   1402.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (3-NOV-2012)       
+  PAV=  6005.2  PSIA   WCT=0.442 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   38 TIME=   1452.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (23-DEC-2012)      
+  PAV=  6005.2  PSIA   WCT=0.472 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   39 TIME=   1502.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (11-FEB-2013)      
+  PAV=  6005.2  PSIA   WCT=0.497 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   40 TIME=   1552.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (2-APR-2013)       
+  PAV=  6005.2  PSIA   WCT=0.519 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   41 TIME=   1602.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (22-MAY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.538 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   42 TIME=   1652.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (11-JLY-2013)      
+  PAV=  6005.2  PSIA   WCT=0.554 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   43 TIME=   1702.98  DAYS (   +50.0  DAYS MAXS  1 ITS) (30-AUG-2013)      
+  PAV=  6005.2  PSIA   WCT=0.568 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   44 TIME=   1752.98  DAYS (   +50.0  DAYS MAXS  2 ITS) (19-OCT-2013)      
+  PAV=  6005.2  PSIA   WCT=0.581 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   45 TIME=   1788.99  DAYS (   +36.0  DAYS HALF  1 ITS) (24-NOV-2013)      
+  PAV=  6005.2  PSIA   WCT=0.590 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+ STEP   46 TIME=   1825.00  DAYS (   +36.0  DAYS REPT  1 ITS) (31-DEC-2013)      
+  PAV=  6005.2  PSIA   WCT=0.598 GOR= 0.00000  MSCF/STB WGR= 0.00000  STB/MSCF   
+    43 READING END     
+            9 Mbytes of storage required                         
+   2.5429     KB/active cell                                     
+           27 Mbytes (image size)                                
+
+ Error summary 
+ Comments               1
+ Warnings               0
+ Problems               0
+ Errors                 0
+ Bugs                   0
+ Final cpu       0.73 elapsed       0.73
+ Total number of time steps forced to be accepted          0
+

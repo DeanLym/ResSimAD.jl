@@ -1,0 +1,408 @@
+[info]: 2020-08-24T18:56:05.311
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 8.2 GB
+
+[info]: Sim model
+Grid: Cartesian grid - (60, 60, 1)
+Number of cells: 3600
+Number of connections: 7080
+Fluid system: OW
+Wells: ["I1", "I2", "P2", "P1"]
+Linear solver: GMRES ILU
+
+[info]: ResSimAD simulation run 1
+[info]: Elapsed time for run 1: 2.636 seconds
+
+[info]: ResSimAD simulation run 2
+[info]: Elapsed time for run 2: 2.451 seconds
+
+[info]: ResSimAD simulation run 3
+[info]: Elapsed time for run 3: 2.569 seconds
+
+[info]: ResSimAD simulation run 4
+[info]: Elapsed time for run 4: 2.315 seconds
+
+[info]: ResSimAD simulation run 5
+[info]: Elapsed time for run 5: 2.358 seconds
+
+[info]: Average run time for the 5 simulations: 2.466 seconds
+[info]: Time steps: 41
+[info]: Newton Iteration: 119
+
+[info]:
+Run 1 log:
+[info]: [info]: Creating simulation model
+[info]: Parsing input options
+[info]: Grid type: Cartesian
+[notice]: Setting constant dx 200.0 for all cells
+[notice]: Setting constant dy 200.0 for all cells
+[notice]: Setting constant dz 60.0 for all cells
+[notice]: Setting constant d 8000.0 for all cells
+[notice]: Setting constant poro 0.2 for all cells
+[notice]: Keyword "ρo" missing (default value 49.1 will be used)
+[notice]: Keyword "ρw" missing (default value 64.79 will be used)
+[info]: Reading PVDO table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVDO.DAT
+[info]: Reading PVTW table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVTW.DAT
+[info]: Reading SWOF table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\SWOF.DAT
+[notice]: Setting constant sw 0.1 for all cells
+[notice]: Setting constant po 6000.0 for all cells
+[notice]: Keyword "time_step" missing (default value [1825.0] will be used)
+[notice]: Keyword "max_newton_iter" missing (default value 10 will be used)
+[notice]: Keyword "linear_solver" is missing (default value GMRES_ILU0 will be used)
+[info]: Initializing grid
+[info]: Grid dimension: 60, 60, 1
+[info]: Number of cells: 3600
+[info]: Initializing rock
+[info]: Constructing connection list for Cartesian grid
+[info]: Number of connections: 7080
+[info]: Initializing fluid
+[info]: Fluid system: OW
+[info]: Initializing facility
+[info]: Initializing scheduler
+[info]: Initializing nonlinear solver
+[info]: Initializing linear solver
+[info]: Day =      2.000, ΔT =    2.000, NI =    3, LI =    24, t =    0.078secs
+[info]: Day =      5.062, ΔT =    3.062, NI =    2, LI =    18, t =    0.030secs
+[info]: Day =     10.671, ΔT =    5.609, NI =    2, LI =    22, t =    0.034secs
+[info]: Day =     21.631, ΔT =   10.960, NI =    3, LI =    39, t =    0.067secs
+[info]: Day =     41.841, ΔT =   20.210, NI =    3, LI =    46, t =    0.053secs
+[info]: Day =     76.881, ΔT =   35.041, NI =    3, LI =    51, t =    0.057secs
+[info]: Day =    126.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.086secs
+[info]: Day =    176.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.077secs
+[info]: Day =    226.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.086secs
+[info]: Day =    276.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.081secs
+[info]: Day =    326.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.068secs
+[info]: Day =    376.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.063secs
+[info]: Day =    426.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.061secs
+[info]: Day =    476.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.069secs
+[info]: Day =    526.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.063secs
+[info]: Day =    576.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.069secs
+[info]: Day =    626.881, ΔT =   50.000, NI =    3, LI =    54, t =    0.061secs
+[info]: Day =    676.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.083secs
+[info]: Day =    726.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.069secs
+[info]: Day =    776.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.085secs
+[info]: Day =    826.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.090secs
+[info]: Day =    876.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.083secs
+[info]: Day =    926.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.092secs
+[info]: Day =    976.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.063secs
+[info]: Day =   1026.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.072secs
+[info]: Day =   1076.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.065secs
+[info]: Day =   1126.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.089secs
+[info]: Day =   1176.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.064secs
+[info]: Day =   1226.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.067secs
+[info]: Day =   1276.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.044secs
+[info]: Day =   1326.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.044secs
+[info]: Day =   1376.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.051secs
+[info]: Day =   1426.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.043secs
+[info]: Day =   1476.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.043secs
+[info]: Day =   1526.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.050secs
+[info]: Day =   1576.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.044secs
+[info]: Day =   1626.881, ΔT =   50.000, NI =    2, LI =    36, t =    0.044secs
+[info]: Day =   1676.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.051secs
+[info]: Day =   1726.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.042secs
+[info]: Day =   1776.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.044secs
+[info]: Day =   1825.000, ΔT =   48.119, NI =    2, LI =    36, t =    0.044secs
+[info]: Simulation finished, elapsed time: 2.572 seconds
+
+[info]:
+Run 2 log:
+[info]: [info]: Creating simulation model
+[info]: Parsing input options
+[info]: Grid type: Cartesian
+[notice]: Setting constant dx 200.0 for all cells
+[notice]: Setting constant dy 200.0 for all cells
+[notice]: Setting constant dz 60.0 for all cells
+[notice]: Setting constant d 8000.0 for all cells
+[notice]: Setting constant poro 0.2 for all cells
+[notice]: Keyword "ρo" missing (default value 49.1 will be used)
+[notice]: Keyword "ρw" missing (default value 64.79 will be used)
+[info]: Reading PVDO table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVDO.DAT
+[info]: Reading PVTW table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVTW.DAT
+[info]: Reading SWOF table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\SWOF.DAT
+[notice]: Setting constant sw 0.1 for all cells
+[notice]: Setting constant po 6000.0 for all cells
+[notice]: Keyword "time_step" missing (default value [1825.0] will be used)
+[notice]: Keyword "max_newton_iter" missing (default value 10 will be used)
+[notice]: Keyword "linear_solver" is missing (default value GMRES_ILU0 will be used)
+[info]: Initializing grid
+[info]: Grid dimension: 60, 60, 1
+[info]: Number of cells: 3600
+[info]: Initializing rock
+[info]: Constructing connection list for Cartesian grid
+[info]: Number of connections: 7080
+[info]: Initializing fluid
+[info]: Fluid system: OW
+[info]: Initializing facility
+[info]: Initializing scheduler
+[info]: Initializing nonlinear solver
+[info]: Initializing linear solver
+[info]: Day =      2.000, ΔT =    2.000, NI =    3, LI =    24, t =    0.043secs
+[info]: Day =      5.062, ΔT =    3.062, NI =    2, LI =    18, t =    0.031secs
+[info]: Day =     10.671, ΔT =    5.609, NI =    2, LI =    22, t =    0.032secs
+[info]: Day =     21.631, ΔT =   10.960, NI =    3, LI =    39, t =    0.057secs
+[info]: Day =     41.841, ΔT =   20.210, NI =    3, LI =    46, t =    0.052secs
+[info]: Day =     76.881, ΔT =   35.041, NI =    3, LI =    51, t =    0.057secs
+[info]: Day =    126.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.083secs
+[info]: Day =    176.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.078secs
+[info]: Day =    226.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.086secs
+[info]: Day =    276.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.081secs
+[info]: Day =    326.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.067secs
+[info]: Day =    376.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.061secs
+[info]: Day =    426.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.060secs
+[info]: Day =    476.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.062secs
+[info]: Day =    526.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.058secs
+[info]: Day =    576.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.061secs
+[info]: Day =    626.881, ΔT =   50.000, NI =    3, LI =    54, t =    0.068secs
+[info]: Day =    676.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.081secs
+[info]: Day =    726.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.066secs
+[info]: Day =    776.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.077secs
+[info]: Day =    826.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.090secs
+[info]: Day =    876.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.082secs
+[info]: Day =    926.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.090secs
+[info]: Day =    976.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.059secs
+[info]: Day =   1026.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1076.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.068secs
+[info]: Day =   1126.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.079secs
+[info]: Day =   1176.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.067secs
+[info]: Day =   1226.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1276.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.043secs
+[info]: Day =   1326.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.046secs
+[info]: Day =   1376.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.040secs
+[info]: Day =   1426.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.042secs
+[info]: Day =   1476.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.046secs
+[info]: Day =   1526.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.039secs
+[info]: Day =   1576.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.041secs
+[info]: Day =   1626.881, ΔT =   50.000, NI =    2, LI =    36, t =    0.047secs
+[info]: Day =   1676.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.041secs
+[info]: Day =   1726.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1776.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1825.000, ΔT =   48.119, NI =    2, LI =    36, t =    0.046secs
+[info]: Simulation finished, elapsed time: 2.432 seconds
+
+[info]:
+Run 3 log:
+[info]: [info]: Creating simulation model
+[info]: Parsing input options
+[info]: Grid type: Cartesian
+[notice]: Setting constant dx 200.0 for all cells
+[notice]: Setting constant dy 200.0 for all cells
+[notice]: Setting constant dz 60.0 for all cells
+[notice]: Setting constant d 8000.0 for all cells
+[notice]: Setting constant poro 0.2 for all cells
+[notice]: Keyword "ρo" missing (default value 49.1 will be used)
+[notice]: Keyword "ρw" missing (default value 64.79 will be used)
+[info]: Reading PVDO table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVDO.DAT
+[info]: Reading PVTW table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVTW.DAT
+[info]: Reading SWOF table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\SWOF.DAT
+[notice]: Setting constant sw 0.1 for all cells
+[notice]: Setting constant po 6000.0 for all cells
+[notice]: Keyword "time_step" missing (default value [1825.0] will be used)
+[notice]: Keyword "max_newton_iter" missing (default value 10 will be used)
+[notice]: Keyword "linear_solver" is missing (default value GMRES_ILU0 will be used)
+[info]: Initializing grid
+[info]: Grid dimension: 60, 60, 1
+[info]: Number of cells: 3600
+[info]: Initializing rock
+[info]: Constructing connection list for Cartesian grid
+[info]: Number of connections: 7080
+[info]: Initializing fluid
+[info]: Fluid system: OW
+[info]: Initializing facility
+[info]: Initializing scheduler
+[info]: Initializing nonlinear solver
+[info]: Initializing linear solver
+[info]: Day =      2.000, ΔT =    2.000, NI =    3, LI =    24, t =    0.040secs
+[info]: Day =      5.062, ΔT =    3.062, NI =    2, LI =    18, t =    0.031secs
+[info]: Day =     10.671, ΔT =    5.609, NI =    2, LI =    22, t =    0.033secs
+[info]: Day =     21.631, ΔT =   10.960, NI =    3, LI =    39, t =    0.053secs
+[info]: Day =     41.841, ΔT =   20.210, NI =    3, LI =    46, t =    0.049secs
+[info]: Day =     76.881, ΔT =   35.041, NI =    3, LI =    51, t =    0.054secs
+[info]: Day =    126.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.087secs
+[info]: Day =    176.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.079secs
+[info]: Day =    226.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.081secs
+[info]: Day =    276.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.073secs
+[info]: Day =    326.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.059secs
+[info]: Day =    376.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.061secs
+[info]: Day =    426.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.056secs
+[info]: Day =    476.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.058secs
+[info]: Day =    526.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.068secs
+[info]: Day =    576.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.061secs
+[info]: Day =    626.881, ΔT =   50.000, NI =    3, LI =    54, t =    0.060secs
+[info]: Day =    676.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.122secs
+[info]: Day =    726.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.058secs
+[info]: Day =    776.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.214secs
+[info]: Day =    826.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.082secs
+[info]: Day =    876.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.086secs
+[info]: Day =    926.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.091secs
+[info]: Day =    976.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.067secs
+[info]: Day =   1026.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1076.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.064secs
+[info]: Day =   1126.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.085secs
+[info]: Day =   1176.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.062secs
+[info]: Day =   1226.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1276.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.046secs
+[info]: Day =   1326.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1376.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.043secs
+[info]: Day =   1426.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.039secs
+[info]: Day =   1476.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.040secs
+[info]: Day =   1526.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.047secs
+[info]: Day =   1576.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.041secs
+[info]: Day =   1626.881, ΔT =   50.000, NI =    2, LI =    36, t =    0.043secs
+[info]: Day =   1676.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.040secs
+[info]: Day =   1726.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.042secs
+[info]: Day =   1776.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1825.000, ΔT =   48.119, NI =    2, LI =    36, t =    0.040secs
+[info]: Simulation finished, elapsed time: 2.559 seconds
+
+[info]:
+Run 4 log:
+[info]: [info]: Creating simulation model
+[info]: Parsing input options
+[info]: Grid type: Cartesian
+[notice]: Setting constant dx 200.0 for all cells
+[notice]: Setting constant dy 200.0 for all cells
+[notice]: Setting constant dz 60.0 for all cells
+[notice]: Setting constant d 8000.0 for all cells
+[notice]: Setting constant poro 0.2 for all cells
+[notice]: Keyword "ρo" missing (default value 49.1 will be used)
+[notice]: Keyword "ρw" missing (default value 64.79 will be used)
+[info]: Reading PVDO table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVDO.DAT
+[info]: Reading PVTW table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVTW.DAT
+[info]: Reading SWOF table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\SWOF.DAT
+[notice]: Setting constant sw 0.1 for all cells
+[notice]: Setting constant po 6000.0 for all cells
+[notice]: Keyword "time_step" missing (default value [1825.0] will be used)
+[notice]: Keyword "max_newton_iter" missing (default value 10 will be used)
+[notice]: Keyword "linear_solver" is missing (default value GMRES_ILU0 will be used)
+[info]: Initializing grid
+[info]: Grid dimension: 60, 60, 1
+[info]: Number of cells: 3600
+[info]: Initializing rock
+[info]: Constructing connection list for Cartesian grid
+[info]: Number of connections: 7080
+[info]: Initializing fluid
+[info]: Fluid system: OW
+[info]: Initializing facility
+[info]: Initializing scheduler
+[info]: Initializing nonlinear solver
+[info]: Initializing linear solver
+[info]: Day =      2.000, ΔT =    2.000, NI =    3, LI =    24, t =    0.037secs
+[info]: Day =      5.062, ΔT =    3.062, NI =    2, LI =    18, t =    0.029secs
+[info]: Day =     10.671, ΔT =    5.609, NI =    2, LI =    22, t =    0.034secs
+[info]: Day =     21.631, ΔT =   10.960, NI =    3, LI =    39, t =    0.045secs
+[info]: Day =     41.841, ΔT =   20.210, NI =    3, LI =    46, t =    0.054secs
+[info]: Day =     76.881, ΔT =   35.041, NI =    3, LI =    51, t =    0.052secs
+[info]: Day =    126.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.075secs
+[info]: Day =    176.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.071secs
+[info]: Day =    226.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.075secs
+[info]: Day =    276.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.077secs
+[info]: Day =    326.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.055secs
+[info]: Day =    376.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.058secs
+[info]: Day =    426.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.055secs
+[info]: Day =    476.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.060secs
+[info]: Day =    526.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.055secs
+[info]: Day =    576.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.057secs
+[info]: Day =    626.881, ΔT =   50.000, NI =    3, LI =    54, t =    0.060secs
+[info]: Day =    676.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.075secs
+[info]: Day =    726.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.057secs
+[info]: Day =    776.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.079secs
+[info]: Day =    826.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.076secs
+[info]: Day =    876.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.079secs
+[info]: Day =    926.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.081secs
+[info]: Day =    976.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.058secs
+[info]: Day =   1026.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.065secs
+[info]: Day =   1076.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1126.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.087secs
+[info]: Day =   1176.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.068secs
+[info]: Day =   1226.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1276.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.043secs
+[info]: Day =   1326.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.040secs
+[info]: Day =   1376.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1426.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.044secs
+[info]: Day =   1476.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.040secs
+[info]: Day =   1526.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.043secs
+[info]: Day =   1576.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.041secs
+[info]: Day =   1626.881, ΔT =   50.000, NI =    2, LI =    36, t =    0.041secs
+[info]: Day =   1676.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.045secs
+[info]: Day =   1726.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.042secs
+[info]: Day =   1776.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1825.000, ΔT =   48.119, NI =    2, LI =    36, t =    0.042secs
+[info]: Simulation finished, elapsed time: 2.3 seconds
+
+[info]:
+Run 5 log:
+[info]: [info]: Creating simulation model
+[info]: Parsing input options
+[info]: Grid type: Cartesian
+[notice]: Setting constant dx 200.0 for all cells
+[notice]: Setting constant dy 200.0 for all cells
+[notice]: Setting constant dz 60.0 for all cells
+[notice]: Setting constant d 8000.0 for all cells
+[notice]: Setting constant poro 0.2 for all cells
+[notice]: Keyword "ρo" missing (default value 49.1 will be used)
+[notice]: Keyword "ρw" missing (default value 64.79 will be used)
+[info]: Reading PVDO table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVDO.DAT
+[info]: Reading PVTW table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\PVTW.DAT
+[info]: Reading SWOF table from C:\Users\yiminliu\Documents\ResSimAD.jl\src\models\data\SWOF.DAT
+[notice]: Setting constant sw 0.1 for all cells
+[notice]: Setting constant po 6000.0 for all cells
+[notice]: Keyword "time_step" missing (default value [1825.0] will be used)
+[notice]: Keyword "max_newton_iter" missing (default value 10 will be used)
+[notice]: Keyword "linear_solver" is missing (default value GMRES_ILU0 will be used)
+[info]: Initializing grid
+[info]: Grid dimension: 60, 60, 1
+[info]: Number of cells: 3600
+[info]: Initializing rock
+[info]: Constructing connection list for Cartesian grid
+[info]: Number of connections: 7080
+[info]: Initializing fluid
+[info]: Fluid system: OW
+[info]: Initializing facility
+[info]: Initializing scheduler
+[info]: Initializing nonlinear solver
+[info]: Initializing linear solver
+[info]: Day =      2.000, ΔT =    2.000, NI =    3, LI =    24, t =    0.039secs
+[info]: Day =      5.062, ΔT =    3.062, NI =    2, LI =    18, t =    0.034secs
+[info]: Day =     10.671, ΔT =    5.609, NI =    2, LI =    22, t =    0.029secs
+[info]: Day =     21.631, ΔT =   10.960, NI =    3, LI =    39, t =    0.049secs
+[info]: Day =     41.841, ΔT =   20.210, NI =    3, LI =    46, t =    0.055secs
+[info]: Day =     76.881, ΔT =   35.041, NI =    3, LI =    51, t =    0.052secs
+[info]: Day =    126.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.079secs
+[info]: Day =    176.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.074secs
+[info]: Day =    226.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.077secs
+[info]: Day =    276.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.079secs
+[info]: Day =    326.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.055secs
+[info]: Day =    376.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.055secs
+[info]: Day =    426.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.062secs
+[info]: Day =    476.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.056secs
+[info]: Day =    526.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.063secs
+[info]: Day =    576.881, ΔT =   50.000, NI =    3, LI =    56, t =    0.058secs
+[info]: Day =    626.881, ΔT =   50.000, NI =    3, LI =    54, t =    0.061secs
+[info]: Day =    676.881, ΔT =   50.000, NI =    4, LI =    72, t =    0.077secs
+[info]: Day =    726.881, ΔT =   50.000, NI =    3, LI =    55, t =    0.063secs
+[info]: Day =    776.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.077secs
+[info]: Day =    826.881, ΔT =   50.000, NI =    4, LI =    75, t =    0.082secs
+[info]: Day =    876.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.077secs
+[info]: Day =    926.881, ΔT =   50.000, NI =    4, LI =    76, t =    0.087secs
+[info]: Day =    976.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1026.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.064secs
+[info]: Day =   1076.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.060secs
+[info]: Day =   1126.881, ΔT =   50.000, NI =    4, LI =    74, t =    0.081secs
+[info]: Day =   1176.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.065secs
+[info]: Day =   1226.881, ΔT =   50.000, NI =    3, LI =    57, t =    0.061secs
+[info]: Day =   1276.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.042secs
+[info]: Day =   1326.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.048secs
+[info]: Day =   1376.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.042secs
+[info]: Day =   1426.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.044secs
+[info]: Day =   1476.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.045secs
+[info]: Day =   1526.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.040secs
+[info]: Day =   1576.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.040secs
+[info]: Day =   1626.881, ΔT =   50.000, NI =    2, LI =    36, t =    0.043secs
+[info]: Day =   1676.881, ΔT =   50.000, NI =    2, LI =    37, t =    0.041secs
+[info]: Day =   1726.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.041secs
+[info]: Day =   1776.881, ΔT =   50.000, NI =    2, LI =    38, t =    0.046secs
+[info]: Day =   1825.000, ΔT =   48.119, NI =    2, LI =    36, t =    0.040secs
+[info]: Simulation finished, elapsed time: 2.349 seconds

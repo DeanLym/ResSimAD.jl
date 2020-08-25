@@ -1,0 +1,357 @@
+[info]: 2020-08-24T19:33:41.087
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 7.8 GB
+
+[info]: MRST run 1
+[info]: Elapsed time for run 1: 15.472 seconds
+
+[info]: MRST run 2
+[info]: Elapsed time for run 2: 15.592 seconds
+
+[info]: MRST run 3
+[info]: Elapsed time for run 3: 15.294 seconds
+
+[info]: MRST run 4
+[info]: Elapsed time for run 4: 15.159 seconds
+
+[info]: MRST run 5
+[info]: Elapsed time for run 5: 15.224 seconds
+
+[info]: Average run time for the 5 simulations: 15.348 seconds
+[info]:
+Run 1 log:
+[info]:
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/41:                                    -> 864 Seconds
+Solving timestep 02/41: 864 Seconds                        -> 16 Days, 1621 Seconds, 894.74 Milliseconds
+Solving timestep 03/41: 16 Days, 1621 Seconds, 894.74 Milliseconds -> 32 Days, 2379 Seconds, 789.47 Milliseconds
+Solving timestep 04/41: 32 Days, 2379 Seconds, 789.47 Milliseconds -> 48 Days, 3137 Seconds, 684.21 Milliseconds
+Solving timestep 05/41: 48 Days, 3137 Seconds, 684.21 Milliseconds -> 96 Days, 1 Hour, 1811.37 Seconds
+Solving timestep 06/41: 96 Days, 1 Hour, 1811.37 Seconds   -> 144 Days, 2 Hours, 485.05 Seconds
+Solving timestep 07/41: 144 Days, 2 Hours, 485.05 Seconds  -> 192 Days, 2 Hours, 2758.74 Seconds
+Solving timestep 08/41: 192 Days, 2 Hours, 2758.74 Seconds -> 240 Days, 3 Hours, 1432.42 Seconds
+Solving timestep 09/41: 240 Days, 3 Hours, 1432.42 Seconds -> 288 Days, 4 Hours, 106.11 Seconds
+Solving timestep 10/41: 288 Days, 4 Hours, 106.11 Seconds  -> 336 Days, 4 Hours, 2379.79 Seconds
+Solving timestep 11/41: 336 Days, 4 Hours, 2379.79 Seconds -> 1 Year, 18 Days, 23.47 Hours
+Solving timestep 12/41: 1 Year, 18 Days, 23.47 Hours       -> 1 Year, 67 Days, 375.16 Seconds
+Solving timestep 13/41: 1 Year, 67 Days, 375.16 Seconds    -> 1 Year, 115 Days, 2648.84 Seconds
+Solving timestep 14/41: 1 Year, 115 Days, 2648.84 Seconds  -> 1 Year, 163 Days, 1.37 Hour
+Solving timestep 15/41: 1 Year, 163 Days, 1.37 Hour        -> 1 Year, 211 Days, 2.00 Hour
+Solving timestep 16/41: 1 Year, 211 Days, 2.00 Hour        -> 1 Year, 259 Days, 2.63 Hours
+Solving timestep 17/41: 1 Year, 259 Days, 2.63 Hours       -> 1 Year, 307 Days, 3.26 Hours
+Solving timestep 18/41: 1 Year, 307 Days, 3.26 Hours       -> 1 Year, 355 Days, 3.89 Hours
+Solving timestep 19/41: 1 Year, 355 Days, 3.89 Hours       -> 2 Years, 37 Days, 22.71 Hours
+Solving timestep 20/41: 2 Years, 37 Days, 22.71 Hours      -> 2 Years, 85 Days, 23.34 Hours
+Solving timestep 21/41: 2 Years, 85 Days, 23.34 Hours      -> 2 Years, 133 Days, 23.97 Hours
+Solving timestep 22/41: 2 Years, 133 Days, 23.97 Hours     -> 2 Years, 182 Days, 2160.00 Seconds
+Solving timestep 23/41: 2 Years, 182 Days, 2160.00 Seconds -> 2 Years, 230 Days, 1.23 Hour
+Solving timestep 24/41: 2 Years, 230 Days, 1.23 Hour       -> 2 Years, 278 Days, 1.86 Hour
+Solving timestep 25/41: 2 Years, 278 Days, 1.86 Hour       -> 2 Years, 326 Days, 2.49 Hours
+Solving timestep 26/41: 2 Years, 326 Days, 2.49 Hours      -> 3 Years, 8 Days, 21.31 Hours
+Solving timestep 27/41: 3 Years, 8 Days, 21.31 Hours       -> 3 Years, 56 Days, 21.94 Hours
+Solving timestep 28/41: 3 Years, 56 Days, 21.94 Hours      -> 3 Years, 104 Days, 22.57 Hours
+Solving timestep 29/41: 3 Years, 104 Days, 22.57 Hours     -> 3 Years, 152 Days, 23.20 Hours
+Solving timestep 30/41: 3 Years, 152 Days, 23.20 Hours     -> 3 Years, 200 Days, 23.83 Hours
+Solving timestep 31/41: 3 Years, 200 Days, 23.83 Hours     -> 3 Years, 249 Days, 1671.16 Seconds
+Solving timestep 32/41: 3 Years, 249 Days, 1671.16 Seconds -> 3 Years, 297 Days, 1.10 Hour
+Solving timestep 33/41: 3 Years, 297 Days, 1.10 Hour       -> 3 Years, 345 Days, 1.73 Hour
+Solving timestep 34/41: 3 Years, 345 Days, 1.73 Hour       -> 4 Years, 27 Days, 20.54 Hours
+Solving timestep 35/41: 4 Years, 27 Days, 20.54 Hours      -> 4 Years, 75 Days, 21.17 Hours
+Solving timestep 36/41: 4 Years, 75 Days, 21.17 Hours      -> 4 Years, 123 Days, 21.80 Hours
+Solving timestep 37/41: 4 Years, 123 Days, 21.80 Hours     -> 4 Years, 171 Days, 22.43 Hours
+Solving timestep 38/41: 4 Years, 171 Days, 22.43 Hours     -> 4 Years, 219 Days, 23.07 Hours
+Solving timestep 39/41: 4 Years, 219 Days, 23.07 Hours     -> 4 Years, 267 Days, 23.70 Hours
+Solving timestep 40/41: 4 Years, 267 Days, 23.70 Hours     -> 4 Years, 316 Days, 1182.32 Seconds
+Solving timestep 41/41: 4 Years, 316 Days, 1182.32 Seconds -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 41 control steps in 15 Seconds, 472 Milliseconds ***
+Newton Iterations 123
+
+[info]:
+Run 2 log:
+[info]:
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/41:                                    -> 864 Seconds
+Solving timestep 02/41: 864 Seconds                        -> 16 Days, 1621 Seconds, 894.74 Milliseconds
+Solving timestep 03/41: 16 Days, 1621 Seconds, 894.74 Milliseconds -> 32 Days, 2379 Seconds, 789.47 Milliseconds
+Solving timestep 04/41: 32 Days, 2379 Seconds, 789.47 Milliseconds -> 48 Days, 3137 Seconds, 684.21 Milliseconds
+Solving timestep 05/41: 48 Days, 3137 Seconds, 684.21 Milliseconds -> 96 Days, 1 Hour, 1811.37 Seconds
+Solving timestep 06/41: 96 Days, 1 Hour, 1811.37 Seconds   -> 144 Days, 2 Hours, 485.05 Seconds
+Solving timestep 07/41: 144 Days, 2 Hours, 485.05 Seconds  -> 192 Days, 2 Hours, 2758.74 Seconds
+Solving timestep 08/41: 192 Days, 2 Hours, 2758.74 Seconds -> 240 Days, 3 Hours, 1432.42 Seconds
+Solving timestep 09/41: 240 Days, 3 Hours, 1432.42 Seconds -> 288 Days, 4 Hours, 106.11 Seconds
+Solving timestep 10/41: 288 Days, 4 Hours, 106.11 Seconds  -> 336 Days, 4 Hours, 2379.79 Seconds
+Solving timestep 11/41: 336 Days, 4 Hours, 2379.79 Seconds -> 1 Year, 18 Days, 23.47 Hours
+Solving timestep 12/41: 1 Year, 18 Days, 23.47 Hours       -> 1 Year, 67 Days, 375.16 Seconds
+Solving timestep 13/41: 1 Year, 67 Days, 375.16 Seconds    -> 1 Year, 115 Days, 2648.84 Seconds
+Solving timestep 14/41: 1 Year, 115 Days, 2648.84 Seconds  -> 1 Year, 163 Days, 1.37 Hour
+Solving timestep 15/41: 1 Year, 163 Days, 1.37 Hour        -> 1 Year, 211 Days, 2.00 Hour
+Solving timestep 16/41: 1 Year, 211 Days, 2.00 Hour        -> 1 Year, 259 Days, 2.63 Hours
+Solving timestep 17/41: 1 Year, 259 Days, 2.63 Hours       -> 1 Year, 307 Days, 3.26 Hours
+Solving timestep 18/41: 1 Year, 307 Days, 3.26 Hours       -> 1 Year, 355 Days, 3.89 Hours
+Solving timestep 19/41: 1 Year, 355 Days, 3.89 Hours       -> 2 Years, 37 Days, 22.71 Hours
+Solving timestep 20/41: 2 Years, 37 Days, 22.71 Hours      -> 2 Years, 85 Days, 23.34 Hours
+Solving timestep 21/41: 2 Years, 85 Days, 23.34 Hours      -> 2 Years, 133 Days, 23.97 Hours
+Solving timestep 22/41: 2 Years, 133 Days, 23.97 Hours     -> 2 Years, 182 Days, 2160.00 Seconds
+Solving timestep 23/41: 2 Years, 182 Days, 2160.00 Seconds -> 2 Years, 230 Days, 1.23 Hour
+Solving timestep 24/41: 2 Years, 230 Days, 1.23 Hour       -> 2 Years, 278 Days, 1.86 Hour
+Solving timestep 25/41: 2 Years, 278 Days, 1.86 Hour       -> 2 Years, 326 Days, 2.49 Hours
+Solving timestep 26/41: 2 Years, 326 Days, 2.49 Hours      -> 3 Years, 8 Days, 21.31 Hours
+Solving timestep 27/41: 3 Years, 8 Days, 21.31 Hours       -> 3 Years, 56 Days, 21.94 Hours
+Solving timestep 28/41: 3 Years, 56 Days, 21.94 Hours      -> 3 Years, 104 Days, 22.57 Hours
+Solving timestep 29/41: 3 Years, 104 Days, 22.57 Hours     -> 3 Years, 152 Days, 23.20 Hours
+Solving timestep 30/41: 3 Years, 152 Days, 23.20 Hours     -> 3 Years, 200 Days, 23.83 Hours
+Solving timestep 31/41: 3 Years, 200 Days, 23.83 Hours     -> 3 Years, 249 Days, 1671.16 Seconds
+Solving timestep 32/41: 3 Years, 249 Days, 1671.16 Seconds -> 3 Years, 297 Days, 1.10 Hour
+Solving timestep 33/41: 3 Years, 297 Days, 1.10 Hour       -> 3 Years, 345 Days, 1.73 Hour
+Solving timestep 34/41: 3 Years, 345 Days, 1.73 Hour       -> 4 Years, 27 Days, 20.54 Hours
+Solving timestep 35/41: 4 Years, 27 Days, 20.54 Hours      -> 4 Years, 75 Days, 21.17 Hours
+Solving timestep 36/41: 4 Years, 75 Days, 21.17 Hours      -> 4 Years, 123 Days, 21.80 Hours
+Solving timestep 37/41: 4 Years, 123 Days, 21.80 Hours     -> 4 Years, 171 Days, 22.43 Hours
+Solving timestep 38/41: 4 Years, 171 Days, 22.43 Hours     -> 4 Years, 219 Days, 23.07 Hours
+Solving timestep 39/41: 4 Years, 219 Days, 23.07 Hours     -> 4 Years, 267 Days, 23.70 Hours
+Solving timestep 40/41: 4 Years, 267 Days, 23.70 Hours     -> 4 Years, 316 Days, 1182.32 Seconds
+Solving timestep 41/41: 4 Years, 316 Days, 1182.32 Seconds -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 41 control steps in 15 Seconds, 592 Milliseconds ***
+Newton Iterations 123
+
+[info]:
+Run 3 log:
+[info]:
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/41:                                    -> 864 Seconds
+Solving timestep 02/41: 864 Seconds                        -> 16 Days, 1621 Seconds, 894.74 Milliseconds
+Solving timestep 03/41: 16 Days, 1621 Seconds, 894.74 Milliseconds -> 32 Days, 2379 Seconds, 789.47 Milliseconds
+Solving timestep 04/41: 32 Days, 2379 Seconds, 789.47 Milliseconds -> 48 Days, 3137 Seconds, 684.21 Milliseconds
+Solving timestep 05/41: 48 Days, 3137 Seconds, 684.21 Milliseconds -> 96 Days, 1 Hour, 1811.37 Seconds
+Solving timestep 06/41: 96 Days, 1 Hour, 1811.37 Seconds   -> 144 Days, 2 Hours, 485.05 Seconds
+Solving timestep 07/41: 144 Days, 2 Hours, 485.05 Seconds  -> 192 Days, 2 Hours, 2758.74 Seconds
+Solving timestep 08/41: 192 Days, 2 Hours, 2758.74 Seconds -> 240 Days, 3 Hours, 1432.42 Seconds
+Solving timestep 09/41: 240 Days, 3 Hours, 1432.42 Seconds -> 288 Days, 4 Hours, 106.11 Seconds
+Solving timestep 10/41: 288 Days, 4 Hours, 106.11 Seconds  -> 336 Days, 4 Hours, 2379.79 Seconds
+Solving timestep 11/41: 336 Days, 4 Hours, 2379.79 Seconds -> 1 Year, 18 Days, 23.47 Hours
+Solving timestep 12/41: 1 Year, 18 Days, 23.47 Hours       -> 1 Year, 67 Days, 375.16 Seconds
+Solving timestep 13/41: 1 Year, 67 Days, 375.16 Seconds    -> 1 Year, 115 Days, 2648.84 Seconds
+Solving timestep 14/41: 1 Year, 115 Days, 2648.84 Seconds  -> 1 Year, 163 Days, 1.37 Hour
+Solving timestep 15/41: 1 Year, 163 Days, 1.37 Hour        -> 1 Year, 211 Days, 2.00 Hour
+Solving timestep 16/41: 1 Year, 211 Days, 2.00 Hour        -> 1 Year, 259 Days, 2.63 Hours
+Solving timestep 17/41: 1 Year, 259 Days, 2.63 Hours       -> 1 Year, 307 Days, 3.26 Hours
+Solving timestep 18/41: 1 Year, 307 Days, 3.26 Hours       -> 1 Year, 355 Days, 3.89 Hours
+Solving timestep 19/41: 1 Year, 355 Days, 3.89 Hours       -> 2 Years, 37 Days, 22.71 Hours
+Solving timestep 20/41: 2 Years, 37 Days, 22.71 Hours      -> 2 Years, 85 Days, 23.34 Hours
+Solving timestep 21/41: 2 Years, 85 Days, 23.34 Hours      -> 2 Years, 133 Days, 23.97 Hours
+Solving timestep 22/41: 2 Years, 133 Days, 23.97 Hours     -> 2 Years, 182 Days, 2160.00 Seconds
+Solving timestep 23/41: 2 Years, 182 Days, 2160.00 Seconds -> 2 Years, 230 Days, 1.23 Hour
+Solving timestep 24/41: 2 Years, 230 Days, 1.23 Hour       -> 2 Years, 278 Days, 1.86 Hour
+Solving timestep 25/41: 2 Years, 278 Days, 1.86 Hour       -> 2 Years, 326 Days, 2.49 Hours
+Solving timestep 26/41: 2 Years, 326 Days, 2.49 Hours      -> 3 Years, 8 Days, 21.31 Hours
+Solving timestep 27/41: 3 Years, 8 Days, 21.31 Hours       -> 3 Years, 56 Days, 21.94 Hours
+Solving timestep 28/41: 3 Years, 56 Days, 21.94 Hours      -> 3 Years, 104 Days, 22.57 Hours
+Solving timestep 29/41: 3 Years, 104 Days, 22.57 Hours     -> 3 Years, 152 Days, 23.20 Hours
+Solving timestep 30/41: 3 Years, 152 Days, 23.20 Hours     -> 3 Years, 200 Days, 23.83 Hours
+Solving timestep 31/41: 3 Years, 200 Days, 23.83 Hours     -> 3 Years, 249 Days, 1671.16 Seconds
+Solving timestep 32/41: 3 Years, 249 Days, 1671.16 Seconds -> 3 Years, 297 Days, 1.10 Hour
+Solving timestep 33/41: 3 Years, 297 Days, 1.10 Hour       -> 3 Years, 345 Days, 1.73 Hour
+Solving timestep 34/41: 3 Years, 345 Days, 1.73 Hour       -> 4 Years, 27 Days, 20.54 Hours
+Solving timestep 35/41: 4 Years, 27 Days, 20.54 Hours      -> 4 Years, 75 Days, 21.17 Hours
+Solving timestep 36/41: 4 Years, 75 Days, 21.17 Hours      -> 4 Years, 123 Days, 21.80 Hours
+Solving timestep 37/41: 4 Years, 123 Days, 21.80 Hours     -> 4 Years, 171 Days, 22.43 Hours
+Solving timestep 38/41: 4 Years, 171 Days, 22.43 Hours     -> 4 Years, 219 Days, 23.07 Hours
+Solving timestep 39/41: 4 Years, 219 Days, 23.07 Hours     -> 4 Years, 267 Days, 23.70 Hours
+Solving timestep 40/41: 4 Years, 267 Days, 23.70 Hours     -> 4 Years, 316 Days, 1182.32 Seconds
+Solving timestep 41/41: 4 Years, 316 Days, 1182.32 Seconds -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 41 control steps in 15 Seconds, 294 Milliseconds ***
+Newton Iterations 123
+
+[info]:
+Run 4 log:
+[info]:
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/41:                                    -> 864 Seconds
+Solving timestep 02/41: 864 Seconds                        -> 16 Days, 1621 Seconds, 894.74 Milliseconds
+Solving timestep 03/41: 16 Days, 1621 Seconds, 894.74 Milliseconds -> 32 Days, 2379 Seconds, 789.47 Milliseconds
+Solving timestep 04/41: 32 Days, 2379 Seconds, 789.47 Milliseconds -> 48 Days, 3137 Seconds, 684.21 Milliseconds
+Solving timestep 05/41: 48 Days, 3137 Seconds, 684.21 Milliseconds -> 96 Days, 1 Hour, 1811.37 Seconds
+Solving timestep 06/41: 96 Days, 1 Hour, 1811.37 Seconds   -> 144 Days, 2 Hours, 485.05 Seconds
+Solving timestep 07/41: 144 Days, 2 Hours, 485.05 Seconds  -> 192 Days, 2 Hours, 2758.74 Seconds
+Solving timestep 08/41: 192 Days, 2 Hours, 2758.74 Seconds -> 240 Days, 3 Hours, 1432.42 Seconds
+Solving timestep 09/41: 240 Days, 3 Hours, 1432.42 Seconds -> 288 Days, 4 Hours, 106.11 Seconds
+Solving timestep 10/41: 288 Days, 4 Hours, 106.11 Seconds  -> 336 Days, 4 Hours, 2379.79 Seconds
+Solving timestep 11/41: 336 Days, 4 Hours, 2379.79 Seconds -> 1 Year, 18 Days, 23.47 Hours
+Solving timestep 12/41: 1 Year, 18 Days, 23.47 Hours       -> 1 Year, 67 Days, 375.16 Seconds
+Solving timestep 13/41: 1 Year, 67 Days, 375.16 Seconds    -> 1 Year, 115 Days, 2648.84 Seconds
+Solving timestep 14/41: 1 Year, 115 Days, 2648.84 Seconds  -> 1 Year, 163 Days, 1.37 Hour
+Solving timestep 15/41: 1 Year, 163 Days, 1.37 Hour        -> 1 Year, 211 Days, 2.00 Hour
+Solving timestep 16/41: 1 Year, 211 Days, 2.00 Hour        -> 1 Year, 259 Days, 2.63 Hours
+Solving timestep 17/41: 1 Year, 259 Days, 2.63 Hours       -> 1 Year, 307 Days, 3.26 Hours
+Solving timestep 18/41: 1 Year, 307 Days, 3.26 Hours       -> 1 Year, 355 Days, 3.89 Hours
+Solving timestep 19/41: 1 Year, 355 Days, 3.89 Hours       -> 2 Years, 37 Days, 22.71 Hours
+Solving timestep 20/41: 2 Years, 37 Days, 22.71 Hours      -> 2 Years, 85 Days, 23.34 Hours
+Solving timestep 21/41: 2 Years, 85 Days, 23.34 Hours      -> 2 Years, 133 Days, 23.97 Hours
+Solving timestep 22/41: 2 Years, 133 Days, 23.97 Hours     -> 2 Years, 182 Days, 2160.00 Seconds
+Solving timestep 23/41: 2 Years, 182 Days, 2160.00 Seconds -> 2 Years, 230 Days, 1.23 Hour
+Solving timestep 24/41: 2 Years, 230 Days, 1.23 Hour       -> 2 Years, 278 Days, 1.86 Hour
+Solving timestep 25/41: 2 Years, 278 Days, 1.86 Hour       -> 2 Years, 326 Days, 2.49 Hours
+Solving timestep 26/41: 2 Years, 326 Days, 2.49 Hours      -> 3 Years, 8 Days, 21.31 Hours
+Solving timestep 27/41: 3 Years, 8 Days, 21.31 Hours       -> 3 Years, 56 Days, 21.94 Hours
+Solving timestep 28/41: 3 Years, 56 Days, 21.94 Hours      -> 3 Years, 104 Days, 22.57 Hours
+Solving timestep 29/41: 3 Years, 104 Days, 22.57 Hours     -> 3 Years, 152 Days, 23.20 Hours
+Solving timestep 30/41: 3 Years, 152 Days, 23.20 Hours     -> 3 Years, 200 Days, 23.83 Hours
+Solving timestep 31/41: 3 Years, 200 Days, 23.83 Hours     -> 3 Years, 249 Days, 1671.16 Seconds
+Solving timestep 32/41: 3 Years, 249 Days, 1671.16 Seconds -> 3 Years, 297 Days, 1.10 Hour
+Solving timestep 33/41: 3 Years, 297 Days, 1.10 Hour       -> 3 Years, 345 Days, 1.73 Hour
+Solving timestep 34/41: 3 Years, 345 Days, 1.73 Hour       -> 4 Years, 27 Days, 20.54 Hours
+Solving timestep 35/41: 4 Years, 27 Days, 20.54 Hours      -> 4 Years, 75 Days, 21.17 Hours
+Solving timestep 36/41: 4 Years, 75 Days, 21.17 Hours      -> 4 Years, 123 Days, 21.80 Hours
+Solving timestep 37/41: 4 Years, 123 Days, 21.80 Hours     -> 4 Years, 171 Days, 22.43 Hours
+Solving timestep 38/41: 4 Years, 171 Days, 22.43 Hours     -> 4 Years, 219 Days, 23.07 Hours
+Solving timestep 39/41: 4 Years, 219 Days, 23.07 Hours     -> 4 Years, 267 Days, 23.70 Hours
+Solving timestep 40/41: 4 Years, 267 Days, 23.70 Hours     -> 4 Years, 316 Days, 1182.32 Seconds
+Solving timestep 41/41: 4 Years, 316 Days, 1182.32 Seconds -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 41 control steps in 15 Seconds, 159 Milliseconds ***
+Newton Iterations 123
+
+[info]:
+Run 5 log:
+[info]:
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+
+Welcome to the Matlab Reservoir Simulation Toolbox (MRST)!
+You are using the release version 2020a. To download other versions of MRST
+and view examples and relevant publications, please visit www.mrst.no
+
+Useful commands for getting started:
+ - List all introductory examples:   mrstExamples()
+ - List all modules:                 mrstPath('list')
+ - Load modules using GUI:           mrstModule('gui')
+ - Explore all available data sets   mrstDatasetGUI()
+ - List examples of a module:        mrstExamples('ad-blackoil')
+ - Explore modules and publications: mrstExploreModules()
+ - Show all examples in all modules: mrstExamples('all')
+ - Display this message:             mrstStartupMessage()
+
+For assistance and discussions about MRST, please visit our mailing list at
+	www.sintef.no/projectweb/mrst/forum/ (sintef-mrst@googlegroups.com)
+For some common queries, see our FAQ: www.sintef.no/projectweb/mrst/faq/
+Solving timestep 01/41:                                    -> 864 Seconds
+Solving timestep 02/41: 864 Seconds                        -> 16 Days, 1621 Seconds, 894.74 Milliseconds
+Solving timestep 03/41: 16 Days, 1621 Seconds, 894.74 Milliseconds -> 32 Days, 2379 Seconds, 789.47 Milliseconds
+Solving timestep 04/41: 32 Days, 2379 Seconds, 789.47 Milliseconds -> 48 Days, 3137 Seconds, 684.21 Milliseconds
+Solving timestep 05/41: 48 Days, 3137 Seconds, 684.21 Milliseconds -> 96 Days, 1 Hour, 1811.37 Seconds
+Solving timestep 06/41: 96 Days, 1 Hour, 1811.37 Seconds   -> 144 Days, 2 Hours, 485.05 Seconds
+Solving timestep 07/41: 144 Days, 2 Hours, 485.05 Seconds  -> 192 Days, 2 Hours, 2758.74 Seconds
+Solving timestep 08/41: 192 Days, 2 Hours, 2758.74 Seconds -> 240 Days, 3 Hours, 1432.42 Seconds
+Solving timestep 09/41: 240 Days, 3 Hours, 1432.42 Seconds -> 288 Days, 4 Hours, 106.11 Seconds
+Solving timestep 10/41: 288 Days, 4 Hours, 106.11 Seconds  -> 336 Days, 4 Hours, 2379.79 Seconds
+Solving timestep 11/41: 336 Days, 4 Hours, 2379.79 Seconds -> 1 Year, 18 Days, 23.47 Hours
+Solving timestep 12/41: 1 Year, 18 Days, 23.47 Hours       -> 1 Year, 67 Days, 375.16 Seconds
+Solving timestep 13/41: 1 Year, 67 Days, 375.16 Seconds    -> 1 Year, 115 Days, 2648.84 Seconds
+Solving timestep 14/41: 1 Year, 115 Days, 2648.84 Seconds  -> 1 Year, 163 Days, 1.37 Hour
+Solving timestep 15/41: 1 Year, 163 Days, 1.37 Hour        -> 1 Year, 211 Days, 2.00 Hour
+Solving timestep 16/41: 1 Year, 211 Days, 2.00 Hour        -> 1 Year, 259 Days, 2.63 Hours
+Solving timestep 17/41: 1 Year, 259 Days, 2.63 Hours       -> 1 Year, 307 Days, 3.26 Hours
+Solving timestep 18/41: 1 Year, 307 Days, 3.26 Hours       -> 1 Year, 355 Days, 3.89 Hours
+Solving timestep 19/41: 1 Year, 355 Days, 3.89 Hours       -> 2 Years, 37 Days, 22.71 Hours
+Solving timestep 20/41: 2 Years, 37 Days, 22.71 Hours      -> 2 Years, 85 Days, 23.34 Hours
+Solving timestep 21/41: 2 Years, 85 Days, 23.34 Hours      -> 2 Years, 133 Days, 23.97 Hours
+Solving timestep 22/41: 2 Years, 133 Days, 23.97 Hours     -> 2 Years, 182 Days, 2160.00 Seconds
+Solving timestep 23/41: 2 Years, 182 Days, 2160.00 Seconds -> 2 Years, 230 Days, 1.23 Hour
+Solving timestep 24/41: 2 Years, 230 Days, 1.23 Hour       -> 2 Years, 278 Days, 1.86 Hour
+Solving timestep 25/41: 2 Years, 278 Days, 1.86 Hour       -> 2 Years, 326 Days, 2.49 Hours
+Solving timestep 26/41: 2 Years, 326 Days, 2.49 Hours      -> 3 Years, 8 Days, 21.31 Hours
+Solving timestep 27/41: 3 Years, 8 Days, 21.31 Hours       -> 3 Years, 56 Days, 21.94 Hours
+Solving timestep 28/41: 3 Years, 56 Days, 21.94 Hours      -> 3 Years, 104 Days, 22.57 Hours
+Solving timestep 29/41: 3 Years, 104 Days, 22.57 Hours     -> 3 Years, 152 Days, 23.20 Hours
+Solving timestep 30/41: 3 Years, 152 Days, 23.20 Hours     -> 3 Years, 200 Days, 23.83 Hours
+Solving timestep 31/41: 3 Years, 200 Days, 23.83 Hours     -> 3 Years, 249 Days, 1671.16 Seconds
+Solving timestep 32/41: 3 Years, 249 Days, 1671.16 Seconds -> 3 Years, 297 Days, 1.10 Hour
+Solving timestep 33/41: 3 Years, 297 Days, 1.10 Hour       -> 3 Years, 345 Days, 1.73 Hour
+Solving timestep 34/41: 3 Years, 345 Days, 1.73 Hour       -> 4 Years, 27 Days, 20.54 Hours
+Solving timestep 35/41: 4 Years, 27 Days, 20.54 Hours      -> 4 Years, 75 Days, 21.17 Hours
+Solving timestep 36/41: 4 Years, 75 Days, 21.17 Hours      -> 4 Years, 123 Days, 21.80 Hours
+Solving timestep 37/41: 4 Years, 123 Days, 21.80 Hours     -> 4 Years, 171 Days, 22.43 Hours
+Solving timestep 38/41: 4 Years, 171 Days, 22.43 Hours     -> 4 Years, 219 Days, 23.07 Hours
+Solving timestep 39/41: 4 Years, 219 Days, 23.07 Hours     -> 4 Years, 267 Days, 23.70 Hours
+Solving timestep 40/41: 4 Years, 267 Days, 23.70 Hours     -> 4 Years, 316 Days, 1182.32 Seconds
+Solving timestep 41/41: 4 Years, 316 Days, 1182.32 Seconds -> 4 Years, 364 Days, 3456.00 Seconds
+*** Simulation complete. Solved 41 control steps in 15 Seconds, 224 Milliseconds ***
+Newton Iterations 123

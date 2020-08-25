@@ -5,9 +5,9 @@ using Dates
 using DelimitedFiles
 
 function run_benchmark_ressimad(model_name, dir)
-    # Suppress ResSimAD log information
+    # Suppress ResSimAD log information to console
     logger = getlogger("root")
-    setlevel!(getlogger("ResSimAD"), "error"; recursive=true)
+    setpropagating!(getlogger("ResSimAD"), false)
     """
     The first run includes compilation time.
     Simulation time for the first run is not logged.
@@ -40,6 +40,11 @@ function run_benchmark_ressimad(model_name, dir)
     info(logger, string(sim))
 
     # Run simulation for 5 times and log runtime
+    out = IOBuffer();
+    fmt, opt = ResSimAD.default_log_format()
+    push!(getlogger("ResSimAD"), DefaultHandler(out, fmt, opt))
+
+    logs = []
     runtimes = []
     for irun = 1:5
         info(logger, "ResSimAD simulation run $(irun)")
@@ -49,16 +54,30 @@ function run_benchmark_ressimad(model_name, dir)
         runsim(sim)
 
         push!(runtimes, time() - t0)
+        push!(logs, String(take!(out)))
         info(logger, "Elapsed time for run $(irun): $(round(runtimes[irun], digits=3)) seconds\n")
     end
 
+    close(out)
+
     info(logger, "Average run time for the 5 simulations: $(round(mean(runtimes), digits=3)) seconds")
+
+    info(logger, "Time steps: $(length(sim.nsolver.num_iter))")
+    info(logger, "Newton Iteration: $(sum(sim.nsolver.num_iter))\n")
+
+    # Write run logs to log file
+    for (irun, log) in enumerate(logs)
+        info(logger, "\nRun $irun log:")
+        info(logger, log)
+    end
+
     # Remove log-file from handlers
+    logger.handlers = filter!(x -> x[1]=="console", logger.handlers)
+
+    logger = getlogger("ResSimAD")
     logger.handlers = filter!(x -> x[1]=="console", logger.handlers)
 
     # Save average run time to file
     writedlm(joinpath(results_dir, "average_runtime.txt"), runtimes)
-
-    # Remove log file
 
 end

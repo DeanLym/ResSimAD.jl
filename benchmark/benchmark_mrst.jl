@@ -33,7 +33,7 @@ function run_benchmark_mrst(model_name, dir)
 
         # Launch MRST
         out = Pipe();
-        cmd1 = `matlab.exe -nodesktop -nosplash -nojvm -minimize -r "run ('example1.m'), quit" -wait -log`
+        cmd1 = `matlab.exe -nodesktop -nosplash -nojvm -minimize -r "run ('$(model_name).m'), quit" -wait -log`
         run(pipeline(cmd1, stderr=out));
         close(out.in);
 

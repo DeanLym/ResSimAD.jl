@@ -1,19 +1,26 @@
+[info]: 2020-08-24T18:47:18.842
+[info]: Sys.MACHINE: x86_64-w64-mingw32
+[info]: CPU model: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+[info]: Number of CPU cores: 8
+[info]: Total memory 15.9 GB
+[info]: Free memory 8.1 GB
+
 [info]: MRST run 1
-[info]: Elapsed time for run 1: 10.749 seconds
+[info]: Elapsed time for run 1: 10.89 seconds
 
 [info]: MRST run 2
-[info]: Elapsed time for run 2: 10.218 seconds
+[info]: Elapsed time for run 2: 10.706 seconds
 
 [info]: MRST run 3
-[info]: Elapsed time for run 3: 10.472 seconds
+[info]: Elapsed time for run 3: 10.529 seconds
 
 [info]: MRST run 4
-[info]: Elapsed time for run 4: 10.155 seconds
+[info]: Elapsed time for run 4: 10.319 seconds
 
 [info]: MRST run 5
-[info]: Elapsed time for run 5: 10.296 seconds
+[info]: Elapsed time for run 5: 10.679 seconds
 
-[info]: Average run time for the 5 simulations: 10.378 seconds
+[info]: Average run time for the 5 simulations: 10.625 seconds
 [info]: 
 Run 1 log:
 [info]:  
@@ -107,7 +114,8 @@ Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days,
 Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
 Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
 Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
-*** Simulation complete. Solved 70 control steps in 10 Seconds, 749 Milliseconds ***
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 890 Milliseconds ***
+Newton Iterations 176
 
 [info]: 
 Run 2 log:
@@ -202,7 +210,8 @@ Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days,
 Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
 Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
 Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
-*** Simulation complete. Solved 70 control steps in 10 Seconds, 218 Milliseconds ***
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 706 Milliseconds ***
+Newton Iterations 176
 
 [info]: 
 Run 3 log:
@@ -297,7 +306,8 @@ Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days,
 Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
 Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
 Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
-*** Simulation complete. Solved 70 control steps in 10 Seconds, 472 Milliseconds ***
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 529 Milliseconds ***
+Newton Iterations 176
 
 [info]: 
 Run 4 log:
@@ -392,7 +402,8 @@ Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days,
 Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
 Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
 Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
-*** Simulation complete. Solved 70 control steps in 10 Seconds, 155 Milliseconds ***
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 319 Milliseconds ***
+Newton Iterations 176
 
 [info]: 
 Run 5 log:
@@ -487,5 +498,6 @@ Solving timestep 67/70: 4 Years, 251 Days, 17.58 Hours     -> 4 Years, 279 Days,
 Solving timestep 68/70: 4 Years, 279 Days, 19.42 Hours     -> 4 Years, 307 Days, 21.27 Hours
 Solving timestep 69/70: 4 Years, 307 Days, 21.27 Hours     -> 4 Years, 335 Days, 23.11 Hours
 Solving timestep 70/70: 4 Years, 335 Days, 23.11 Hours     -> 4 Years, 364 Days, 3456.00 Seconds
-*** Simulation complete. Solved 70 control steps in 10 Seconds, 296 Milliseconds ***
+*** Simulation complete. Solved 70 control steps in 10 Seconds, 679 Milliseconds ***
+Newton Iterations 176
 

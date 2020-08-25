@@ -1,0 +1,199 @@
+RUNSPEC   == memory dimensioning of the run =============================
+
+TITLE     -- title of the run
+EXAMPLE 2
+
+DIMENS    -- dimensions of the model
+-- NX    NY   NZ
+   60    60    1 /
+
+OIL       -- two phase black oil
+WATER     -- water is present, but no gas
+FIELD     -- unit specification
+START     -- starting date for simulation run
+  1 'JAN' 2009 /
+
+EQLDIMS   -- equilibration table size
+  1  100   10    1   20 /
+TABDIMS   -- size of saturation and pvt tables
+  1    1   60   60 /
+WELLDIMS  -- max numb of WELLS/CONN per WELL/GROUPS/WELLperGROUP
+  10    20    1    10/
+START     -- starting time for simulation run
+    1 'JAN' 2009  /
+NSTACK    -- usually 10
+    50 /
+
+GRID      == geometry of our model =====================================
+
+EQUALS    -- set top depth, block sizes and rock properties
+          -- valid for a given range of blocks: I1 I2   J1 J2   K1 K2
+      'DX'     200   /                        -- default box => all blocks
+      'DY'     200   /
+      'PORO'   0.2 /
+      'DZ'     60  / -- thickness of the layers
+/
+
+INCLUDE
+'../PERM_BIMODAL.DAT'
+/
+
+COPY
+	PERMX PERMY /
+	PERMX PERMZ /
+/
+
+TOPS
+3600*7990/
+
+PROPS     == pvt and relperm tables =============================
+
+PVTW
+-- Pref | wat FVF @Pref | wat compres | visco@Pref | viscosibility @Pref
+   3962.194496       1.029          3.17E-06           0.31            0.0 /
+
+
+PVDO
+725.19 1.012 1.16
+1015.266 1.0081 1.1611
+1305.342 1.0041 1.1621
+1595.418 1.0002 1.1632
+1885.494 0.9963 1.1642
+2175.57 0.9924 1.1653
+2465.646 0.9884 1.1663
+2755.722 0.9845 1.1674
+3045.798 0.9806 1.1684
+3335.874 0.9766 1.1695
+3637.55304 0.9725 1.1706
+3893.109996 0.9691 1.1715
+4138.369254 0.9658 1.1724
+4374.201042 0.9626 1.1733
+4601.040474 0.9595 1.1741
+4819.467702 0.9565 1.1749
+5029.91784 0.9537 1.1756
+5232.97104 0.9509 1.1764
+5428.917378 0.9483 1.1771
+5618.191968 0.9457 1.1778
+5801.374962 0.9432 1.1784
+5978.611398 0.9408 1.1791
+6150.33639 0.9385 1.1797
+6316.840014 0.9362 1.1803
+6478.557384 0.9341 1.1809
+6635.633538 0.9319 1.1815
+6788.358552 0.9299 1.182
+6937.16754 0.9278 1.1826
+7082.20554 0.9259 1.1831
+7223.762628 0.924 1.1836
+7361.983842 0.9221 1.1841
+7497.304296 0.9203 1.1846
+7629.869028 0.9185 1.1851
+7759.823076 0.9167 1.1856
+7887.601554 0.915 1.186
+8013.204462 0.9133 1.1865
+8137.211952 0.9116 1.1869
+8259.624024 0.9099 1.1874
+8380.585716 0.9083 1.1878
+8500.532142 0.9067 1.1883
+8619.463302 0.9051 1.1887
+8982.058302 0.9001 1.19
+/
+
+SWOF
+0.0000 0 0.9000 0
+0.1000 0 0.9000 0
+0.2000 0.0102 0.6612 0
+0.3000 0.0408 0.4592 0
+0.4000 0.0918 0.2939 0
+0.5000 0.1633 0.1653 0
+0.6000 0.2551 0.0735 0
+0.7000 0.3673 0.0184 0
+0.8000 0.5000 0.0000 0
+1.0000 0.5000 0.0000 0.0000
+/
+
+
+ROCK       -- reference Pressure and rock compressibility
+        14.7    0E-6
+/
+
+DENSITY   -- oil wat gas @surface(lbm/scf)
+        49.1  64.79  0.0647
+/
+
+SOLUTION   == initial state of solution variables =====================
+PRESSURE
+3600*6000 /
+
+SWAT
+3600*0.1 /
+
+RPTSOL
+'NOTHING' /
+
+
+SUMMARY    == output written to summary *.RSM file ====================
+
+WOPR       -- 'W'ell 'O'il 'P'roduction 'R'ate
+P1
+P2
+/
+
+WWPR       -- 'W'ell 'W'ater 'P'roduction 'R'ate
+P1
+P2
+/
+
+WWIR
+I1
+I2
+/
+
+SCHEDULE   == operations to be simulated ==============================
+
+DRSDT     -- Free gas is not allowed to re-dissolve within oil
+  0 /
+
+RPTRST    -- request restart file
+'NOTHING'
+/
+
+
+TUNING  -- min/max timestep (3 sections)
+2.0 50  /
+5*  0.1 /
+2* 100 /
+
+WELSPECS   == WELL SPECIFICATION DATA ================================
+'I1'	'G1'	40	40	1*	'WATER'	/
+'I2'	'G1'	25	53	1*	'WATER'	/
+'P1'	'G1'	20	18	1*	'OIL'	/
+'P2'	'G1'	13	35	1*	'OIL'	/
+/
+
+COMPDAT    -- COMPLETION SPECIFICATION DATA
+'I1'	40	40	1	1	OPEN	2*	1.0	3*	Z	/
+'I2'	25	53	1	1	OPEN	2*	1.0	3*	Z	/
+'P1'	20	18	1	1	OPEN	2*	1.0	3*	Z	/
+'P2'	13	35	1	1	OPEN	2*	1.0	3*	Z	/
+/
+
+WCONPROD   -- PRODUCTION WELL CONTROLS
+--   WELL    OPEN/  CTRL     OIL  WATER   GAS  LIQU   RES   BHP
+--   NAME    SHUT   MODE    RATE   RATE  RATE  RATE  RATE
+    'P1'  'OPEN' 'BHP'   5*                      5900  / --see ECL manual for details
+	'P2'  'OPEN' 'BHP'   5*                      5900  / --see ECL manual for details
+/
+
+
+WCONINJE   -- INJECTION WELL CONTROLS
+    'I1'  'WATER' 'OPEN'   'BHP'   2*   6100  / --see ECL manual for details
+	'I2'  'WATER' 'OPEN'   'BHP'   2*   6100  / --see ECL manual for details
+/
+
+-- timesteps can be refined by entering multiple TSTEP keywords
+TSTEP      -- and run it for 5 yrs
+   1825.0
+/
+
+
+END     ================================================================
