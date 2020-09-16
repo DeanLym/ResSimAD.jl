@@ -79,11 +79,11 @@ function compute_λ(phase::Phase)::ADVector
     @. phase.λ = phase.kr / (phase.μ * phase.b)
 end
 
-function compute_b(phase::Phase)::ADVector where {T <: AbstractPVT}
+function compute_b(phase::Phase)::ADVector
     get_b(phase.pvt, phase.b, phase.p)
 end
 
-function compute_μ(phase::Phase)::ADVector where {T <: AbstractPVT}
+function compute_μ(phase::Phase)::ADVector
     get_μ(phase.pvt, phase.μ, phase.p)
 end
 

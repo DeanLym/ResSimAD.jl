@@ -274,10 +274,10 @@ Base.floor(z::Tv) where{Tv <: ADScaler}  = floor(z.v)
 Base.ceil(z::Tv) where{Tv <: ADScaler}   = ceil(z.v)
 Base.trunc(z::Tv) where{Tv <: ADScaler}  = trunc(z.v)
 Base.round(z::Tv) where{Tv <: ADScaler}  = round(z.v)
-Base.floor(::Type{T}, z::Tv) where {N, T<:Real, Tv <: ADScaler} = floor(T, z.v)
-Base.trunc(::Type{T}, z::Tv) where {N, T<:Real, Tv <: ADScaler} = trunc(T, z.v)
-Base.ceil( ::Type{T}, z::Tv) where {N, T<:Real, Tv <: ADScaler} = ceil(T, z.v)
-Base.round(::Type{T}, z::Tv) where {N, T<:Real, Tv <: ADScaler} = round(T, z.v)
+Base.floor(::Type{T}, z::Tv) where {T<:Real, Tv <: ADScaler} = floor(T, z.v)
+Base.trunc(::Type{T}, z::Tv) where {T<:Real, Tv <: ADScaler} = trunc(T, z.v)
+Base.ceil( ::Type{T}, z::Tv) where {T<:Real, Tv <: ADScaler} = ceil(T, z.v)
+Base.round(::Type{T}, z::Tv) where {T<:Real, Tv <: ADScaler} = round(T, z.v)
 
 Base.abs(z::Tv) where{Tv <: ADScaler} = z ≥ 0 ? z : -z
 

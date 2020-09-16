@@ -133,10 +133,14 @@ end
 function init_lsolver(lsolver_opt::Dict, grid::AbstractGrid)
     info(LOGGER, "Initializing linear solver")
     solver_type = lsolver_opt["type"]
-    if solver_type == "GMRES_ILU0"
-        lsolver = GMRES_ILU0_Solver()
+    if solver_type == "GMRES_ILU"
+        lsolver = GMRES_ILU_Solver()
+    elseif solver_type == "BICGSTAB_ILU"
+        lsolver = BICGSTAB_ILU_Solver()
     elseif solver_type == "GMRES_CPR"
         lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors)
+    elseif solver_type == "BICGSTAB_CPR"
+        lsolver = BICGSTAB_CPR_Solver(grid.nc, grid.neighbors)
     else
         lsolver = Julia_BackSlash_Solver()
     end

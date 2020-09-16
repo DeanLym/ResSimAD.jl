@@ -25,17 +25,39 @@ end
 
 lsolver_info(::Julia_BackSlash_Solver) = "Julia backslash"
 
-## GMRES Solver with ILU0 preconditioner
-struct GMRES_ILU0_Solver <: AbstractLinearSolver
+## BICGSTAB solver with ILU preconditioner
+struct BICGSTAB_ILU_Solver <: AbstractLinearSolver
+    l::Int
     τ::Float64
     iterations::Vector{Int64}
-    GMRES_ILU0_Solver(; τ=0.1) = new(τ, Int[])
+    BICGSTAB_ILU_Solver(; l=2, τ=0.1) = new(l, τ, Int[])
 end
 
-lsolver_info(::GMRES_ILU0_Solver) = "GMRES ILU"
+lsolver_info(x::BICGSTAB_ILU_Solver) = "BiCGStab($(x.l)) ILU"
 
 function solve(
-    solver::GMRES_ILU0_Solver,
+    solver::BICGSTAB_ILU_Solver,
+    δx::Vector{Float64},
+    jac::SparseMatrixCSC{Float64,Int},
+    residual::Vector{Float64},
+)::Vector{Float64}
+    prec = ilu(jac, τ=solver.τ)
+    _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=prec, log=true)
+    push!(solver.iterations, log.iters)
+    return residual
+end
+
+## GMRES Solver with ILU preconditioner
+struct GMRES_ILU_Solver <: AbstractLinearSolver
+    τ::Float64
+    iterations::Vector{Int64}
+    GMRES_ILU_Solver(; τ=0.1) = new(τ, Int[])
+end
+
+lsolver_info(::GMRES_ILU_Solver) = "GMRES ILU"
+
+function solve(
+    solver::GMRES_ILU_Solver,
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
@@ -73,8 +95,38 @@ function solve(
     residual::Vector{Float64},
 )::Vector{Float64}
     setup_cpr_preconditioner(solver.cpr_prec, jac)
-    # _, log = gmres!(δx, jac, residual, Pl=prec, log=true)
     _, log = gmres!(δx, jac, residual, Pl=solver.cpr_prec, log=true, maxiter=200)
+    push!(solver.iterations, log.iters)
+    return residual
+end
+
+## BICGSTAB Solver with CPR preconditioner
+struct BICGSTAB_CPR_Solver <: AbstractLinearSolver
+    l::Int
+    cpr_prec::CPRPreconditioner
+    iterations::Vector{Int64}
+end
+
+function BICGSTAB_CPR_Solver(
+    nc::Int64,
+    neighbors::Vector{Vector{Int}};
+    l=2,
+    τ=0.5,
+)
+    cpr_prec = CPRPreconditioner(nc, neighbors, τ)
+    return BICGSTAB_CPR_Solver(l, cpr_prec, Int[])
+end
+
+lsolver_info(::BICGSTAB_CPR_Solver) = "BICGSTAB CPR"
+
+function solve(
+    solver::BICGSTAB_CPR_Solver,
+    δx::Vector{Float64},
+    jac::SparseMatrixCSC{Float64,Int},
+    residual::Vector{Float64},
+)::Vector{Float64}
+    setup_cpr_preconditioner(solver.cpr_prec, jac)
+    _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=solver.cpr_prec, log=true)
     push!(solver.iterations, log.iters)
     return residual
 end

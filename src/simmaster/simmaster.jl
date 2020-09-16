@@ -38,7 +38,7 @@ using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJ
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step
 
 using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
-        GMRES_ILU0_Solver, GMRES_CPR_Solver, solve, lsolver_info
+        GMRES_ILU_Solver, GMRES_CPR_Solver, BICGSTAB_ILU_Solver, BICGSTAB_CPR_Solver, solve, lsolver_info
 #! format: on
 
 import Base.show
