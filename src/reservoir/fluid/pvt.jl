@@ -32,7 +32,7 @@ end
 function PVTC(param::Dict{String, Float64})
     vecs = ("pref", "bref",  "c", "μref", "cμ")
     params = [param[v] for v in vecs]
-    return PVTW(params...)
+    return PVTC(params...)
 end
 
 function PVTC(df::DataFrame)

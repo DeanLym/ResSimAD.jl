@@ -6,9 +6,14 @@ end
 
 
 function check_keyword_type(p, options, types)
-    if !(typeof(options[p]) ∈ types)
+    type = typeof(options[p])
+    if type <: Dict && Dict ∈ types
+        return true
+    elseif !(typeof(options[p]) ∈ types)
         error(LOGGER, "Type for keyword \"$p\" must be one of $types")
+        return false
     end
+    return true
 end
 
 
