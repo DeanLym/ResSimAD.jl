@@ -1,11 +1,14 @@
 
-const well_modes_dict = Dict([
+const valid_well_modes = Dict([
     ("producer", ("bhp", "shut", "orat", "wrat", "lrat"))
     ("injector", ("bhp", "wrat"))
 ])
 
+const valid_well_limits = keys(get_limit)
+
 function parse_well_option(w, type::String, well_names::Set{String})
-    modes = well_modes_dict[type]
+    
+    # Check required keywords
     wkeywords = keys(w)
     if !("name" ∈ wkeywords)
         error(LOGGER, "Missing well name")
@@ -16,6 +19,8 @@ function parse_well_option(w, type::String, well_names::Set{String})
             error(LOGGER, "Keyword \"$pp\" missing for well")
         end
     end
+
+    # Parse well name
     check_keyword_type("name", w, (String,))
     name = w["name"]
     if name in well_names
@@ -23,18 +28,49 @@ function parse_well_option(w, type::String, well_names::Set{String})
     end
     push!(well_names, name)
 
+    # Parse perforation
     check_keyword_type("perforation", w, (Vector{Tuple{Int, Int, Int}},))
+
+    # Parse well control mode
     check_keyword_type("mode", w, (String,))
     mode = lowercase(w["mode"])
-    if !(mode ∈ modes)
+    valid_modes = valid_well_modes[type]
+    if !(mode ∈ valid_modes)
         erorr(LOGGER, "Unsupported mode \"$mode\" for well \"$name\"")
     end
     w["mode"] = get_ctrl_mode[mode]
+
+    # Parse well control target
     check_keyword_type("target", w, (Float64,))
 
+    # Parse well radius
     if !("radius" ∈ wkeywords)
         notice(LOGGER, "Keyword \"radius\" missing for well \"$name\", (default value 0.5 will be used)")
         w["radius"] = 0.5
+    end
+
+    # Parse well limits
+    if "limits" ∈ wkeywords
+        check_keyword_type("limits", w, (Vector{Tuple{String, Float64}},))
+        well_limits = copy(w["limits"])
+        empty!(w["limits"])
+        for (limit, v) in well_limits
+            limit = lowercase(limit)
+            if !(limit ∈ valid_well_limits)
+                erorr(LOGGER, "Unsupported limit \"$limit\" for well \"$name\"")
+            end
+            if occursin(mode, limit)
+                warn(LOGGER, "Limit \"$limit\" ignored under \"$mode\" control for well \"$name\"")
+            else
+                push!(w["limits"], (limit, v))
+            end
+        end
+    else
+        if type == "producer"
+            w["limits"] = [("min_bhp", 14.7)]
+        else
+            w["limits"] = [("max_bhp", 1.0e5)]
+        end
     end
 end
 

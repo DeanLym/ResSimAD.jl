@@ -32,8 +32,8 @@ using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
 using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJECTOR,
-        get_ctrl_mode, compute_wi, compute_qo, compute_qw, compute_ql, compute_bhp,
-        save_result
+        get_ctrl_mode, get_limit, compute_wi, compute_qo, compute_qw, compute_ql, compute_bhp,
+        save_result, check_limits
 
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step
 
@@ -184,20 +184,35 @@ function time_step(sim::Sim)::Nothing
         newton_step(sim)
         linear_iter += lsolver.iterations[end]
     end
-    update_dt(sch, fluid, nsolver.converged)
     push!(nsolver.num_iter, nsolver.newton_iter)
 
+    proceed = true
     if nsolver.converged
+        for well in values(facility)
+            if !(check_limits(well))
+                proceed = false
+            end
+        end
+    else
+        proceed = false
+    end
+    
+    if proceed
+        update_dt(sch, fluid, nsolver.converged)
         save_fluid_results(reservoir, sch.t_current)
         save_facility_results(facility, sch.t_current)
         update_fluid_tn(fluid)
     else
+        if !nsolver.converged
+            update_dt(sch, fluid, nsolver.converged)
+            warn(LOGGER, "Convergence failed, cutting time step size to $(round(sch.dt, digits=3)) days")
+        end
         reset_primary_variable(fluid)
-        warn(LOGGER, "Convergence failed, cutting time step size to $(round(sch.dt, digits=3)) days")
     end
+
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)
-    if nsolver.converged
+    if proceed
         info(LOGGER, format(log_fmt, t, dt, nsolver.newton_iter, linear_iter, time() - t0))
     end
     nsolver.newton_iter = 0

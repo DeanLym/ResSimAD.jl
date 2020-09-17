@@ -3,6 +3,11 @@ module Facility
 using DataFrames: DataFrame
 using Statistics: mean
 
+using Memento
+const LOGGER = getlogger(@__MODULE__)
+__init__() = Memento.register(LOGGER)
+
+
 using ..Global: α
 using ..AutoDiff:ADVector, advector, value
 using ..Rock:AbstractRock
@@ -24,6 +29,14 @@ const get_ctrl_mode = Dict{String,CtrlMode}(
     "lrat" => CLRAT,
 )
 
+const get_limit = Dict{String, Limit}(
+    "max_bhp" => MAX_BHP,
+    "min_bhp" => MIN_BHP,
+    "max_orat" => MAX_ORAT,
+    "max_wrat" => MAX_WRAT,
+    "max_grat" => MAX_GRAT,
+    "max_lrat" => MAX_LRAT,
+)
 
 mutable struct StandardWell{T} <: AbstractFacility
     name::String
@@ -105,7 +118,6 @@ function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::Abstract
     end
     return nothing
 end
-
 
 function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
@@ -226,6 +238,6 @@ function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
     return well.ql
 end
 
-
+include("check_limits.jl")
 
 end

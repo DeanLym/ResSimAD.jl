@@ -9,7 +9,7 @@ const LOGGER = getlogger(@__MODULE__)
 __init__() = Memento.register(LOGGER)
 
 using ..Grid:compute_cell_depth
-using ..Facility:get_ctrl_mode
+using ..Facility:get_ctrl_mode, get_limit
 
 include("utils.jl")
 include("gridparser.jl")

@@ -86,10 +86,12 @@ function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::Abstract
     well.mode = w["mode"]
     well.target = w["target"]
     # Set limits
-    # limits = get(well_option, "limits", Dict{Limit, Float64}())
-    # for (k,v) in limits
-    #     well.limits[k] = v
-    # end
+    if "limits" in keys(w)
+        limits = w["limits"]
+        for (k,v) in limits
+            well.limits[get_limit[k]] = v
+        end
+    end
     compute_wi(well, grid, rock)
     return well
 end
