@@ -602,7 +602,7 @@ version = "1.0.1"
 deps = ["AlgebraicMultigrid", "CSV", "Calculus", "DataFrames", "DelimitedFiles", "Documenter", "Formatting", "HDF5", "IncompleteLU", "Interpolations", "IterativeSolvers", "Libdl", "LinearAlgebra", "Memento", "SparseArrays", "SpecialFunctions", "StaticArrays", "Statistics", "duneistl_bicgilu_julia_jll"]
 git-tree-sha1 = "9d7e78028337e2c6e912a337147288286c63e003"
 repo-rev = "master"
-repo-url = ".."
+repo-url = "."
 uuid = "0f5291bf-5850-40d8-bc7e-2ce68032ef0b"
 version = "0.1.0"
 
