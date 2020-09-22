@@ -4,39 +4,45 @@
 
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://deanlym.github.io/ResSimAD.jl/dev/)
 
-A reservoir simulator in a modern programming language.
+A light-weighted reservoir simulator in a modern programming language.
 
 ## Features
-- **Interactivity**: run simulations in interactive programming environments such as `Jupyter notebook` or `Juno`. With the `PyJulia` python module, ResSimAD.jl is also accessible from `Python`.
+- **Interactivity**: run simulations in interactive programming environments such as `Jupyter notebook` and `VSCode`. With the `PyJulia` python module, `ResSimAD.jl` is also accessible from `Python`.
 - **Dynamic control**: run simulation timestep by timestep, or newton step by newton step, and modify parameters or controls dynamically.
-- **Distributed computing**: with the `Distributed` Julia module, it is very convenient to run multiple simulations in parallel. In addition, with the ClusterManagers.jl package, it is very convenient to run multiple simulations in parallel on a HPC cluster. This is very useful for tasks such as field optimization and history matching that require simulating a large number of models.
+- **Distributed computing**: with the `Distributed` Julia built-in module, it is very convenient to run multiple simulations in parallel. In addition, with the ClusterManagers.jl package, it is very convenient to run multiple simulations in parallel on a HPC cluster. This is very useful for tasks such as field optimization and history matching that require simulating a large number of models.
 
-## Automatic Differentaition (AD)
-An operator-overloading-based forward mode AD framework is developed to compute gradients automatically. Instead of using existing Julia AD packages such as Zygote, Tracker or DualNumbers, a customized AD framework is developed here for the sake of efficiency. The AD framework underlying `ResSimAD.jl` is tailored for the operations in reservoir simulation. This allows maximum level of optimization which makes this AD framework almost as fast as hand-written differentiation. On the other hand, the AD framework may need to be extended if some new operations are introduced when extending the functionality of ResSimAD.jl.
+## Automatic Differentiation (AD)
+An operator-overloading-based forward mode AD framework is developed to compute gradients automatically. Instead of using existing Julia AD packages such as [Zygote.jl](https://github.com/FluxML/Zygote.jl), [Tracker.jl](https://github.com/FluxML/Tracker.jl) or [DualNumbers.jl](https://github.com/JuliaDiff/DualNumbers.jl), a customized AD framework is developed here for the sake of efficiency. The AD framework underlying `ResSimAD.jl` is tailored for the operations in reservoir simulation. This allows maximum level of optimization which makes this AD framework almost as fast as hand-written differentiation. On the other hand, the AD framework may need to be extended if some new operations are introduced when extending the functionality of `ResSimAD.jl`.
 
 ## Functionality
-Functionality-wise, ResSimAD.jl is still at a very early stage. It currently works for simple simulation models:
+Functionality-wise, `ResSimAD.jl` is still at a very early stage. It currently works for simple simulation models:
 - Grid: 3D Cartesian grid
 - Fluid: two phase (oil-water) dead oil
 - Well: single perforation
 
-But the underlying framework of ResSimAD.jl is designed for easy extension for more complex simulation models, such as those with unstructured grid, three-phase black oil fluid model, wells with multiple perforations. This is largely facilitated by the powerful type system and multiple dispatch in Julia, and the AD framework.
-
-Extensions to more complex problems, such as compositional fluid models, multi-segment wells, require more effort. The current AD framework is highly optimized for black oil models and standard wells. Extending the AD framework to handle compositional models, advanced wells and maintaining the same level of efficiency will require some effort. These will not be the focus for ResSimAD.jl for now.
+But the underlying framework of `ResSimAD.jl` is designed for easy extension to more complex simulation models, such as those with unstructured grid, three-phase black oil fluid model, wells with multiple perforations. This is largely facilitated by the powerful type system and multiple dispatch in Julia, and the AD framework.
 
 ## Performance
-For a limited number of test problems, the speed of ResSimAD.jl is comparable to, and in some cases even faster than, Eclipse and ADGPRS. This is very impressive given that ResSimAD.jl is written in pure Julia and that ResSimAD.jl uses AD. This is largely facilitated by
-- The fast speed of the Julia language, especially the highly optimized array broadcasting, which makes it possible to completely avoid the overhead of memory allocation induced by operator-overloading-based AD.
-- ResSimAD.jl currently uses the GMRES + ILU linear solver from the IterativeSolver.jl package. For the simple problems that ResSimAD.jl currently supports, it is efficient enough.
-- File IO can be completely avoid when using ResSimAD.jl in an interactive environment. Simulation results can stay in memory before they are analyzed or visualized for downstream tasks.
+For the supported cases, the speed of `ResSimAD.jl` is comparable to professional simulators written in low-level languages including [Eclipse](https://www.software.slb.com/products/eclipse), [OPM](https://opm-project.org/) and [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs). See [`Benchmark`](@ref) for benchmark comparisons with [MRST](https://www.sintef.no/projectweb/mrst/), [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs), [Eclipse](https://www.software.slb.com/products/eclipse) and [OPM](https://opm-project.org/).
 
 ## Installation
-ResSimAD.jl is currently a private repository. If you have access to this repository,
-please download the source code. Then install manually with
+`ResSimAD.jl` is being tested internally. You will need to get access to the repository.
+
+To install, first open `Julia` and press key `]` to activate the package manager.
+
+Then, install the `duneistl_bicgilu_jll.jl` package with
 
 ```julia
-] add ResSimAD.jl
+add https://github.com/DeanLym/duneistl_bicgilu_jll.jl.git
 ```
+
+Next, install `ResSimAD.jl` with
+
+```julia
+add https://github.com/DeanLym/ResSimAD.jl.git
+```
+
+The `duneistl_bicgiul_jll.jl` is a Julia wrapper for the BiGCstab solver and the incomplete LU preconditioner from the [DUNE-ISTL](https://dune-project.org/) library. It is the fastest linear solver (2-3x speedup than the default solver) among all the supported linear solvers in `ResSimAD.jl`. Set `options["linear_solver]="BICGSTAB_ILU_DUNE_ISTL"` to use this solver. Normally, when intalling `ResSimAD.jl`, all dependencies will be automatically installed. However, the `duneistl_bicgiul_jll.jl` has not been registered to the `Julia` registry. So unfortunately we need to install this one manually for now.
 
 ## Contents
 ```@contents
