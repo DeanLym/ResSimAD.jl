@@ -9,6 +9,7 @@ using SparseArrays:SparseMatrixCSC, sparse
 using IterativeSolvers, IncompleteLU
 
 
+
 abstract type AbstractLinearSolver end
 
 ## Julia BackSlash Solver
@@ -19,8 +20,8 @@ function solve(
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
-)::Vector{Float64}
-    residual .= jac \ residual
+)
+    δx .= jac \ residual
 end
 
 lsolver_info(::Julia_BackSlash_Solver) = "Julia backslash"
@@ -40,11 +41,10 @@ function solve(
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
-)::Vector{Float64}
+)
     prec = ilu(jac, τ=solver.τ)
     _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=prec, log=true, tol=0.1)
     push!(solver.iterations, log.iters)
-    return residual
 end
 
 ## GMRES Solver with ILU preconditioner
@@ -61,11 +61,10 @@ function solve(
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
     residual::Vector{Float64},
-)::Vector{Float64}
+)
     prec = ilu(jac, τ=solver.τ)
     _, log = gmres!(δx, jac, residual, Pl=prec, log=true, tol=0.1)
     push!(solver.iterations, log.iters)
-    return residual
 end
 
 ## GMRES Solver with CPR preconditioner
@@ -97,7 +96,6 @@ function solve(
     setup_cpr_preconditioner(solver.cpr_prec, jac)
     _, log = gmres!(δx, jac, residual, Pl=solver.cpr_prec, log=true, tol=0.1)
     push!(solver.iterations, log.iters)
-    return residual
 end
 
 ## BICGSTAB Solver with CPR preconditioner
@@ -128,7 +126,8 @@ function solve(
     setup_cpr_preconditioner(solver.cpr_prec, jac)
     _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=solver.cpr_prec, log=true, tol=0.1)
     push!(solver.iterations, log.iters)
-    return residual
 end
+
+include("dune_istl_solver.jl")
 
 end

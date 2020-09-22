@@ -37,7 +37,7 @@ using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJ
 
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step
 
-using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver,
+using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver, BICGSTAB_ILU_DUNE_ISTL_Solver,
         GMRES_ILU_Solver, GMRES_CPR_Solver, BICGSTAB_ILU_Solver, BICGSTAB_CPR_Solver, solve, lsolver_info
 #! format: on
 
@@ -53,7 +53,7 @@ const log_fmt = FormatExpr("Day = {:>10.3f}, ΔT = {:>8.3f}, NI = {:>4d}, LI ={:
 
 Main Sim object
 """
-struct Sim
+ mutable struct Sim
     reservoir::AbstractReservoir
     facility::Dict{String, AbstractFacility}
     scheduler::Scheduler

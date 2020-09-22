@@ -4,7 +4,7 @@ function parse_lsolver(options, keywords)
     p = "linear_solver"
     if p ∈ keywords
         val = options[p]
-        if val ∈ ("GMRES_ILU", "GMRES_CPR", "BICGSTAB_ILU", "BICGSTAB_CPR", "Julia_BackSlash")
+        if val ∈ ("GMRES_ILU", "GMRES_CPR", "BICGSTAB_ILU", "BICGSTAB_CPR", "JULIA_BACKSLASH", "BICGSTAB_ILU_DUNE_ISTL")
             lsolver_opt["type"] = options[p]
         else
             error(LOGGER, "Unknown linear solver type $val")

@@ -143,6 +143,8 @@ function init_lsolver(lsolver_opt::Dict, grid::AbstractGrid)
         lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors)
     elseif solver_type == "BICGSTAB_CPR"
         lsolver = BICGSTAB_CPR_Solver(grid.nc, grid.neighbors)
+    elseif solver_type == "BICGSTAB_ILU_DUNE_ISTL"
+        lsolver = BICGSTAB_ILU_DUNE_ISTL_Solver(grid)
     else
         lsolver = Julia_BackSlash_Solver()
     end
