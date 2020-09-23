@@ -44,7 +44,7 @@ add https://github.com/DeanLym/ResSimAD.jl.git
 
 The `duneistl_bicgiul_jll.jl` is a Julia wrapper for the BiGCstab solver and the incomplete LU preconditioner from the [DUNE-ISTL](https://dune-project.org/) library. It is the fastest linear solver (2-3x speedup than the default solver) among all the supported linear solvers in `ResSimAD.jl`. 
 
-Set `options["linear_solver]="BICGSTAB_ILU_DUNE_ISTL"` to use this solver. 
+Set `options["linear_solver"]="BICGSTAB_ILU_DUNE_ISTL"` to use this solver. 
 
 Normally, when installing `ResSimAD.jl`, all dependencies will be automatically installed. However, the `duneistl_bicgiul_jll.jl` has not been registered to the `Julia` registry. So unfortunately we need to install this one manually for now.
 
