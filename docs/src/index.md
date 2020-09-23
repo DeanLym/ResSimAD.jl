@@ -23,7 +23,7 @@ Functionality-wise, `ResSimAD.jl` is still at a very early stage. It currently w
 But the underlying framework of `ResSimAD.jl` is designed for easy extension to more complex simulation models, such as those with unstructured grid, three-phase black oil fluid model, wells with multiple perforations. This is largely facilitated by the powerful type system and multiple dispatch in Julia, and the AD framework.
 
 ## Performance
-For the supported cases, the speed of `ResSimAD.jl` is comparable to professional simulators written in low-level languages including [Eclipse](https://www.software.slb.com/products/eclipse), [OPM](https://opm-project.org/) and [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs). See [`Benchmark`](@ref) for benchmark comparisons with [MRST](https://www.sintef.no/projectweb/mrst/), [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs), [Eclipse](https://www.software.slb.com/products/eclipse) and [OPM](https://opm-project.org/).
+For the supported cases, the speed of `ResSimAD.jl` is comparable to professional simulators written in low-level languages including [Eclipse](https://www.software.slb.com/products/eclipse), [OPM](https://opm-project.org/) and [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs). See [Benchmark](@ref) for benchmark comparisons with [MRST](https://www.sintef.no/projectweb/mrst/), [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs), [Eclipse](https://www.software.slb.com/products/eclipse) and [OPM](https://opm-project.org/).
 
 ## Installation
 `ResSimAD.jl` is being tested internally. You will need to get access to the repository.
@@ -42,7 +42,11 @@ Next, install `ResSimAD.jl` with
 add https://github.com/DeanLym/ResSimAD.jl.git
 ```
 
-The `duneistl_bicgiul_jll.jl` is a Julia wrapper for the BiGCstab solver and the incomplete LU preconditioner from the [DUNE-ISTL](https://dune-project.org/) library. It is the fastest linear solver (2-3x speedup than the default solver) among all the supported linear solvers in `ResSimAD.jl`. Set `options["linear_solver]="BICGSTAB_ILU_DUNE_ISTL"` to use this solver. Normally, when intalling `ResSimAD.jl`, all dependencies will be automatically installed. However, the `duneistl_bicgiul_jll.jl` has not been registered to the `Julia` registry. So unfortunately we need to install this one manually for now.
+The `duneistl_bicgiul_jll.jl` is a Julia wrapper for the BiGCstab solver and the incomplete LU preconditioner from the [DUNE-ISTL](https://dune-project.org/) library. It is the fastest linear solver (2-3x speedup than the default solver) among all the supported linear solvers in `ResSimAD.jl`. 
+
+Set `options["linear_solver]="BICGSTAB_ILU_DUNE_ISTL"` to use this solver. 
+
+Normally, when installing `ResSimAD.jl`, all dependencies will be automatically installed. However, the `duneistl_bicgiul_jll.jl` has not been registered to the `Julia` registry. So unfortunately we need to install this one manually for now.
 
 ## Contents
 ```@contents
