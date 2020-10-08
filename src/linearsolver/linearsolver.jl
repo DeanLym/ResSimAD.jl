@@ -15,7 +15,7 @@ abstract type AbstractLinearSolver end
 ## Julia BackSlash Solver
 struct Julia_BackSlash_Solver <: AbstractLinearSolver end
 
-function solve(
+function lsolve(
     solver::Julia_BackSlash_Solver,
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
@@ -36,7 +36,7 @@ end
 
 lsolver_info(x::BICGSTAB_ILU_Solver) = "BiCGStab($(x.l)) ILU"
 
-function solve(
+function lsolve(
     solver::BICGSTAB_ILU_Solver,
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
@@ -56,7 +56,7 @@ end
 
 lsolver_info(::GMRES_ILU_Solver) = "GMRES ILU"
 
-function solve(
+function lsolve(
     solver::GMRES_ILU_Solver,
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
@@ -87,7 +87,7 @@ end
 
 lsolver_info(::GMRES_CPR_Solver) = "GMRES CPR"
 
-function solve(
+function lsolve(
     solver::GMRES_CPR_Solver,
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},
@@ -117,7 +117,7 @@ end
 
 lsolver_info(::BICGSTAB_CPR_Solver) = "BICGSTAB CPR"
 
-function solve(
+function lsolve(
     solver::BICGSTAB_CPR_Solver,
     δx::Vector{Float64},
     jac::SparseMatrixCSC{Float64,Int},

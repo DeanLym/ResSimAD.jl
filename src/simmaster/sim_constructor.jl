@@ -124,31 +124,63 @@ function init_scheduler(scheduler_opt::Dict)
     return sch
 end
 
-function init_nsolver(nsolver_opt::Dict)
+function init_nsolver(nsolver_opt::Dict, lsolver_opt::Dict)
     info(LOGGER, "Initializing nonlinear solver")
-    nsolver = NRSolver()
+    if lsolver_opt["backend"] == "Julia"
+        nsolver = NRSolver()
+    else
+        nsolver = NRSolverDuneIstl()
+    end
     nsolver.max_newton_iter = nsolver_opt["max_newton_iter"]
     nsolver.min_err =  nsolver_opt["min_err"]
     return nsolver
 end
 
-function init_lsolver(lsolver_opt::Dict, grid::AbstractGrid)
+function init_lsolver(lsolver_opt::Dict, grid::AbstractGrid, fluid::AbstractFluid)
     info(LOGGER, "Initializing linear solver")
     solver_type = lsolver_opt["type"]
-    if solver_type == "GMRES_ILU"
-        lsolver = GMRES_ILU_Solver()
-    elseif solver_type == "BICGSTAB_ILU"
-        lsolver = BICGSTAB_ILU_Solver()
-    elseif solver_type == "GMRES_CPR"
-        lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors)
-    elseif solver_type == "BICGSTAB_CPR"
-        lsolver = BICGSTAB_CPR_Solver(grid.nc, grid.neighbors)
-    elseif solver_type == "BICGSTAB_ILU_DUNE_ISTL"
-        lsolver = BICGSTAB_ILU_DUNE_ISTL_Solver(grid)
+    solver_backend = lsolver_opt["backend"]
+    if solver_backend == "Julia"
+        if solver_type == "GMRES_ILU"
+            lsolver = GMRES_ILU_Solver()
+        elseif solver_type == "BICGSTAB_ILU"
+            lsolver = BICGSTAB_ILU_Solver()
+        elseif solver_type == "GMRES_CPR"
+            lsolver = GMRES_CPR_Solver(grid.nc, grid.neighbors)
+        elseif solver_type == "BICGSTAB_CPR"
+            lsolver = BICGSTAB_CPR_Solver(grid.nc, grid.neighbors)
+        else
+            lsolver = Julia_BackSlash_Solver()
+        end
     else
-        lsolver = Julia_BackSlash_Solver()
+        lsolver = init_duneistl_solver(solver_type, grid.nc, fluid)
     end
 end
+
+function init_duneistl_solver(solver_type::String, nc::Int, ::OWFluid)
+    solver = DuneIstlSolver{Float64, Int32(2)}(nc)
+    if solver_type == "GMRES_ILU"
+        set_solver_type(solver, "RestartedGMRes")
+        set_preconditioner_type(solver, "ILU")
+    else # "BICGSTAB_ILU"
+        set_solver_type(solver, "BiCGSTAB")
+        set_preconditioner_type(solver, "ILU")
+    end
+    return DuneIstlSolverWrapper(solver, Int[])
+end
+
+function init_duneistl_solver(solver_type::String, nc::Int, ::SPFluid)
+    lsolver = DuneIstlSolver{Float64, Int32(1)}(nc)
+    if solver_type == "GMRES_ILU"
+        set_solver_type(lsolver, "RestartedGMRes")
+        set_preconditioner_type(lsolver, "ILU")
+    else # "BICGSTAB_ILU"
+        set_solver_type(lsolver, "BiCGSTAB")
+        set_preconditioner_type(lsolver, "ILU")
+    end
+    return lsolver
+end
+
 
 function Sim(options::Dict)
     info(LOGGER, "Creating simulation model")
@@ -173,15 +205,17 @@ function Sim(options::Dict)
 
     scheduler = init_scheduler(parsed_options["scheduler_opt"])
 
-    nsolver = init_nsolver(parsed_options["nsolver_opt"])
+    nsolver = init_nsolver(parsed_options["nsolver_opt"], parsed_options["lsolver_opt"])
 
-    lsolver = init_lsolver(parsed_options["lsolver_opt"], grid)
+    lsolver = init_lsolver(parsed_options["lsolver_opt"], grid, fluid)
+
+    nsolver.lsolver = lsolver
 
     update_phases(fluid, grid.connlist)
 
     compute_residual(fluid, grid, rock, facility, scheduler.dt)
 
-    init_nsolver(nsolver, grid, fluid)
+    initialize_nsolver(nsolver, grid, fluid)
 
-    return Sim(reservoir, facility, scheduler, nsolver, lsolver)
+    return Sim(reservoir, facility, scheduler, nsolver)
 end

@@ -56,7 +56,7 @@ for v in (:dt, :t_current, :t_next)
 end
 
 # Define function reservoir(sim), facility(sim) ...
-for v in ("reservoir", "facility", "scheduler", "nsolver", "lsolver")
+for v in ("reservoir", "facility", "scheduler", "nsolver")
     @eval $(Symbol(v))(x::Sim) = getfield(x, Symbol($v))
 end
 # Overwrite getproperty function for sim

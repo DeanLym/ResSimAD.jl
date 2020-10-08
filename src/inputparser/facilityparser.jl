@@ -1,13 +1,12 @@
 
 const valid_well_modes = Dict([
     ("producer", ("bhp", "shut", "orat", "wrat", "lrat"))
-    ("injector", ("bhp", "wrat"))
+    ("injector", ("bhp", "wrat", "shut"))
 ])
 
 const valid_well_limits = keys(get_limit)
 
 function parse_well_option(w, type::String, well_names::Set{String})
-    
     # Check required keywords
     wkeywords = keys(w)
     if !("name" ∈ wkeywords)
@@ -36,7 +35,7 @@ function parse_well_option(w, type::String, well_names::Set{String})
     mode = lowercase(w["mode"])
     valid_modes = valid_well_modes[type]
     if !(mode ∈ valid_modes)
-        erorr(LOGGER, "Unsupported mode \"$mode\" for well \"$name\"")
+        error(LOGGER, "Unsupported mode \"$mode\" for well \"$name\"")
     end
     w["mode"] = get_ctrl_mode[mode]
 

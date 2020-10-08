@@ -33,11 +33,11 @@ function compute_residual(
     return fluid
 end
 
-function assemble_residual(nsolver::AbstractNonlinearSolver, fluid::SPFluid)
+function assemble_residual(nsolver::NRSolver, fluid::SPFluid)
     @. nsolver.residual = fluid.components[1].r
 end
 
-function update_solution(nsolver::AbstractNonlinearSolver, fluid::SPFluid)
+function update_solution(nsolver::NRSolver, fluid::SPFluid)
     phase = fluid.phases[1]
     assembler = nsolver.assembler
     @. assembler.p = value(phase.p) - nsolver.δx
@@ -53,7 +53,7 @@ function compute_residual_error(fluid::SPFluid, grid::AbstractGrid, rock::Abstra
 end
 
 
-struct SPAssembler <: Assembler
+struct SPAssembler <: AbstractAssembler
     diag_idx::NamedTuple
     ll_idx::NamedTuple
     rr_idx::NamedTuple
@@ -103,7 +103,7 @@ function SPAssembler(
 end
 
 
-function init_nsolver(nsolver::AbstractNonlinearSolver, grid::AbstractGrid, fluid::SPFluid)
+function initialize_nsolver(nsolver::NRSolver, grid::AbstractGrid, fluid::SPFluid)
     nc = grid.nc
     nsolver.residual = zeros(nc)
     nsolver.δx = zeros(nc)
@@ -129,7 +129,7 @@ function init_nsolver(nsolver::AbstractNonlinearSolver, grid::AbstractGrid, flui
 end
 
 
-function assemble_jacobian(nsolver::AbstractNonlinearSolver, fluid::SPFluid, wells::Dict{String, AbstractFacility},)
+function assemble_jacobian(nsolver::NRSolver, fluid::SPFluid, wells::Dict{String, AbstractFacility},)
     nzval, assembler = nsolver.jac.nzval, nsolver.assembler
     fill!(nzval, 0.0)
     # Accumulation term

@@ -63,6 +63,12 @@ git-tree-sha1 = "7c4f882c41faa72118841185afc58a2eb00ef612"
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 version = "0.3.3+0"
 
+[[CxxWrap]]
+deps = ["Libdl", "MacroTools", "libcxxwrap_julia_jll"]
+git-tree-sha1 = "762359626941f45b21238eb373a0bcedf6b61dd7"
+uuid = "1f15a43c-97ca-5a2a-ae31-89f07a497df4"
+version = "0.11.0"
+
 [[DataAPI]]
 git-tree-sha1 = "176e23402d80e7743fc26c19c681bfb11246af32"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
@@ -108,6 +114,14 @@ deps = ["Base64", "Dates", "DocStringExtensions", "InteractiveUtils", "JSON", "L
 git-tree-sha1 = "fb1ff838470573adc15c71ba79f8d31328f035da"
 uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 version = "0.25.2"
+
+[[DuneIstlSolvers]]
+deps = ["CxxWrap", "duneistl_julia_jll"]
+git-tree-sha1 = "f8783a7cc28257b574daa72a0b358732ccc458dd"
+repo-rev = "master"
+repo-url = "https://github.com/DeanLym/DuneIstlSolvers.jl.git"
+uuid = "e904836c-cba4-4c6f-9d10-b9ca3d4a7580"
+version = "0.1.0"
 
 [[ExprTools]]
 git-tree-sha1 = "7fce513fcda766962ff67c5596cb16c463dfd371"
@@ -224,6 +238,12 @@ deps = ["Libdl", "Pkg"]
 git-tree-sha1 = "51b1db0732bbdcfabb60e36095cc3ed9c0016932"
 uuid = "5ced341a-0733-55b8-9ab6-a4889d929147"
 version = "1.9.2+2"
+
+[[MacroTools]]
+deps = ["Markdown", "Random"]
+git-tree-sha1 = "f7d2e3f654af75f01ec49be82c231c382214223a"
+uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
+version = "0.5.5"
 
 [[Markdown]]
 deps = ["Base64"]
@@ -436,10 +456,16 @@ git-tree-sha1 = "4de91f4313d9e88162d461e282fe3066ab3a3c09"
 uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
 version = "1.4.5+1"
 
-[[duneistl_bicgilu_julia_jll]]
-deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "84d0ab04f0c5358df1913fe8252eaf57c6f773d5"
+[[duneistl_julia_jll]]
+deps = ["CompilerSupportLibraries_jll", "Libdl", "Pkg", "libcxxwrap_julia_jll"]
+git-tree-sha1 = "19b998309b58be18689d3edb77cb8620e6737569"
 repo-rev = "master"
-repo-url = "https://github.com/DeanLym/duneistl_bicgilu_jll.jl.git"
-uuid = "a9e5d5f4-2699-5525-b05c-0994d2f797c3"
-version = "0.1.0+0"
+repo-url = "https://github.com/DeanLym/libduneistlsolver_jll.jl.git"
+uuid = "228c9359-a2f9-5b9c-be5b-bc96acd46855"
+version = "0.2.1+0"
+
+[[libcxxwrap_julia_jll]]
+deps = ["Libdl", "Pkg"]
+git-tree-sha1 = "1b2520ea0c1d5cbc12e8a97c15427133d726f743"
+uuid = "3eaa8342-bff7-56a5-9981-c04077f7cee7"
+version = "0.8.0+0"

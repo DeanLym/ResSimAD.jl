@@ -40,12 +40,12 @@ function compute_residual(
     return fluid
 end
 
-function assemble_residual(nsolver::AbstractNonlinearSolver, fluid::OWFluid)
+function assemble_residual(nsolver::NRSolver, fluid::OWFluid)
     @. nsolver.residual[1:2:end] = fluid.components.w.r
     @. nsolver.residual[2:2:end] = fluid.components.o.r
 end
 
-function update_solution(nsolver::AbstractNonlinearSolver, fluid::OWFluid)
+function update_solution(nsolver::NRSolver, fluid::OWFluid)
     o, w = fluid.phases.o, fluid.phases.w
     assembler = nsolver.assembler
     @. assembler.po = value(o.p) - nsolver.δx[1:2:end]
@@ -66,7 +66,7 @@ function compute_residual_error(fluid::OWFluid, grid::AbstractGrid, rock::Abstra
     return max(rw_err, ro_err)
 end
 
-struct OWAssembler <: Assembler
+struct OWAssembler <: AbstractAssembler
     diag_idx::NamedTuple
     ll_idx::NamedTuple
     rr_idx::NamedTuple
@@ -158,7 +158,7 @@ function OWAssembler(
 end
 
 
-function init_nsolver(nsolver::AbstractNonlinearSolver, grid::AbstractGrid, fluid::OWFluid)
+function initialize_nsolver(nsolver::NRSolver, grid::AbstractGrid, ::OWFluid)
     nc = grid.nc
     nsolver.residual = zeros(2*nc)
     nsolver.δx = zeros(2*nc)
@@ -189,7 +189,7 @@ function init_nsolver(nsolver::AbstractNonlinearSolver, grid::AbstractGrid, flui
 end
 
 
-function assemble_jacobian(nsolver::AbstractNonlinearSolver, fluid::OWFluid, wells::Dict{String, AbstractFacility},)
+function assemble_jacobian(nsolver::NRSolver, fluid::OWFluid, wells::Dict{String, AbstractFacility},)
     nzval, assembler = nsolver.jac.nzval, nsolver.assembler
     # Accumulation term
     aw, ao = fluid.components.w.a, fluid.components.o.a
@@ -232,4 +232,140 @@ function assemble_jacobian(nsolver::AbstractNonlinearSolver, fluid::OWFluid, wel
         @. nzval[diag_idx.∂ro∂p[ind]] -= grad(well.qo, 1, 1)
         @. nzval[diag_idx.∂ro∂s[ind]] -= grad(well.qo, 1, 2)
     end
+end
+
+
+## DUNE-ISTL Backend
+struct OWAssemblerDuneIstl <: AbstractAssembler
+    nc::Int
+    nconn::Int
+    diag_bi::Vector{Int32}
+    l_bi::Vector{Int32}
+    r_bi::Vector{Int32}
+    v_nc::Vector{Float64}
+    v_nconn::Vector{Float64}
+    po::Vector{Float64}
+    sw::Vector{Float64}
+end
+
+function OWAssemblerDuneIstl(
+    grid::AbstractGrid,
+)
+    nc, nconn = grid.nc, grid.connlist.nconn
+    diag_bi = collect(Int32, 1:nc)
+    l_bi, r_bi = Int32.(grid.connlist.l), Int32.(grid.connlist.r)
+    v_nc = Vector{Float64}(undef, nc)
+    v_nconn = Vector{Float64}(undef, nconn)
+    po = Vector{Float64}(undef, nc)
+    sw = Vector{Float64}(undef, nc)
+    return OWAssemblerDuneIstl(nc, nconn, diag_bi, l_bi, r_bi, v_nc, v_nconn, po, sw)
+end
+
+
+function initialize_nsolver(nsolver::NRSolverDuneIstl, grid::AbstractGrid, ::AbstractFluid)
+    BI = Int[]
+    BJ = Int[]
+    row_size = Int[]
+    for (i, nn) in enumerate(grid.neighbors)
+        for j in nn
+            push!(BI, i)
+            push!(BJ, j)
+        end
+    end
+    for n in grid.num_neighbors
+        push!(row_size, n)
+    end
+    nnz = length(BI)
+    construct_matrix(nsolver.lsolver.solver, nnz, Int32.(row_size), Int32.(BI), Int32.(BJ))
+    nsolver.assembler = OWAssemblerDuneIstl(grid)
+end
+
+function assemble_residual(nsolver::NRSolverDuneIstl, fluid::OWFluid)
+    solver, assembler = nsolver.lsolver.solver, nsolver.assembler
+    n = assembler.nc
+    reset_rhs(solver)
+    add_value_rhs(solver, n, assembler.diag_bi, 1, fluid.components.w.r)
+    add_value_rhs(solver, n, assembler.diag_bi, 2, fluid.components.o.r)
+end
+
+function assemble_jacobian(nsolver::NRSolverDuneIstl, fluid::OWFluid, wells::Dict{String, AbstractFacility})
+    solver, assembler = nsolver.lsolver.solver, nsolver.assembler
+    nc, nconn = assembler.nc, assembler.nconn
+    reset_matrix(solver, false)
+    # Accumulation term
+    aw, ao = fluid.components.w.a, fluid.components.o.a
+    diag_bi = assembler.diag_bi
+    v_nc, v_nconn = assembler.v_nc, assembler.v_nconn
+    # void add_value_matrix(int nn, int* BI, int* BJ, int I, int J, T* value){
+    @. v_nc = -grad(aw, 1, 1)
+    add_value_matrix(solver, nc, diag_bi, diag_bi, 1, 1, v_nc)
+    @. v_nc = -grad(ao, 1, 1)
+    add_value_matrix(solver, nc, diag_bi, diag_bi, 2, 1, v_nc)
+    @. v_nc = -grad(aw, 1, 2)
+    add_value_matrix(solver, nc, diag_bi, diag_bi, 1, 2, v_nc)
+    @. v_nc = -grad(ao, 1, 2)
+    add_value_matrix(solver, nc, diag_bi, diag_bi, 2, 2, v_nc)
+    # # Flux term
+    fw, fo = fluid.phases.w.f, fluid.phases.o.f
+    l_bi, r_bi = assembler.l_bi, assembler.r_bi
+    @. v_nconn = -grad(fw, 1, 1)
+    add_value_matrix(solver, nconn, l_bi, l_bi, 1, 1, v_nconn)
+    @. v_nconn = -grad(fo, 1, 1)
+    add_value_matrix(solver, nconn, l_bi, l_bi, 2, 1, v_nconn)
+    @. v_nconn = -grad(fw, 1, 2)
+    add_value_matrix(solver, nconn, l_bi, l_bi, 1, 2, v_nconn)
+    @. v_nconn = -grad(fo, 1, 2)
+    add_value_matrix(solver, nconn, l_bi, l_bi, 2, 2, v_nconn)
+
+    @. v_nconn = -grad(fw, 2, 1)
+    add_value_matrix(solver, nconn, l_bi, r_bi, 1, 1, v_nconn)
+    @. v_nconn = -grad(fo, 2, 1)
+    add_value_matrix(solver, nconn, l_bi, r_bi, 2, 1, v_nconn)
+    @. v_nconn = -grad(fw, 2, 2)
+    add_value_matrix(solver, nconn, l_bi, r_bi, 1, 2, v_nconn)
+    @. v_nconn = -grad(fo, 2, 2)
+    add_value_matrix(solver, nconn, l_bi, r_bi, 2, 2, v_nconn)
+
+    @. v_nconn = grad(fw, 1, 1)
+    add_value_matrix(solver, nconn, r_bi, l_bi, 1, 1, v_nconn)
+    @. v_nconn = grad(fo, 1, 1)
+    add_value_matrix(solver, nconn, r_bi, l_bi, 2, 1, v_nconn)
+    @. v_nconn = grad(fw, 1, 2)
+    add_value_matrix(solver, nconn, r_bi, l_bi, 1, 2, v_nconn)
+    @. v_nconn = grad(fo, 1, 2)
+    add_value_matrix(solver, nconn, r_bi, l_bi, 2, 2, v_nconn)
+
+    @. v_nconn = grad(fw, 2, 1)
+    add_value_matrix(solver, nconn, r_bi, r_bi, 1, 1, v_nconn)
+    @. v_nconn = grad(fo, 2, 1)
+    add_value_matrix(solver, nconn, r_bi, r_bi, 2, 1, v_nconn)
+    @. v_nconn = grad(fw, 2, 2)
+    add_value_matrix(solver, nconn, r_bi, r_bi, 1, 2, v_nconn)
+    @. v_nconn = grad(fo, 2, 2)
+    add_value_matrix(solver, nconn, r_bi, r_bi, 2, 2, v_nconn)
+
+    for well in values(wells)
+        # Add well rate to residual
+        ind = Int32.(well.ind)
+        add_value_matrix(solver, 1, ind, ind, 1, 1, -grad(well.qw, 1, 1))
+        add_value_matrix(solver, 1, ind, ind, 1, 2, -grad(well.qw, 1, 2))
+        add_value_matrix(solver, 1, ind, ind, 2, 1, -grad(well.qo, 1, 1))
+        add_value_matrix(solver, 1, ind, ind, 2, 2, -grad(well.qo, 1, 2))
+    end
+end
+
+function update_solution(nsolver::NRSolverDuneIstl, fluid::OWFluid)
+    o, w = fluid.phases.o, fluid.phases.w
+    solver, assembler = nsolver.lsolver.solver, nsolver.assembler
+    # get_value_x(int nn, int* BI, int I, T* value)
+    get_value_x(solver, assembler.nc, assembler.diag_bi, 1, assembler.po)
+    get_value_x(solver, assembler.nc, assembler.diag_bi, 2, assembler.sw)
+
+    @. assembler.po = value(o.p) - assembler.po
+    @. assembler.sw = value(w.s) - assembler.sw
+    # Bounds check
+    @. assembler.sw = max(assembler.sw, 0.0)
+    @. assembler.sw = min(assembler.sw, 1.0)
+    update_primary_variable(fluid, assembler.po, assembler.sw)
+    return fluid
 end

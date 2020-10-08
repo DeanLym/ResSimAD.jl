@@ -11,6 +11,7 @@ __init__() = Memento.register(LOGGER)
 using LinearAlgebra:norm
 using SparseArrays:sparse, SparseMatrixCSC
 using Statistics
+using DuneIstlSolvers
 
 #! format: off
 using ..Global: M, α, β, g_, gc
@@ -37,14 +38,14 @@ using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJ
 
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step
 
-using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver, BICGSTAB_ILU_DUNE_ISTL_Solver,
-        GMRES_ILU_Solver, GMRES_CPR_Solver, BICGSTAB_ILU_Solver, BICGSTAB_CPR_Solver, solve, lsolver_info
+using ..LinearSolver: AbstractLinearSolver, Julia_BackSlash_Solver, DuneIstlSolverWrapper,
+        GMRES_ILU_Solver, GMRES_CPR_Solver, BICGSTAB_ILU_Solver, BICGSTAB_CPR_Solver, lsolve, lsolver_info
 #! format: on
 
 import Base.show
 
 abstract type AbstractNonlinearSolver end
-abstract type Assembler end
+abstract type AbstractAssembler end
 
 const log_fmt = FormatExpr("Day = {:>10.3f}, ΔT = {:>8.3f}, NI = {:>4d}, LI ={:>6d}, t = {:>8.3f}secs")
 
@@ -58,7 +59,6 @@ Main Sim object
     facility::Dict{String, AbstractFacility}
     scheduler::Scheduler
     nsolver::AbstractNonlinearSolver
-    lsolver::AbstractLinearSolver
 end
 
 function Base.show(io::IO, sim::Sim)
@@ -68,9 +68,25 @@ function Base.show(io::IO, sim::Sim)
     println(io, "Number of connections: ", sim.connlist.nconn)
     println(io, "Fluid system: ", fluid_system(sim.reservoir.fluid))
     println(io, "Wells: ", collect(keys(sim.facility)))
-    println(io, "Linear solver: ", lsolver_info(sim.lsolver))
+    println(io, "Linear solver: ", lsolver_info(sim.nsolver.lsolver))
 end
 
+
+mutable struct NRSolverDuneIstl <: AbstractNonlinearSolver
+    max_newton_iter::Int
+    newton_iter::Int
+    min_err::Float64
+    num_iter::Vector{Int}
+    converged::Bool
+    recompute_residual::Bool
+    lsolver::DuneIstlSolverWrapper
+    assembler::AbstractAssembler
+    NRSolverDuneIstl() = new(10, 0, 1.0e-6, Vector{Int}(), false, false)
+end
+
+function solve_linear_equations(nsolver::NRSolverDuneIstl)
+    lsolve(nsolver.lsolver)
+end
 
 mutable struct NRSolver <: AbstractNonlinearSolver
     max_newton_iter::Int
@@ -82,8 +98,13 @@ mutable struct NRSolver <: AbstractNonlinearSolver
     δx::Vector{Float64}
     residual::Vector{Float64}
     jac::SparseMatrixCSC{Float64,Int}
-    assembler::Assembler
+    assembler::AbstractAssembler
+    lsolver::AbstractLinearSolver
     NRSolver() = new(10, 0, 1.0e-6, Vector{Int}(), false, false)
+end
+
+function solve_linear_equations(nsolver::NRSolver)
+    lsolve(nsolver.lsolver, nsolver.δx, nsolver.jac, nsolver.residual)
 end
 
 """
@@ -116,13 +137,13 @@ julia> @printf("%.3e",get_residual_error(sim))
 function newton_step(sim::Sim)::Nothing
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
-    facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
+    facility, nsolver, sch = sim.facility, sim.nsolver, sim.scheduler
     # Assemble residual
     assemble_residual(nsolver, fluid)
     # Assemble jacobian
     assemble_jacobian(nsolver, fluid, facility)
     # Solve equation
-    solve(lsolver, nsolver.δx, nsolver.jac, nsolver.residual)
+    solve_linear_equations(nsolver)
     # Update solution
     update_solution(nsolver, fluid)
     # Update dynamic states and then compute new residual
@@ -162,7 +183,7 @@ function time_step(sim::Sim)::Nothing
     t0 = time()
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
-    facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.lsolver, sim.scheduler
+    facility, nsolver, lsolver, sch = sim.facility, sim.nsolver, sim.nsolver.lsolver, sim.scheduler
     dt, t = sch.dt, sch.t_next
     linear_iter = 0
     while true
