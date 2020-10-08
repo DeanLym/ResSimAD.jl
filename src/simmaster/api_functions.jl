@@ -238,6 +238,36 @@ function get_state_map(sim::Sim, var::String, t::Float64)
     return @eval $(Symbol(lowercase(var)*"_rec"))($sim)[round($t, digits=6)]
 end
 
+"""
+    get_data(sim::Sim, dataname::String)
+
+Get data for dataname `dataname`.
+
+# Examples
+```jldoctest
+julia> using ResSimAD: get_model, step_to, get_data, silence
+
+julia> silence();
+
+julia> sim, options = get_model("example1");
+
+julia> step_to(sim, 10.0);
+
+julia> λo = get_data(sim, "λo");
+
+julia> size(λo)
+(450,)
+
+```
+"""
+function get_data(sim::Sim, dataname::String)
+    ret = @eval $(Symbol(lowercase(dataname)))($sim)
+    if typeof(ret) == Array{Float64, 1}
+        return ret
+    else
+        return value(ret)
+    end
+end
 
 """
     save_results(sim::Sim; dir::String="./", state_report::String="report")

@@ -34,7 +34,7 @@ export get_grid_index
 export change_dt
 export set_perm, set_poro
 export Sim, runsim, time_step, step_to, newton_step
-export get_model, get_example_data, get_state_map, get_well_rates, save_results
+export get_model, get_example_data, get_state_map, get_well_rates, save_results, get_data
 export get_residual_error
 export change_well_mode, change_well_target, shut_well, add_well
 export add_log_file
