@@ -23,7 +23,7 @@ using .Facility: isproducer
 
 using .SimMaster:Sim, runsim, time_step, step_to, newton_step, add_well, change_well_mode,
             change_well_target, shut_well, get_well_rates, change_dt, get_residual_error,
-            get_state_map, set_perm, set_poro, save_results
+            get_state_map, set_perm, set_poro, save_results, get_data
 
 using .Models: get_model, get_example_data
 
