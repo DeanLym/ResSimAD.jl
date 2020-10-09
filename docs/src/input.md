@@ -470,7 +470,7 @@ julia> options["min_err"] = 1.0e-3;
 
 ## Linear solver
 ---
-### linear_solver_backend
+### linear\_solver\_backend
 
 - Data type
 
@@ -479,19 +479,19 @@ Type    | Size
 String | -
 
 - Supported values
-    - `"JULIA"` - linear solvers from [IterativeSolvers.jl](https://github.com/JuliaMath/IterativeSolvers.jl)
     - `"DUNEISTL"` (default) - linear solvers from the [ISTL](https://dune-project.org/modules/dune-istl/) module from [DUNE](https://dune-project.org/)
+    - `"JULIA"` - linear solvers from [IterativeSolvers.jl](https://github.com/JuliaMath/IterativeSolvers.jl)
 
 - Example
 
 ```jldoctest
-julia> options["linear_solver_backend"] = "JULIA";
-
 julia> options["linear_solver_backend"] = "DUNEISTL";
+
+julia> options["linear_solver_backend"] = "JULIA";
 
 ```
 
-### linear_solver_type
+### linear\_solver\_type
 
 - Data type
 
