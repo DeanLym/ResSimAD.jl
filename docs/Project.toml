@@ -2,10 +2,12 @@
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DuneIstlSolvers = "e904836c-cba4-4c6f-9d10-b9ca3d4a7580"
 HDF5 = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 ResSimAD = "0f5291bf-5850-40d8-bc7e-2ce68032ef0b"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
+duneistl_julia_jll = "228c9359-a2f9-5b9c-be5b-bc96acd46855"
 
 [compat]
 Documenter = "0.25"
