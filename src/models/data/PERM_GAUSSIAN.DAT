@@ -1,15 +1,22 @@
-# PERM
-# Gaussian system 60x60
-462.7965311791255
-549.4547649098886
-569.0634276170592
-575.4880710664381
-469.0640845765829
-624.687484573518
-741.1518277078972
-457.5232943356377
-608.3175306515967
-429.1722270419058
+PERM
+-- lines starting with "--" are comments
+-- empty lines before keyword are allowed
+-- empty lines after / are allowed
+-- each line can have different width
+-- allowed delimiters: single/multiple spaces, tabs and combination of spaces and tabs
+
+
+-- Permeability values (md)
+-- Bimodal channel system 60x60
+-- "n*v" represents repeated values : "n" repeated value of "v"
+
+462.7965311791255 2*549.4547649098886
+
+-- comments between lines are allowed
+
+575.4880710664381 469.0640845765829 624.687484573518
+741.1518277078972       457.5232943356377
+608.3175306515967           429.1722270419058
 480.8229427747174
 459.46710474738586
 374.7306120672714
@@ -3600,3 +3607,4 @@
 729.2535669543674
 735.922636681785
 803.2704847459388
+/

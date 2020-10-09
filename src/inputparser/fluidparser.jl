@@ -33,7 +33,7 @@ function parse_ow_fluid(options, keywords, nc, fluid_opt)
         check_keyword_type(p, options, (String, DataFrame))
         if isa(val, String)
             info(LOGGER, "Reading $p table from $val")
-            fluid_opt["PVTO"] = read_pvt_table(val)
+            fluid_opt["PVTO"] = read_pvt_table(val, p)
         else
             fluid_opt["PVTO"] = val
         end
@@ -41,7 +41,7 @@ function parse_ow_fluid(options, keywords, nc, fluid_opt)
         check_keyword_type(p, options, (String, DataFrame, Dict))
         if isa(val, String)
             info(LOGGER, "Reading $p table from $val")
-            fluid_opt["PVTO"] = read_pvtc_table(val)
+            fluid_opt["PVTO"] = read_pvtc_table(val, p)
         elseif isa(val, Dict)
             #
             for v in pvct_keys
@@ -66,7 +66,7 @@ function parse_ow_fluid(options, keywords, nc, fluid_opt)
     val = options[p]
     if isa(val, String)
         info(LOGGER, "Reading $p table from $val")
-        fluid_opt["PVTW"] = read_pvtc_table(val)
+        fluid_opt["PVTW"] = read_pvtc_table(val, p)
     elseif isa(val, Dict)
         for v in pvct_keys
             if !(v ∈ keys(val))
@@ -140,7 +140,7 @@ end
 
 
 function read_swof_table(fn::String)
-    df = DataFrame(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
+    df = read_table_file(fn, "SWOF")
     rename!(df, [:sw, :krw, :kro, :pcw])
     # Add flat extrapolation
     insert!.(eachcol(df), 1, [-1.e30, df[1, :krw], df[1, :kro], df[1, :pcw]])
@@ -149,15 +149,15 @@ function read_swof_table(fn::String)
     return df
 end
 
-function read_pvtc_table(fn::String)
-    df = DataFrame(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
+function read_pvtc_table(fn::String, keyword::String)
+    df = read_table_file(fn, keyword)
     vecs = [:pref, :bref, :c, :μref, :cμ]
     rename!(df, vecs)
     return df
 end
 
-function read_pvt_table(fn::String)
-    df = DataFrame(CSV.File(fn; delim=' ', comment="--", header=false, datarow=2, footerskip=1))
+function read_pvt_table(fn::String, keyword::String)
+    df = read_table_file(fn, keyword)
     rename!(df, [:p, :b, :μ])
     # Add flat extrapolation
     insert!.(eachcol(df), 1, [-1.e30, df[1,:b], df[1,:μ]])

@@ -1,22 +1,33 @@
-# PERM
-# Bimodal channel system 60x60
-3178.285029
-2446.060514
-2725.630664
-2459.982858
-5183.966961
-5056.071076
-6485.687908
-6785.449608
+
+
+PERM
+-- lines starting with "--" are comments
+-- empty lines before keyword are allowed
+-- empty lines after / are allowed
+-- each line can have different width
+-- allowed delimiters: single/multiple spaces, tabs and combination of spaces and tabs
+
+
+-- Permeability values (md)
+-- Bimodal channel system 60x60
+-- "n*v" represents repeated values : "n" repeated value of "v"
+
+
+3178.285029 2*2446.060514
+
+2459.982858      5183.966961
+
+-- comments between lines are allowed
+
+5056.071076         6485.687908 6785.449608
 5467.869381
 3736.868652
+
 2385.073288
 3060.647402
 2655.611979
 2129.248447
-3873.486714
-12.517564
-11.670187
+3873.486714 12.517564 11.670187
 5.735125
 5.918044
 14.030517
@@ -3600,3 +3611,7 @@
 5393.608780
 5481.480146
 4638.212692
+/
+
+
+

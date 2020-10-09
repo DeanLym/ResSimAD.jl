@@ -1,4 +1,15 @@
+
+
+
 SWOF
+
+-- lines starting with "--" are comments
+-- empty lines before keyword are allowed
+-- empty lines after / are allowed
+-- empty lines between rows are allowed
+-- allowed delimiters: single/multiple spaces, tabs and combination of spaces and tabs
+
+-- sw krw kro pcw(psi)
 0.0000 0 0.9000 0
 0.1000 0 0.9000 0
 0.2000 0.0102 0.6612 0

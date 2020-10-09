@@ -1,3 +1,17 @@
+
+
 PVTW
-3962.194496 1.029 3.17E-06 0.31 0
+
+-- lines starting with "--" are comments
+-- empty lines before keyword are allowed
+-- empty lines after / are allowed
+-- empty lines between rows are allowed
+-- allowed delimiters: single/multiple spaces, tabs and combination of spaces and tabs
+-- see keyword PVTW in Eclipse reference manual
+
+-- pref(psi) bw  cw (1/psi) vis_w(cp) c_visw(1/psi)
+3962.194496   1.029     3.17E-06 0.31 0
 /
+
+
+
