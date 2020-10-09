@@ -2,9 +2,32 @@
 
 [![Build Status](https://travis-ci.com/DeanLym/ResSimAD.jl.svg?token=zPX8pK8q8xHrqbTxACjW&branch=master)](https://travis-ci.com/DeanLym/ResSimAD.jl)
 
-[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://deanlym.github.io/ResSimAD.jl/dev/)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://deanlym.github.io/ResSimAD.jl/stable/)
 
 A light-weighted reservoir simulator in a modern programming language.
+
+## Installation
+`ResSimAD.jl` is being tested internally. You will need to get access to the repository.
+
+`ResSimAD.jl` is unregistered for now. In addition, the dependent JLL package `libduneistlsolver_jll.jl` and the solver package `DuneIstlSolvers.jl` are also unregistered.
+
+Therefore, to install, we need to first manually install `libduneistlsolver_jll.jl`:
+
+```julia
+] add https://github.com/DeanLym/libduneistlsolver_jll.jl.git
+```
+
+Next, we need to manually install `DuneIstlSolvers.jl`:
+
+```julia
+] add https://github.com/DeanLym/DuneIstlSolvers.jl.git
+```
+
+Then, we can install `ResSimAD.jl` with
+
+```julia
+add https://github.com/DeanLym/ResSimAD.jl.git
+```
 
 ## Features
 - **Interactivity**: run simulations in interactive programming environments such as `Jupyter notebook` and `VSCode`. With the `PyJulia` python module, `ResSimAD.jl` is also accessible from `Python`.
@@ -25,28 +48,6 @@ But the underlying framework of `ResSimAD.jl` is designed for easy extension to 
 ## Performance
 For the supported cases, the speed of `ResSimAD.jl` is comparable to professional simulators written in low-level languages including [Eclipse](https://www.software.slb.com/products/eclipse), [OPM](https://opm-project.org/) and [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs). See [Benchmark](@ref) for benchmark comparisons with [MRST](https://www.sintef.no/projectweb/mrst/), [ADGPRS](https://supri-b.stanford.edu/research-areas/ad-gprs), [Eclipse](https://www.software.slb.com/products/eclipse) and [OPM](https://opm-project.org/).
 
-## Installation
-`ResSimAD.jl` is being tested internally. You will need to get access to the repository.
-
-To install, first open `Julia` and press key `]` to activate the package manager.
-
-Then, install the `duneistl_bicgilu_jll.jl` package with
-
-```julia
-add https://github.com/DeanLym/duneistl_bicgilu_jll.jl.git
-```
-
-Next, install `ResSimAD.jl` with
-
-```julia
-add https://github.com/DeanLym/ResSimAD.jl.git
-```
-
-The `duneistl_bicgiul_jll.jl` is a Julia wrapper for the BiGCstab solver and the incomplete LU preconditioner from the [DUNE-ISTL](https://dune-project.org/) library. It is the fastest linear solver (2-3x speedup than the default solver) among all the supported linear solvers in `ResSimAD.jl`. 
-
-Set `options["linear_solver]="BICGSTAB_ILU_DUNE_ISTL"` to use this solver. 
-
-Normally, when installing `ResSimAD.jl`, all dependencies will be automatically installed. However, the `duneistl_bicgiul_jll.jl` has not been registered to the `Julia` registry. So unfortunately we need to install this one manually for now.
 
 ## Contents
 ```@contents
