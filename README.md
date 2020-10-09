@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/DeanLym/ResSimAD.jl.svg?token=zPX8pK8q8xHrqbTxACjW&branch=master)](https://travis-ci.com/DeanLym/ResSimAD.jl)
 
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://deanlym.github.io/ResSimAD.jl/stable/)
+[![](https://img.shields.io/badge/docs-dev-green.svg)](https://deanlym.github.io/ResSimAD.jl/dev/)
 
 
 A light-weighted reservoir simulator in a modern programming language.
@@ -32,7 +33,7 @@ Then, we can install `ResSimAD.jl` with
 
 ## Documentation
 
-Here is the [documentation](https://deanlym.github.io/ResSimAD.jl/stable/).
+Here is the documentation for [stable version](https://deanlym.github.io/ResSimAD.jl/stable/) and [dev version](https://deanlym.github.io/ResSimAD.jl/dev/).
 
 ## Features
 - **Interactivity**: run simulations in interactive programming environments such as `Jupyter notebook` and `VSCode`. With the `PyJulia` python module, `ResSimAD.jl` is also accessible from `Python`.

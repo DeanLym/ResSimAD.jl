@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.com/DeanLym/ResSimAD.jl.svg?token=zPX8pK8q8xHrqbTxACjW&branch=master)](https://travis-ci.com/DeanLym/ResSimAD.jl)
 
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://deanlym.github.io/ResSimAD.jl/stable/)
+[![](https://img.shields.io/badge/docs-dev-green.svg)](https://deanlym.github.io/ResSimAD.jl/dev/)
+
 
 A light-weighted reservoir simulator in a modern programming language.
 
