@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Precompile · ResSimAD.jl</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro&amp;display=swap" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">ResSimAD.jl</span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../workflow/">Basic workflow</a></li><li><a class="tocitem" href="../workflow2/">Advanced workflow</a></li><li class="is-active"><a class="tocitem" href>Precompile</a><ul class="internal"><li><a class="tocitem" href="#Why-precompiling"><span>Why precompiling</span></a></li><li><a class="tocitem" href="#How-to-precompile"><span>How to precompile</span></a></li><li><a class="tocitem" href="#What-precompiling-does"><span>What precompiling does</span></a></li></ul></li><li><a class="tocitem" href="../benchmark/">Benchmark</a></li><li><a class="tocitem" href="../python/">Python usage</a></li><li><a class="tocitem" href="../examples/">Example models</a></li><li><a class="tocitem" href="../input/">Input options</a></li><li><a class="tocitem" href="../api/">API functions</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Precompile</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Precompile</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/DeanLym/ResSimAD.jl/blob/master/docs/src/precompile.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Precompile"><a class="docs-heading-anchor" href="#Precompile">Precompile</a><a id="Precompile-1"></a><a class="docs-heading-anchor-permalink" href="#Precompile" title="Permalink"></a></h1><h2 id="Why-precompiling"><a class="docs-heading-anchor" href="#Why-precompiling">Why precompiling</a><a id="Why-precompiling-1"></a><a class="docs-heading-anchor-permalink" href="#Why-precompiling" title="Permalink"></a></h2><p>Quote from the <a href="https://julialang.github.io/PackageCompiler.jl/dev/">PackageCompiler.jl</a> documentation:</p><blockquote><p>Julia is, in general, a &quot;just-barely-ahead-of-time&quot; compiled language. When you call a function for the first time, Julia compiles it for precisely the types of the arguments given. This can take some time. All subsequent calls within that same session use this fast compiled function, but if you restart Julia you lose all the compiled work.</p></blockquote><p>In a new Julia session, it may feel slow when importing <code>ResSimAD</code>, creating <code>Sim</code> object, running simulation for the first time. This is because there are a lot of functions getting compiled &quot;just-barely-ahead-of-time&quot;. These include functions in the ResSimAD.jl package itself and many methods in the dependencies of ResSimAD.jl.</p><p>The following code demonstrates this:</p><pre><code class="language-julia">println(&quot;Importing ResSimAD (1st time) takes:&quot;)
+@time using ResSimAD
+
+println(&quot;Creating Sim object (1st time) takes:&quot;)
+@time sim, options = get_model(&quot;example1&quot;)
+
+println(&quot;Running simulation (1st time) takes:&quot;)
+
+@time runsim(sim);
+
+
+println(&quot;\nImporting ResSimAD (2nd time) takes:&quot;)
+@time using ResSimAD
+
+println(&quot;Creating Sim object (2nd time) takes:&quot;)
+@time sim, options = get_model(&quot;example1&quot;)
+
+println(&quot;Running simulation (2nd time) takes:&quot;)
+
+@time runsim(sim);
+</code></pre><p>There are huge differences in the execution time between the first calls and the second calls:</p><pre><code class="language-julia">Importing ResSimAD (1st time) takes:
+  2.962693 seconds (6.16 M allocations: 384.068 MiB)
+Creating Sim object (1st time) takes:
+ 28.540179 seconds (59.03 M allocations: 2.926 GiB, 5.07% gc time)
+Running simulation (1st time) takes:
+  1.797259 seconds (4.20 M allocations: 364.556 MiB, 5.76% gc time)
+
+Importing ResSimAD (2nd time) takes:
+  1.004753 seconds (2.59 M allocations: 122.898 MiB, 1.96% gc time)
+Creating Sim object (2nd time) takes:
+  0.001944 seconds (2.95 k allocations: 1.226 MiB)
+Running simulation (2nd time) takes:
+  0.373982 seconds (138.59 k allocations: 160.657 MiB, 7.20% gc time)</code></pre><p>Creating and simulating this small model (with only <code>450 cells</code>) for the first time will take about <code>30 secs</code>. And all subsequent runs will take less than <code>0.5 secs</code>. In a long running Julia session (e.g., in Juno or Jupyter notebook), the slow start up time is often times acceptable. However, there are cases where this long start up become unacceptable. For such cases, it is recommended to use the <a href="https://julialang.github.io/PackageCompiler.jl/dev/">PackageCompiler.jl</a> package to speed up the start up time.</p><h2 id="How-to-precompile"><a class="docs-heading-anchor" href="#How-to-precompile">How to precompile</a><a id="How-to-precompile-1"></a><a class="docs-heading-anchor-permalink" href="#How-to-precompile" title="Permalink"></a></h2><p>To precompile ResSimAD.jl, first install the PackageCompiler.jl package. Then run:</p><pre><code class="language-julia">using ResSimAD
+
+fn = joinpath(pkgdir(ResSimAD), &quot;precompile&quot;, &quot;precompile.jl&quot;);
+
+include(fn)
+</code></pre><p>This will take several minutes. You will see the following outputs:</p><pre><code class="language-julia">Precompiling ResSimAD.jl.
+Default system image will be replaced.
+[ Info: PackageCompiler: creating system image object file, this might take a while...
+[ Info: PackageCompiler: default sysimg replaced, restart Julia for the new sysimg to be in effect
+</code></pre><p>After the precompiling finishes, restart Julia and run the following code again</p><pre><code class="language-julia">println(&quot;Importing ResSimAD (1st time) takes:&quot;)
+@time using ResSimAD
+
+println(&quot;Creating Sim object (1st time) takes:&quot;)
+@time sim, options = get_model(&quot;example1&quot;)
+
+println(&quot;Running simulation (1st time) takes:&quot;)
+
+@time runsim(sim);
+
+
+println(&quot;\nImporting ResSimAD (2nd time) takes:&quot;)
+@time using ResSimAD
+
+println(&quot;Creating Sim object (2nd time) takes:&quot;)
+@time sim, options = get_model(&quot;example1&quot;)
+
+println(&quot;Running simulation (2nd time) takes:&quot;)
+
+@time runsim(sim);
+</code></pre><p>This time, importing ResSimAD.jl, creating <code>Sim</code> object and running simulation for the first time becomes almost as fast as the second calls:</p><pre><code class="language-julia">Importing ResSimAD (1st time) takes:
+  0.001425 seconds (1.16 k allocations: 58.562 KiB)
+Creating Sim object (1st time) takes:
+  0.028607 seconds (63.63 k allocations: 4.854 MiB)
+Running simulation (1st time) takes:
+  0.399527 seconds (193.98 k allocations: 163.970 MiB, 4.50% gc time)
+
+Importing ResSimAD (2nd time) takes:
+  0.000831 seconds (751 allocations: 39.719 KiB)
+Creating Sim object (2nd time) takes:
+  0.002119 seconds (3.04 k allocations: 1.227 MiB)
+Running simulation (2nd time) takes:
+  0.352242 seconds (138.59 k allocations: 160.657 MiB, 4.27% gc time)
+</code></pre><h2 id="What-precompiling-does"><a class="docs-heading-anchor" href="#What-precompiling-does">What precompiling does</a><a id="What-precompiling-does-1"></a><a class="docs-heading-anchor-permalink" href="#What-precompiling-does" title="Permalink"></a></h2><p>The PackageCompiler first runs a precompile execution file (<code>precompile/precompule_execution_file.jl</code>). This file executes the most commonly used ResSimAD.jl API functions. All functions and subroutines that were executed get compiled and stored. These compiled functions are combined with the default Julia system image to form a new system image. The new system image replaces the default Julia system image.</p><p>Future Julia sessions will launch with this new system image. The compiled functions will be loaded automatically. As a result, importing ResSimAD.jl, creating <code>Sim</code> object and running simulation for the first time become much faster.</p><p>This also means the ResSimAD.jl is locked to the version that gets compiled. Therefore, any modification to the ResSimAD.jl package (if you are developing ResSimAD.jl) or any version update will be shadowed. To solve this problem, there are three options</p><ul><li><p>Re-precompile ResSimAD.jl.</p></li><li><p>In stead of replacing the default system image with the new system image, we can keep both system images:</p></li></ul><pre><code class="language-julia">using ResSimAD
+
+replace_default = 0
+
+fn = joinpath(pkgdir(ResSimAD), &quot;precompile&quot;, &quot;precompile.jl&quot;);
+
+include(fn)
+</code></pre><p>This will create a new system image called <code>ResSimADSysImg.so</code>. Then we can launch Julia with this new system image to speed up ResSimAD.jl:</p><pre><code class="language-shell">julia -J ResSimADSysImg.so</code></pre><p>or launch Julia with the default system image as usual (for example when developing ResSimAD.jl where you are constantly modifying ResSimAD.jl or when you are using Julia for other tasks).</p><pre><code class="language-shell">julia</code></pre><p>We can also specify the path for the new system image:</p><pre><code class="language-julia">using ResSimAD
+
+replace_default = 0
+
+sysimage_path = &quot;mypath/mysysimg.so&quot;
+
+fn = joinpath(pkgdir(ResSimAD), &quot;precompile&quot;, &quot;precompile.jl&quot;);
+
+include(fn)
+
+</code></pre><ul><li>Restore default system image: if the default system image is replaced, we can restore it with</li></ul><pre><code class="language-julia">using PackageCompiler
+restore_default_sysimage()</code></pre><p>This will restore the default system image. The new system image that contains precompiled ResSimAD.jl related functions will be discarded .</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../workflow2/">« Advanced workflow</a><a class="docs-footer-nextpage" href="../benchmark/">Benchmark »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 9 October 2020 07:05">Friday 9 October 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
