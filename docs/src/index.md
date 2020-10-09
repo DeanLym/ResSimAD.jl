@@ -26,7 +26,7 @@ Next, we need to manually install `DuneIstlSolvers.jl`:
 Then, we can install `ResSimAD.jl` with
 
 ```julia
-add https://github.com/DeanLym/ResSimAD.jl.git
+] add https://github.com/DeanLym/ResSimAD.jl.git
 ```
 
 ## Features
