@@ -620,11 +620,11 @@ version = "1.0.1"
 
 [[ResSimAD]]
 deps = ["AlgebraicMultigrid", "CSV", "Calculus", "DataFrames", "DelimitedFiles", "Documenter", "DuneIstlSolvers", "Formatting", "HDF5", "IncompleteLU", "Interpolations", "IterativeSolvers", "Libdl", "LinearAlgebra", "Memento", "SparseArrays", "SpecialFunctions", "StaticArrays", "Statistics", "duneistl_julia_jll"]
-git-tree-sha1 = "40022b2d68a7e21a2bf3f910da774bee90d01bb8"
+git-tree-sha1 = "7c053365c924c3195361dc1eb253848b56c7deab"
 repo-rev = "master"
-repo-url = ".."
+repo-url = "."
 uuid = "0f5291bf-5850-40d8-bc7e-2ce68032ef0b"
-version = "0.1.0"
+version = "0.1.2"
 
 [[Rmath]]
 deps = ["Random", "Rmath_jll"]
