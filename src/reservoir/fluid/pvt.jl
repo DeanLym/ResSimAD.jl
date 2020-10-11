@@ -3,22 +3,22 @@ abstract type AbstractPVT end
 
 struct PVT <: AbstractPVT
     b::Interp
-    μ::Interp
+    bμ::Interp
     table::DataFrame
 end
 
 function PVT(df::DataFrame)
     b = interpolate((df.p,), df.b, Gridded(Linear()))
-    μ = interpolate((df.p,), df.μ, Gridded(Linear()))
-    return PVT(b, μ, df)
+    bμ = interpolate((df.p,), df.b .* df.μ , Gridded(Linear()))
+    return PVT(b, bμ, df)
 end
 
 function get_b(pvt::PVT, b::T, p::T)::T where {T <: AbstractVector}
     @. b = pvt.b(p)
 end
 
-function get_μ(pvt::PVT, μ::T, p::T)::T where {T <: AbstractVector}
-    @. μ = pvt.μ(p)
+function get_μ(pvt::PVT, μ::T, p::T, b::T)::T where {T <: AbstractVector}
+    @. μ = pvt.bμ(p) / b
 end
 
 struct PVTC <: AbstractPVT
@@ -43,10 +43,11 @@ end
 
 function get_b(pvtc::PVTC, b::T, p::T)::T where {T <: AbstractVector}
     c, pref, bref = pvtc.c, pvtc.pref, pvtc.bref
-    @. b = bref / (1 + c * (p - pref) + c*c*(p - pref)^2 / 2)
+    @. b = bref / (1 + c * (p - pref) + c^2*(p - pref)^2 / 2)
 end
 
-function get_μ(pvtc::PVTC, μ::T, p::T)::T where {T <: AbstractVector}
-    cμ, pref, μref = pvtc.cμ, pvtc.pref, pvtc.μref
-    @. μ = μref / (1 + cμ * (p - pref) + cμ * cμ * (p - pref)^2 / 2)
+function get_μ(pvtc::PVTC, μ::T, p::T, b::T)::T where {T <: AbstractVector}
+    c, cμ, pref, μref, bref = pvtc.c, pvtc.cμ, pvtc.pref, pvtc.μref, pvtc.bref
+    @. μ = bref*μref / (1 + (c-cμ) * (p - pref) + (c-cμ)^2 * (p - pref)^2 / 2) / b
 end
+

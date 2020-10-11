@@ -9,10 +9,10 @@ abstract type AbstractRock end
 
 struct StandardRock <: AbstractRock
     nc::Int
-    kx::Vector{Float64}
-    ky::Vector{Float64}
-    kz::Vector{Float64}
-    ϕ::Vector{Float64}
+    kx::Vector{Float64} # x permeability 
+    ky::Vector{Float64} # y permeability 
+    kz::Vector{Float64} # z permeability 
+    ϕ::Vector{Float64} # porosity
     function StandardRock(nc::Int)
         props = (:kx, :ky, :kz, :ϕ)
         params = [ones(nc) for _ in props]
@@ -37,16 +37,46 @@ function set_perm(rock::StandardRock, kx::Vector{Float64}, ky::Vector{Float64}, 
     rock.kz .= kz
 end
 
-function set_poro(rock::StandardRock, ϕ::Float64)
+function set_poro(rock::T, ϕ::Float64) where{T <: AbstractRock}
     notice(LOGGER, "Setting constant porosity ϕ = $(round(ϕ, digits=3)) for all cells")
     I = ones(rock.nc)
     set_poro(rock, ϕ*I)
 end
 
-function set_poro(rock::StandardRock, ϕ::Vector{Float64})
+function set_poro(rock::T, ϕ::Vector{Float64}) where{T <: AbstractRock}
     if any(ϕ .≤ 0.) error(LOGGER, "Negative value in porosity") end
     if any(ϕ .≥ 1.) error(LOGGER, "Porosity value larger than 1") end
     rock.ϕ .= ϕ
+end
+
+struct TransRock <: AbstractRock
+    nc::Int
+    tranx::Vector{Float64} # x Transmissibility
+    trany::Vector{Float64} # y Transmissibility
+    tranz::Vector{Float64} # z Transmissibility
+    ϕ::Vector{Float64} # porosity
+    function TransRock(nc::Int)
+        props = (:tranx, :trany, :tranz, :ϕ)
+        params = [ones(nc) for _ in props]
+        return new(nc, params...)
+    end 
+end
+
+function set_trans(rock::TransRock, tranx::Float64, trany::Float64, tranz::Float64)
+    notice(LOGGER, "Setting constant transmissibility tranx = $(round(tranx, digits=3)) for all cells")
+    notice(LOGGER, "Setting constant transmissibility trany = $(round(trany, digits=3)) for all cells")
+    notice(LOGGER, "Setting constant transmissibility tranz = $(round(tranz, digits=3)) for all cells")
+    I = ones(rock.nc)
+    set_perm(rock, tranx*I, trany*I, tranz*I)
+end
+
+function set_trans(rock::TransRock, tranx::Vector{Float64}, trany::Vector{Float64}, tranz::Vector{Float64})
+    if any(tranx .< 0.) || any(trany .< 0.) || any(tranz .< 0.)
+        error(LOGGER, "Negative value in transmissibility")
+    end
+    rock.tranx .= tranx
+    rock.trany .= trany
+    rock.tranz .= tranz
 end
 
 end

@@ -23,7 +23,7 @@ using ..InputParser: parse_input, parse_well_option
 using ..Grid: CartGrid, AbstractGrid, ConnList, construct_connlist, set_cell_depth,
                 get_grid_index, set_cell_size, sort_conn, grid_info, compute_cell_depth
 
-using ..Rock: AbstractRock, StandardRock, set_perm, set_poro
+using ..Rock: AbstractRock, StandardRock, TransRock, set_perm, set_poro, set_trans
 
 using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
                 set_fluid_tn, update_phases, update_primary_variable,

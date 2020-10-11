@@ -33,7 +33,6 @@ function example4()
     options["nx"] = 60; options["ny"] = 60; options["nz"] = 40;
     options["dx"] = 50.; options["dy"] = 50.; options["dz"] = 20.;
     options["tops"] = 8000.;
-    options["d"] = 10000.0;
     options["poro"] = 0.2;
     options["perm"] = 2000.0;
     options["multpermz"] = 0.25;

@@ -4,6 +4,17 @@ function check_required_keyword(p, keywords)
     end
 end
 
+function check_all_keywords_included(v, keywords)
+    flag = true
+    for p in v
+        if !(p in keywords)
+            flag = false
+            break
+        end
+    end
+    return flag
+end
+
 
 function check_keyword_type(p, options, types)
     type = typeof(options[p])
@@ -102,6 +113,7 @@ end
 
 function read_table_file(fn, keyword)
     contents = strip(open(f->read(f, String), fn))
+    contents = replace(contents, "\t" => " ") # replace tab with space
     if !startswith(contents, keyword)
         error(LOGGER, "File $fn should start with $keyword ")
     end

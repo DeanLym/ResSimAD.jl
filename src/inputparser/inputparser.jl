@@ -20,6 +20,7 @@ include("schedulerparser.jl")
 include("nsolverparser.jl")
 include("lsolverparser.jl")
 
+
 function parse_input(options::Dict)
     info(LOGGER, "Parsing input options")
     keywords = keys(options)
@@ -27,11 +28,11 @@ function parse_input(options::Dict)
     grid_opt = parse_grid(options, keywords)
     nc = grid_opt["nc"]
     # Parse rock
-    rock_opt = parse_rock(options, keywords, nc)
+    rock_opt = parse_rock(options, keywords, nc, grid_opt)
     # Parse fluid
     fluid_opt = parse_fluid(options, keywords, nc)
     # Parse well
-    facility_opt = parse_facility(options, keywords)
+    facility_opt = parse_facility(options, keywords, rock_opt)
     # Parse scheduler
     scheduler_opt = parse_scheduler(options, keywords)
     # Parse nsolver

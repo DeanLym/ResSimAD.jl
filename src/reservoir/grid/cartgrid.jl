@@ -94,7 +94,7 @@ function set_cell_size(
 end
 
 
-function construct_connlist(grid::CartGrid, rock::AbstractRock)::ConnList
+function construct_connlist(grid::CartGrid, rock::StandardRock)::ConnList
     info(LOGGER, "Constructing connection list for Cartesian grid")
     connlist = grid.connlist
     dx, dy, dz = grid.dx, grid.dy, grid.dz
@@ -133,6 +133,53 @@ function construct_connlist(grid::CartGrid, rock::AbstractRock)::ConnList
                 r = get_grid_index(grid, ii, jj, kk + 1)
                 trans =
                     2 * α * dx[l] * dy[l] / ((dz[l] / kz[l]) + (dz[r] / kz[r]))
+                Δd = grid.d[l] - grid.d[r]
+                add_conn(connlist, l, r, trans, Δd)
+            end
+        end
+    end
+    connlist.nconn = length(connlist.trans)
+    construct_neighbors(grid)
+    return connlist
+end
+
+
+function construct_connlist(grid::CartGrid, rock::TransRock)::ConnList
+    info(LOGGER, "Constructing connection list for Cartesian grid")
+    connlist = grid.connlist
+    dx, dy, dz = grid.dx, grid.dy, grid.dz
+    tranx, trany, tranz = rock.tranx, rock.trany, rock.tranz #
+    # X Direction
+    for kk = 1:grid.nz
+        for jj = 1:grid.ny
+            for ii = 1:grid.nx-1
+                l = get_grid_index(grid, ii, jj, kk)
+                r = get_grid_index(grid, ii + 1, jj, kk)
+                trans = tranx[l]
+                Δd = grid.d[l] - grid.d[r]
+                add_conn(connlist, l, r, trans, Δd)
+            end
+        end
+    end
+    # Y Direction
+    for kk = 1:grid.nz
+        for jj = 1:grid.ny-1
+                for ii = 1:grid.nx
+                l = get_grid_index(grid, ii, jj, kk)
+                r = get_grid_index(grid, ii, jj + 1, kk)
+                trans = trany[l]
+                Δd = grid.d[l] - grid.d[r]
+                add_conn(connlist, l, r, trans, Δd)
+            end
+        end
+    end
+    # Z Direction
+    for kk = 1:grid.nz-1
+        for jj = 1:grid.ny
+            for ii = 1:grid.nx
+                l = get_grid_index(grid, ii, jj, kk)
+                r = get_grid_index(grid, ii, jj, kk + 1)
+                trans = tranz[l]
                 Δd = grid.d[l] - grid.d[r]
                 add_conn(connlist, l, r, trans, Δd)
             end

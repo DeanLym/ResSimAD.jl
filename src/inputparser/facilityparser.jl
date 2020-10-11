@@ -6,7 +6,7 @@ const valid_well_modes = Dict([
 
 const valid_well_limits = keys(get_limit)
 
-function parse_well_option(w, type::String, well_names::Set{String})
+function parse_well_option(w, type::String, well_names::Set{String}, require_well_index::Bool)
     # Check required keywords
     wkeywords = keys(w)
     if !("name" ∈ wkeywords)
@@ -43,9 +43,23 @@ function parse_well_option(w, type::String, well_names::Set{String})
     check_keyword_type("target", w, (Float64,))
 
     # Parse well radius
-    if !("radius" ∈ wkeywords)
-        notice(LOGGER, "Keyword \"radius\" missing for well \"$name\", (default value 0.5 will be used)")
-        w["radius"] = 0.5
+    if "wi" ∈ wkeywords
+        check_keyword_type("wi", w, (Vector{Float64},))
+        if length(w["wi"]) != length(w["perforation"])
+            error(LOGGER, "Length of \"wi\" must be the same as \"perforation\" for well \"$name\"")
+        end
+        info(LOGGER, "Setting well index from input for well \"$name\"")
+        if "radius" ∈ wkeywords
+            warn(LOGGER, "Well radius will not be used for calculating well index for well \"$name\"")
+        end
+    elseif require_well_index
+        error(LOGGER, "\"wi\" keyword must be set for well \"$name\"")
+    else
+        info(LOGGER, "Well index for well \"$name\" will be computed with radius")
+        if !("radius" ∈ wkeywords)
+            notice(LOGGER, "Keyword \"radius\" missing for well \"$name\", (default value 0.5 will be used)")
+            w["radius"] = 0.5
+        end
     end
 
     # Parse well limits
@@ -74,10 +88,10 @@ function parse_well_option(w, type::String, well_names::Set{String})
 end
 
 
-function parse_facility(options, keywords)
+function parse_facility(options, keywords, rock_opt)
     facility_opt = Dict()
     v = ("producers", "injectors")
-
+    require_well_index = (rock_opt["trans_type"] == "trans")
     well_names = Set{String}()
     for p in v
         if p in keywords
@@ -85,7 +99,7 @@ function parse_facility(options, keywords)
             facility_opt["num_$p"] = length(val)
             facility_opt[p] = deepcopy(val)
             for w in facility_opt[p]
-                parse_well_option(w, p[1:end-1], well_names)
+                parse_well_option(w, p[1:end-1], well_names, require_well_index)
             end
         else
             facility_opt["num_$p"] = 0

@@ -4,11 +4,15 @@ const get_well_type =
 function init_grid(grid_opt::Dict)
     info(LOGGER, "Initializing grid")
     grid_type = grid_opt["type"]
-    if grid_type == "Cartesian"
+    if grid_type == "CARTESIAN"
         nx, ny, nz = grid_opt["nx"], grid_opt["ny"], grid_opt["nz"]
         grid = CartGrid(nx, ny, nz)
-        dx, dy, dz = grid_opt["dx"], grid_opt["dy"], grid_opt["dz"]
-        set_cell_size(grid, dx, dy, dz)
+        if "dx" in keys(grid_opt)
+            dx, dy, dz = grid_opt["dx"], grid_opt["dy"], grid_opt["dz"]
+            set_cell_size(grid, dx, dy, dz)
+        else
+            set_cell_size(grid, grid_opt["v"])
+        end
         set_cell_depth(grid, grid_opt["d"])
         info(LOGGER, "Grid dimension: $(grid.nx), $(grid.ny), $(grid.nz)")
         info(LOGGER, "Number of cells: $(grid.nc)")
@@ -21,8 +25,13 @@ end
 
 function init_rock(rock_opt::Dict, nc::Int)
     info(LOGGER, "Initializing rock")
-    rock = StandardRock(nc)
-    set_perm(rock, rock_opt["permx"], rock_opt["permy"], rock_opt["permz"])
+    if rock_opt["trans_type"] == "perm"
+        rock = StandardRock(nc)
+        set_perm(rock, rock_opt["permx"], rock_opt["permy"], rock_opt["permz"])
+    else # rock_opt["trans_type"] == "trans"
+        rock = TransRock(nc)
+        set_trans(rock, rock_opt["tranx"], rock_opt["trany"], rock_opt["tranz"])
+    end
     set_poro(rock, rock_opt["poro"])
     return rock
 end
@@ -96,7 +105,30 @@ function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::Abstract
     return well
 end
 
-function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
+function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid)
+    name = w["name"]
+    perf = Vector{Int}()
+    for indices in w["perforation"]
+        push!(perf, get_grid_index(grid, indices...))
+    end
+    well = StandardWell{T}(name, perf, nv)
+    # Set control mode and target
+    well.mode = w["mode"]
+    well.target = w["target"]
+    # Set limits
+    if "limits" in keys(w)
+        limits = w["limits"]
+        for (k,v) in limits
+            well.limits[get_limit[k]] = v
+        end
+    end
+    # Set well index
+    well.wi .= w["wi"]
+    
+    return well
+end
+
+function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, rock::StandardRock)
     info(LOGGER, "Initializing facility")
     v = ("producers", "injectors")
     facility = Dict{String, AbstractFacility}()
@@ -105,6 +137,22 @@ function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, rock::Abstra
         if facility_opt["num_$p"] > 0
             for w in facility_opt[p]
                 facility[w["name"]] = init_well(T, w, nv, grid, rock)
+            end
+        end
+    end
+
+    return facility
+end
+
+function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, ::TransRock)
+    info(LOGGER, "Initializing facility")
+    v = ("producers", "injectors")
+    facility = Dict{String, AbstractFacility}()
+    for p in v
+        T = get_well_type[p[1:end-1]]
+        if facility_opt["num_$p"] > 0
+            for w in facility_opt[p]
+                facility[w["name"]] = init_well(T, w, nv, grid)
             end
         end
     end
@@ -190,7 +238,7 @@ function Sim(options::Dict)
 
     nc = grid.nc
     rock = init_rock(parsed_options["rock_opt"], nc)
-
+    
     construct_connlist(grid, rock)
     sort_conn(grid.connlist)
     info(LOGGER, "Number of connections: $(grid.connlist.nconn)")

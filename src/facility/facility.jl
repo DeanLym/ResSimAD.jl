@@ -88,6 +88,25 @@ function StandardWell{T}(
     return p
 end
 
+function StandardWell{T}(
+    name::String,
+    perforation::Vector{Int},
+    nv::Int,
+) where {T}
+    p = StandardWell{T}(name)
+    p.ind = Vector{Int}()
+    append!(p.ind, perforation)
+    nperf = length(p.ind) # Number of perforations
+    p.wi = Vector{Float64}(undef, nperf)
+
+    p.qo = advector(nperf, 1, nv)
+    p.qw = advector(nperf, 1, nv)
+    p.ql = advector(nperf, 1, nv)
+    p.bhp = advector(nperf, 1, nv)
+
+    return p
+end
+
 function isproducer(::StandardWell{PRODUCER})
     return true
 end
@@ -174,12 +193,13 @@ function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVecto
     mode, target, ind = well.mode, well.target, well.ind
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
-        λo, λw, pw = o.λ, w.λ, w.p
+        kro, krw, μo, μw, bw, pw = o.kr, w.kr, o.μ, w.μ, w.b, w.p
+        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
         if any(pw[ind] .> target)
             # Avoid inverse flow
             @. well.qw = 0.0*pw[ind]
         else
-            @. well.qw = well.wi * (λo[ind] + λw[ind]) * (pw[ind] - target)
+            @. well.qw = well.wi * λ * (pw[ind] - target)
         end
     elseif mode == CWRAT
         @. well.qw = target + 0.0*w.p[ind]

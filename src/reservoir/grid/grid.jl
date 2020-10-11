@@ -5,7 +5,7 @@ const LOGGER = getlogger(@__MODULE__)
 __init__() = Memento.register(LOGGER)
 
 using ..Global: α
-using ..Rock: AbstractRock
+using ..Rock: AbstractRock, StandardRock, TransRock
 
 export AbstractGrid,
     CartGrid, get_grid_index, set_cell_size, set_perm, set_poro, construct_conn
@@ -28,6 +28,14 @@ end
 function set_cell_depth(grid::AbstractGrid, d::Float64)::AbstractGrid
     notice(LOGGER, "Setting constant depth = $(round(d, digits=3)) for all cells")
     set_cell_depth(grid, d*ones(grid.nc))
+end
+
+function set_cell_size(grid::AbstractGrid, v::Vector{Float64})
+    if any(v .≤ 0)
+        error(LOGGER, "Negative value in v")
+    end
+    # Compute volume
+    grid.v .= v
 end
 
 function construct_neighbors(grid::AbstractGrid)::Vector{Vector{Int}}

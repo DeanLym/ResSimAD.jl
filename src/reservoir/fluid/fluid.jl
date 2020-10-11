@@ -26,6 +26,7 @@ struct Phase
     s::ADVector   # Cells Phase Saturation
     b::ADVector   # Cells Phase Formation Volume Factor
     μ::ADVector   # Cells Phase Viscosity
+    
     kr::ADVector  # Cells Phase Relative Permeability
     λ::ADVector   # Cells Phase Mobility
     ρ::ADVector   # Cells Phase Density
@@ -84,7 +85,7 @@ function compute_b(phase::Phase)::ADVector
 end
 
 function compute_μ(phase::Phase)::ADVector
-    get_μ(phase.pvt, phase.μ, phase.p)
+    get_μ(phase.pvt, phase.μ, phase.p, phase.b)
 end
 
 function compute_γ(phase::Phase, connlist::ConnList)::ADVector
@@ -131,20 +132,14 @@ function update_phase_tn(phase::Phase)::Phase
 end
 
 function update_phase(phase::Phase, connlist::ConnList)::Phase
-    # println("SGrad")
-    # @time begin
     compute_b(phase)
     compute_μ(phase)
     compute_ρ(phase)
     compute_λ(phase)
-    # end
-    # println("DGrad")
-    # @time begin
+
     compute_γ(phase, connlist)
     compute_ΔΨ(phase, connlist)
     compute_f(phase, connlist)
-    # end
-
     return phase
 end
 
