@@ -46,12 +46,17 @@ julia> length(keys(sim.facility))
 """
 function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     well_names = Set{String}(keys(sim.facility))
-    parse_well_option(well_option, welltype, well_names)
     T = get_well_type[lowercase(welltype)]
     reservoir = sim.reservoir
     nv, grid, rock = reservoir.fluid.nv, reservoir.grid, reservoir.rock
     name = well_option["name"]
-    sim.facility[name] = init_well(T, well_option, nv, grid, rock)
+    if "wi" ∈ keys(well_option)
+        parse_well_option(well_option, welltype, well_names, true)
+        sim.facility[name] = init_well(T, well_option, nv, grid)
+    else # "radius"
+        parse_well_option(well_option, welltype, well_names, false)
+        sim.facility[name] = init_well(T, well_option, nv, grid, rock)
+    end
     reset_dt(sim.scheduler)
     sim.nsolver.recompute_residual = true
     notice(LOGGER, "Added new $(welltype) $(name)")
