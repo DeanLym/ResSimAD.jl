@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>API functions · ResSimAD.jl</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro&amp;display=swap" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">ResSimAD.jl</span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../workflow/">Basic workflow</a></li><li><a class="tocitem" href="../workflow2/">Advanced workflow</a></li><li><a class="tocitem" href="../precompile/">Precompile</a></li><li><a class="tocitem" href="../benchmark/">Benchmark</a></li><li><a class="tocitem" href="../python/">Python usage</a></li><li><a class="tocitem" href="../examples/">Example models</a></li><li><a class="tocitem" href="../input/">Input options</a></li><li class="is-active"><a class="tocitem" href>API functions</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>API functions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>API functions</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/DeanLym/ResSimAD.jl/blob/master/docs/src/api.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.Models.get_model" href="#ResSimAD.Models.get_model"><code>ResSimAD.Models.get_model</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">get_model(example_name::String)</code></pre><p>Get example model <code>example_name</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.runsim" href="#ResSimAD.SimMaster.runsim"><code>ResSimAD.SimMaster.runsim</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">runsim(sim::Sim)</code></pre><p>Run simulation from day <code>sim.scheduler.t_current</code> to day <code>sim.scheduler.time_step[end]</code></p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, runsim
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; sim.scheduler.t_current
+0.0
+
+julia&gt; sim.scheduler.time_step[end]
+1825.0
+
+julia&gt; runsim(sim);
+
+julia&gt; sim.scheduler.t_current
+1825.0</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.step_to" href="#ResSimAD.SimMaster.step_to"><code>ResSimAD.SimMaster.step_to</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">step_to(sim::Sim, t::Float64)</code></pre><p>Simluate until day <code>t</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, step_to
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; sim.scheduler.t_current
+0.0
+
+julia&gt; step_to(sim, 100.0);
+
+julia&gt; sim.scheduler.t_current
+100.0</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.time_step" href="#ResSimAD.SimMaster.time_step"><code>ResSimAD.SimMaster.time_step</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">time_step(sim::Sim)</code></pre><p>Simluate for one time step. Time step length is <code>sim.scheduler.dt</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, time_step
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; sim.scheduler.t_current
+0.0
+
+julia&gt; sim.scheduler.dt
+0.1
+
+julia&gt; time_step(sim);
+
+julia&gt; sim.scheduler.t_current
+0.1</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.newton_step" href="#ResSimAD.SimMaster.newton_step"><code>ResSimAD.SimMaster.newton_step</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">newton_step(sim::Sim)</code></pre><p>Simulate for one newton step.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, newton_step, get_residual_error
+
+julia&gt; using Printf: @printf
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; @printf(&quot;%.3e&quot;,get_residual_error(sim))
+2.210e-01
+julia&gt; newton_step(sim)
+
+julia&gt; @printf(&quot;%.3e&quot;,get_residual_error(sim))
+1.927e-02
+julia&gt; newton_step(sim)
+
+julia&gt; @printf(&quot;%.3e&quot;,get_residual_error(sim))
+9.871e-05</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.change_well_mode" href="#ResSimAD.SimMaster.change_well_mode"><code>ResSimAD.SimMaster.change_well_mode</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">change_well_mode(sim::Sim, name::String, mode::String, target::Float64)</code></pre><p>Change the control mode of well <code>name</code> to be <code>mode</code> with target value <code>target</code></p><p><strong>Arguments</strong></p><ul><li><code>sim::Sim</code>: Sim object</li><li><code>name::String</code>: name of the well</li><li><code>mode::String</code>: target mode, not case sensitive<ul><li>producers:<ul><li>&quot;bhp&quot;: constant BHP</li><li>&quot;shut&quot;: shut-in</li><li>&quot;orat&quot;: constant oil rate</li><li>&quot;wrat&quot;: constant water rate</li><li>&quot;lrat&quot;: constatnt liquid rate</li></ul></li><li>injectors:<ul><li>&quot;bhp&quot;: constant BHP</li><li>&quot;wrat&quot;: constant water rate</li></ul></li></ul></li><li><code>target::Float64</code></li></ul><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, change_well_mode, silence
+
+julia&gt; silence();
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; change_well_mode(sim, &quot;P1&quot;, &quot;bhp&quot;, 6200.);
+
+julia&gt; println(sim.facility[&quot;P1&quot;].mode)
+CBHP
+
+julia&gt; println(sim.facility[&quot;P1&quot;].target)
+6200.0</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.change_well_target" href="#ResSimAD.SimMaster.change_well_target"><code>ResSimAD.SimMaster.change_well_target</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">change_well_target(sim::Sim, name::String, target::Float64)</code></pre><p>Change the control target of well <code>name</code> to be <code>target</code>.</p><p><strong>Arguments</strong></p><ul><li><code>sim::Sim</code>: Sim object</li><li><code>name::String</code>: name of the well</li><li><code>target::Float64</code>: well control target</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, change_well_target, silence
+
+julia&gt; silence();
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; change_well_target(sim, &quot;P1&quot;, 6200.);
+
+julia&gt; println(sim.facility[&quot;P1&quot;].target)
+6200.0
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.get_well_rates" href="#ResSimAD.SimMaster.get_well_rates"><code>ResSimAD.SimMaster.get_well_rates</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">get_well_rates(sim::Sim, name::String, data::String)</code></pre><p>Get column <code>data</code> from dataframe <code>sim.facility[name].results</code></p><p><strong>Arguments</strong></p><ul><li><code>sim::Sim</code>: Sim object</li><li><code>name::String</code>: name of the well</li><li><code>data::String</code>: column name (case insensitive)<ul><li>&quot;TIME&quot;: Time steps</li><li>&quot;ORAT&quot;: Oil rate</li><li>&quot;WRAT&quot;: Water rate</li><li>&quot;GRAT&quot;: Gas rate</li><li>&quot;LRAT&quot;: Liquid rate</li><li>&quot;WBHP&quot;: BHP</li></ul></li></ul><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, runsim, get_well_rates, silence
+
+julia&gt; silence();
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; runsim(sim);
+
+julia&gt; tstep = get_well_rates(sim, &quot;P1&quot;, &quot;Time&quot;);
+
+julia&gt; qo = get_well_rates(sim, &quot;P1&quot;, &quot;ORAT&quot;);
+
+julia&gt; length(tstep) &gt; 0
+true
+julia&gt; length(qo) &gt; 0
+true</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.get_data" href="#ResSimAD.SimMaster.get_data"><code>ResSimAD.SimMaster.get_data</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">get_data(sim::Sim, dataname::String)</code></pre><p>Get data for dataname <code>dataname</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, step_to, get_data, silence
+
+julia&gt; silence();
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; step_to(sim, 10.0);
+
+julia&gt; λo = get_data(sim, &quot;λo&quot;);
+
+julia&gt; size(λo)
+(450,)
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.get_state_map" href="#ResSimAD.SimMaster.get_state_map"><code>ResSimAD.SimMaster.get_state_map</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">get_state_map(sim::Sim, var::String, t::Float64)</code></pre><p>Get state map for variable <code>var</code> at time <code>t</code>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, runsim, get_state_map, get_well_rates, silence
+
+julia&gt; silence();
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; runsim(sim);
+
+julia&gt; t = get_well_rates(sim, &quot;P1&quot;, &quot;TIME&quot;);
+
+julia&gt; po = get_state_map(sim, &quot;po&quot;, t[end]);
+
+julia&gt; size(po)
+(450,)
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.add_well" href="#ResSimAD.SimMaster.add_well"><code>ResSimAD.SimMaster.add_well</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">add_well(sim::Sim, welltype::String, well_option::Dict)</code></pre><p>Add one well of type <code>welltype</code>, with well setups specified in <code>well_option</code></p><p><strong>Arguments</strong></p><ul><li><code>sim::Sim</code>: Sim object</li><li><code>welltype::String</code>: type of the well (case insensitive)<ul><li>&quot;injector&quot;: injector</li><li>&quot;producer&quot;: producer</li></ul></li><li><code>well_option::Dict</code>: well setups with keys<ul><li>&quot;name&quot; -&gt; String, name of the well</li><li>&quot;perforation&quot; -&gt; Vector{Tuple{Int, Int, Int}}, indices for perforated blocks</li><li>&quot;radius&quot; -&gt; Float64, well radius</li><li>&quot;mode&quot; -&gt; String, well control mode</li><li>&quot;target&quot; -&gt; Float64, well constrol target</li></ul></li></ul><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD: get_model, add_well, silence
+
+julia&gt; silence();
+
+julia&gt; sim, options = get_model(&quot;example1&quot;);
+
+julia&gt; length(keys(sim.facility))
+2
+
+julia&gt; p2 = Dict(&quot;name&quot; =&gt; &quot;P2&quot;, &quot;perforation&quot;=&gt;[(5,5,1)], &quot;radius&quot;=&gt;0.5, &quot;mode&quot;=&gt;&quot;bhp&quot;, &quot;target&quot;=&gt;5600.);
+
+julia&gt; add_well(sim, &quot;producer&quot;, p2);
+
+julia&gt; length(keys(sim.facility))
+3
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.shut_well" href="#ResSimAD.SimMaster.shut_well"><code>ResSimAD.SimMaster.shut_well</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">shut_well(sim::Sim, name::String)</code></pre><p>Shut well <code>name</code></p></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.SimMaster.change_dt" href="#ResSimAD.SimMaster.change_dt"><code>ResSimAD.SimMaster.change_dt</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">change_dt(sim::Sim, dt::Float64)</code></pre><p>Set next time step size to be <code>dt</code></p></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.silence" href="#ResSimAD.silence"><code>ResSimAD.silence</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">silence()</code></pre><p>Do not show any message except for &quot;error&quot; messages. See <code>ResSimAD.verbose()</code> for more information.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD:silence
+
+julia&gt; silence();
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.debug" href="#ResSimAD.debug"><code>ResSimAD.debug</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">debug()</code></pre><p>Show &quot;debug&quot; messages. See <code>ResSimAD.verbose()</code> for more information.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD:debug
+
+julia&gt; debug();
+</code></pre></div></section></article><article class="docstring"><header><a class="docstring-binding" id="ResSimAD.verbose" href="#ResSimAD.verbose"><code>ResSimAD.verbose</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia">verbose(level::String)</code></pre><p>Set verbose level. Show messages with higher level than the set <code>level</code>. See Memento.jl for more information.</p><p><strong>Arguments</strong></p><ul><li><code>level::String</code>: verbose levels (low to high)<ul><li><code>&quot;debug&quot;</code>: verbose message used for debugging</li><li><code>&quot;info&quot;</code>: general information</li><li><code>&quot;notice&quot;</code>: important events that are part of normal execution</li><li><code>&quot;warn&quot;</code>: warning that may cause the program to fail</li><li><code>&quot;error&quot;</code>: error that causes the program to terminate</li></ul></li></ul><p><strong>Examples</strong></p><pre><code class="language-julia-repl">julia&gt; using ResSimAD:verbose
+
+julia&gt; verbose(&quot;debug&quot;);
+</code></pre></div></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../input/">« Input options</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Thursday 15 October 2020 01:56">Thursday 15 October 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
