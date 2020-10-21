@@ -33,7 +33,7 @@ using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
 using ..Reservoir: AbstractReservoir, StandardReservoir, save_fluid_results
 
 using ..Facility: AbstractFacility, StandardWell, WellType, Limit, PRODUCER, INJECTOR,
-        get_ctrl_mode, get_limit, compute_wi, compute_qo, compute_qw, compute_ql, compute_bhp,
+        get_ctrl_mode, get_limit, compute_wi, compute_qo, compute_qw, compute_well_state, compute_ql, compute_bhp,
         save_result, check_limits
 
 using ..Schedule: Scheduler, update_dt, set_dt, reset_dt, insert_time_step, set_time_step

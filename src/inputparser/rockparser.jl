@@ -62,6 +62,5 @@ function parse_rock(options, keywords, nc, grid_opt)
             end
         end
     end
-    
     return rock_opt
 end

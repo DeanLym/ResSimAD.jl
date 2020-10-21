@@ -89,8 +89,12 @@ function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::Abstract
     for indices in w["perforation"]
         push!(perf, get_grid_index(grid, indices...))
     end
+    
     radius = w["radius"]
     well = StandardWell{T}(name, perf, radius, nv)
+    # Set perforation depth
+    well.d .= grid.d[perf]
+
     # Set control mode and target
     well.mode = w["mode"]
     well.target = w["target"]
@@ -105,13 +109,15 @@ function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::Abstract
     return well
 end
 
-function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid)
+function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid )
     name = w["name"]
     perf = Vector{Int}()
     for indices in w["perforation"]
         push!(perf, get_grid_index(grid, indices...))
     end
     well = StandardWell{T}(name, perf, nv)
+    # Set perforation depth
+    well.d .= grid.d[perf]
     # Set control mode and target
     well.mode = w["mode"]
     well.target = w["target"]

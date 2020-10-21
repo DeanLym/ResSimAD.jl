@@ -8,6 +8,7 @@ mutable struct Scheduler
     dt_old::Float64
     dt::Float64
     dt_max::Float64
+    a_max::Float64
     dt0::Float64
     ω::Float64
     ηp::Float64
@@ -21,9 +22,10 @@ mutable struct Scheduler
         sch.dt = sch.dt0
         sch.dt_old = sch.dt
         sch.dt_max = Inf
-        sch.ω = 0.5
-        sch.ηp = 1000.
-        sch.ηs = 0.4
+        sch.a_max = 2.0
+        sch.ω = 0.0
+        sch.ηp = 10000.
+        sch.ηs = 10000.
         sch.t_current = 0.0
         sch.t_next = sch.t_current + sch.dt
         sch.time_step = [100.]
@@ -53,7 +55,7 @@ function update_dt(sch::Scheduler, fluid::OWFluid, converge::Bool)
         rp = (1+ω)*ηp ./ (abs.(value(o.p) .- o.pn) .+ ω*ηp)
         rs = (1+ω)*ηs ./ (abs.(value(o.s) .- o.sn) .+ ω*ηs)
     end
-    dt = min(dt_old * min(minimum(rp), minimum(rs)), sch.dt_max)
+    dt = min(dt_old * min(minimum(rp), minimum(rs), sch.a_max), sch.dt_max)
     t_next = sch.t_next
     for t in sch.time_step
         if (t_next - t)*(t_next + dt - t) < 0

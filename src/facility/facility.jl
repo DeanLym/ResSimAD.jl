@@ -8,7 +8,7 @@ const LOGGER = getlogger(@__MODULE__)
 __init__() = Memento.register(LOGGER)
 
 
-using ..Global: α
+using ..Global: α, β, g_, gc
 using ..AutoDiff:ADVector, advector, value
 using ..Rock:AbstractRock
 using ..Grid:AbstractStructGrid, get_grid_index
@@ -43,6 +43,8 @@ mutable struct StandardWell{T} <: AbstractFacility
     r::Float64 # Wellbore radius
     ind::Vector{Int} # Perforation gridblock indices
     wi::Vector{Float64} # Well indices
+    d::Vector{Float64} # Perforation depth
+    ρl::Vector{Float64} # Liquid density
 
     mode::CtrlMode
     target::Float64
@@ -76,9 +78,12 @@ function StandardWell{T}(
     p = StandardWell{T}(name)
     p.ind = Vector{Int}()
     append!(p.ind, perforation)
+    sort!(p.ind)
     p.r = radius
     nperf = length(p.ind) # Number of perforations
     p.wi = Vector{Float64}(undef, nperf)
+    p.d = Vector{Float64}(undef, nperf)
+    p.ρl = Vector{Float64}(undef, nperf)
 
     p.qo = advector(nperf, 1, nv)
     p.qw = advector(nperf, 1, nv)
@@ -96,8 +101,11 @@ function StandardWell{T}(
     p = StandardWell{T}(name)
     p.ind = Vector{Int}()
     append!(p.ind, perforation)
+    sort!(p.ind)
     nperf = length(p.ind) # Number of perforations
     p.wi = Vector{Float64}(undef, nperf)
+    p.d = Vector{Float64}(undef, nperf)
+    p.ρl = Vector{Float64}(undef, nperf)
 
     p.qo = advector(nperf, 1, nv)
     p.qw = advector(nperf, 1, nv)
@@ -115,7 +123,6 @@ function isproducer(::StandardWell{INJECTOR})
     return false
 end
 
-
 function init_results_df()
     Vec = Vector{Float64}
     DataFrame(TIME=Vec(), ORAT=Vec(), WRAT=Vec(), GRAT=Vec(), LRAT=Vec(), WBHP=Vec())
@@ -123,22 +130,92 @@ end
 
 function save_result(well::StandardWell, t::Float64)
     qo, qw, qg = sum(value(well.qo)), sum(value(well.qw)), 0.0
-    bhp = mean(value(well.bhp))
+    bhp = value(well.bhp[1])
     push!(well.results, [t, qo, qw, qg, qo+qw, bhp])
 end
 
 function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::AbstractRock)::Nothing
     ind, r = well.ind, well.r
-    kx, ky, dx, dy, dz = rock.kx, rock.ky, grid.dx, grid.dy, grid.dz
+    kx_, ky_, dx_, dy_, dz_ = rock.kx, rock.ky, grid.dx, grid.dy, grid.dz
     for (i, n) in enumerate(ind)
-        kx, ky, dx, dy, dz = kx[n], ky[n], dx[n], dy[n], dz[n]
+        kx, ky, dx, dy, dz = kx_[n], ky_[n], dx_[n], dy_[n], dz_[n]
         r0 = 0.28*√(√(ky/kx)*dx^2 + √(kx/ky)*dy^2) / ((ky/kx)^0.25 + (kx/ky)^0.25)
         well.wi[i] = 2*α*pi*√(kx*ky)*dz / log(r0 / r)
     end
     return nothing
 end
 
-function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
+function compute_well_state(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
+    mode, target, ind, d, wi = well.mode, well.target, well.ind, well.d, well.wi
+    o, w = fluid.phases.o, fluid.phases.w
+    λo, po = o.λ, o.p
+    λw, pw = w.λ, w.p
+    ρo_, ρw_ = value(o.ρ[ind]), value(w.ρ[ind])
+    if mode == CBHP
+        for (i, idx) in enumerate(ind)
+            well.qo[i] = wi[i] * λo[idx] * (po[idx] - target)
+            well.qw[i] = wi[i] * λw[idx] * (pw[idx] - target)
+            well.bhp[i] = target + 0.0*o.p[idx]
+            qo_, qw_ = value(well.qo[i]), value(well.qw[i])
+            ρ_ = (ρo_[i] * qo_ + ρw_[i] * qw_)  / (qo_ + qw_ + 1.e-3)
+            if i < length(ind)
+                target += β / gc * g_ * ρ_ * (d[i+1] - d[i])
+            end
+        end
+    elseif mode == CORAT
+        @. well.qo = target + 0.0 * po[ind]
+        @. well.qw = (λw[ind] / λo[ind]) * target
+        @. well.bhp = po[ind] - target / (wi * λo[ind])
+        # rhs, lhs = 0.0, 0.0
+        # Δpw = 0.0
+        # po_, λo_ = value(po[ind]), value(λo[ind])
+        # for (i, idx) in enumerate(ind)
+        #     rhs += wi[i] * λo_[i] * (po_[i] - Δpw)
+        #     ρ_ = (ρo_[i] * qo_ + ρw_[i] * qw_)  / (qo_ + qw_ + 1.e-3)
+        #     if i < length(ind)
+        #         Δpw += β / gc * g_ * ρ_ * (d[i+1] - d[i])
+        #     end
+        # end
+    elseif mode == CLRAT
+        @. well.qo = λo[ind] / (λo[ind] + λw[ind]) * target
+        @. well.qw = λw[ind] / (λo[ind] + λw[ind]) * target
+        @. well.bhp = po[ind] - target / (wi * (λo[ind] + λw[ind]))
+    elseif mode == SHUT
+        @. well.qo = 0.0 * po[ind]
+        @. well.qw = 0.0 * pw[ind]
+        @. well.bhp = po[ind]
+    end
+end
+
+function compute_well_state(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
+    mode, target, ind, d, wi = well.mode, well.target, well.ind, well.d, well.wi
+    o, w = fluid.phases.o, fluid.phases.w
+    kro, krw, μo, μw, bw, pw, po = o.kr, w.kr, o.μ, w.μ, w.b, w.p, o.p
+    @. well.qo = 0.0 * po[ind]
+    if mode == CBHP
+        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
+        ρw = value(w.ρ)
+        for (i, idx) in enumerate(ind)
+            well.qw[i] = wi[i] * λ[i] * (pw[idx] - target)
+            well.bhp[i] = target + 0.0*w.p[idx]
+            ρ = ρw[idx]
+            if i < length(ind)
+                target += β / gc * g_ * ρ * (d[i+1] - d[i])
+            end
+        end
+    elseif mode == CWRAT
+        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
+        @. well.qw = target + 0.0*pw[ind]
+        @. well.bhp = po[ind] - target / (wi * λ)
+    elseif mode == SHUT
+        @. well.qw = 0.0*pw[ind]
+        @. well.bhp = po[ind]
+    else
+        throw(ErrorException("Mode $mode not supported for injector"))
+    end
+end
+
+function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
     mode, target, ind = well.mode, well.target, well.ind
     o, w = fluid.phases.o, fluid.phases.w
     if mode == CBHP
@@ -231,7 +308,6 @@ end
 function compute_bhp(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind
     o, w = fluid.phases.o, fluid.phases.w
-
     if mode == CBHP
         @. well.bhp = target + 0.0*o.p[ind]
     elseif mode == CWRAT
@@ -241,8 +317,6 @@ function compute_bhp(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVect
         @. well.bhp = o.p[ind]
     end
 end
-
-
 
 function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
     mode, target, ind = well.mode, well.target, well.ind

@@ -28,9 +28,7 @@ function compute_residual(
 
     # Well Term
     for well in values(wells)
-        compute_qo(well, fluid)
-        compute_qw(well, fluid)
-        compute_bhp(well, fluid)
+        compute_well_state(well, fluid)
         # Add well rate to residual
         ind = well.ind
         @. ro[ind] -= value(well.qo)
@@ -347,10 +345,11 @@ function assemble_jacobian(nsolver::NRSolverDuneIstl, fluid::OWFluid, wells::Dic
     for well in values(wells)
         # Add well rate to residual
         ind = Int32.(well.ind)
-        add_value_matrix(solver, 1, ind, ind, 1, 1, -grad(well.qw, 1, 1))
-        add_value_matrix(solver, 1, ind, ind, 1, 2, -grad(well.qw, 1, 2))
-        add_value_matrix(solver, 1, ind, ind, 2, 1, -grad(well.qo, 1, 1))
-        add_value_matrix(solver, 1, ind, ind, 2, 2, -grad(well.qo, 1, 2))
+        nperf = length(ind)
+        add_value_matrix(solver, nperf, ind, ind, 1, 1, -grad(well.qw, 1, 1))
+        add_value_matrix(solver, nperf, ind, ind, 1, 2, -grad(well.qw, 1, 2))
+        add_value_matrix(solver, nperf, ind, ind, 2, 1, -grad(well.qo, 1, 1))
+        add_value_matrix(solver, nperf, ind, ind, 2, 2, -grad(well.qo, 1, 2))
     end
 end
 
@@ -360,6 +359,9 @@ function update_solution(nsolver::NRSolverDuneIstl, fluid::OWFluid)
     # get_value_x(int nn, int* BI, int I, T* value)
     get_value_x(solver, assembler.nc, assembler.diag_bi, 1, assembler.po)
     get_value_x(solver, assembler.nc, assembler.diag_bi, 2, assembler.sw)
+    # Apply appleyard chopping on saturation
+    # println("Appleyard chopping")
+    @. assembler.sw = min(assembler.sw, 0.35*value(w.s))
 
     @. assembler.po = value(o.p) - assembler.po
     @. assembler.sw = value(w.s) - assembler.sw
