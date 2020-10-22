@@ -146,40 +146,79 @@ function compute_wi(well::StandardWell, grid::AbstractStructGrid, rock::Abstract
 end
 
 function compute_well_state(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
-    mode, target, ind, d, wi = well.mode, well.target, well.ind, well.d, well.wi
+    mode, target, ind, d, wi, ρl = well.mode, well.target, well.ind, well.d, well.wi, well.ρl
     o, w = fluid.phases.o, fluid.phases.w
     λo, po = o.λ, o.p
     λw, pw = w.λ, w.p
     ρo_, ρw_ = value(o.ρ[ind]), value(w.ρ[ind])
+    λo_, λw_ = value(λo[ind]), value(λw[ind])
+    # Compute well bore density   
+    @. ρl = (ρo_ * λo_ + ρw_ * λw_)  / (λo_ + λw_ + 1.e-3)
     if mode == CBHP
         for (i, idx) in enumerate(ind)
-            well.qo[i] = wi[i] * λo[idx] * (po[idx] - target)
-            well.qw[i] = wi[i] * λw[idx] * (pw[idx] - target)
+            if po[idx] < target
+                well.qo[i] = 0.0*po[ind]
+            else
+                well.qo[i] = wi[i] * λo[idx] * (po[idx] - target)
+            end
+            if pw[idx] < target
+                well.qw[i] = 0.0*pw[ind]
+            else
+                well.qw[i] = wi[i] * λw[idx] * (pw[idx] - target)
+            end
             well.bhp[i] = target + 0.0*o.p[idx]
-            qo_, qw_ = value(well.qo[i]), value(well.qw[i])
-            ρ_ = (ρo_[i] * qo_ + ρw_[i] * qw_)  / (qo_ + qw_ + 1.e-3)
             if i < length(ind)
-                target += β / gc * g_ * ρ_ * (d[i+1] - d[i])
+                target += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
             end
         end
     elseif mode == CORAT
         @. well.qo = target + 0.0 * po[ind]
         @. well.qw = (λw[ind] / λo[ind]) * target
         @. well.bhp = po[ind] - target / (wi * λo[ind])
-        # rhs, lhs = 0.0, 0.0
-        # Δpw = 0.0
-        # po_, λo_ = value(po[ind]), value(λo[ind])
+        # rhs, lhs, Δpw = 0.0, 0.0, 0.0
+        # po_ = value(po[ind])
         # for (i, idx) in enumerate(ind)
+        #     lhs += wi[i] * λo_[i]
         #     rhs += wi[i] * λo_[i] * (po_[i] - Δpw)
-        #     ρ_ = (ρo_[i] * qo_ + ρw_[i] * qw_)  / (qo_ + qw_ + 1.e-3)
         #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρ_ * (d[i+1] - d[i])
+        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
         #     end
         # end
+        # Δpw = 0.0
+        # for (i, idx) in enumerate(ind)
+        #     well.bhp[i] = (rhs - target) / lhs + Δpw + 0.0 * po[idx]
+        #     if i < length(ind)
+        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+        #     end
+        # end
+        # @. well.qo = wi * λo[ind] * (po[ind] - well.bhp)
+        # @. well.qw = wi * λw[ind] * (pw[ind] - well.bhp)
     elseif mode == CLRAT
         @. well.qo = λo[ind] / (λo[ind] + λw[ind]) * target
         @. well.qw = λw[ind] / (λo[ind] + λw[ind]) * target
         @. well.bhp = po[ind] - target / (wi * (λo[ind] + λw[ind]))
+        # rhs, lhs, Δpw = 0.0, 0.0, 0.0
+        # po_ = value(po[ind])
+        # for (i, idx) in enumerate(ind)
+        #     lhs += wi[i] * (λo_[i] + λw_[i])
+        #     rhs += wi[i] * (λo_[i] + λw_[i]) * (po_[i] - Δpw)
+        #     # sum{i}(wi[i] * (λo_[i] + λw_[i]) * (po_[i] - bhp[1] - ρl[i]gh[i])) = target
+        #     # sum{i}(wi[i] * (λo_[i] + λw_[i]) * bhp[1]) = sum{i}(wi[i] * (λo_[i] + λw_[i]) * (po_[i] - ρl[i]gh[i])) - target
+        #     # lhs * bhp[1] = rhs - target
+        #     # bhp[1] = (rhs - target) / lhs
+        #     if i < length(ind)
+        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+        #     end
+        # end
+        # Δpw = 0.0
+        # for (i, idx) in enumerate(ind)
+        #     well.bhp[i] = (rhs - target) / lhs + Δpw + 0.0 * po[idx]
+        #     if i < length(ind)
+        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+        #     end
+        # end
+        # @. well.qo = wi * λo[ind] * (po[ind] - well.bhp)
+        # @. well.qw = wi * λw[ind] * (pw[ind] - well.bhp)
     elseif mode == SHUT
         @. well.qo = 0.0 * po[ind]
         @. well.qw = 0.0 * pw[ind]
@@ -188,148 +227,51 @@ function compute_well_state(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
 end
 
 function compute_well_state(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
-    mode, target, ind, d, wi = well.mode, well.target, well.ind, well.d, well.wi
+    mode, target, ind, d, wi, ρl = well.mode, well.target, well.ind, well.d, well.wi, well.ρl
     o, w = fluid.phases.o, fluid.phases.w
     kro, krw, μo, μw, bw, pw, po = o.kr, w.kr, o.μ, w.μ, w.b, w.p, o.p
     @. well.qo = 0.0 * po[ind]
+    @. ρl = value(w.ρ[ind])
+    λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
     if mode == CBHP
-        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
-        ρw = value(w.ρ)
         for (i, idx) in enumerate(ind)
-            well.qw[i] = wi[i] * λ[i] * (pw[idx] - target)
+            if pw[idx] > target
+                well.qw[i] = 0.0*pw[ind]
+            else
+                well.qw[i] = wi[i] * λ[i] * (pw[idx] - target)
+            end
             well.bhp[i] = target + 0.0*w.p[idx]
-            ρ = ρw[idx]
             if i < length(ind)
-                target += β / gc * g_ * ρ * (d[i+1] - d[i])
+                target += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
             end
         end
     elseif mode == CWRAT
-        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
         @. well.qw = target + 0.0*pw[ind]
         @. well.bhp = po[ind] - target / (wi * λ)
+        # λ_ = value(λ)
+        # rhs, lhs, Δpw = 0.0, 0.0, 0.0
+        # pw_ = value(pw[ind])
+        # for (i, idx) in enumerate(ind)
+        #     lhs += wi[i] * λ_[i]
+        #     rhs += wi[i] * λ_[i] * (pw_[i] - Δpw)
+        #     if i < length(ind)
+        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+        #     end
+        # end
+        # Δpw = 0.0
+        # for (i, idx) in enumerate(ind)
+        #     well.bhp[i] = (rhs - target) / lhs + Δpw + 0.0 * pw[idx]
+        #     if i < length(ind)
+        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+        #     end
+        # end
+        # @. well.qw = wi * λ * (pw[ind] - well.bhp)
     elseif mode == SHUT
         @. well.qw = 0.0*pw[ind]
         @. well.bhp = po[ind]
     else
         throw(ErrorException("Mode $mode not supported for injector"))
     end
-end
-
-function compute_qo(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
-    mode, target, ind = well.mode, well.target, well.ind
-    o, w = fluid.phases.o, fluid.phases.w
-    if mode == CBHP
-        λo, po = o.λ, o.p
-        if any(po[ind] .< target)
-            @. well.qo = 0.0 * po[ind]
-        else
-            @. well.qo = well.wi * λo[ind] * (po[ind] - target)
-        end
-    elseif mode == CORAT
-        @. well.qo = target + 0.0 * o.p[ind]
-    elseif mode == CLRAT
-        λo, λw = o.λ, w.λ
-        @. well.qo = λo[ind] / (λo[ind] + λw[ind]) * target
-    elseif mode == SHUT
-        @. well.qo = 0.0 * o.p[ind]
-    end
-    return well.qo
-end
-
-function compute_qw(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
-    mode, target, ind = well.mode, well.target, well.ind
-    o, w = fluid.phases.o, fluid.phases.w
-    if mode == CBHP
-        λw, pw = w.λ, w.p
-        if any(pw[ind] .< target)
-            @. well.qw = 0.0*pw[ind]
-        else
-            @. well.qw = well.wi * λw[ind] * (pw[ind] - target)
-        end
-    elseif mode == CORAT
-        λo, λw = o.λ, w.λ
-        @. well.qw = (λw[ind] / λo[ind]) * target
-    elseif mode == CLRAT
-        λo, λw = o.λ, w.λ
-        @. well.qw = λw[ind] / (λo[ind] + λw[ind]) * target
-    elseif mode == SHUT
-        @. well.qw = 0.0 * w.p[ind]
-    else
-        throw(ErrorException("Mode $mode not supported for producer"))
-    end
-    return well.qw
-end
-
-
-function compute_qo(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
-    @. well.qo = 0.0 * fluid.phases.o.p[well.ind]
-    return well.qo
-end
-
-function compute_qw(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVector
-    mode, target, ind = well.mode, well.target, well.ind
-    o, w = fluid.phases.o, fluid.phases.w
-    if mode == CBHP
-        kro, krw, μo, μw, bw, pw = o.kr, w.kr, o.μ, w.μ, w.b, w.p
-        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
-        if any(pw[ind] .> target)
-            # Avoid inverse flow
-            @. well.qw = 0.0*pw[ind]
-        else
-            @. well.qw = well.wi * λ * (pw[ind] - target)
-        end
-    elseif mode == CWRAT
-        @. well.qw = target + 0.0*w.p[ind]
-    elseif mode == SHUT
-        @. well.qw = 0.0*w.p[ind]
-    else
-        throw(ErrorException("Mode $mode not supported for injector"))
-    end
-    return well.qw
-end
-
-
-function compute_bhp(well::StandardWell{PRODUCER}, fluid::AbstractFluid)::ADVector
-    mode, target, ind = well.mode, well.target, well.ind
-    o, w = fluid.phases.o, fluid.phases.w
-    if mode == CBHP
-        @. well.bhp = target + 0.0*o.p[ind]
-    elseif mode == CORAT
-        λo, po = o.λ, o.p
-        @. well.bhp = po[ind] - target / (well.wi * λo[ind])
-    elseif mode == CLRAT
-        λo, λw = o.λ, w.λ
-        @. well.bhp = o.p[ind] - target / (well.wi * (λo[ind] + λw[ind]))
-    elseif mode == SHUT
-        @. well.bhp = o.p[ind]
-    end
-end
-
-function compute_bhp(well::StandardWell{INJECTOR}, fluid::AbstractFluid)::ADVector
-    mode, target, ind = well.mode, well.target, well.ind
-    o, w = fluid.phases.o, fluid.phases.w
-    if mode == CBHP
-        @. well.bhp = target + 0.0*o.p[ind]
-    elseif mode == CWRAT
-        λo, λw, po = o.λ, w.λ, o.p
-        @. well.bhp = po[ind] - target / (well.wi * (λo[ind] + λw[ind]))
-    elseif mode == SHUT
-        @. well.bhp = o.p[ind]
-    end
-end
-
-function compute_ql(well::StandardWell, fluid::SPFluid)::ADVector
-    mode, target, ind = well.mode, well.target, well.ind
-    phase = fluid.phases[1]
-    if mode == CBHP
-        λ, p = phase.λ, phase.p
-        @. well.ql = well.wi * λ[ind] * (p[ind] - target)
-    elseif mode == CLRAT
-        @. well.ql = target + 0.0 * phase.p[ind]
-    elseif mode == SHUT
-        @. well.ql = 0.0 * phase.p[ind]
-    end
-    return well.ql
 end
 
 include("check_limits.jl")

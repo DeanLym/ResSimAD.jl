@@ -28,7 +28,7 @@ function check_limits(well::StandardWell{PRODUCER})::Bool
         end
     elseif mode == CORAT
         if MIN_BHP in keys(well.limits)
-            limit_honored = check_limit(well, MIN_BHP, mean(value(well.bhp)), well.limits[MIN_BHP], MAX_ORAT, CBHP, "psi") 
+            limit_honored = check_limit(well, MIN_BHP, value(well.bhp[1]), well.limits[MIN_BHP], MAX_ORAT, CBHP, "psi") 
             if !limit_honored
                 return false
             end
@@ -41,7 +41,7 @@ function check_limits(well::StandardWell{PRODUCER})::Bool
         end
     elseif mode == CLRAT
         if MIN_BHP in keys(well.limits)
-            limit_honored = check_limit(well, MIN_BHP, mean(value(well.bhp)), well.limits[MIN_BHP], MAX_LRAT, CBHP, "psi") 
+            limit_honored = check_limit(well, MIN_BHP, value(well.bhp[1]), well.limits[MIN_BHP], MAX_LRAT, CBHP, "psi") 
             if !limit_honored
                 return false
             end
@@ -68,7 +68,7 @@ function check_limits(well::StandardWell{INJECTOR})::Bool
         end
     elseif mode == CWRAT
         if MAX_BHP in keys(well.limits)
-            limit_honored = check_limit(well, MAX_BHP, well.limits[MAX_BHP], mean(value(well.bhp)), MAX_WRAT, CBHP, "psi") 
+            limit_honored = check_limit(well, MAX_BHP, well.limits[MAX_BHP], value(well.bhp[1]), MAX_WRAT, CBHP, "psi") 
             if !limit_honored
                 return false
             end
