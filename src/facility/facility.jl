@@ -157,12 +157,12 @@ function compute_well_state(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
     if mode == CBHP
         for (i, idx) in enumerate(ind)
             if po[idx] < target
-                well.qo[i] = 0.0*po[ind]
+                well.qo[i] = 0.0*po[idx]
             else
                 well.qo[i] = wi[i] * λo[idx] * (po[idx] - target)
             end
             if pw[idx] < target
-                well.qw[i] = 0.0*pw[ind]
+                well.qw[i] = 0.0*pw[idx]
             else
                 well.qw[i] = wi[i] * λw[idx] * (pw[idx] - target)
             end
@@ -236,7 +236,7 @@ function compute_well_state(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
     if mode == CBHP
         for (i, idx) in enumerate(ind)
             if pw[idx] > target
-                well.qw[i] = 0.0*pw[ind]
+                well.qw[i] = 0.0*pw[idx]
             else
                 well.qw[i] = wi[i] * λ[i] * (pw[idx] - target)
             end
