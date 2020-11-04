@@ -83,15 +83,15 @@ function init_fluid(fluid_opt::Dict, grid::AbstractGrid)
 end
 
 
-function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::AbstractRock)
+function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::AbstractRock, row_num::Int)
     name = w["name"]
     perf = Vector{Int}()
     for indices in w["perforation"]
         push!(perf, get_grid_index(grid, indices...))
     end
-    
+
     radius = w["radius"]
-    well = StandardWell{T}(name, perf, radius, nv)
+    well = StandardWell{T}(name, perf, radius, nv, row_num)
     # Set perforation depth
     well.d .= grid.d[perf]
 
@@ -109,13 +109,13 @@ function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, rock::Abstract
     return well
 end
 
-function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid )
+function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid, row_num::Int)
     name = w["name"]
     perf = Vector{Int}()
     for indices in w["perforation"]
         push!(perf, get_grid_index(grid, indices...))
     end
-    well = StandardWell{T}(name, perf, nv)
+    well = StandardWell{T}(name, perf, nv, row_num)
     # Set perforation depth
     well.d .= grid.d[perf]
     # Set control mode and target
@@ -130,7 +130,7 @@ function init_well(T::WellType, w::Dict, nv::Int, grid::CartGrid )
     end
     # Set well index
     well.wi .= w["wi"]
-    
+
     return well
 end
 
@@ -138,11 +138,13 @@ function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, rock::Standa
     info(LOGGER, "Initializing facility")
     v = ("producers", "injectors")
     facility = Dict{String, AbstractFacility}()
+    row_num = grid.nc
     for p in v
         T = get_well_type[p[1:end-1]]
         if facility_opt["num_$p"] > 0
             for w in facility_opt[p]
-                facility[w["name"]] = init_well(T, w, nv, grid, rock)
+                row_num += 1
+                facility[w["name"]] = init_well(T, w, nv, grid, rock, row_num)
             end
         end
     end
@@ -154,11 +156,13 @@ function init_facility(facility_opt::Dict, nv::Int, grid::CartGrid, ::TransRock)
     info(LOGGER, "Initializing facility")
     v = ("producers", "injectors")
     facility = Dict{String, AbstractFacility}()
+    row_num = grid.nc
     for p in v
         T = get_well_type[p[1:end-1]]
         if facility_opt["num_$p"] > 0
             for w in facility_opt[p]
-                facility[w["name"]] = init_well(T, w, nv, grid)
+                row_num += 1
+                facility[w["name"]] = init_well(T, w, nv, grid, row_num)
             end
         end
     end
@@ -223,18 +227,6 @@ function init_duneistl_solver(solver_type::String, nc::Int, ::OWFluid)
     return DuneIstlSolverWrapper(solver, Int[])
 end
 
-function init_duneistl_solver(solver_type::String, nc::Int, ::SPFluid)
-    lsolver = DuneIstlSolver{Float64, Int32(1)}(nc)
-    if solver_type == "GMRES_ILU"
-        set_solver_type(lsolver, "RestartedGMRes")
-        set_preconditioner_type(lsolver, "ILU")
-    else # "BICGSTAB_ILU"
-        set_solver_type(lsolver, "BiCGSTAB")
-        set_preconditioner_type(lsolver, "ILU")
-    end
-    return lsolver
-end
-
 
 function Sim(options::Dict)
     info(LOGGER, "Creating simulation model")
@@ -244,7 +236,7 @@ function Sim(options::Dict)
 
     nc = grid.nc
     rock = init_rock(parsed_options["rock_opt"], nc)
-    
+
     construct_connlist(grid, rock)
     sort_conn(grid.connlist)
     info(LOGGER, "Number of connections: $(grid.connlist.nconn)")
@@ -269,7 +261,7 @@ function Sim(options::Dict)
 
     compute_residual(fluid, grid, rock, facility, scheduler.dt)
 
-    initialize_nsolver(nsolver, grid, fluid)
+    initialize_nsolver(nsolver, grid, facility, fluid)
 
     return Sim(reservoir, facility, scheduler, nsolver)
 end

@@ -49,13 +49,14 @@ function add_well(sim::Sim, welltype::String, well_option::Dict)::Nothing
     T = get_well_type[lowercase(welltype)]
     reservoir = sim.reservoir
     nv, grid, rock = reservoir.fluid.nv, reservoir.grid, reservoir.rock
+    row_num = grid.nc + length(sim.facility) + 1
     name = well_option["name"]
     if "wi" ∈ keys(well_option)
         parse_well_option(well_option, welltype, well_names, true)
-        sim.facility[name] = init_well(T, well_option, nv, grid)
+        sim.facility[name] = init_well(T, well_option, nv, grid, row_num)
     else # "radius"
         parse_well_option(well_option, welltype, well_names, false)
-        sim.facility[name] = init_well(T, well_option, nv, grid, rock)
+        sim.facility[name] = init_well(T, well_option, nv, grid, rock, row_num)
     end
     reset_dt(sim.scheduler)
     sim.nsolver.recompute_residual = true

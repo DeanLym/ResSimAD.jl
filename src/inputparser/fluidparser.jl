@@ -4,9 +4,8 @@ function parse_fluid(options, keywords, nc)
     fluid_opt["type"] = options["fluid"]
     if fluid_opt["type"] == "OW"
         return parse_ow_fluid(options, keywords, nc, fluid_opt)
-    elseif fluid_opt["type"] ∈ ("OIL", "WATER", "GAS")
-        error(LOGGER, "Single phase currently unsupported.")
-        # return parse_sp_fluid(options, keywords, nc, fluid_opt)
+    else
+        error(LOGGER, "Unsupported fluid type $(fluid_opt["type"])")
     end
 end
 

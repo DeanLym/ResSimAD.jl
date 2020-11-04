@@ -55,13 +55,14 @@ function update_solution(nsolver::NRSolver, fluid::OWFluid)
     return fluid
 end
 
-function compute_residual_error(fluid::OWFluid, grid::AbstractGrid, rock::AbstractRock, dt::Float64)
+function compute_residual_error(fluid::OWFluid, grid::AbstractGrid, rock::AbstractRock, wells::Dict{String, AbstractFacility}, dt::Float64)
     a = dt .* M ./ (grid.v .* rock.ϕ)
     op, wp = fluid.phases.o, fluid.phases.w
     oc, wc = fluid.components.o, fluid.components.w
     rw_err = maximum(abs.(a .* value(wp.b) .* wc.r))
     ro_err = maximum(abs.(a .* value(op.b) .* oc.r))
-    return max(rw_err, ro_err)
+    w_err = maximum(abs.([w.rw for w in values(wells)]))
+    return max(rw_err, ro_err, w_err)
 end
 
 struct OWAssembler <: AbstractAssembler
@@ -260,30 +261,53 @@ function OWAssemblerDuneIstl(
 end
 
 
-function initialize_nsolver(nsolver::NRSolverDuneIstl, grid::AbstractGrid, ::AbstractFluid)
-    BI = Int[]
-    BJ = Int[]
+function initialize_nsolver(nsolver::NRSolverDuneIstl, grid::AbstractGrid, wells::Dict{String, AbstractFacility}, ::AbstractFluid)
+    indices = Set{Tuple{Int, Int}}()
     row_size = Int[]
     for (i, nn) in enumerate(grid.neighbors)
         for j in nn
-            push!(BI, i)
-            push!(BJ, j)
+            push!(indices, (i, j))
         end
     end
     for n in grid.num_neighbors
         push!(row_size, n)
     end
+    # Add well block
+    for w in values(wells)
+        for i in w.ind
+            for j in w.ind
+                if !((i,j)∈indices)
+                    push!(indices, (i, j))
+                    row_size[i] += 1
+                end
+            end
+        end
+    end
+    BI = [x[1] for x in indices]
+    BJ = [x[2] for x in indices]
+
     nnz = length(BI)
+
     construct_matrix(nsolver.lsolver.solver, nnz, Int32.(row_size), Int32.(BI), Int32.(BJ))
     nsolver.assembler = OWAssemblerDuneIstl(grid)
 end
 
-function assemble_residual(nsolver::NRSolverDuneIstl, fluid::OWFluid)
+function assemble_residual(nsolver::NRSolverDuneIstl, fluid::OWFluid, wells::Dict{String, AbstractFacility})
     solver, assembler = nsolver.lsolver.solver, nsolver.assembler
     n = assembler.nc
     reset_rhs(solver)
     add_value_rhs(solver, n, assembler.diag_bi, 1, fluid.components.w.r)
     add_value_rhs(solver, n, assembler.diag_bi, 2, fluid.components.o.r)
+    # Add well terms
+    for well in values(wells)
+        ind = Int32.(well.ind)
+        nperf = length(ind)
+        ∂rw∂w, ∂ro∂w = -grad(well.qw, 2, 1), -grad(well.qo, 2, 1) # Cw
+        ∂w∂w = well.∂w # Dw
+        Rw = well.rw
+        add_value_rhs(solver, nperf, ind, 1, - ∂rw∂w .* Rw ./ ∂w∂w)
+        add_value_rhs(solver, nperf, ind, 2, - ∂ro∂w .* Rw ./ ∂w∂w)
+    end
 end
 
 function assemble_jacobian(nsolver::NRSolverDuneIstl, fluid::OWFluid, wells::Dict{String, AbstractFacility})
@@ -346,19 +370,48 @@ function assemble_jacobian(nsolver::NRSolverDuneIstl, fluid::OWFluid, wells::Dic
         # Add well rate to residual
         ind = Int32.(well.ind)
         nperf = length(ind)
-        add_value_matrix(solver, nperf, ind, ind, 1, 1, -grad(well.qw, 1, 1))
-        add_value_matrix(solver, nperf, ind, ind, 1, 2, -grad(well.qw, 1, 2))
-        add_value_matrix(solver, nperf, ind, ind, 2, 1, -grad(well.qo, 1, 1))
-        add_value_matrix(solver, nperf, ind, ind, 2, 2, -grad(well.qo, 1, 2))
-    end
-end
+        ∂rw∂po, ∂rw∂sw, ∂ro∂po, ∂ro∂sw = -grad(well.qw, 1, 1), -grad(well.qw, 1, 2), -grad(well.qo, 1, 1), -grad(well.qo, 1, 2)
+        
+        # Add derivatives of reservoir equations to reservoir primary variables
+        add_value_matrix(solver, nperf, ind, ind, 1, 1, ∂rw∂po) 
+        add_value_matrix(solver, nperf, ind, ind, 1, 2, ∂rw∂sw) 
+        add_value_matrix(solver, nperf, ind, ind, 2, 1, ∂ro∂po) 
+        add_value_matrix(solver, nperf, ind, ind, 2, 2, ∂ro∂sw) 
 
-function update_solution(nsolver::NRSolverDuneIstl, fluid::OWFluid)
+        # Add derivatives of 
+        # 1. reservoir equations to well variables
+        # 2. well equations to reservoir primary variables
+        # 3. well equations to well variables
+        # 4. perform Schur complement in place : J -= Cw * Bw / Dw
+        ∂rw∂w, ∂ro∂w = -grad(well.qw, 2, 1), -grad(well.qo, 2, 1) # Cw
+        ∂w∂po, ∂w∂sw = well.∂r[:, 1], well.∂r[:, 2] # Bw
+        ∂w∂w = well.∂w # Dw
+        for i in ind
+            BI = Int32(i) .* ones(Int32, nperf)
+            add_value_matrix(solver, nperf, BI, ind, 1, 1, -∂rw∂w .* ∂w∂po ./ ∂w∂w) 
+            add_value_matrix(solver, nperf, BI, ind, 1, 2, -∂rw∂w .* ∂w∂sw ./ ∂w∂w)  
+            add_value_matrix(solver, nperf, BI, ind, 2, 1, -∂ro∂w .* ∂w∂po ./ ∂w∂w)  
+            add_value_matrix(solver, nperf, BI, ind, 2, 2, -∂ro∂w .* ∂w∂sw ./ ∂w∂w) 
+        end
+    end
+end  
+
+function update_solution(nsolver::NRSolverDuneIstl, fluid::OWFluid, wells::Dict{String, AbstractFacility})
     o, w = fluid.phases.o, fluid.phases.w
     solver, assembler = nsolver.lsolver.solver, nsolver.assembler
     # get_value_x(int nn, int* BI, int I, T* value)
     get_value_x(solver, assembler.nc, assembler.diag_bi, 1, assembler.po)
     get_value_x(solver, assembler.nc, assembler.diag_bi, 2, assembler.sw)
+    # Update well solutions
+    for well in values(wells)
+        ind = Int32.(well.ind)
+        nperf = length(ind)
+        ∂w∂po, ∂w∂sw = well.∂r[:, 1], well.∂r[:, 2] # Bw
+        ∂w∂w = well.∂w # Dw
+        rw = well.rw
+        well.bhp -= (rw - sum(∂w∂po .* assembler.po[ind]) - sum(∂w∂sw .* assembler.sw[ind])) / ∂w∂w
+    end
+
     # Apply appleyard chopping on saturation
     # println("Appleyard chopping")
     @. assembler.sw = min(assembler.sw, 0.35*value(w.s))

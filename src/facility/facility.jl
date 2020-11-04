@@ -9,10 +9,10 @@ __init__() = Memento.register(LOGGER)
 
 
 using ..Global: α, β, g_, gc
-using ..AutoDiff:ADVector, advector, value
+using ..AutoDiff:ADVector, advector, value, ADScaler, adscaler, grad
 using ..Rock:AbstractRock
 using ..Grid:AbstractStructGrid, get_grid_index
-using ..Fluid:AbstractFluid, SPFluid
+using ..Fluid:AbstractFluid
 
 abstract type AbstractFacility end
 
@@ -51,11 +51,20 @@ mutable struct StandardWell{T} <: AbstractFacility
 
     limits::Dict{Limit, Float64}
 
+    row_num::Int # row number of well equation
+    bhp::ADScaler # Bottom hole pressure
+
     qo::ADVector # Oil Rate
     qw::ADVector # Water Rate
     ql::ADVector # Liquid Rate
-    bhp::ADVector # Bottom hole pressure
 
+    ∂r::Array{Float64, 2} # Derivative to reservoir primary variables 
+    ∂w::Float64 # Derivative to the well primary variable (bhp)  
+    rw::Float64 # Residual of well equation
+
+    bhp_::ADVector 
+
+    
     results::DataFrame
 
     function StandardWell{T}(name::String) where {T}
@@ -69,26 +78,34 @@ mutable struct StandardWell{T} <: AbstractFacility
     end
 end
 
+
 function StandardWell{T}(
     name::String,
     perforation::Vector{Int},
-    radius::Float64,
     nv::Int,
+    row_num::Int,
 ) where {T}
     p = StandardWell{T}(name)
     p.ind = Vector{Int}()
     append!(p.ind, perforation)
     sort!(p.ind)
-    p.r = radius
     nperf = length(p.ind) # Number of perforations
     p.wi = Vector{Float64}(undef, nperf)
     p.d = Vector{Float64}(undef, nperf)
     p.ρl = Vector{Float64}(undef, nperf)
 
-    p.qo = advector(nperf, 1, nv)
-    p.qw = advector(nperf, 1, nv)
-    p.ql = advector(nperf, 1, nv)
-    p.bhp = advector(nperf, 1, nv)
+    p.row_num = row_num
+
+    p.bhp = adscaler(0.0, row_num, 1, nv)
+
+    p.qo = advector(nperf, 2, nv)
+    p.qw = advector(nperf, 2, nv)
+    p.ql = advector(nperf, 2, nv)
+    p.bhp_ = advector(nperf, 2, nv)
+
+    p.∂r = zeros((nperf, nv))
+    p.∂w = 0.0
+    p.rw = 0.0
 
     return p
 end
@@ -96,22 +113,12 @@ end
 function StandardWell{T}(
     name::String,
     perforation::Vector{Int},
+    radius::Float64,
     nv::Int,
+    row_num::Int,
 ) where {T}
-    p = StandardWell{T}(name)
-    p.ind = Vector{Int}()
-    append!(p.ind, perforation)
-    sort!(p.ind)
-    nperf = length(p.ind) # Number of perforations
-    p.wi = Vector{Float64}(undef, nperf)
-    p.d = Vector{Float64}(undef, nperf)
-    p.ρl = Vector{Float64}(undef, nperf)
-
-    p.qo = advector(nperf, 1, nv)
-    p.qw = advector(nperf, 1, nv)
-    p.ql = advector(nperf, 1, nv)
-    p.bhp = advector(nperf, 1, nv)
-
+    p = StandardWell{T}(name, perforation, nv, row_num)
+    p.r = radius
     return p
 end
 
@@ -130,7 +137,7 @@ end
 
 function save_result(well::StandardWell, t::Float64)
     qo, qw, qg = sum(value(well.qo)), sum(value(well.qw)), 0.0
-    bhp = value(well.bhp[1])
+    bhp = value(well.bhp)
     push!(well.results, [t, qo, qw, qg, qo+qw, bhp])
 end
 
@@ -147,128 +154,115 @@ end
 
 function compute_well_state(well::StandardWell{PRODUCER}, fluid::AbstractFluid)
     mode, target, ind, d, wi, ρl = well.mode, well.target, well.ind, well.d, well.wi, well.ρl
+    bhp = well.bhp
     o, w = fluid.phases.o, fluid.phases.w
     λo, po = o.λ, o.p
     λw, pw = w.λ, w.p
     ρo_, ρw_ = value(o.ρ[ind]), value(w.ρ[ind])
     λo_, λw_ = value(λo[ind]), value(λw[ind])
-    # Compute well bore density   
-    @. ρl = (ρo_ * λo_ + ρw_ * λw_)  / (λo_ + λw_ + 1.e-3)
-    if mode == CBHP
+    nv = size(well.∂r)[end]
+
+    # Compute well rates
+    if mode == SHUT
+        # Well equation: rw = bhp - po
+        @. well.qo = 0.0 * (po[ind] - bhp)
+        @. well.qw = 0.0 * (pw[ind] - bhp)
+    else
+        # Compute well bore density   
+        @. ρl = (ρo_ * λo_ + ρw_ * λw_)  / (λo_ + λw_ + 1.e-3)
+        Δbhp = 0.0
         for (i, idx) in enumerate(ind)
-            if po[idx] < target
-                well.qo[i] = 0.0*po[idx]
-            else
-                well.qo[i] = wi[i] * λo[idx] * (po[idx] - target)
-            end
-            if pw[idx] < target
-                well.qw[i] = 0.0*pw[idx]
-            else
-                well.qw[i] = wi[i] * λw[idx] * (pw[idx] - target)
-            end
-            well.bhp[i] = target + 0.0*o.p[idx]
+            # if po[idx] < target
+            #     well.qo[i] = 0.0*(po[idx] - bhp)
+            # else
+            #     well.qo[i] = wi[i] * λo[idx] * (po[idx] - (bhp + Δbhp))
+            # end
+            # if pw[idx] < target
+            #     well.qw[i] = 0.0*(pw[idx] - bhp)
+            # else
+            #     well.qw[i] = wi[i] * λw[idx] * (pw[idx] - (bhp + Δbhp))
+            # end
+            well.qo[i] = wi[i] * λo[idx] * (po[idx] - (bhp + Δbhp))
+            well.qw[i] = wi[i] * λw[idx] * (pw[idx] - (bhp + Δbhp))
             if i < length(ind)
-                target += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+                Δbhp += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
             end
         end
+    end
+
+    if mode == CBHP
+        # Well equation: rw = bhp - target
+        well.rw = value(well.bhp) - target
+        well.∂r .= 0.0
+        well.∂w = 1.0
     elseif mode == CORAT
-        @. well.qo = target + 0.0 * po[ind]
-        @. well.qw = (λw[ind] / λo[ind]) * target
-        @. well.bhp = po[ind] - target / (wi * λo[ind])
-        # rhs, lhs, Δpw = 0.0, 0.0, 0.0
-        # po_ = value(po[ind])
-        # for (i, idx) in enumerate(ind)
-        #     lhs += wi[i] * λo_[i]
-        #     rhs += wi[i] * λo_[i] * (po_[i] - Δpw)
-        #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
-        #     end
-        # end
-        # Δpw = 0.0
-        # for (i, idx) in enumerate(ind)
-        #     well.bhp[i] = (rhs - target) / lhs + Δpw + 0.0 * po[idx]
-        #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
-        #     end
-        # end
-        # @. well.qo = wi * λo[ind] * (po[ind] - well.bhp)
-        # @. well.qw = wi * λw[ind] * (pw[ind] - well.bhp)
+        # Well equation: rw = sum(well.qo) - target
+        well.rw = sum(value.(well.qo)) - target
+        well.∂w = sum(grad.(well.qo, 2, 1))
+        for i = 1:nv
+            well.∂r[:, i] .= grad.(well.qo, 1, i) # ∂r∂po
+        end
     elseif mode == CLRAT
-        @. well.qo = λo[ind] / (λo[ind] + λw[ind]) * target
-        @. well.qw = λw[ind] / (λo[ind] + λw[ind]) * target
-        @. well.bhp = po[ind] - target / (wi * (λo[ind] + λw[ind]))
-        # rhs, lhs, Δpw = 0.0, 0.0, 0.0
-        # po_ = value(po[ind])
-        # for (i, idx) in enumerate(ind)
-        #     lhs += wi[i] * (λo_[i] + λw_[i])
-        #     rhs += wi[i] * (λo_[i] + λw_[i]) * (po_[i] - Δpw)
-        #     # sum{i}(wi[i] * (λo_[i] + λw_[i]) * (po_[i] - bhp[1] - ρl[i]gh[i])) = target
-        #     # sum{i}(wi[i] * (λo_[i] + λw_[i]) * bhp[1]) = sum{i}(wi[i] * (λo_[i] + λw_[i]) * (po_[i] - ρl[i]gh[i])) - target
-        #     # lhs * bhp[1] = rhs - target
-        #     # bhp[1] = (rhs - target) / lhs
-        #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
-        #     end
-        # end
-        # Δpw = 0.0
-        # for (i, idx) in enumerate(ind)
-        #     well.bhp[i] = (rhs - target) / lhs + Δpw + 0.0 * po[idx]
-        #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
-        #     end
-        # end
-        # @. well.qo = wi * λo[ind] * (po[ind] - well.bhp)
-        # @. well.qw = wi * λw[ind] * (pw[ind] - well.bhp)
+        # Well equation: rw = sum(well.qo + well.qw) - target
+        well.rw = sum(value.(well.qo)) + sum(value.(well.qw)) - target
+        well.∂w = sum(grad.(well.qo, 2, 1)) + sum(grad.(well.qw, 2, 1))
+        for i = 1:nv
+            well.∂r[:, i] .= grad.(well.qo, 1, i) .+ grad.(well.qw, 1, i) # ∂r∂po
+        end
     elseif mode == SHUT
-        @. well.qo = 0.0 * po[ind]
-        @. well.qw = 0.0 * pw[ind]
-        @. well.bhp = po[ind]
+        # Well equation: rw = bhp - po[1]
+        well.rw = value(well.bhp) - value(po[1])
+        well.∂r .= 0.0
+        well.∂w = 1.0
     end
 end
 
 function compute_well_state(well::StandardWell{INJECTOR}, fluid::AbstractFluid)
     mode, target, ind, d, wi, ρl = well.mode, well.target, well.ind, well.d, well.wi, well.ρl
+    bhp = well.bhp
     o, w = fluid.phases.o, fluid.phases.w
     kro, krw, μo, μw, bw, pw, po = o.kr, w.kr, o.μ, w.μ, w.b, w.p, o.p
-    @. well.qo = 0.0 * po[ind]
+    @. well.qo = 0.0 * (po[ind] - bhp)
     @. ρl = value(w.ρ[ind])
-    λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
-    if mode == CBHP
+    nv = size(well.∂r)[end]
+
+    if mode == SHUT
+        @. well.qw = 0.0* (pw[ind] - bhp)
+    else
+        λ = @. (kro[ind] / μo[ind] + krw[ind] / μw[ind]) / bw[ind]
+        Δbhp = 0.0
         for (i, idx) in enumerate(ind)
-            if pw[idx] > target
-                well.qw[i] = 0.0*pw[idx]
-            else
-                well.qw[i] = wi[i] * λ[i] * (pw[idx] - target)
-            end
-            well.bhp[i] = target + 0.0*w.p[idx]
+            # if pw[idx] > target
+            #     well.qw[i] = 0.0*(pw[idx] - bhp)
+            # else
+            #     # well.qw[i] = wi[i] * λw[idx] * (pw[idx] - (bhp + Δbhp))
+            #     well.qw[i] = wi[i] * λ[i] * (pw[idx] - (bhp + Δbhp))
+            # end
+            well.qw[i] = wi[i] * λ[i] * (pw[idx] - (bhp + Δbhp))
+            # well.bhp_[i] = target + 0.0*w.p[idx]
             if i < length(ind)
-                target += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
+                Δbhp += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
             end
         end
+    end
+
+    if mode == CBHP
+        # Well equation: rw = bhp - target
+        well.∂r .= 0.0
+        well.∂w = 1.0
+        well.rw = value(well.bhp) - target
     elseif mode == CWRAT
-        @. well.qw = target + 0.0*pw[ind]
-        @. well.bhp = po[ind] - target / (wi * λ)
-        # λ_ = value(λ)
-        # rhs, lhs, Δpw = 0.0, 0.0, 0.0
-        # pw_ = value(pw[ind])
-        # for (i, idx) in enumerate(ind)
-        #     lhs += wi[i] * λ_[i]
-        #     rhs += wi[i] * λ_[i] * (pw_[i] - Δpw)
-        #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
-        #     end
-        # end
-        # Δpw = 0.0
-        # for (i, idx) in enumerate(ind)
-        #     well.bhp[i] = (rhs - target) / lhs + Δpw + 0.0 * pw[idx]
-        #     if i < length(ind)
-        #         Δpw += β / gc * g_ * ρl[i] * (d[i+1] - d[i])
-        #     end
-        # end
-        # @. well.qw = wi * λ * (pw[ind] - well.bhp)
+        # Well equation: rw = sum(qw) - target
+        well.rw = sum(value.(well.qw)) - target
+        well.∂w = sum(grad.(well.qw, 2, 1))
+        for i = 1:nv
+            well.∂r[:, i] .= grad.(well.qw, 1, i) # ∂r∂po
+        end
     elseif mode == SHUT
-        @. well.qw = 0.0*pw[ind]
-        @. well.bhp = po[ind]
+        # Well equation: rw = bhp - pw[1]
+        well.rw = value(well.bhp) - value(pw[1])
+        well.∂r .= 0.0
+        well.∂w = 1.0
     else
         throw(ErrorException("Mode $mode not supported for injector"))
     end

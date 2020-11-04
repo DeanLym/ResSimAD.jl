@@ -1,7 +1,7 @@
 module Schedule
 
 using ..AutoDiff:value
-using ..Fluid:OWFluid, SPFluid
+using ..Fluid:OWFluid
 
 
 mutable struct Scheduler
@@ -78,29 +78,5 @@ function insert_time_step(scheduler::Scheduler, t::Float64)::Vector{Float64}
     sort!(scheduler.time_step)
 end
 
-
-function update_dt(sch::Scheduler, fluid::SPFluid, converge::Bool)
-    if !converge
-        sch.dt *= 0.5
-        sch.t_next = sch.t_current + sch.dt
-        return nothing
-    else
-        ω, ηp = sch.ω, sch.ηp
-        dt_old = sch.dt
-        phase = fluid.phases[1]
-        rp = minimum((1+ω)*ηp ./ (abs.(value(phase.p) .- phase.pn) .+ ω*ηp))
-    end
-    dt = min(dt_old * rp, sch.dt_max)
-    sch.t_current = sch.t_next
-    sch.t_next = sch.t_current + dt
-    for t in sch.time_step
-        if (sch.t_current - t)*(sch.t_current + dt - t) < 0
-            sch.t_next = t
-            break
-        end
-    end
-    sch.dt = sch.t_next - sch.t_current
-    return nothing
-end
 
 end

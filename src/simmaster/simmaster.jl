@@ -25,7 +25,7 @@ using ..Grid: CartGrid, AbstractGrid, ConnList, construct_connlist, set_cell_dep
 
 using ..Rock: AbstractRock, StandardRock, TransRock, set_perm, set_poro, set_trans
 
-using ..Fluid: AbstractFluid, OWFluid, SPFluid, PVT, PVTC, SWOFTable, SWOFCorey,
+using ..Fluid: AbstractFluid, OWFluid, PVT, PVTC, SWOFTable, SWOFCorey,
                 set_fluid_tn, update_phases, update_primary_variable,
                 update_fluid_tn, reset_primary_variable, fluid_system, equil,
                 primary_variables
@@ -138,13 +138,13 @@ function newton_step(sim::Sim)::Nothing
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     facility, nsolver, sch = sim.facility, sim.nsolver, sim.scheduler
     # Assemble residual
-    assemble_residual(nsolver, fluid)
+    assemble_residual(nsolver, fluid, facility)
     # Assemble jacobian
     assemble_jacobian(nsolver, fluid, facility)
     # Solve equation
     solve_linear_equations(nsolver)
     # Update solution
-    update_solution(nsolver, fluid)
+    update_solution(nsolver, fluid, facility)
     # Update dynamic states and then compute new residual
     update_phases(fluid, grid.connlist)
     compute_residual(fluid, grid, rock, facility, sch.dt)
@@ -191,7 +191,7 @@ function time_step(sim::Sim)::Nothing
             nsolver.recompute_residual = false
         end
         # Check convergence
-        err = compute_residual_error(fluid, grid, rock, sch.dt)
+        err = compute_residual_error(fluid, grid, rock, facility, sch.dt)
         if err < nsolver.min_err
             nsolver.converged = true
             break
@@ -307,7 +307,7 @@ function get_residual_error(sim::Sim)
     reservoir = sim.reservoir
     grid, fluid, rock = reservoir.grid, reservoir.fluid, reservoir.rock
     sch = sim.scheduler
-    compute_residual_error(fluid, grid, rock, sch.dt)
+    compute_residual_error(fluid, grid, rock, sim.facility, sch.dt)
 end
 
 function save_facility_results(facility::Dict{String, AbstractFacility}, t::Float64)
@@ -321,8 +321,5 @@ include("api_functions.jl")
 include("derived_property.jl")
 
 include("owfluid_solver.jl")
-include("spfluid_solver.jl")
-
-
 
 end

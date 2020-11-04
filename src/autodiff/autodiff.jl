@@ -61,6 +61,11 @@ function adscaler(v::Float64, i::Int64, g::SMat{Nv, 1, Nv}) where {Nv}
     return ADScaler{Nv, 1, Nv}(v, SA[i], g)
 end
 
+function adscaler(v::Float64, i::Int64, iv::Int64, nv::Int64)
+    g = SMat{nv, 1, nv}([if i==iv 1.0 else 0.0 end for i=1:nv])
+    return ADScaler{nv, 1, nv}(v, SA[i], g)
+end
+
 function set_primary_variable(x::Vector{ADScaler{Nv, 1, Nv}}, v::Vector{Float64}, iv::Int) where {Nv}
     nc = length(v)
     g = [SMat{Nv, 1, Nv}([if i==iv 1.0 else 0.0 end for i=1:Nv])]

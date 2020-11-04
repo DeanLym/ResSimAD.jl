@@ -1,7 +1,7 @@
 name = "ResSimAD"
 uuid = "0f5291bf-5850-40d8-bc7e-2ce68032ef0b"
 authors = ["Yimin Liu"]
-version = "0.1.6"
+version = "0.2.0"
 
 [deps]
 AlgebraicMultigrid = "2169fc97-5a83-5252-b627-83903c6c433c"

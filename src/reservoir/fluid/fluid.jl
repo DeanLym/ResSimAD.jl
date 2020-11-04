@@ -220,50 +220,6 @@ function update_phases(fluid::OWFluid, connlist::ConnList)
     update_phase(fluid.phases.w, connlist)
 end
 
-## Single Phase Fluid
-struct SPFluid <: AbstractFluid
-    nv::Int
-    phases::NamedTuple
-    components::NamedTuple
-    function SPFluid(nc::Int, nconn::Int, ρ::Float64, pvt::AbstractPVT; name::String = "OIL")
-        nv = 1
-        if name == "OIL"
-            phases = (o = Phase(nc, nconn, nv, ρ, pvt), )
-            components = (o = Component(nc, nv), )
-        elseif name == "WATER"
-            phases = (w = Phase(nc, nconn, nv, ρ, pvt), )
-            components = (w = Component(nc, nv), )
-        elseif name == "GAS"
-            phases = (g = Phase(nc, nconn, nv, ρ, pvt), )
-            components = (g = Component(nc, nv), )
-        end
-
-        return new(nv, phases, components)
-    end
-end
-
-function set_fluid_tn(fluid::SPFluid, p::Vector{Float64})
-    phase = fluid.phases[1]
-    @. phase.sn = 1.0
-    set_phase_tn(phase, p, phase.sn)
-end
-
-function update_primary_variable(fluid::SPFluid, p::Vector{Float64})
-    phase = fluid.phases[1]
-    set_primary_variable(phase.p, p, 1)
-    @. phase.kr = 1.0 + 0.0*phase.p
-    @. phase.s = 1.0 + 0.0*phase.p
-end
-
-function reset_primary_variable(fluid::SPFluid)
-    phase = fluid.phases[1]
-    update_primary_variable(fluid, phase.pn)
-end
-
-function update_phases(fluid::SPFluid, connlist::ConnList)
-    update_phase(fluid.phases[1], connlist)
-end
-
 
 include("equil.jl")
 
