@@ -660,7 +660,7 @@ git-tree-sha1 = "609ffb2930093b1d56abb147f1e244fe17c253a8"
 repo-rev = "master"
 repo-url = "."
 uuid = "0f5291bf-5850-40d8-bc7e-2ce68032ef0b"
-version = "0.2.0"
+version = "0.2.1"
 
 [[Rmath]]
 deps = ["Random", "Rmath_jll"]
