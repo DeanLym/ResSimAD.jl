@@ -35,6 +35,10 @@ ResSimAD.get_data
 ```
 
 ```@docs
+ResSimAD.get_velocity
+```
+
+```@docs
 ResSimAD.get_state_map
 ```
 

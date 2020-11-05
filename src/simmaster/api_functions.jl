@@ -339,3 +339,65 @@ function save_results(sim::Sim; dir::String="./", state_report::String="report")
     close(fid)
     return nothing
 end
+
+
+"""
+    get_velocity(sim::Sim, direction::string, phase::string)
+
+Get velocity (ft/s) of phase `phase` across each cell in the given `direction`
+
+# Arguments
+- `sim::Sim`: Sim object
+- `direction::String`: direction
+    - "x": x direction
+    - "y": y direction
+    - "z": z direction
+- `phase::String`: phase
+    - "o": oil phase
+    - "w": water phase
+    - "g": gas phase
+"""
+function get_velocity(sim::Sim, direction::String, phase::String)
+    if typeof(sim.reservoir.grid) != CartGrid
+        error(LOGGER, "get_velocity only works for Cartesian grid")
+    end
+
+    if !(direction ∈ ("x", "y", "z"))
+        error(LOGGER, "Unsupported direction $direction")
+    end
+
+    if !(phase ∈ ("o", "w"))
+        error(LOGGER, "Unsupported phase $phase")
+    end
+
+    if direction == "x"
+        offset = 1
+        area = sim.dy .* sim.dz
+    elseif direction == "y"
+        offset = sim.nx
+        area = sim.dx .* sim.dz
+    else
+        offset = sim.nx * sim.ny
+        area = sim.dx .* sim.dy
+    end
+
+    f = get_data(sim, "f$phase") # STB/DAY
+    l_list, r_list = sim.connlist.l, sim.connlist.r
+    nconn = length(l_list)
+    v = zeros((sim.nc))
+    for i = 1:nconn
+        l, r = l_list[i], r_list[i]
+        if r - l == offset
+            v[l] -= f[i]
+            v[r] += f[i]
+        end
+    end
+    
+    # unit conversion
+    day2s = 24.0*60.0*60.0
+    bbl2ft3 = 5.6145833334
+    @. v *= bbl2ft3 / day2s # ft^3/s
+    # Divide area
+    @. v /= area # ft/s
+    return v
+end
