@@ -184,7 +184,7 @@ end
 
 function init_nsolver(nsolver_opt::Dict, lsolver_opt::Dict)
     info(LOGGER, "Initializing nonlinear solver")
-    if lsolver_opt["backend"] == "Julia"
+    if lsolver_opt["backend"] == "JULIA"
         nsolver = NRSolver()
     else
         nsolver = NRSolverDuneIstl()
@@ -198,7 +198,7 @@ function init_lsolver(lsolver_opt::Dict, grid::AbstractGrid, fluid::AbstractFlui
     info(LOGGER, "Initializing linear solver")
     solver_type = lsolver_opt["type"]
     solver_backend = lsolver_opt["backend"]
-    if solver_backend == "Julia"
+    if solver_backend == "JULIA"
         if solver_type == "GMRES_ILU"
             lsolver = GMRES_ILU_Solver()
         elseif solver_type == "BICGSTAB_ILU"
