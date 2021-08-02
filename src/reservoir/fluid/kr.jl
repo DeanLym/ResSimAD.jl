@@ -1,8 +1,8 @@
 abstract type AbstractKROW end
 
 struct SWOFTable <: AbstractKROW
-    krw::Interp
-    kro::Interp
+    krw
+    kro
     table::DataFrame
 end
 

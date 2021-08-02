@@ -2,8 +2,8 @@ abstract type AbstractPVT end
 
 
 struct PVT <: AbstractPVT
-    b::Interp
-    bμ::Interp
+    b
+    bμ
     table::DataFrame
 end
 

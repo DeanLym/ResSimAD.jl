@@ -9,7 +9,7 @@ using DataFrames
 using CSV
 using Interpolations
 using Interpolations:GriddedInterpolation
-const Interp = GriddedInterpolation{Float64,1,Float64,Gridded{Linear},Tuple{Array{Float64,1}}}
+# const Interp = GriddedInterpolation{Float64,1,Float64,Gridded{Linear},Tuple{Array{Float64,1}}}
 
 #! format: off
 import Base
