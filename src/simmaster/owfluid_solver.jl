@@ -157,7 +157,7 @@ function OWAssembler(
 end
 
 
-function initialize_nsolver(nsolver::NRSolver, grid::AbstractGrid, ::OWFluid)
+function initialize_nsolver(nsolver::NRSolver, grid::AbstractGrid, wells::Dict{String, AbstractFacility}, ::OWFluid)
     nc = grid.nc
     nsolver.residual = zeros(2*nc)
     nsolver.δx = zeros(2*nc)
