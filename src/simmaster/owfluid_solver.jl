@@ -38,7 +38,7 @@ function compute_residual(
     return fluid
 end
 
-function assemble_residual(nsolver::NRSolver, fluid::OWFluid)
+function assemble_residual(nsolver::NRSolver, fluid::OWFluid, wells::Dict{String, AbstractFacility})
     @. nsolver.residual[1:2:end] = fluid.components.w.r
     @. nsolver.residual[2:2:end] = fluid.components.o.r
 end
