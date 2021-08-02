@@ -43,7 +43,7 @@ function lsolve(
     residual::Vector{Float64},
 )
     prec = ilu(jac, τ=solver.τ)
-    _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=prec, log=true, tol=0.1)
+    _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=prec, log=true, reltol=0.1)
     push!(solver.iterations, log.iters)
 end
 
@@ -63,7 +63,7 @@ function lsolve(
     residual::Vector{Float64},
 )
     prec = ilu(jac, τ=solver.τ)
-    _, log = gmres!(δx, jac, residual, Pl=prec, log=true, tol=0.1)
+    _, log = gmres!(δx, jac, residual, Pl=prec, log=true, reltol=0.1)
     push!(solver.iterations, log.iters)
 end
 
@@ -94,7 +94,7 @@ function lsolve(
     residual::Vector{Float64},
 )::Vector{Float64}
     setup_cpr_preconditioner(solver.cpr_prec, jac)
-    _, log = gmres!(δx, jac, residual, Pl=solver.cpr_prec, log=true, tol=0.1)
+    _, log = gmres!(δx, jac, residual, Pl=solver.cpr_prec, log=true, reltol=0.1)
     push!(solver.iterations, log.iters)
 end
 
@@ -124,7 +124,7 @@ function lsolve(
     residual::Vector{Float64},
 )::Vector{Float64}
     setup_cpr_preconditioner(solver.cpr_prec, jac)
-    _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=solver.cpr_prec, log=true, tol=0.1)
+    _, log = bicgstabl!(δx, jac, residual, solver.l, Pl=solver.cpr_prec, log=true, reltol=0.1)
     push!(solver.iterations, log.iters)
 end
 
