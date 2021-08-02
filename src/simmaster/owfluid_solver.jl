@@ -43,7 +43,7 @@ function assemble_residual(nsolver::NRSolver, fluid::OWFluid, wells::Dict{String
     @. nsolver.residual[2:2:end] = fluid.components.o.r
 end
 
-function update_solution(nsolver::NRSolver, fluid::OWFluid)
+function update_solution(nsolver::NRSolver, fluid::OWFluid, wells::Dict{String, AbstractFacility})
     o, w = fluid.phases.o, fluid.phases.w
     assembler = nsolver.assembler
     @. assembler.po = value(o.p) - nsolver.δx[1:2:end]
